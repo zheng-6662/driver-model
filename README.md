@@ -1,38 +1,40 @@
-# Driver Multimodal Processing
+# 驾驶员多模态数据处理与建模
 
-Codebase for multimodal driving data processing and modeling, including:
+这是一个面向驾驶模拟实验的多模态数据处理与建模代码仓库，主要包含以下内容：
 
-- vehicle preprocessing
-- physio preprocessing
-- EEG preprocessing
-- event-level multimodal dataset building
-- multimodal steering prediction models
+- 车辆数据预处理
+- 生理数据预处理
+- 脑电数据预处理
+- 事件级多模态数据集构建
+- 多模态转向行为预测模型
 
-## Start Here
+## 先看哪里
 
-- Final curated code:
+- 最终整理后的主代码：
   - [datasetprocess/final_code](F:\数据集处理\data_process\datasetprocess\final_code)
-- Multimodal workspace and legacy entry points:
+- 多模态数据工作区与历史入口：
   - [datasetprocess/多模态数据](F:\数据集处理\data_process\datasetprocess\多模态数据)
 
-## Recommended Reading Order
+## 推荐阅读顺序
 
 1. `datasetprocess/final_code/README.md`
-2. `datasetprocess/final_code/dataset/`
-3. `datasetprocess/final_code/model/training/`
-4. `datasetprocess/多模态数据/00_目录说明/README.md`
+2. `datasetprocess/final_code/processing/`
+3. `datasetprocess/final_code/dataset/`
+4. `datasetprocess/final_code/model/training/`
+5. `datasetprocess/多模态数据/00_目录说明/README.md`
 
-## Repository Layout
+## 仓库结构
 
 ```text
 datasetprocess/
-├─ final_code/        # curated final code
-├─ 多模态数据/          # multimodal workspace, legacy entry points, archived results
-├─ 数据预处理/          # local preprocessing workspace (not the main entry for this repo)
-└─ 补充采集数据/        # local auxiliary workspace (not the main entry for this repo)
+├─ final_code/   # 最终整理后的代码
+├─ 多模态数据/     # 多模态工作区、历史入口、归档结果
+├─ 数据预处理/     # 本地预处理工作区
+└─ 补充采集数据/   # 本地补充处理工作区
 ```
 
-## Notes
+## 说明
 
-- Large datasets, model weights, figures, videos, and generated artifacts are intentionally ignored.
-- This repository is focused on source code and project structure, not raw data storage.
+- 本仓库主要保存源码、说明文档和项目结构。
+- 原始数据、模型权重、图片、视频以及自动生成产物没有上传到 GitHub。
+- 如果你只想看当前推荐使用的版本，请直接从 `datasetprocess/final_code/` 开始。
