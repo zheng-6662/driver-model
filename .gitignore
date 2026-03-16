@@ -7,6 +7,8 @@ __pycache__/
 
 # Local outputs
 trajectory_plot_output/
+datasetprocess/多模态数据/程序运行结果/
+datasetprocess/多模态数据/__pycache__/
 
 # Large data and generated artifacts
 *.csv
