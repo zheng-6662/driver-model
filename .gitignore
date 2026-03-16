@@ -1,0 +1,39 @@
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local outputs
+trajectory_plot_output/
+
+# Large data and generated artifacts
+*.csv
+*.xlsx
+*.xls
+*.mat
+*.fif
+*.set
+*.zip
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.npy
+*.npz
+*.pth
+*.log
+*.json
+*.html
+*.cfg
+*.inc
+*.aed
+*.lut
+*.ini
+
+# Keep source code and docs
+!*.py
+!*.md
+!*.txt
+!*.gitignore

@@ -1,0 +1,63 @@
+==============================
+原始事件样本总数：5198
+==============================
+
+🔧 特征标准化：
+  zx|roll              mean=  0.0027, std=  0.0757
+  zx|vyaw              mean=  0.0177, std=  0.1955
+  zx|ay                mean=  0.1831, std=  3.4566
+  zx|ax                mean= -0.2682, std=  1.3251
+  zx1|v_km/h           mean= 26.9913, std=  8.8410
+  zx1|lateraldistance  mean=  0.9309, std= 11.5564
+  zx1|lanecurvatureXY  mean=  0.0002, std=  0.0051
+  zx|yaw               mean= -2.7187, std=  6.1389
+  zx|SteeringWheel     mean= -0.2806, std=  1.2533
+  LTR_est              mean=  0.0206, std=  0.3886
+
+训练集样本数：4158
+测试集样本数：1040
+输入特征顺序： ['zx|roll', 'zx|vyaw', 'zx|ay', 'zx|ax', 'zx1|v_km/h', 'zx1|lateraldistance', 'zx1|lanecurvatureXY', 'zx|yaw', 'zx|SteeringWheel', 'LTR_est']
+每个样本时间长度：400 点
+
+[Epoch 01] Train MSE=1.028458 | Test MSE=0.893858
+[Epoch 02] Train MSE=0.831144 | Test MSE=0.814380
+[Epoch 03] Train MSE=0.748492 | Test MSE=0.854117
+[Epoch 04] Train MSE=0.711642 | Test MSE=0.700798
+[Epoch 05] Train MSE=0.632846 | Test MSE=0.653252
+[Epoch 06] Train MSE=0.592891 | Test MSE=0.693536
+[Epoch 07] Train MSE=0.573809 | Test MSE=0.648887
+[Epoch 08] Train MSE=0.526244 | Test MSE=0.558028
+[Epoch 09] Train MSE=0.480891 | Test MSE=0.539987
+[Epoch 10] Train MSE=0.445201 | Test MSE=0.515028
+[Epoch 11] Train MSE=0.440548 | Test MSE=0.540495
+[Epoch 12] Train MSE=0.412154 | Test MSE=0.506032
+[Epoch 13] Train MSE=0.383973 | Test MSE=0.423030
+[Epoch 14] Train MSE=0.329363 | Test MSE=0.502704
+[Epoch 15] Train MSE=0.325824 | Test MSE=0.468150
+[Epoch 16] Train MSE=0.327723 | Test MSE=0.410794
+[Epoch 17] Train MSE=0.301994 | Test MSE=0.406732
+[Epoch 18] Train MSE=0.286688 | Test MSE=0.459567
+[Epoch 19] Train MSE=0.275461 | Test MSE=0.390594
+[Epoch 20] Train MSE=0.252431 | Test MSE=0.409390
+[Epoch 21] Train MSE=0.258147 | Test MSE=0.399327
+[Epoch 22] Train MSE=0.250170 | Test MSE=0.430168
+[Epoch 23] Train MSE=0.245217 | Test MSE=0.450569
+[Epoch 24] Train MSE=0.286033 | Test MSE=0.448603
+[Epoch 25] Train MSE=0.271805 | Test MSE=0.421038
+[Epoch 26] Train MSE=0.232462 | Test MSE=0.403369
+[Epoch 27] Train MSE=0.225144 | Test MSE=0.461074
+[Epoch 28] Train MSE=0.220514 | Test MSE=0.408652
+[Epoch 29] Train MSE=0.226748 | Test MSE=0.410127
+[Epoch 30] Train MSE=0.221944 | Test MSE=0.421306
+[Epoch 31] Train MSE=0.224976 | Test MSE=0.424516
+[Epoch 32] Train MSE=0.239064 | Test MSE=0.456237
+[Epoch 33] Train MSE=0.254911 | Test MSE=0.451451
+[Epoch 34] Train MSE=0.231032 | Test MSE=0.461375
+[Epoch 35] Train MSE=0.242617 | Test MSE=0.411090
+[Epoch 36] Train MSE=0.238051 | Test MSE=0.448366
+[Epoch 37] Train MSE=0.206522 | Test MSE=0.403715
+[Epoch 38] Train MSE=0.189207 | Test MSE=0.368543
+[Epoch 39] Train MSE=0.177220 | Test MSE=0.383603
+[Epoch 40] Train MSE=0.180819 | Test MSE=0.374349
+
+🎉 已保存 Transformer 模型 checkpoint：model_rollpeak_transformer_v2.pth
