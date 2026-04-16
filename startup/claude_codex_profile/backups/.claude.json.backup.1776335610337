@@ -1,10 +1,17 @@
 {
-  "numStartups": 1,
+  "numStartups": 5,
   "customApiKeyResponses": {
     "approved": [
       "k-claude-codex-proxy"
     ],
     "rejected": []
+  },
+  "tipsHistory": {
+    "new-user-warmup": 1,
+    "plan-mode-for-complex-tasks": 2,
+    "color-when-multi-clauding": 2,
+    "terminal-setup": 4,
+    "memory-command": 5
   },
   "cachedGrowthBookFeatures": {
     "tengu_opus_default_pro_plan": false,
