@@ -1,0 +1,16 @@
+﻿Normalization backup:
+F:\data_set_process\data_process\zotero_normalize_backup_20260401_095455
+
+Current layout:
+Database root: E:\文献\zotero1
+Linked attachment root in Zotero: E:\文献\zotero2
+E:\文献\zotero2 -> junction -> C:\Users\Administrator\Nutstore\1\zotero数据库
+Legacy path compatibility: E:\文献\zotero数据库 -> junction -> C:\Users\Administrator\Nutstore\1\zotero数据库
+
+Linked attachment normalization:
+Total linked attachments: 29
+Resolved after normalization: 29
+Missing linked attachments: 0
+
+Remaining known issue:
+Stored attachment key YVJM9LX7 is still missing from Zotero storage.

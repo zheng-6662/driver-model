@@ -1,0 +1,6 @@
+@echo off
+if not "%~1"=="" (
+  powershell -NoProfile -ExecutionPolicy Bypass -File "D:\ClaudeCode\codex-bridge\invoke-codex.ps1" -Mode exec -ProjectRoot "F:\data_set_process\data_process" -FullAuto -Prompt "%~1"
+) else (
+  powershell -NoProfile -ExecutionPolicy Bypass -File "D:\ClaudeCode\codex-bridge\invoke-codex.ps1" -Mode exec -ProjectRoot "F:\data_set_process\data_process" -FullAuto
+)

@@ -1,0 +1,23 @@
+model_provider = "zx"
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+network_access = "enabled"
+disable_response_storage = true
+windows_wsl_setup_acknowledged = true
+model_verbosity = "high"
+personality = "pragmatic"
+
+[model_providers.zx]
+name = "zx"
+base_url = "http://localhost:8317/v1"
+wire_api = "responses"
+requires_openai_auth = true
+
+[windows]
+sandbox = "unelevated"
+
+[features]
+multi_agent = true
+
+[projects.'F:\data_set_process\data_process']
+trust_level = "trusted"

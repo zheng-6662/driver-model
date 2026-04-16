@@ -1,0 +1,176 @@
+param(
+  [Parameter(Mandatory = $false)]
+  [ValidateSet("exec", "review")]
+  [string]$Mode = "exec",
+
+  [Parameter(Mandatory = $false)]
+  [string]$Prompt = "",
+
+  [Parameter(Mandatory = $false)]
+  [string]$ProjectRoot = "F:\data_set_process\data_process",
+
+  [Parameter(Mandatory = $false)]
+  [switch]$Json,
+
+  [Parameter(Mandatory = $false)]
+  [switch]$FullAuto
+)
+
+$ErrorActionPreference = "Stop"
+
+function Get-ProjectPromptPrefix {
+  param(
+    [Parameter(Mandatory = $false)]
+    [string]$ProjectRoot
+  )
+
+  if ([string]::IsNullOrWhiteSpace($ProjectRoot)) {
+    return ""
+  }
+
+  $normalizedRoot = $ProjectRoot.TrimEnd('\').ToLowerInvariant()
+  $targetRoot = "f:\data_set_process\data_process"
+
+  if ($normalizedRoot -ne $targetRoot) {
+    return ""
+  }
+
+  return @"
+Project-specific requirement for this repository:
+
+If the task materially advances thesis/model progress, you must append a detailed progress entry to `F:\data_set_process\data_process\reports\project_progress_master.md` before returning any compressed summary.
+
+Treat the following as thesis/model progress when they materially move the project forward:
+- command execution
+- file inspection
+- script or documentation edits
+- experiment analysis
+- run comparison
+- failure analysis
+- literature organization
+- plan refinement
+
+The progress entry should capture:
+- what was done
+- why it was done
+- what was found
+- the recommended next step
+
+If the task is not related to thesis/model progress, you may ignore this requirement.
+
+User prompt follows.
+"@
+}
+
+$codexExe = "D:\ClaudeCode\codex-bridge\codex.exe"
+if (!(Test-Path $codexExe)) {
+  Write-Error "Codex executable not found at $codexExe"
+  exit 1
+}
+
+if ([string]::IsNullOrWhiteSpace($Prompt)) {
+  $stdin = [Console]::In.ReadToEnd()
+  if (-not [string]::IsNullOrWhiteSpace($stdin)) {
+    $Prompt = $stdin.Trim()
+  }
+}
+
+if ([string]::IsNullOrWhiteSpace($Prompt)) {
+  Write-Error "A prompt is required."
+  exit 1
+}
+
+$promptPrefix = Get-ProjectPromptPrefix -ProjectRoot $ProjectRoot
+if (-not [string]::IsNullOrWhiteSpace($promptPrefix)) {
+  $Prompt = $promptPrefix.Trim() + "`r`n`r`n" + $Prompt
+}
+
+$outputDir = "D:\ClaudeCode\codex-bridge\runs"
+if (!(Test-Path $outputDir)) {
+  New-Item -ItemType Directory -Path $outputDir -Force | Out-Null
+}
+
+$ts = Get-Date -Format "yyyyMMdd_HHmmss"
+$lastMessageFile = Join-Path $outputDir ("codex_last_message_{0}.txt" -f $ts)
+$stdoutFile = Join-Path $outputDir ("codex_stdout_{0}.log" -f $ts)
+$stderrFile = Join-Path $outputDir ("codex_stderr_{0}.log" -f $ts)
+
+$args = New-Object System.Collections.Generic.List[string]
+$args.Add($Mode)
+if ($Mode -eq "exec") {
+  $args.Add("-C")
+  $args.Add($ProjectRoot)
+  $args.Add("--skip-git-repo-check")
+  $args.Add("--output-last-message")
+  $args.Add($lastMessageFile)
+  $args.Add("--json")
+  if ($FullAuto) {
+    $args.Add("--full-auto")
+  }
+  $args.Add($Prompt)
+} elseif ($Mode -eq "review") {
+  $args.Add("--uncommitted")
+  $args.Add($Prompt)
+}
+
+$psi = New-Object System.Diagnostics.ProcessStartInfo
+$psi.FileName = $codexExe
+$psi.Arguments = [string]::Join(' ', ($args | ForEach-Object {
+  if ($_ -match '[\s"]') {
+    '"' + (($_ -replace '\\', '\\') -replace '"', '\"') + '"'
+  } else {
+    $_
+  }
+}))
+$process = Start-Process -FilePath $psi.FileName -ArgumentList $psi.Arguments -NoNewWindow -PassThru -Wait -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile
+
+$stdout = if (Test-Path $stdoutFile) { Get-Content $stdoutFile -Raw } else { "" }
+$stderr = if (Test-Path $stderrFile) { Get-Content $stderrFile -Raw } else { "" }
+
+if ($process.ExitCode -ne 0) {
+  if (-not [string]::IsNullOrWhiteSpace($stderr)) {
+    Write-Error $stderr.Trim()
+  } elseif (-not [string]::IsNullOrWhiteSpace($stdout)) {
+    Write-Error $stdout.Trim()
+  } else {
+    Write-Error "Codex exited with code $($process.ExitCode)."
+  }
+  exit $process.ExitCode
+}
+
+if ($Mode -eq "exec") {
+  $finalText = $null
+  foreach ($line in ($stdout -split "`r?`n")) {
+    if ([string]::IsNullOrWhiteSpace($line)) { continue }
+    try {
+      $event = $line | ConvertFrom-Json
+      if ($event.type -eq "item.completed" -and $event.item.type -eq "agent_message") {
+        $finalText = [string]$event.item.text
+      }
+    } catch {
+      continue
+    }
+  }
+
+  if (-not [string]::IsNullOrWhiteSpace($finalText)) {
+    $finalText
+    exit 0
+  }
+
+  if (Test-Path $lastMessageFile) {
+    Get-Content $lastMessageFile
+    exit 0
+  }
+
+  if ($Json) {
+    $stdout
+    exit 0
+  }
+
+  Write-Error "Codex completed but no final message could be extracted. See logs in $outputDir."
+  exit 1
+}
+
+if (-not [string]::IsNullOrWhiteSpace($stdout)) {
+  $stdout.Trim()
+}
