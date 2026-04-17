@@ -113,6 +113,23 @@ def load_json(path):
         return json.load(f)
 
 
+STEER_SOURCE_UNIT = "rad"
+STEER_ANGLE_UNIT = os.environ.get("DRIVER_MODEL_STEER_ANGLE_UNIT", "deg").strip().lower()
+if STEER_ANGLE_UNIT not in {"rad", "deg"}:
+    raise ValueError(f"Unsupported DRIVER_MODEL_STEER_ANGLE_UNIT={STEER_ANGLE_UNIT!r}; expected 'rad' or 'deg'")
+STEER_ANGLE_SCALE = float(180.0 / np.pi) if STEER_ANGLE_UNIT == "deg" else 1.0
+STEER_PLOT_LABEL = f"steer ({STEER_ANGLE_UNIT})"
+STEER_PEAK_PLOT_LABEL = f"peak|steer| (GT, {STEER_ANGLE_UNIT})"
+
+
+def steer_value_from_rad(value: float) -> float:
+    return float(value) * STEER_ANGLE_SCALE
+
+
+def steer_array_from_rad(values) -> np.ndarray:
+    return np.asarray(values, dtype=np.float32) * np.float32(STEER_ANGLE_SCALE)
+
+
 
 # =========================
 # Road-type (curve/straight) utilities
@@ -283,10 +300,37 @@ W_AMP        = 0.30 if ENABLE_PEAKINTENSITY_AUX else 0.0   # peak intensity supe
 W_TREND      = 0.10   # coarse steer-trend alignment on the full 2s future window
 TREND_POOL_KERNEL = 20
 TREND_POOL_STRIDE = 20
-TREND_SIGN_EPS = 0.02
+TREND_SIGN_EPS = steer_value_from_rad(0.02)
+TREND_LOSS_MODE = os.environ.get("DRIVER_MODEL_TREND_LOSS_MODE", "pooled_level_mse_v1")
+TREND_LEVEL_WEIGHT = float(os.environ.get("DRIVER_MODEL_TREND_LEVEL_WEIGHT", "0.25"))
+TREND_DELTA_WEIGHT = float(os.environ.get("DRIVER_MODEL_TREND_DELTA_WEIGHT", "0.50"))
+TREND_DIR_WEIGHT = float(os.environ.get("DRIVER_MODEL_TREND_DIR_WEIGHT", "0.25"))
+ENABLE_STEER_COARSE_FINE = os.environ.get("DRIVER_MODEL_STEER_COARSE_FINE", "0") == "1"
+W_TREND_COARSE = float(os.environ.get("DRIVER_MODEL_W_TREND_COARSE", "0.10"))
+W_FINE_DC = float(os.environ.get("DRIVER_MODEL_W_FINE_DC", "0.02"))
+ENABLE_PHASE_ADAPTIVE_TREND = os.environ.get("DRIVER_MODEL_PHASE_ADAPTIVE_TREND", "0") == "1"
+TREND_EARLY_BINS = int(os.environ.get("DRIVER_MODEL_TREND_EARLY_BINS", "12"))
+TREND_LATE_STRAIGHT_DOWN = float(os.environ.get("DRIVER_MODEL_TREND_LATE_STRAIGHT_DOWN", "0.35"))
+TREND_LATE_STRONGREV_DOWN = float(os.environ.get("DRIVER_MODEL_TREND_LATE_STRONGREV_DOWN", "0.45"))
+ENABLE_LATE_REV_GATE = os.environ.get("DRIVER_MODEL_LATE_REV_GATE", "0") == "1"
+LATE_REV_GATE_START_SEC = float(os.environ.get("DRIVER_MODEL_LATE_REV_GATE_START_SEC", "1.05"))
+LATE_REV_GATE_SCALE = float(os.environ.get("DRIVER_MODEL_LATE_REV_GATE_SCALE", "0.60"))
+LATE_REV_GATE_RAMP_POWER = float(os.environ.get("DRIVER_MODEL_LATE_REV_GATE_RAMP_POWER", "1.50"))
+ENABLE_STRONG_POS_GATE = os.environ.get("DRIVER_MODEL_STRONG_POS_GATE", "0") == "1"
+STRONG_POS_GATE_START_SEC = float(os.environ.get("DRIVER_MODEL_STRONG_POS_GATE_START_SEC", "1.20"))
+STRONG_POS_GATE_SCALE = float(os.environ.get("DRIVER_MODEL_STRONG_POS_GATE_SCALE", "0.45"))
+STRONG_POS_GATE_RAMP_POWER = float(os.environ.get("DRIVER_MODEL_STRONG_POS_GATE_RAMP_POWER", "1.75"))
+STRONG_POS_GATE_PROB_CENTER = float(os.environ.get("DRIVER_MODEL_STRONG_POS_GATE_PROB_CENTER", "0.60"))
+ENABLE_HARD_LATE_FINE = os.environ.get("DRIVER_MODEL_HARD_LATE_FINE", "0") == "1"
+W_HARD_LATE_FINE = float(os.environ.get("DRIVER_MODEL_W_HARD_LATE_FINE", "0.06"))
+HARD_LATE_START_SEC = float(os.environ.get("DRIVER_MODEL_HARD_LATE_START_SEC", "1.25"))
+HARD_TAIL_START_SEC = float(os.environ.get("DRIVER_MODEL_HARD_TAIL_START_SEC", "1.50"))
+HARD_PEAK_QUANTILE = float(os.environ.get("DRIVER_MODEL_HARD_PEAK_QUANTILE", "0.90"))
+HARD_TAIL_QUANTILE = float(os.environ.get("DRIVER_MODEL_HARD_TAIL_QUANTILE", "0.80"))
 REV_SAMPLE_WEIGHT = 1.80   # 强反打样本整体 loss 加权（建议先用 1.5~2.0）
 REV_ZERO_EPS      = 1e-4    # 过零检测小阈值，避免数值噪声误判
 LAMBDA_REV  = 0.05 if ENABLE_REVERSAL_AUX else 0.0
+LAMBDA_STRONG_POS_GATE = float(os.environ.get("DRIVER_MODEL_LAMBDA_STRONG_POS_GATE", "0.10"))
 REV_EPS_WEAK    = 0.02   # 弱反转判定阈值（方向盘单位若已归一化，请相应缩放）
 REV_EPS_STRONG  = 0.20   # 强反转判定阈值（更贴近紧急变道“明显反打”）
 STRONG_PEAK_THR = 2.0    # 强反转附加条件：未来窗内 |steer| 峰值需超过该阈值（单位同 steer）
@@ -302,6 +346,11 @@ LANE_WIDTH_M     = 3.5   # 车道宽（用于 lateraldistance 解缠）
 LANE_JUMP_THR_M  = 1.8   # lateraldistance 跳变检测阈值（约半个车道宽）
 EEG_HIST_SEC = 2      # 你现在提取 EEG 事件特征用的 hist2s 文件名后缀
 EPS = 1e-6
+REV_EPS_WEAK = steer_value_from_rad(0.02)
+REV_EPS_STRONG = steer_value_from_rad(0.20)
+STRONG_PEAK_THR = steer_value_from_rad(2.0)
+STEER_ONSET_THR_ABS = steer_value_from_rad(0.02)
+REV_EPS = REV_EPS_WEAK
 ROAD_OK_RATIO_THR = 0.7  # use road_type_fixed when ref_nn_ok ratio >= this
 
 SEED = 2025
@@ -856,7 +905,8 @@ def build_samples_for_vehicle(vehicle_file, style_map):
     if col_ay is not None:
         df_feat["LTR_est"] = df_v[col_ay] * LTR_COEFF
 
-    steer = df_v[col_steer].to_numpy(dtype=np.float32)
+    steer = steer_array_from_rad(df_v[col_steer].to_numpy(dtype=np.float32))
+    df_feat[col_steer] = steer
     dt = 1.0 / FS
     steer_rate = np.gradient(steer, dt)
     df_feat["steer_rate"] = steer_rate
@@ -1146,12 +1196,36 @@ class Past2FutureMultiTaskRoadPreview(nn.Module):
                  num_layers_enc=2, num_layers_dec=2,
                  dim_feedforward=256, dropout=0.1,
                  max_len_enc=600, max_len_dec=400,
-                 state_dim=2):
+                 state_dim=2,
+                 enable_steer_coarse_fine=False,
+                 trend_pool_kernel=20,
+                 trend_pool_stride=20,
+                 enable_late_reversal_gate=False,
+                 late_rev_gate_start_sec=1.05,
+                 late_rev_gate_scale=0.60,
+                 late_rev_gate_ramp_power=1.50,
+                 enable_strong_pos_gate=False,
+                 strong_pos_gate_start_sec=1.20,
+                 strong_pos_gate_scale=0.45,
+                 strong_pos_gate_ramp_power=1.75,
+                 strong_pos_gate_prob_center=0.60):
         super().__init__()
         self.d_model = d_model
         self.future_len = future_len
         self.out_dim = out_dim
         self.state_dim = state_dim
+        self.enable_steer_coarse_fine = bool(enable_steer_coarse_fine)
+        self.trend_pool_kernel = int(trend_pool_kernel)
+        self.trend_pool_stride = int(trend_pool_stride)
+        self.enable_late_reversal_gate = bool(enable_late_reversal_gate)
+        self.late_rev_gate_start_sec = float(late_rev_gate_start_sec)
+        self.late_rev_gate_scale = float(late_rev_gate_scale)
+        self.late_rev_gate_ramp_power = float(late_rev_gate_ramp_power)
+        self.enable_strong_pos_gate = bool(enable_strong_pos_gate)
+        self.strong_pos_gate_start_sec = float(strong_pos_gate_start_sec)
+        self.strong_pos_gate_scale = float(strong_pos_gate_scale)
+        self.strong_pos_gate_ramp_power = float(strong_pos_gate_ramp_power)
+        self.strong_pos_gate_prob_center = float(strong_pos_gate_prob_center)
 
         # Encoder
         self.enc_input_proj = nn.Linear(input_dim, d_model)
@@ -1175,6 +1249,15 @@ class Past2FutureMultiTaskRoadPreview(nn.Module):
         self.decoder = nn.TransformerDecoder(dec_layer, num_layers=num_layers_dec)
 
         self.out_proj = nn.Linear(d_model, out_dim)
+        if self.enable_steer_coarse_fine:
+            self.steer_fine_proj = nn.Linear(d_model, 1)
+            self.steer_coarse_proj = nn.Sequential(
+                nn.Linear(d_model, 64),
+                nn.GELU(),
+                nn.Dropout(dropout),
+                nn.Linear(64, 1)
+            )
+            self.other_proj = nn.Linear(d_model, max(1, out_dim - 1))
         self.dropout = nn.Dropout(dropout)
 
         # ---- NEW: state head (encoder pooling) ----
@@ -1193,6 +1276,13 @@ class Past2FutureMultiTaskRoadPreview(nn.Module):
             nn.Dropout(dropout),
             nn.Linear(64, 1)
         )
+        if self.enable_strong_pos_gate:
+            self.strong_pos_gate_head = nn.Sequential(
+                nn.Linear(d_model * 2, 64),
+                nn.GELU(),
+                nn.Dropout(dropout),
+                nn.Linear(64, 1)
+            )
 
     def forward(self, src, ctx, curve_norm):
         B, T_in, _ = src.shape
@@ -1220,9 +1310,89 @@ class Past2FutureMultiTaskRoadPreview(nn.Module):
 
         tgt = pos_tgt + ctx_emb + curve_emb
         out = self.decoder(tgt, memory)
-        y_hat_norm = self.out_proj(out)
+        if not self.enable_steer_coarse_fine:
+            y_hat_norm = self.out_proj(out)
+            return y_hat_norm, z_veh, rev_logit
 
-        return y_hat_norm, z_veh, rev_logit
+        steer_fine_norm = self.steer_fine_proj(out).squeeze(-1)
+        pool_k = max(1, min(int(self.trend_pool_kernel), T_out))
+        pool_s = max(1, int(self.trend_pool_stride))
+        dec_pool = F.avg_pool1d(out.transpose(1, 2), kernel_size=pool_k, stride=pool_s).transpose(1, 2)
+        steer_coarse_norm = self.steer_coarse_proj(dec_pool).squeeze(-1)
+        steer_coarse_up_norm = F.interpolate(
+            steer_coarse_norm.unsqueeze(1),
+            size=T_out,
+            mode="linear",
+            align_corners=True,
+        ).squeeze(1)
+        steer_fine_out_norm = steer_fine_norm
+        late_rev_gate = None
+        late_rev_prob = None
+        strong_pos_gate_logit = None
+        strong_pos_gate_prob = None
+        strong_pos_late_gate = None
+        if self.enable_strong_pos_gate and self.strong_pos_gate_scale > 0.0:
+            late_start_idx = _sec_to_future_idx(self.strong_pos_gate_start_sec, T_out)
+            late_slice = out[:, late_start_idx:, :] if late_start_idx < T_out else out[:, -1:, :]
+            late_feat = late_slice.mean(dim=1)
+            gate_feat = torch.cat([ctx_enc, late_feat], dim=1)
+            strong_pos_gate_logit = self.strong_pos_gate_head(gate_feat).squeeze(-1)
+            strong_pos_gate_prob = torch.sigmoid(strong_pos_gate_logit).to(out.dtype).unsqueeze(1)
+            centered_prob = (
+                (strong_pos_gate_prob - self.strong_pos_gate_prob_center)
+                / max(1e-6, 1.0 - self.strong_pos_gate_prob_center)
+            ).clamp(0.0, 1.0)
+            late_ramp = _build_late_ramp(
+                T_out,
+                self.strong_pos_gate_start_sec,
+                device=out.device,
+                dtype=out.dtype,
+                power=self.strong_pos_gate_ramp_power,
+            )
+            strong_pos_late_gate = 1.0 + self.strong_pos_gate_scale * centered_prob * late_ramp
+            steer_fine_out_norm = steer_fine_norm * strong_pos_late_gate
+        elif self.enable_late_reversal_gate and self.late_rev_gate_scale > 0.0:
+            late_ramp = _build_late_ramp(
+                T_out,
+                self.late_rev_gate_start_sec,
+                device=out.device,
+                dtype=out.dtype,
+                power=self.late_rev_gate_ramp_power,
+            )
+            if torch.count_nonzero(late_ramp).item() > 0:
+                late_rev_prob = torch.sigmoid(rev_logit).to(out.dtype).unsqueeze(1)
+                late_rev_gate = 1.0 + self.late_rev_gate_scale * late_rev_prob * late_ramp
+                # Keep coarse trend untouched and only amplify late fine residual on reversal-like samples.
+                steer_fine_out_norm = steer_fine_norm * late_rev_gate
+        steer_norm = steer_coarse_up_norm + steer_fine_out_norm
+        other_norm = self.other_proj(out)
+        y_hat_norm = torch.cat([steer_norm.unsqueeze(-1), other_norm], dim=-1)
+        aux = {
+            "steer_coarse_norm": steer_coarse_norm,
+            "steer_coarse_up_norm": steer_coarse_up_norm,
+            "steer_fine_raw_norm": steer_fine_norm,
+            "steer_fine_norm": steer_fine_out_norm,
+        }
+        if strong_pos_gate_logit is not None:
+            aux["strong_pos_gate_logit"] = strong_pos_gate_logit
+            aux["strong_pos_gate_prob"] = strong_pos_gate_prob.squeeze(1)
+            aux["strong_pos_late_gate"] = strong_pos_late_gate
+        if late_rev_gate is not None:
+            aux["late_rev_gate"] = late_rev_gate
+            aux["late_rev_prob"] = late_rev_prob.squeeze(1)
+        return y_hat_norm, z_veh, rev_logit, aux
+
+
+def unpack_model_output(output):
+    if not isinstance(output, tuple):
+        raise TypeError(f"Unexpected model output type: {type(output)!r}")
+    if len(output) == 3:
+        y_hat_norm, z_veh, rev_logit = output
+        return y_hat_norm, z_veh, rev_logit, {}
+    if len(output) == 4:
+        y_hat_norm, z_veh, rev_logit, aux = output
+        return y_hat_norm, z_veh, rev_logit, (aux or {})
+    raise ValueError(f"Unexpected model output length: {len(output)}")
 
 
 
@@ -1411,17 +1581,163 @@ def compute_trend_loss(y_hat: torch.Tensor, y_true: torch.Tensor, y_mean_t: torc
     steer_true = y_true_den[:, :, 0]
     trend_pred = _avg_pool_seq_torch(steer_pred, TREND_POOL_KERNEL, TREND_POOL_STRIDE)
     trend_true = _avg_pool_seq_torch(steer_true, TREND_POOL_KERNEL, TREND_POOL_STRIDE)
-    return weighted_mse_loss_per_sample(trend_pred, trend_true, sample_weight)
+
+    loss_level = weighted_mse_loss_per_sample(trend_pred, trend_true, sample_weight)
+    if TREND_LOSS_MODE == "pooled_level_mse_v1":
+        return loss_level
+    if TREND_LOSS_MODE != "pooled_delta_direction_v1":
+        raise ValueError(f"Unsupported TREND_LOSS_MODE={TREND_LOSS_MODE!r}")
+    if trend_pred.shape[1] <= 1:
+        return loss_level
+
+    # Match coarse segment-to-segment movement directly instead of only pooled levels.
+    trend_delta_pred = _diff1(trend_pred)
+    trend_delta_true = _diff1(trend_true)
+    loss_delta = weighted_mse_loss_per_sample(trend_delta_pred, trend_delta_true, sample_weight)
+
+    delta_scale = torch.clamp(trend_delta_true.detach().abs().mean(dim=1, keepdim=True), min=TREND_SIGN_EPS)
+    trend_dir_pred = torch.tanh(trend_delta_pred / delta_scale)
+    with torch.no_grad():
+        trend_dir_true = torch.tanh(trend_delta_true / delta_scale)
+    loss_dir = weighted_mse_loss_per_sample(trend_dir_pred, trend_dir_true, sample_weight)
+
+    return (
+        TREND_LEVEL_WEIGHT * loss_level
+        + TREND_DELTA_WEIGHT * loss_delta
+        + TREND_DIR_WEIGHT * loss_dir
+    )
 
 
-def compute_total_task_loss(y_hat: torch.Tensor, y_true: torch.Tensor, y_mean_t: torch.Tensor, y_std_t: torch.Tensor, sample_weight=None, use_reversal_local_weight=True):
+def _sec_to_future_idx(sec: float, future_len: int) -> int:
+    idx = int(round(float(sec) * float(FS)))
+    return max(0, min(int(future_len), idx))
+
+
+def _build_late_ramp(future_len: int, start_sec: float, device, dtype, power: float = 1.0) -> torch.Tensor:
+    late_start_idx = _sec_to_future_idx(start_sec, future_len)
+    ramp = torch.zeros((1, future_len), device=device, dtype=dtype)
+    if late_start_idx >= future_len:
+        return ramp
+    weights = torch.linspace(0.0, 1.0, future_len - late_start_idx, device=device, dtype=dtype)
+    if float(power) != 1.0:
+        weights = weights.clamp_min(0.0).pow(float(power))
+    ramp[:, late_start_idx:] = weights
+    return ramp
+
+
+def _build_hard_late_masks(steer_true_den: torch.Tensor, rev_gt_weak=None, rev_gt_strong=None):
+    B, T = steer_true_den.shape
+    hard_late_mask = torch.zeros_like(steer_true_den)
+    late_start_idx = _sec_to_future_idx(HARD_LATE_START_SEC, T)
+    tail_start_idx = _sec_to_future_idx(HARD_TAIL_START_SEC, T)
+    if late_start_idx < T:
+        hard_late_mask[:, late_start_idx:] = 1.0
+
+    gt_peak = steer_true_den.detach().abs().amax(dim=1)
+    if tail_start_idx < T:
+        gt_tail = steer_true_den.detach()[:, tail_start_idx:].abs().amax(dim=1)
+    else:
+        gt_tail = gt_peak
+
+    if gt_peak.numel() > 1:
+        peak_thr = torch.quantile(gt_peak, HARD_PEAK_QUANTILE)
+        tail_thr = torch.quantile(gt_tail, HARD_TAIL_QUANTILE)
+    else:
+        peak_thr = gt_peak[0]
+        tail_thr = gt_tail[0]
+    hard_pos_mask = (gt_peak >= peak_thr) & (gt_tail >= tail_thr)
+
+    if rev_gt_strong is not None:
+        hard_rev_mask = rev_gt_strong.view(-1) > 0.5
+    else:
+        hard_rev_mask = torch.zeros((B,), device=steer_true_den.device, dtype=torch.bool)
+    if rev_gt_weak is not None:
+        weak_rev_mask = rev_gt_weak.view(-1) > 0.5
+    else:
+        weak_rev_mask = torch.zeros((B,), device=steer_true_den.device, dtype=torch.bool)
+    hard_mask = (hard_rev_mask | (weak_rev_mask & hard_pos_mask)).to(steer_true_den.dtype)
+    return hard_mask, hard_late_mask
+
+
+def compute_coarse_fine_losses(forward_aux, y_true: torch.Tensor, y_mean_t: torch.Tensor, y_std_t: torch.Tensor, sample_weight=None, is_curve=None, rev_gt_weak=None, rev_gt_strong=None):
+    steer_coarse_norm = None if forward_aux is None else forward_aux.get("steer_coarse_norm")
+    steer_coarse_up_norm = None if forward_aux is None else forward_aux.get("steer_coarse_up_norm")
+    steer_fine_raw_norm = None if forward_aux is None else forward_aux.get("steer_fine_raw_norm", forward_aux.get("steer_fine_norm"))
+    steer_fine_out_norm = None if forward_aux is None else forward_aux.get("steer_fine_norm", steer_fine_raw_norm)
+    if (
+        steer_coarse_norm is None
+        or steer_coarse_up_norm is None
+        or steer_fine_raw_norm is None
+        or steer_fine_out_norm is None
+    ):
+        zero = torch.tensor(0.0, device=y_true.device, dtype=y_true.dtype)
+        return zero, zero, zero
+
+    steer_true_den = y_true[:, :, 0] * y_std_t[0] + y_mean_t[0]
+    steer_coarse_den = steer_coarse_norm * y_std_t[0] + y_mean_t[0]
+    steer_coarse_up_den = steer_coarse_up_norm * y_std_t[0] + y_mean_t[0]
+    steer_fine_raw_den = steer_fine_raw_norm * y_std_t[0]
+    steer_fine_out_den = steer_fine_out_norm * y_std_t[0]
+
+    trend_true = _avg_pool_seq_torch(steer_true_den, TREND_POOL_KERNEL, TREND_POOL_STRIDE)
+    fine_pool = _avg_pool_seq_torch(steer_fine_raw_den, TREND_POOL_KERNEL, TREND_POOL_STRIDE)
+    hard_mask, hard_late_mask = _build_hard_late_masks(steer_true_den, rev_gt_weak=rev_gt_weak, rev_gt_strong=rev_gt_strong)
+
+    if ENABLE_PHASE_ADAPTIVE_TREND:
+        seg_w = torch.ones_like(trend_true)
+        t = torch.arange(trend_true.shape[1], device=trend_true.device, dtype=trend_true.dtype)
+        early_mask = (t < float(TREND_EARLY_BINS)).to(trend_true.dtype).unsqueeze(0)
+        late_mask = (t >= float(TREND_EARLY_BINS)).to(trend_true.dtype).unsqueeze(0)
+        seg_w = seg_w + 0.25 * early_mask
+        if is_curve is not None:
+            straight = (1.0 - is_curve.float().clamp(0.0, 1.0)).view(-1, 1).to(trend_true.dtype)
+            seg_w = seg_w - TREND_LATE_STRAIGHT_DOWN * late_mask * straight
+        if rev_gt_strong is not None:
+            strong = rev_gt_strong.float().view(-1, 1).to(trend_true.dtype)
+            seg_w = seg_w - TREND_LATE_STRONGREV_DOWN * late_mask * strong
+        if ENABLE_HARD_LATE_FINE:
+            hard_late_bins = (hard_mask.view(-1, 1) > 0) & (late_mask > 0)
+            seg_w = torch.where(hard_late_bins, torch.ones_like(seg_w), seg_w)
+        seg_w = torch.clamp(seg_w, min=0.25)
+        loss_coarse = weighted_mean_per_sample((((steer_coarse_den - trend_true) ** 2) * seg_w).mean(dim=1), sample_weight)
+    else:
+        loss_coarse = weighted_mse_loss_per_sample(steer_coarse_den, trend_true, sample_weight)
+    loss_fine_dc = weighted_mse_loss_per_sample(fine_pool, torch.zeros_like(fine_pool), sample_weight)
+
+    if ENABLE_HARD_LATE_FINE:
+        res_gt = steer_true_den - steer_coarse_up_den.detach()
+        hard_weight = hard_late_mask * hard_mask.view(-1, 1)
+        per_sample_denom = hard_weight.sum(dim=1)
+        per_sample_loss = torch.where(
+            per_sample_denom > 0,
+            (((steer_fine_out_den - res_gt) ** 2) * hard_weight).sum(dim=1) / per_sample_denom.clamp_min(1.0),
+            torch.zeros_like(per_sample_denom),
+        )
+        loss_hard_late_fine = weighted_mean_per_sample(per_sample_loss, sample_weight)
+    else:
+        loss_hard_late_fine = torch.tensor(0.0, device=y_true.device, dtype=y_true.dtype)
+    return loss_coarse, loss_fine_dc, loss_hard_late_fine
+
+
+def compute_total_task_loss(y_hat: torch.Tensor, y_true: torch.Tensor, y_mean_t: torch.Tensor, y_std_t: torch.Tensor, sample_weight=None, use_reversal_local_weight=True, forward_aux=None, is_curve=None, rev_gt_weak=None, rev_gt_strong=None):
     loss_task, loss_amp, loss_d1, loss_d2 = compute_active_task_losses(y_hat, y_true, sample_weight=sample_weight)
     loss_revseq, loss_peaktime, loss_steer_wt = compute_reversal_shape_losses(
         y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight, use_reversal_local_weight=use_reversal_local_weight
     )
-    loss_trend = compute_trend_loss(y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight)
-    loss_task = loss_task + W_REVSEQ * loss_revseq + W_PEAKTIME * loss_peaktime + W_STEER_WT * loss_steer_wt + W_TREND * loss_trend
-    return loss_task, loss_amp, loss_d1, loss_d2, loss_revseq, loss_peaktime, loss_steer_wt, loss_trend
+    if ENABLE_STEER_COARSE_FINE:
+        loss_trend = torch.tensor(0.0, device=y_hat.device, dtype=y_hat.dtype)
+        loss_trend_coarse, loss_fine_dc, loss_hard_late_fine = compute_coarse_fine_losses(
+            forward_aux, y_true, y_mean_t, y_std_t, sample_weight=sample_weight, is_curve=is_curve, rev_gt_weak=rev_gt_weak, rev_gt_strong=rev_gt_strong
+        )
+        loss_task = loss_task + W_TREND_COARSE * loss_trend_coarse + W_FINE_DC * loss_fine_dc + W_HARD_LATE_FINE * loss_hard_late_fine
+    else:
+        loss_trend = compute_trend_loss(y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight)
+        loss_trend_coarse = torch.tensor(0.0, device=y_hat.device, dtype=y_hat.dtype)
+        loss_fine_dc = torch.tensor(0.0, device=y_hat.device, dtype=y_hat.dtype)
+        loss_hard_late_fine = torch.tensor(0.0, device=y_hat.device, dtype=y_hat.dtype)
+        loss_task = loss_task + W_TREND * loss_trend
+    loss_task = loss_task + W_REVSEQ * loss_revseq + W_PEAKTIME * loss_peaktime + W_STEER_WT * loss_steer_wt
+    return loss_task, loss_amp, loss_d1, loss_d2, loss_revseq, loss_peaktime, loss_steer_wt, loss_trend, loss_trend_coarse, loss_fine_dc, loss_hard_late_fine
 
 
 def _denorm_y(y_norm_np: np.ndarray, y_mean: np.ndarray, y_std: np.ndarray) -> np.ndarray:
@@ -1531,7 +1847,7 @@ def _first_threshold_crossing_idx_np(seq_1d, threshold, ref_value=None):
     return int(idx[0])
 
 
-def _head_metrics(pred, true, fs=200, head_frac=0.25, onset_thr_ratio=0.15, onset_thr_abs=0.02):
+def _head_metrics(pred, true, fs=200, head_frac=0.25, onset_thr_ratio=0.15, onset_thr_abs=STEER_ONSET_THR_ABS):
     t_len = int(pred.shape[1])
     head_len = max(1, int(round(t_len * head_frac)))
     pred_head = pred[:, :head_len, 0]
@@ -1587,6 +1903,7 @@ def _head_metrics(pred, true, fs=200, head_frac=0.25, onset_thr_ratio=0.15, onse
         "n_valid_onset": int(onset_delay.size),
         "response_onset_threshold_ratio": float(onset_thr_ratio),
         "response_onset_threshold_abs": float(onset_thr_abs),
+        "steer_angle_unit": STEER_ANGLE_UNIT,
     }
 
 
@@ -1676,9 +1993,11 @@ def _trend_metrics(pred, true, fs=200, pool_kernel=TREND_POOL_KERNEL, pool_strid
     corr_vec = np.asarray(corr_vec, dtype=np.float64)
     sign_match_vec = np.asarray(sign_match_vec, dtype=np.float64)
     coarse_err = pred_pool - true_pool
+    coarse_delta_err = np.diff(pred_pool, axis=1) - np.diff(true_pool, axis=1) if pred_pool.shape[1] > 1 else np.empty((pred_pool.shape[0], 0), dtype=np.float64)
     corr_valid = corr_vec[np.isfinite(corr_vec)]
     sign_valid = sign_match_vec[np.isfinite(sign_match_vec)]
     return {
+        "trend_loss_mode": TREND_LOSS_MODE,
         "trend_pool_kernel": int(min(int(pool_kernel), pred_steer.shape[1])),
         "trend_pool_stride": int(pool_stride),
         "trend_segment_sec": float(min(int(pool_kernel), pred_steer.shape[1]) / max(1, fs)),
@@ -1689,6 +2008,8 @@ def _trend_metrics(pred, true, fs=200, pool_kernel=TREND_POOL_KERNEL, pool_strid
         "coarse_segment_sign_match_median": _safe_median_np(sign_valid),
         "coarse_segment_mae": _safe_mae_np(coarse_err),
         "coarse_segment_rmse": _safe_rmse_np(coarse_err),
+        "coarse_delta_mae": _safe_mae_np(coarse_delta_err),
+        "coarse_delta_rmse": _safe_rmse_np(coarse_delta_err),
     }
 
 
@@ -1752,6 +2073,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
     zveh_all, zphys_all, zmask_all = [], [], []
     idx_all, curve_score_all, is_curve_all = [], [], []
     rev_gt_all, rev_gt_weak_all, rev_gt_strong_all, rev_prob_all = [], [], [], []
+    strong_pos_gate_prob_all = []
 
     with torch.no_grad():
         for batch in test_loader:
@@ -1765,7 +2087,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
             rev_gt_weak_b = batch.get("rev_gt_weak", batch["rev_gt"]).to(DEVICE, non_blocking=True).squeeze(1)
             rev_gt_strong_b = batch.get("rev_gt_strong", batch["rev_gt"]).to(DEVICE, non_blocking=True).squeeze(1)
 
-            y_hat_norm, z_veh, rev_logit = model(src, ctx, curve_norm)
+            y_hat_norm, z_veh, rev_logit, forward_aux = unpack_model_output(model(src, ctx, curve_norm))
 
             preds.append(y_hat_norm.cpu().numpy())
             trues.append(y_true_norm.cpu().numpy())
@@ -1777,6 +2099,8 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
             rev_gt_weak_all.append(rev_gt_weak_b.detach().cpu().numpy())
             rev_gt_strong_all.append(rev_gt_strong_b.detach().cpu().numpy())
             rev_prob_all.append(torch.sigmoid(rev_logit).detach().cpu().numpy())
+            if forward_aux.get("strong_pos_gate_prob") is not None:
+                strong_pos_gate_prob_all.append(forward_aux["strong_pos_gate_prob"].detach().cpu().numpy())
             curve_score_all.append(batch.get("curve_score", torch.full((src.shape[0],), float('nan'))).cpu().numpy())
             is_curve_all.append(batch.get("is_curve", torch.full((src.shape[0],), -1, dtype=torch.long)).cpu().numpy())
 
@@ -1894,6 +2218,9 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
         fs=fs,
     )
     rev_metrics = {
+        "STEER_SOURCE_UNIT": STEER_SOURCE_UNIT,
+        "STEER_ANGLE_UNIT": STEER_ANGLE_UNIT,
+        "STEER_ANGLE_SCALE": float(STEER_ANGLE_SCALE),
         "REV_EPS_WEAK": float(REV_EPS_WEAK),
         "REV_EPS_STRONG": float(REV_EPS_STRONG),
         "STRONG_PEAK_THR": float(STRONG_PEAK_THR),
@@ -1923,6 +2250,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
         "rev_gt_weak": np.concatenate(rev_gt_weak_all, axis=0).astype(np.int64) if len(rev_gt_weak_all)>0 else -1,
         "rev_gt_strong": np.concatenate(rev_gt_strong_all, axis=0).astype(np.int64) if len(rev_gt_strong_all)>0 else -1,
         "rev_prob": np.concatenate(rev_prob_all, axis=0).astype(np.float32) if len(rev_prob_all)>0 else np.nan,
+        "strong_pos_gate_prob": np.concatenate(strong_pos_gate_prob_all, axis=0).astype(np.float32) if len(strong_pos_gate_prob_all)>0 else np.nan,
         "idx": np.concatenate(idx_all, axis=0).astype(np.int64) if len(idx_all)>0 else -1,
     }
     for j, col in enumerate(veh_state_cols):
@@ -1998,7 +2326,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
     for j in range(primary_plot_dims):
         veh_col = veh_state_cols[j]
         label = plot_dim_labels[j]
-        _scatter(df_state[veh_col].values, peak_abs_steer, f"{label}_veh (student)", "peak|steer| (GT)", f"state_vs_peak_steer_{label}.png")
+        _scatter(df_state[veh_col].values, peak_abs_steer, f"{label}_veh (student)", STEER_PEAK_PLOT_LABEL, f"state_vs_peak_steer_{label}.png")
         _scatter(df_state[veh_col].values, peak_abs_ay, f"{label}_veh (student)", "peak|ay| (GT)", f"state_vs_peak_ay_{label}.png")
 
     # ---- per-sample pred-vs-gt plots with state annotation ----
@@ -2021,7 +2349,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
         ax1 = fig.add_subplot(3, 1, 1)
         ax1.plot(t, true[idx, :, 0], label="GT", linewidth=1.2)
         ax1.plot(t, pred[idx, :, 0], label="Pred", linewidth=1.2, linestyle="--")
-        ax1.set_ylabel("steer")
+        ax1.set_ylabel(STEER_PLOT_LABEL)
         ax1.set_title(title)
         ax1.grid(True, alpha=0.3)
         ax1.legend()
@@ -2080,7 +2408,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
     for j in range(primary_plot_dims):
         veh_col = veh_state_cols[j]
         label = plot_dim_labels[j]
-        _scatter(df_state[veh_col].values, peak_abs_steer, f"{label}_veh (student)", "peak|steer| (GT)", f"state_vs_peak_steer_{label}.png")
+        _scatter(df_state[veh_col].values, peak_abs_steer, f"{label}_veh (student)", STEER_PEAK_PLOT_LABEL, f"state_vs_peak_steer_{label}.png")
         _scatter(df_state[veh_col].values, peak_abs_ay, f"{label}_veh (student)", "peak|ay| (GT)", f"state_vs_peak_ay_{label}.png")
 
     # ---- per-sample pred-vs-gt plots with state annotation ----
@@ -2103,7 +2431,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
         ax1 = fig.add_subplot(3, 1, 1)
         ax1.plot(t, true[idx, :, 0], label="GT", linewidth=1.2)
         ax1.plot(t, pred[idx, :, 0], label="Pred", linewidth=1.2, linestyle="--")
-        ax1.set_ylabel("steer")
+        ax1.set_ylabel(STEER_PLOT_LABEL)
         ax1.set_title(title)
         ax1.grid(True, alpha=0.3)
         ax1.legend()
@@ -3044,8 +3372,8 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
         plt.savefig(str(fig_dir / outname), dpi=200)
         plt.close()
 
-    _scatter(df_state["A_veh"].values, peak_abs_steer, "A_veh (student)", "peak|steer| (GT)", "state_vs_peak_steer_A.png")
-    _scatter(df_state["C_veh"].values, peak_abs_steer, "C_veh (student)", "peak|steer| (GT)", "state_vs_peak_steer_C.png")
+    _scatter(df_state["A_veh"].values, peak_abs_steer, "A_veh (student)", STEER_PEAK_PLOT_LABEL, "state_vs_peak_steer_A.png")
+    _scatter(df_state["C_veh"].values, peak_abs_steer, "C_veh (student)", STEER_PEAK_PLOT_LABEL, "state_vs_peak_steer_C.png")
     _scatter(df_state["A_veh"].values, peak_abs_ay, "A_veh (student)", "peak|ay| (GT)", "state_vs_peak_ay_A.png")
     _scatter(df_state["C_veh"].values, peak_abs_ay, "C_veh (student)", "peak|ay| (GT)", "state_vs_peak_ay_C.png")
 
@@ -3071,7 +3399,7 @@ def evaluate_and_plot(model: nn.Module, test_loader: DataLoader,
         ax1 = fig.add_subplot(3, 1, 1)
         ax1.plot(t, true[idx, :, 0], label="GT", linewidth=1.2)
         ax1.plot(t, pred[idx, :, 0], label="Pred", linewidth=1.2, linestyle="--")
-        ax1.set_ylabel("steer")
+        ax1.set_ylabel(STEER_PLOT_LABEL)
         ax1.set_title(title)
         ax1.grid(True, alpha=0.3)
         ax1.legend()
@@ -3394,6 +3722,14 @@ def main():
             print(f"🔁 rev_head pos_weight={pw:.3f}  (pos={pos_cnt:.0f}, neg={neg_cnt:.0f})")
         except Exception:
             rev_pos_weight = torch.tensor(1.0, device=DEVICE)
+        try:
+            strong_pos_cnt = float(np.sum(rev_gt_strong[train_idx] > 0.5))
+            strong_pos_neg_cnt = float(len(train_idx) - strong_pos_cnt)
+            spw = strong_pos_neg_cnt / max(1.0, strong_pos_cnt)
+            strong_pos_gate_pos_weight = torch.tensor(spw, device=DEVICE)
+            print(f"strong_pos_gate pos_weight={spw:.3f}  (pos={strong_pos_cnt:.0f}, neg={strong_pos_neg_cnt:.0f})")
+        except Exception:
+            strong_pos_gate_pos_weight = torch.tensor(1.0, device=DEVICE)
     
         # model
         model = Past2FutureMultiTaskRoadPreview(
@@ -3410,6 +3746,18 @@ def main():
             max_len_enc=WIN_LEN,
             max_len_dec=FUTURE_LEN,
             state_dim=state_dim,
+            enable_steer_coarse_fine=ENABLE_STEER_COARSE_FINE,
+            trend_pool_kernel=TREND_POOL_KERNEL,
+            trend_pool_stride=TREND_POOL_STRIDE,
+            enable_late_reversal_gate=ENABLE_LATE_REV_GATE,
+            late_rev_gate_start_sec=LATE_REV_GATE_START_SEC,
+            late_rev_gate_scale=LATE_REV_GATE_SCALE,
+            late_rev_gate_ramp_power=LATE_REV_GATE_RAMP_POWER,
+            enable_strong_pos_gate=ENABLE_STRONG_POS_GATE,
+            strong_pos_gate_start_sec=STRONG_POS_GATE_START_SEC,
+            strong_pos_gate_scale=STRONG_POS_GATE_SCALE,
+            strong_pos_gate_ramp_power=STRONG_POS_GATE_RAMP_POWER,
+            strong_pos_gate_prob_center=STRONG_POS_GATE_PROB_CENTER,
         ).to(DEVICE)
     
         optim = torch.optim.Adam(model.parameters(), lr=LR)
@@ -3427,7 +3775,22 @@ def main():
             f"actual_dim={state_dim}"
         )
         print(f"Distill: lambda_state={LAMBDA_STATE} | lambda_rev={LAMBDA_REV} | REV_EPS={REV_EPS}\n")
-    
+        print(
+            f"Steer unit: source={STEER_SOURCE_UNIT} -> target={STEER_ANGLE_UNIT} | "
+            f"scale={STEER_ANGLE_SCALE:.6f}"
+        )
+        if ENABLE_LATE_REV_GATE:
+            print(
+                f"Late rev gate: enabled=True | start_sec={LATE_REV_GATE_START_SEC:.2f} | "
+                f"scale={LATE_REV_GATE_SCALE:.2f} | ramp_power={LATE_REV_GATE_RAMP_POWER:.2f}"
+            )
+        if ENABLE_STRONG_POS_GATE:
+            print(
+                f"Strong-pos gate: enabled=True | start_sec={STRONG_POS_GATE_START_SEC:.2f} | "
+                f"scale={STRONG_POS_GATE_SCALE:.2f} | ramp_power={STRONG_POS_GATE_RAMP_POWER:.2f} | "
+                f"prob_center={STRONG_POS_GATE_PROB_CENTER:.2f} | lambda={LAMBDA_STRONG_POS_GATE:.3f}"
+            )
+
         # ---- persist run config (for reproducibility) ----
         run_config = {
             "MODEL_VER": "v5_8_response_state_v1_protocol_safe",
@@ -3465,6 +3828,10 @@ def main():
             "TEACHER_STATE_COMPONENTS": teacher_state_meta["component_names"],
             "LAMBDA_REV": float(LAMBDA_REV),
             "REV_EPS": float(REV_EPS),
+            "STEER_SOURCE_UNIT": STEER_SOURCE_UNIT,
+            "STEER_ANGLE_UNIT": STEER_ANGLE_UNIT,
+            "STEER_ANGLE_SCALE": float(STEER_ANGLE_SCALE),
+            "STEER_ONSET_THR_ABS": float(STEER_ONSET_THR_ABS),
             "ROOT": ROOT,
             "STYLE_CSV": STYLE_CSV,
             "FS": FS,
@@ -3496,7 +3863,34 @@ def main():
             "TREND_POOL_KERNEL": TREND_POOL_KERNEL,
             "TREND_POOL_STRIDE": TREND_POOL_STRIDE,
             "TREND_SIGN_EPS": TREND_SIGN_EPS,
+            "TREND_LOSS_MODE": TREND_LOSS_MODE,
+            "TREND_LEVEL_WEIGHT": TREND_LEVEL_WEIGHT,
+            "TREND_DELTA_WEIGHT": TREND_DELTA_WEIGHT,
+            "TREND_DIR_WEIGHT": TREND_DIR_WEIGHT,
+            "ENABLE_STEER_COARSE_FINE": bool(ENABLE_STEER_COARSE_FINE),
+            "W_TREND_COARSE": W_TREND_COARSE,
+            "W_FINE_DC": W_FINE_DC,
+            "ENABLE_PHASE_ADAPTIVE_TREND": bool(ENABLE_PHASE_ADAPTIVE_TREND),
+            "TREND_EARLY_BINS": TREND_EARLY_BINS,
+            "TREND_LATE_STRAIGHT_DOWN": TREND_LATE_STRAIGHT_DOWN,
+            "TREND_LATE_STRONGREV_DOWN": TREND_LATE_STRONGREV_DOWN,
+            "ENABLE_LATE_REV_GATE": bool(ENABLE_LATE_REV_GATE),
+            "LATE_REV_GATE_START_SEC": LATE_REV_GATE_START_SEC,
+            "LATE_REV_GATE_SCALE": LATE_REV_GATE_SCALE,
+            "LATE_REV_GATE_RAMP_POWER": LATE_REV_GATE_RAMP_POWER,
+            "ENABLE_STRONG_POS_GATE": bool(ENABLE_STRONG_POS_GATE),
+            "STRONG_POS_GATE_START_SEC": STRONG_POS_GATE_START_SEC,
+            "STRONG_POS_GATE_SCALE": STRONG_POS_GATE_SCALE,
+            "STRONG_POS_GATE_RAMP_POWER": STRONG_POS_GATE_RAMP_POWER,
+            "STRONG_POS_GATE_PROB_CENTER": STRONG_POS_GATE_PROB_CENTER,
+            "ENABLE_HARD_LATE_FINE": bool(ENABLE_HARD_LATE_FINE),
+            "W_HARD_LATE_FINE": W_HARD_LATE_FINE,
+            "HARD_LATE_START_SEC": HARD_LATE_START_SEC,
+            "HARD_TAIL_START_SEC": HARD_TAIL_START_SEC,
+            "HARD_PEAK_QUANTILE": HARD_PEAK_QUANTILE,
+            "HARD_TAIL_QUANTILE": HARD_TAIL_QUANTILE,
             "LAMBDA_STATE": LAMBDA_STATE,
+            "LAMBDA_STRONG_POS_GATE": LAMBDA_STRONG_POS_GATE,
             "EEG_HIST_SEC": EEG_HIST_SEC,
             "SEED": SEED,
             "N_TRAIN": int(len(train_dataset)),
@@ -3516,7 +3910,7 @@ def main():
     
         for epoch in range(1, EPOCHS + 1):
             model.train()
-            loss_sum, loss_task_sum, loss_state_sum, loss_rev_sum, loss_trend_sum, n_batch = 0.0, 0.0, 0.0, 0.0, 0.0, 0
+            loss_sum, loss_task_sum, loss_state_sum, loss_rev_sum, loss_trend_sum, loss_trend_coarse_sum, loss_fine_dc_sum, loss_hard_late_sum, loss_strong_pos_gate_sum, n_batch = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0
     
             for batch in train_loader:
                 src = batch["src"].to(DEVICE, non_blocking=True)
@@ -3525,16 +3919,18 @@ def main():
                 ctx = batch["ctx"].to(DEVICE, non_blocking=True)
                 z_phys_b = batch["z_phys"].to(DEVICE, non_blocking=True)
                 z_mask = batch["z_mask"].to(DEVICE, non_blocking=True)  # (B,1)
+                is_curve_b = batch["is_curve"].to(DEVICE, non_blocking=True)
                 rev_gt_b = batch["rev_gt"].to(DEVICE, non_blocking=True).squeeze(1)  # (B,)
                 rev_gt_weak_b = batch.get("rev_gt_weak", batch["rev_gt"]).to(DEVICE, non_blocking=True).squeeze(1)
                 rev_gt_strong_b = batch.get("rev_gt_strong", batch["rev_gt"]).to(DEVICE, non_blocking=True).squeeze(1)
     
                 optim.zero_grad()
-                y_hat, z_veh, rev_logit = model(src, ctx, curve_norm)
+                y_hat, z_veh, rev_logit, forward_aux = unpack_model_output(model(src, ctx, curve_norm))
 
                 sample_weight = build_reversal_sample_weight(rev_gt_b)
-                loss_task, loss_amp, loss_d1, loss_d2, loss_revseq, loss_peaktime, loss_steer_wt, loss_trend = compute_total_task_loss(
-                    y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight, use_reversal_local_weight=True
+                loss_task, loss_amp, loss_d1, loss_d2, loss_revseq, loss_peaktime, loss_steer_wt, loss_trend, loss_trend_coarse, loss_fine_dc, loss_hard_late_fine = compute_total_task_loss(
+                    y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight, use_reversal_local_weight=True, forward_aux=forward_aux,
+                    is_curve=is_curve_b, rev_gt_weak=rev_gt_weak_b, rev_gt_strong=rev_gt_strong_b
                 )
 
                 # train 侧也使用 GT soft reversal 作为局部加权依据，避免 hard case 被均值化
@@ -3547,8 +3943,17 @@ def main():
                     loss_rev = F.binary_cross_entropy_with_logits(rev_logit, rev_gt_b.float(), pos_weight=rev_pos_weight)
                 else:
                     loss_rev = torch.tensor(0.0, device=DEVICE)
+                strong_pos_gate_logit = forward_aux.get("strong_pos_gate_logit")
+                if ENABLE_STRONG_POS_GATE and strong_pos_gate_logit is not None:
+                    loss_strong_pos_gate = F.binary_cross_entropy_with_logits(
+                        strong_pos_gate_logit,
+                        rev_gt_strong_b.float(),
+                        pos_weight=strong_pos_gate_pos_weight,
+                    )
+                else:
+                    loss_strong_pos_gate = torch.tensor(0.0, device=DEVICE)
 
-                loss = loss_task + LAMBDA_STATE * loss_state + LAMBDA_REV * loss_rev
+                loss = loss_task + LAMBDA_STATE * loss_state + LAMBDA_REV * loss_rev + LAMBDA_STRONG_POS_GATE * loss_strong_pos_gate
                 loss.backward()
                 optim.step()
     
@@ -3557,6 +3962,10 @@ def main():
                 loss_state_sum += float(loss_state.item())
                 loss_rev_sum += float(loss_rev.item())
                 loss_trend_sum += float(loss_trend.item())
+                loss_trend_coarse_sum += float(loss_trend_coarse.item())
+                loss_fine_dc_sum += float(loss_fine_dc.item())
+                loss_hard_late_sum += float(loss_hard_late_fine.item())
+                loss_strong_pos_gate_sum += float(loss_strong_pos_gate.item())
                 n_batch += 1
     
             train_loss = loss_sum / max(1, n_batch)
@@ -3564,7 +3973,7 @@ def main():
     
             # val
             model.eval()
-            val_sum, val_trend_sum, val_n = 0.0, 0.0, 0
+            val_sum, val_trend_sum, val_trend_coarse_sum, val_fine_dc_sum, val_hard_late_sum, val_strong_pos_gate_sum, val_n = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0
             with torch.no_grad():
                 for batch in val_loader:
                     src = batch["src"].to(DEVICE, non_blocking=True)
@@ -3573,12 +3982,16 @@ def main():
                     ctx = batch["ctx"].to(DEVICE, non_blocking=True)
                     z_phys_b = batch["z_phys"].to(DEVICE, non_blocking=True)
                     z_mask = batch["z_mask"].to(DEVICE, non_blocking=True)
+                    is_curve_b = batch["is_curve"].to(DEVICE, non_blocking=True)
                     rev_gt_b = batch["rev_gt"].to(DEVICE, non_blocking=True).squeeze(1)
-    
-                    y_hat, z_veh, rev_logit = model(src, ctx, curve_norm)
+                    rev_gt_weak_b = batch.get("rev_gt_weak", batch["rev_gt"]).to(DEVICE, non_blocking=True).squeeze(1)
+                    rev_gt_strong_b = batch.get("rev_gt_strong", batch["rev_gt"]).to(DEVICE, non_blocking=True).squeeze(1)
+
+                    y_hat, z_veh, rev_logit, forward_aux = unpack_model_output(model(src, ctx, curve_norm))
                     sample_weight = build_reversal_sample_weight(rev_gt_b)
-                    loss_task, loss_amp, loss_d1, loss_d2, loss_revseq, loss_peaktime, loss_steer_wt, loss_trend = compute_total_task_loss(
-                        y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight, use_reversal_local_weight=True
+                    loss_task, loss_amp, loss_d1, loss_d2, loss_revseq, loss_peaktime, loss_steer_wt, loss_trend, loss_trend_coarse, loss_fine_dc, loss_hard_late_fine = compute_total_task_loss(
+                        y_hat, y_true, y_mean_t, y_std_t, sample_weight=sample_weight, use_reversal_local_weight=True, forward_aux=forward_aux,
+                        is_curve=is_curve_b, rev_gt_weak=rev_gt_weak_b, rev_gt_strong=rev_gt_strong_b
                     )
 
                     # val 侧与 train 使用同一套加权目标，避免选择标准错位
@@ -3589,29 +4002,54 @@ def main():
                         loss_rev = F.binary_cross_entropy_with_logits(rev_logit, rev_gt_b.float(), pos_weight=rev_pos_weight)
                     else:
                         loss_rev = torch.tensor(0.0, device=DEVICE)
-                    loss = loss_task + LAMBDA_STATE * loss_state + LAMBDA_REV * loss_rev
+                    strong_pos_gate_logit = forward_aux.get("strong_pos_gate_logit")
+                    if ENABLE_STRONG_POS_GATE and strong_pos_gate_logit is not None:
+                        loss_strong_pos_gate = F.binary_cross_entropy_with_logits(
+                            strong_pos_gate_logit,
+                            rev_gt_strong_b.float(),
+                            pos_weight=strong_pos_gate_pos_weight,
+                        )
+                    else:
+                        loss_strong_pos_gate = torch.tensor(0.0, device=DEVICE)
+                    loss = loss_task + LAMBDA_STATE * loss_state + LAMBDA_REV * loss_rev + LAMBDA_STRONG_POS_GATE * loss_strong_pos_gate
 
                     val_sum += float(loss.item())
                     val_trend_sum += float(loss_trend.item())
+                    val_trend_coarse_sum += float(loss_trend_coarse.item())
+                    val_fine_dc_sum += float(loss_fine_dc.item())
+                    val_hard_late_sum += float(loss_hard_late_fine.item())
+                    val_strong_pos_gate_sum += float(loss_strong_pos_gate.item())
                     val_n += 1
             val_loss = val_sum / max(1, val_n)
 
             print(f"[Epoch {epoch:02d}/{EPOCHS:02d}] "
-                  f"Train={train_loss:.6f} (task={loss_task_sum/max(1,n_batch):.6f}, trend={loss_trend_sum/max(1,n_batch):.6f}, state={loss_state_sum/max(1,n_batch):.6f}) | "
-                  f"Val={val_loss:.6f} (trend={val_trend_sum/max(1,val_n):.6f})")
+                  f"Train={train_loss:.6f} (task={loss_task_sum/max(1,n_batch):.6f}, trend={loss_trend_sum/max(1,n_batch):.6f}, trend_cf={loss_trend_coarse_sum/max(1,n_batch):.6f}, fine_dc={loss_fine_dc_sum/max(1,n_batch):.6f}, hard_late={loss_hard_late_sum/max(1,n_batch):.6f}, strong_gate={loss_strong_pos_gate_sum/max(1,n_batch):.6f}, state={loss_state_sum/max(1,n_batch):.6f}) | "
+                  f"Val={val_loss:.6f} (trend={val_trend_sum/max(1,val_n):.6f}, trend_cf={val_trend_coarse_sum/max(1,val_n):.6f}, fine_dc={val_fine_dc_sum/max(1,val_n):.6f}, hard_late={val_hard_late_sum/max(1,val_n):.6f}, strong_gate={val_strong_pos_gate_sum/max(1,val_n):.6f})")
     
             # ---- write history (CSV) ----
             task_avg = float(loss_task_sum / max(1, n_batch))
             trend_avg = float(loss_trend_sum / max(1, n_batch))
+            trend_coarse_avg = float(loss_trend_coarse_sum / max(1, n_batch))
+            fine_dc_avg = float(loss_fine_dc_sum / max(1, n_batch))
+            hard_late_avg = float(loss_hard_late_sum / max(1, n_batch))
+            strong_pos_gate_avg = float(loss_strong_pos_gate_sum / max(1, n_batch))
             state_avg = float(loss_state_sum / max(1, n_batch))
             history.append({
                 "epoch": int(epoch),
                 "train_loss": float(train_loss),
                 "train_task": task_avg,
                 "train_trend": trend_avg,
+                "train_trend_coarse": trend_coarse_avg,
+                "train_fine_dc": fine_dc_avg,
+                "train_hard_late": hard_late_avg,
+                "train_strong_pos_gate": strong_pos_gate_avg,
                 "train_state": state_avg,
                 "val_loss": float(val_loss),
                 "val_trend": float(val_trend_sum / max(1, val_n)),
+                "val_trend_coarse": float(val_trend_coarse_sum / max(1, val_n)),
+                "val_fine_dc": float(val_fine_dc_sum / max(1, val_n)),
+                "val_hard_late": float(val_hard_late_sum / max(1, val_n)),
+                "val_strong_pos_gate": float(val_strong_pos_gate_sum / max(1, val_n)),
             })
             try:
                 pd.DataFrame(history).to_csv(str(history_csv), index=False, encoding="utf-8-sig")
@@ -3666,8 +4104,39 @@ def main():
                 "TREND_POOL_KERNEL": TREND_POOL_KERNEL,
                 "TREND_POOL_STRIDE": TREND_POOL_STRIDE,
                 "TREND_SIGN_EPS": TREND_SIGN_EPS,
+                "STEER_SOURCE_UNIT": STEER_SOURCE_UNIT,
+                "STEER_ANGLE_UNIT": STEER_ANGLE_UNIT,
+                "STEER_ANGLE_SCALE": float(STEER_ANGLE_SCALE),
+                "STEER_ONSET_THR_ABS": float(STEER_ONSET_THR_ABS),
+                "TREND_LOSS_MODE": TREND_LOSS_MODE,
+                "TREND_LEVEL_WEIGHT": TREND_LEVEL_WEIGHT,
+                "TREND_DELTA_WEIGHT": TREND_DELTA_WEIGHT,
+                "TREND_DIR_WEIGHT": TREND_DIR_WEIGHT,
+                "ENABLE_STEER_COARSE_FINE": ENABLE_STEER_COARSE_FINE,
+                "W_TREND_COARSE": W_TREND_COARSE,
+                "W_FINE_DC": W_FINE_DC,
+                "ENABLE_PHASE_ADAPTIVE_TREND": ENABLE_PHASE_ADAPTIVE_TREND,
+                "TREND_EARLY_BINS": TREND_EARLY_BINS,
+                "TREND_LATE_STRAIGHT_DOWN": TREND_LATE_STRAIGHT_DOWN,
+                "TREND_LATE_STRONGREV_DOWN": TREND_LATE_STRONGREV_DOWN,
+                "ENABLE_LATE_REV_GATE": ENABLE_LATE_REV_GATE,
+                "LATE_REV_GATE_START_SEC": LATE_REV_GATE_START_SEC,
+                "LATE_REV_GATE_SCALE": LATE_REV_GATE_SCALE,
+                "LATE_REV_GATE_RAMP_POWER": LATE_REV_GATE_RAMP_POWER,
+                "ENABLE_STRONG_POS_GATE": ENABLE_STRONG_POS_GATE,
+                "STRONG_POS_GATE_START_SEC": STRONG_POS_GATE_START_SEC,
+                "STRONG_POS_GATE_SCALE": STRONG_POS_GATE_SCALE,
+                "STRONG_POS_GATE_RAMP_POWER": STRONG_POS_GATE_RAMP_POWER,
+                "STRONG_POS_GATE_PROB_CENTER": STRONG_POS_GATE_PROB_CENTER,
+                "ENABLE_HARD_LATE_FINE": ENABLE_HARD_LATE_FINE,
+                "W_HARD_LATE_FINE": W_HARD_LATE_FINE,
+                "HARD_LATE_START_SEC": HARD_LATE_START_SEC,
+                "HARD_TAIL_START_SEC": HARD_TAIL_START_SEC,
+                "HARD_PEAK_QUANTILE": HARD_PEAK_QUANTILE,
+                "HARD_TAIL_QUANTILE": HARD_TAIL_QUANTILE,
                 "LAMBDA_STATE": LAMBDA_STATE,
                 "LAMBDA_REV": LAMBDA_REV,
+                "LAMBDA_STRONG_POS_GATE": LAMBDA_STRONG_POS_GATE,
                 "W_AMP": W_AMP,
                 "ENABLE_RESPONSE_STATE_V1": ENABLE_RESPONSE_STATE_V1,
                 "ENABLE_STATE_DISTILL": ENABLE_STATE_DISTILL,

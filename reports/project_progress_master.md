@@ -4625,3 +4625,65 @@
   1. 先读取当前后台运行输出，确认脚本是否已顺利进入数据扫描、构样本、训练与评估导出。
   2. 若运行正常，优先对比新的 `pred_vs_gt_example_*.png` 与 `test_metrics_by_reversal.json`，重点看 strong/weak reversal 样本的 tail 是否不再过早水平化。
   3. 只有当这一步仍不足以改善后段发平时，再进入第二轮最小加法：小幅打开 `W_REVSEQ` / `W_PEAKTIME`。
+
+### Supplemental Record (2026-04-17, dedicated strong-pos gate source on coarse-fine + phase-adaptive mainline)
+- Executor：Codex
+- Why：`20260416_220918` 仍是当前 strongest allowed mainline，但 `20260417_011755` 已说明 raw `rev_logit` 作为 late gate source 不够定向；直接继续扫旧 scalar 没有高 EV，所以这轮只沿主线前进一步，先把 gate source 从 raw `rev_head` 改成 dedicated strong-pos head。
+- What was changed：
+  1. 在 `datasetprocess/final_code/model/training/future_steer_event_rollpeak_transformer_v5_8_amp_tuned_fixed.py` 中新增 dedicated strong-pos gate 路径：
+     - `ENABLE_STRONG_POS_GATE`
+     - `STRONG_POS_GATE_START_SEC`
+     - `STRONG_POS_GATE_SCALE`
+     - `STRONG_POS_GATE_RAMP_POWER`
+     - `STRONG_POS_GATE_PROB_CENTER`
+     - `LAMBDA_STRONG_POS_GATE`
+  2. 使用 `ctx_enc + late decoder pooled feature` 构造 `strong_pos_gate_head`，训练时对 `rev_gt_strong` 加入 BCE 监督；前向端仅对高置信样本应用 centered late fine gate，并保留旧 raw late gate 作为回退路径。
+  3. `evaluate_and_plot(...)` 现会把 `strong_pos_gate_prob` 写入 `figures/test_state_dump.csv`，便于直接检验 gate source 的 separability。
+  4. `tools/recalc_v58_checkpoint_with_current_metrics.py` 已同步支持回读 strong-pos gate 配置，保证 raw checkpoint 的 protocol-safe 重算口径不漂移。
+- What was run：
+  1. smoke：
+     - `tmp/protocol_safe_runs/TRAIN_V5_4_STATECOND_REV_20260417_100458`
+  2. full-regime：
+     - `tmp/protocol_safe_runs/TRAIN_V5_4_STATECOND_REV_20260417_100716`
+  3. protocol-safe recalc summary：
+     - `tmp/protocol_safe_runs/TRAIN_V5_4_STATECOND_REV_20260417_100716/figures/recalc_current_metrics_20260417_coarsefine_phase_strongposgate_full_protocol_safe_summary.json`
+- What was found：
+  1. 新 gate source 的 separability 明显提升。基于 `test_state_dump.csv`，`strong_pos_gate_prob` 对 `rev_gt_strong` 的 AUC 约为 `0.704`，显著高于 `220918` 中旧 `rev_prob` 的约 `0.473`。
+  2. 但当前 activation 方案仍会破坏主线大盘。与 `220918` 相比，`rmse_steer 0.5697 -> 0.6491`、`tail_rmse_steer 0.6826 -> 0.8068`、`late_peak_recall 0.5940 -> 0.5128`、`first_reversal_time_mae_sec 0.6206 -> 0.8016`，而 `strong_pos.tail_amp_ratio_pred_over_gt 0.3732 -> 0.3601`、`strong_pos.tail_flatness_rate 0.7368 -> 0.8947` 说明目标 bucket 也没有被拉回。
+  3. 这轮因此是新的 `no-go`，不能替代 `220918`，但它明确证明：当前瓶颈已不主要是 gate source，而是 activation 机制会把 late fine 能量错误注入整盘。
+- Practical judgment：
+  1. 当前 fair baseline 仍是 `20260416_103752`；当前 strongest allowed mainline 仍是 `20260416_220918`。
+  2. `20260417_100716` 不应晋升为新默认，也不应诱导回去重扫旧 scalar；它的价值在于把“source 不准”和“activation 错位”这两个问题正式拆开。
+  3. 如果后续继续 gate 路线，优先级最高的不是再换 source，而是改 activation：更可能有效的是 tail-only / additive / training-only 的定向控制，而不是乘法式 full late fine gain。
+
+### Supplemental Record (2026-04-17, repository-level lightweight Git/review policy confirmed for this project)
+- Executor：Codex
+- Why：
+  - 用户明确表示当前不需要重型团队流程，但希望把“什么时候直接推、什么时候先 review”的判断固定下来，避免后续每次都重复解释 Git / branch / PR / review 的区别。
+  - 结合仓库现状，这个项目属于单人主导的研究/训练型仓库，主要风险来自实验逻辑与结果口径漂移，而不是常规产品代码的多人审批。
+- Repository assessment used for this decision：
+  1. 当前仓库主要贡献者为单人；`git shortlog -sne --all` 结果仅见一个主贡献者账号。
+  2. 当前工作内容以训练脚本、实验记录、报告打包、重算工具和临时运行副本为主，并非典型多人并行开发的产品仓库。
+  3. 当前 `gh pr status` 显示 `main` 没有关联 PR，这与当前仓库尚未采用“所有改动都走 PR”模式的事实状态一致。
+- Confirmed operating policy：
+  1. 文档、说明、日报、进度汇总、非关键整理类改动：
+     - 允许直接在 `main` 提交并推送。
+     - 默认不要求额外 branch / PR。
+  2. 会影响实验结论或可复现性的关键改动：
+     - 包括训练脚本、数据切分、预处理、指标计算、checkpoint 重算口径。
+     - 这类改动默认先新建功能分支，再做 review；是否最终开 PR，可按当次重要性决定。
+  3. 重要里程碑改动：
+     - 包括固定新 baseline、准备对外展示/汇报、沉淀论文证据、需要后续稳定交接的阶段性结论。
+     - 这类改动默认要求 `branch + review`，并保持提交信息和结果归档清晰可追溯。
+- Review focus for this repository：
+  1. train / val / test 是否泄漏或 protocol drift。
+  2. split、recalc、evaluation 口径是否一致。
+  3. active source 与 `tmp` 副本是否混用。
+  4. 当前 run 与历史 baseline 是否真的 fair comparable。
+  5. 是否把不该进入长期历史的实验产物误提交到主线。
+- Practical interpretation going forward：
+  - 该仓库采用“按风险分级”的轻量 review 规则，而不是“每次改动都强制 PR”的重流程。
+  - 默认工作方式可概括为：
+    - 普通记录类改动：`main` 直接推进。
+    - 关键实验逻辑：`branch + review`。
+    - 是否开 PR：按里程碑价值和归档需求决定，不强制。

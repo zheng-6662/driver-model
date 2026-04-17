@@ -4,6 +4,7 @@ import argparse
 import importlib.util
 import inspect
 import json
+import os
 import sys
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
@@ -37,6 +38,22 @@ def save_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
+
+
+def try_load_json(path: Path) -> dict[str, Any] | None:
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else None
+    except Exception:
+        return None
+
+
+def resolve_steer_angle_unit(model_config: dict[str, Any]) -> str:
+    unit = str(model_config.get("STEER_ANGLE_UNIT", "rad")).strip().lower()
+    if unit not in {"rad", "deg"}:
+        raise ValueError(f"Unsupported STEER_ANGLE_UNIT={unit!r}; expected 'rad' or 'deg'")
+    return unit
 
 
 def subset_list(items, indices: np.ndarray):
@@ -132,6 +149,18 @@ def build_collate_fn():
     return collate_fn
 
 
+def unpack_model_output(output):
+    if not isinstance(output, tuple):
+        raise TypeError(f"Unexpected model output type: {type(output)!r}")
+    if len(output) == 3:
+        y_hat, z_veh, rev_logit = output
+        return y_hat, z_veh, rev_logit, {}
+    if len(output) == 4:
+        y_hat, z_veh, rev_logit, aux = output
+        return y_hat, z_veh, rev_logit, (aux or {})
+    raise ValueError(f"Unexpected model output length: {len(output)}")
+
+
 def compute_basic_metrics(pred: np.ndarray, true: np.ndarray) -> dict[str, float]:
     err = pred - true
     return {
@@ -158,7 +187,8 @@ def build_case_rows(metrics_module, pred: np.ndarray, true: np.ndarray, test_met
         true_base = float(true_steer[0])
         pred_base = float(pred_steer[0])
         true_peak_delta = float(np.max(np.abs(true_steer - true_base)))
-        onset_thr = max(0.02, 0.15 * true_peak_delta)
+        onset_thr_abs = float(getattr(metrics_module, "STEER_ONSET_THR_ABS", 0.02))
+        onset_thr = max(onset_thr_abs, 0.15 * true_peak_delta)
 
         gt_onset_idx = metrics_module._first_threshold_crossing_idx_np(true_steer, threshold=onset_thr, ref_value=true_base)
         pred_onset_idx = metrics_module._first_threshold_crossing_idx_np(pred_steer, threshold=onset_thr, ref_value=pred_base)
@@ -377,7 +407,8 @@ def build_repro_dataset(eval_module, split_mode: str, smoke_max_samples: int, se
     return datasets, meta
 
 
-def instantiate_model(module, input_dim: int, context_dim: int, future_len: int, state_dim: int, device: str):
+def instantiate_model(module, input_dim: int, context_dim: int, future_len: int, state_dim: int, device: str, model_config: dict[str, Any] | None = None):
+    model_config = model_config or {}
     d_model = int(getattr(module, "D_MODEL", 128))
     nhead = int(getattr(module, "N_HEAD", getattr(module, "NHEAD", 2)))
     num_layers_enc = int(getattr(module, "NUM_LAYERS_ENC", getattr(module, "ENC_LAYERS", 2)))
@@ -386,6 +417,18 @@ def instantiate_model(module, input_dim: int, context_dim: int, future_len: int,
     dropout = float(getattr(module, "DROPOUT", 0.1))
     max_len_enc = int(getattr(module, "WIN_LEN", 600))
     max_len_dec = int(getattr(module, "FUTURE_LEN", future_len))
+    enable_steer_coarse_fine = bool(model_config.get("ENABLE_STEER_COARSE_FINE", getattr(module, "ENABLE_STEER_COARSE_FINE", False)))
+    trend_pool_kernel = int(model_config.get("TREND_POOL_KERNEL", getattr(module, "TREND_POOL_KERNEL", 20)))
+    trend_pool_stride = int(model_config.get("TREND_POOL_STRIDE", getattr(module, "TREND_POOL_STRIDE", 20)))
+    enable_late_reversal_gate = bool(model_config.get("ENABLE_LATE_REV_GATE", getattr(module, "ENABLE_LATE_REV_GATE", False)))
+    late_rev_gate_start_sec = float(model_config.get("LATE_REV_GATE_START_SEC", getattr(module, "LATE_REV_GATE_START_SEC", 1.05)))
+    late_rev_gate_scale = float(model_config.get("LATE_REV_GATE_SCALE", getattr(module, "LATE_REV_GATE_SCALE", 0.60)))
+    late_rev_gate_ramp_power = float(model_config.get("LATE_REV_GATE_RAMP_POWER", getattr(module, "LATE_REV_GATE_RAMP_POWER", 1.50)))
+    enable_strong_pos_gate = bool(model_config.get("ENABLE_STRONG_POS_GATE", getattr(module, "ENABLE_STRONG_POS_GATE", False)))
+    strong_pos_gate_start_sec = float(model_config.get("STRONG_POS_GATE_START_SEC", getattr(module, "STRONG_POS_GATE_START_SEC", 1.20)))
+    strong_pos_gate_scale = float(model_config.get("STRONG_POS_GATE_SCALE", getattr(module, "STRONG_POS_GATE_SCALE", 0.45)))
+    strong_pos_gate_ramp_power = float(model_config.get("STRONG_POS_GATE_RAMP_POWER", getattr(module, "STRONG_POS_GATE_RAMP_POWER", 1.75)))
+    strong_pos_gate_prob_center = float(model_config.get("STRONG_POS_GATE_PROB_CENTER", getattr(module, "STRONG_POS_GATE_PROB_CENTER", 0.60)))
     model = module.Past2FutureMultiTaskRoadPreview(
         input_dim=input_dim,
         context_dim=context_dim,
@@ -400,6 +443,18 @@ def instantiate_model(module, input_dim: int, context_dim: int, future_len: int,
         max_len_enc=max_len_enc,
         max_len_dec=max_len_dec,
         state_dim=state_dim,
+        enable_steer_coarse_fine=enable_steer_coarse_fine,
+        trend_pool_kernel=trend_pool_kernel,
+        trend_pool_stride=trend_pool_stride,
+        enable_late_reversal_gate=enable_late_reversal_gate,
+        late_rev_gate_start_sec=late_rev_gate_start_sec,
+        late_rev_gate_scale=late_rev_gate_scale,
+        late_rev_gate_ramp_power=late_rev_gate_ramp_power,
+        enable_strong_pos_gate=enable_strong_pos_gate,
+        strong_pos_gate_start_sec=strong_pos_gate_start_sec,
+        strong_pos_gate_scale=strong_pos_gate_scale,
+        strong_pos_gate_ramp_power=strong_pos_gate_ramp_power,
+        strong_pos_gate_prob_center=strong_pos_gate_prob_center,
     ).to(device)
     return model
 
@@ -410,6 +465,13 @@ def run_eval(args):
     checkpoint_path = Path(args.checkpoint_path).resolve()
     output_dir = Path(args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    raw_obj = torch.load(str(checkpoint_path), map_location="cpu")
+    model_config = raw_obj.get("config", {}) if isinstance(raw_obj, dict) else {}
+    if not model_config:
+        run_config_path = checkpoint_path.parent.parent / "run_config.json"
+        model_config = try_load_json(run_config_path) or {}
+    os.environ["DRIVER_MODEL_STEER_ANGLE_UNIT"] = resolve_steer_angle_unit(model_config)
 
     eval_module = load_module(script_path, f"eval_module_{abs(hash(str(script_path)))}")
     metrics_module = load_module(metrics_script_path, f"metrics_module_{abs(hash(str(metrics_script_path)))}")
@@ -442,9 +504,9 @@ def run_eval(args):
         future_len=int(getattr(eval_module, "FUTURE_LEN", 400)),
         state_dim=meta["state_dim"],
         device=device,
+        model_config=model_config,
     )
 
-    raw_obj = torch.load(str(checkpoint_path), map_location=device)
     state_dict = raw_obj["state_dict"] if isinstance(raw_obj, dict) and "state_dict" in raw_obj else raw_obj
     model.load_state_dict(state_dict)
     model.eval()
@@ -468,7 +530,7 @@ def run_eval(args):
             y_true = batch["y_norm"].to(device, non_blocking=True)
             curve_norm = batch["curve_norm"].to(device, non_blocking=True)
             ctx = batch["ctx"].to(device, non_blocking=True)
-            y_hat, _, _ = model(src, ctx, curve_norm)
+            y_hat, _, _, _ = unpack_model_output(model(src, ctx, curve_norm))
             pred_norm_all.append(y_hat.detach().cpu().numpy())
             true_norm_all.append(y_true.detach().cpu().numpy())
             batch_local_idx_all.append(batch["idx"].detach().cpu().numpy())
