@@ -20,12 +20,16 @@ $pythonExeCandidates = @(
     "F:\python3.11\python.exe"
 )
 $pythonExe = $pythonExeCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
-$adapterScript = Join-Path $projectRoot "tools\anthropic_codex_adapter.py"
+$adapterScript = Join-Path $projectRoot "02_code\tools\anthropic_codex_adapter.py"
 $script:RestartCount = 0
 $script:AdapterPid = $null
 
 if (-not $pythonExe) {
     throw "Python runtime not found. Checked: $($pythonExeCandidates -join ', ')"
+}
+
+if (-not (Test-Path $adapterScript)) {
+    throw "Adapter script not found: $adapterScript"
 }
 
 if (-not (Test-Path $runtimeDir)) {
@@ -128,7 +132,7 @@ if (Test-Path $stopFlag) {
     Remove-Item -LiteralPath $stopFlag -Force
 }
 
-Write-ServiceLog "Supervisor started. preferredPort=$PreferredPort maxPort=$MaxPort pythonExe=$pythonExe"
+Write-ServiceLog "Supervisor started. preferredPort=$PreferredPort maxPort=$MaxPort pythonExe=$pythonExe adapterScript=$adapterScript"
 Write-State -Status "booting"
 
 while ($true) {

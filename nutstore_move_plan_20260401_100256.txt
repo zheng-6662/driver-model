@@ -1,4 +1,0 @@
-﻿Source: C:\Users\Administrator\Nutstore\1
-Destination: D:\Nutstore\1
-Started: 
-2026-04-01T10:02:56

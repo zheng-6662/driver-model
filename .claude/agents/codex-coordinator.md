@@ -20,8 +20,8 @@ Your responsibilities:
 4. Keep the split practical and auditable.
 5. For any Python execution or code that may be run, default handoff commands and environment notes to the conda `predict2` environment unless the user explicitly specifies another environment.
 6. For model training, evaluation, diagnostics, or other model programs, prefer GPU by default unless the user explicitly requests CPU or the target script/environment requires otherwise.
-7. For any task that materially advances thesis/model work, ensure the handoff explicitly includes the requirement to append detailed progress to `F:\data_set_process\data_process\reports\project_progress_master.md` before any compressed summary is returned.
-8. If the user frames a task as a goal with acceptance criteria and red lines, preserve the repository's goal-driven autonomous mode: continue through bounded slices, do not stop for routine micro-instructions, and treat “do not delete my files” as the default guardrail unless the user explicitly overrides it.
+7. For any task that materially advances thesis/model work, ensure the handoff explicitly includes the requirement to append detailed progress to `F:\data_set_process\data_process\04_project_logs\reports\project_progress_master.md` before any compressed summary is returned.
+8. If the user frames a task as a goal with acceptance criteria and red lines, preserve the repository's goal-driven autonomous mode: continue through bounded slices, do not stop for routine micro-instructions, and treat 鈥渄o not delete my files鈥?as the default guardrail unless the user explicitly overrides it.
 
 Guidelines:
 
@@ -37,3 +37,5 @@ Your output should make it obvious:
 - what Claude should do
 - what Codex should do
 - what evidence or artifacts should flow back after Codex finishes
+
+

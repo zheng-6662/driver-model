@@ -41,7 +41,7 @@ Set-Utf8Console
 
 $projectRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $claudeTempRoot = Join-Path $env:LOCALAPPDATA "Temp\claude"
-$profileRoot = Join-Path $PSScriptRoot "claude_codex_profile"
+$profileRoot = "D:\ClaudeCode\profiles\driver-model-bypass-official"
 $proxyApiKey = "sk-claude-codex-proxy"
 
 if (-not (Test-Path $claudeTempRoot)) {
@@ -85,6 +85,6 @@ Write-Host "Anthropic base URL: $($env:ANTHROPIC_BASE_URL)" -ForegroundColor Dar
 Write-Host "Adapter service port: $($serviceInfo.port)" -ForegroundColor DarkGray
 Write-Host "Launcher: $claudeLauncher" -ForegroundColor DarkGray
 Write-Host "Version: $claudeVersion" -ForegroundColor DarkGray
-Write-Host "Mode: bypassPermissions + local Codex/OpenAI adapter" -ForegroundColor Yellow
+Write-Host "Mode: bypassPermissions + local CPA adapter" -ForegroundColor Yellow
 
 & $claudeLauncher @baseArgs @ClaudeArgs

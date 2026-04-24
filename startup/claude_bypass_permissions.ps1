@@ -3,7 +3,7 @@ param(
     [string[]]$ClaudeArgs
 )
 
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = "Stop"
 
 function Set-Utf8Console {
     $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
@@ -11,27 +11,27 @@ function Set-Utf8Console {
     [Console]::OutputEncoding = $utf8NoBom
     $global:OutputEncoding = $utf8NoBom
 
-    $env:PYTHONUTF8 = '1'
-    $env:PYTHONIOENCODING = 'utf-8'
-    $env:LANG = 'C.UTF-8'
-    $env:LC_ALL = 'C.UTF-8'
+    $env:PYTHONUTF8 = "1"
+    $env:PYTHONIOENCODING = "utf-8"
+    $env:LANG = "C.UTF-8"
+    $env:LC_ALL = "C.UTF-8"
 
     & chcp 65001 | Out-Null
 }
 
 Set-Utf8Console
 
-$projectRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
-$claudeTempRoot = Join-Path $env:LOCALAPPDATA 'Temp\claude'
-$launcherConfigRoot = 'D:\ClaudeCode\profiles\driver-model-bypass-official'
-$launcherSettingsPath = Join-Path $launcherConfigRoot 'settings.json'
+$projectRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
+$claudeTempRoot = Join-Path $env:LOCALAPPDATA "Temp\claude"
+$launcherConfigRoot = "D:\ClaudeCode\profiles\driver-model-bypass-official"
+$launcherSettingsPath = Join-Path $launcherConfigRoot "settings.json"
 
 function Resolve-ClaudeLauncher {
     $preferredLaunchers = @(
-        'D:\ClaudeCode\global\claude.cmd',
-        'D:\ClaudeCode\global\claude.ps1',
-        'D:\Apps\nodejs\claude.cmd',
-        'D:\Apps\nodejs\claude.ps1'
+        "D:\ClaudeCode\global\claude.cmd",
+        "D:\ClaudeCode\global\claude.ps1",
+        "D:\Apps\nodejs\claude.cmd",
+        "D:\Apps\nodejs\claude.ps1"
     )
 
     foreach ($candidate in $preferredLaunchers) {
@@ -65,11 +65,11 @@ Remove-Item Env:ANTHROPIC_BASE_URL -ErrorAction SilentlyContinue
 $claudeLauncher = Resolve-ClaudeLauncher
 $claudeVersion = & $claudeLauncher --version
 $baseArgs = @(
-    '--permission-mode', 'bypassPermissions',
-    '--add-dir', $claudeTempRoot
+    "--permission-mode", "bypassPermissions",
+    "--add-dir", $claudeTempRoot
 )
 
-$authStatusRaw = ''
+$authStatusRaw = ""
 $authStatus = $null
 
 try {

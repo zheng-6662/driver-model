@@ -16,6 +16,7 @@ $stateFile = Join-Path $runtimeDir "service_state.json"
 $stopFlag = Join-Path $runtimeDir "stop.flag"
 $serviceLog = Join-Path $runtimeDir "supervisor.log"
 $supervisorScript = Join-Path $PSScriptRoot "claude_codex_adapter_supervisor.ps1"
+$cpaBootstrapScript = Join-Path $PSScriptRoot "openclaw_cpa_oneclick.ps1"
 
 if (-not (Test-Path $runtimeDir)) {
     New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
@@ -57,6 +58,51 @@ function Test-ServiceHealth {
         return $false
     }
 }
+
+function Test-BackendHealth {
+    param(
+        [string]$BaseUrl,
+        [string]$ApiKey
+    )
+
+    if ([string]::IsNullOrWhiteSpace($BaseUrl)) {
+        return $false
+    }
+
+    $headers = @{}
+    if (-not [string]::IsNullOrWhiteSpace($ApiKey)) {
+        $headers.Authorization = "Bearer $ApiKey"
+    }
+
+    try {
+        $response = Invoke-WebRequest -UseBasicParsing -Uri "$BaseUrl/models" -Headers $headers -TimeoutSec 5
+        return $response.StatusCode -eq 200
+    } catch {
+        return $false
+    }
+}
+
+function Ensure-BackendReady {
+    if (Test-BackendHealth -BaseUrl $BackendBaseUrl -ApiKey $BackendApiKey) {
+        return
+    }
+
+    if (-not (Test-Path $cpaBootstrapScript)) {
+        throw "CPA bootstrap script not found: $cpaBootstrapScript"
+    }
+
+    Write-Host "CPA backend is not ready. Starting OpenClaw + CPA..." -ForegroundColor Yellow
+    & $cpaBootstrapScript -SkipPrompt -SkipBrowser -NoPause
+    if ($LASTEXITCODE -ne 0) {
+        throw "OpenClaw + CPA bootstrap failed with exit code $LASTEXITCODE."
+    }
+
+    if (-not (Test-BackendHealth -BaseUrl $BackendBaseUrl -ApiKey $BackendApiKey)) {
+        throw "CPA backend is still unavailable after bootstrap: $BackendBaseUrl"
+    }
+}
+
+Ensure-BackendReady
 
 $state = Read-State
 if ($state -and (Test-ProcessAlive -ProcessId ([int]$state.servicePid)) -and (Test-ServiceHealth -BaseUrl $state.baseUrl)) {

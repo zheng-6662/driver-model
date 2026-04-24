@@ -1,4 +1,4 @@
----
+﻿---
 description: Compare two experiment runs or protocol variants and explain differences in setup, fairness, and outcome.
 ---
 Compare two experiment runs in this driver-model repository.
@@ -17,7 +17,7 @@ Before answering:
    - metrics JSON
    - protocol config files
    - relevant training or diagnostics source files when needed
-4. Because run comparison directly affects thesis/model conclusions, append a detailed progress entry to `reports/project_progress_master.md` before returning the compressed comparison summary.
+4. Because run comparison directly affects thesis/model conclusions, append a detailed progress entry to `04_project_logs/reports/project_progress_master.md` before returning the compressed comparison summary.
 
 Pay special attention to:
 
@@ -43,3 +43,4 @@ Rules:
 - Separate factual differences from causal hypotheses.
 - If the command arguments do not clearly identify two targets, ask one concise clarification question.
 - The progress entry should record what runs were compared, why this comparison mattered, what was found, and the best next experiment.
+

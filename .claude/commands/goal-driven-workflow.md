@@ -1,4 +1,4 @@
----
+﻿---
 description: Run the repository's goal-driven autonomous workflow so the user can give a target, acceptance criteria, and red lines while Claude/Codex continue pushing until the target is met or an evidence-based blocker is reached.
 ---
 Run the goal-driven autonomous workflow for this repository.
@@ -10,8 +10,8 @@ ARGUMENTS: $ARGUMENTS
 Required reading before acting:
 
 1. `CLAUDE.md`
-2. `reports/goal_driven_autonomous_workflow.md`
-3. `reports/goal_driven_target_template.md`
+2. `04_project_logs/reports/goal_driven_autonomous_workflow.md`
+3. `04_project_logs/reports/goal_driven_target_template.md`
 
 Workflow:
 
@@ -23,8 +23,8 @@ Workflow:
 3. Preserve repository guardrails:
    - do not delete user files unless explicitly approved
    - preserve protocol safety unless the user explicitly requests a protocol change
-   - log substantive progress to `reports/project_progress_master.md` before compressed summaries
-   - treat “high-risk branch” primarily as a branch that could drift away from the core goal of predicting driver behavior and vehicle-state trends under extreme conditions
+   - log substantive progress to `04_project_logs/reports/project_progress_master.md` before compressed summaries
+   - treat 鈥渉igh-risk branch鈥?primarily as a branch that could drift away from the core goal of predicting driver behavior and vehicle-state trends under extreme conditions
 4. Use the standard collaboration pattern:
    - Claude scopes and risk-checks
    - Codex executes bounded concrete work
@@ -76,3 +76,4 @@ Rules:
 - Only interrupt the user for decisions that are materially risky or ambiguous.
 - Avoid tunnel vision: if the same narrow issue has already been tried `3-4` times without meaningful movement, switch direction unless new evidence strongly justifies one more pass.
 - Do not mechanically force a tiny smoke run before every training task; if the path is already well-understood, a full run is allowed.
+

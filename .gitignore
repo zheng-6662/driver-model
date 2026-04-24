@@ -1,14 +1,14 @@
 .idea/
 .vscode/
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Local outputs
-trajectory_plot_output/
-datasetprocess/多模态数据/程序运行结果/
-datasetprocess/多模态数据/__pycache__/
+03_results/cache/
+03_results/tmp/
+03_results/output/
+03_results/artifacts/
+03_results/trajectory_plot_output/
+03_results/backups/
+03_results/zotero_records/
+03_results/metadata/
 
 # Large data and generated artifacts
 *.csv
@@ -33,6 +33,9 @@ datasetprocess/多模态数据/__pycache__/
 *.aed
 *.lut
 *.ini
+*.pyc
+*.pyo
+*.pyd
 
 # Keep source code and docs
 !*.py

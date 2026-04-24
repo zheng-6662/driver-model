@@ -1,4 +1,4 @@
-$rawInput = [Console]::In.ReadToEnd()
+﻿$rawInput = [Console]::In.ReadToEnd()
 if ([string]::IsNullOrWhiteSpace($rawInput)) {
   exit 0
 }
@@ -80,8 +80,8 @@ if (-not $targetPath.StartsWith($projectRoot)) {
 }
 
 $blockedSegments = @(
-  "\datasetprocess\多模态数据\01_历史入口归档\",
-  "\datasetprocess\多模态数据\程序运行结果\",
+  "\datasetprocess\澶氭ā鎬佹暟鎹甛01_鍘嗗彶鍏ュ彛褰掓。\",
+  "\datasetprocess\澶氭ā鎬佹暟鎹甛绋嬪簭杩愯缁撴灉\",
   "\tmp\",
   "\artifacts\",
   "_backup_"
@@ -91,7 +91,7 @@ foreach ($segment in $blockedSegments) {
   if ($targetPath.Contains($segment)) {
     Emit-PreToolDecision `
       -Decision "deny" `
-      -Reason "Editing archived, generated, tmp, artifacts, or backup paths is blocked by this project hook. Prefer maintained source under datasetprocess/final_code, tools, reports, or root docs instead." `
+      -Reason "Editing archived, generated, tmp, artifacts, or backup paths is blocked by this project hook. Prefer maintained source under 02_code/final_code, tools, reports, or root docs instead." `
       -AdditionalContext "The attempted target was $targetPath. This repository mixes active source with archived/generated outputs, so do not edit these paths unless the user explicitly redirects the task."
     exit 0
   }
@@ -107,3 +107,4 @@ if ($isTrainingConfig) {
 }
 
 exit 0
+

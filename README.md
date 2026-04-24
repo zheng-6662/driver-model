@@ -1,100 +1,70 @@
-# 极限工况下驾驶员反应研究
+# 极限工况驾驶员反应研究
 
-本项目旨在研究极限工况下驾驶员的反应特征，重点关注驾驶员在高风险、高负荷驾驶场景中的行为变化以及车辆、生理和脑电等多模态信号之间的关联。
+这个仓库现在按四块整理：
 
-项目的核心目标包括：
+- `01_datasets/`：原始数据、预处理数据、事件数据集、补充采集数据、下载材料
+- `02_code/`：当前维护代码、历史脚本、工具脚本、启动脚本、外部工作区
+- `03_results/`：实验输出、临时运行目录、图表、备份、权重和分析产物
+- `04_project_logs/`：项目日志、实验登记、状态说明、项目文档
 
-- 构建极限工况下的多模态驾驶数据处理流程
-- 提取车辆、生理、脑电等多源信号特征
-- 构建事件级多模态数据集
-- 建立驾驶员反应预测与建模方法
-- 为极限驾驶工况下的人机协同与驾驶行为理解提供分析基础
+## 当前应该从哪里开始看
 
-## 数据模态
+如果你只想看现在还在维护、还应该继续改的代码，从这里开始：
 
-本项目围绕以下几类数据展开：
+1. `02_code/final_code/README.md`
+2. `02_code/final_code/processing/`
+3. `02_code/final_code/dataset/`
+4. `02_code/final_code/model/training/`
+5. `04_project_logs/references/current-state.md`
 
-- 车辆数据
-  - 方向盘、横摆角速度、侧向加速度、车身姿态、LTR 等
-- 生理数据
-  - ECG、EMG、EDA、RESP 等
-- 脑电数据
-  - EEG 预处理、坏道处理、ICA 清理、特征提取
+## 四块目录分别放什么
 
-## 主要流程
+### 1. 数据集
 
-本仓库当前保留的主流程包括：
+`01_datasets/` 里是数据本体，不建议把代码和结果再混进去。
 
-1. 车辆数据预处理
-2. 生理数据预处理
-3. 脑电数据预处理
-4. 事件级多模态数据集构建
-5. 多模态模型训练与诊断评估
+- `01_datasets/多模态数据/被试数据集合/`：当前训练和诊断会直接读的主数据集
+- `01_datasets/多模态数据/Event_Dataset*`：事件级数据集
+- `01_datasets/数据预处理/`：车辆 / 生理 / 脑电预处理产物
+- `01_datasets/补充采集数据/`：补充采集与清洗数据
+- `01_datasets/downloads/`：外部下载材料
 
-## 先看哪里
+### 2. 代码
 
-- 最终整理后的主代码：
-  - [datasetprocess/final_code](F:\数据集处理\data_process\datasetprocess\final_code)
-- 多模态数据工作区与历史入口：
-  - [datasetprocess/多模态数据](F:\数据集处理\data_process\datasetprocess\多模态数据)
+`02_code/` 里是脚本和工具。
 
-如果你只想看当前推荐使用的代码，请直接从 `datasetprocess/final_code/` 开始。
+- `02_code/final_code/`：当前维护主线代码
+- `02_code/tools/`：分析、导出、重算、可视化工具
+- `02_code/startup/`：启动与辅助脚本
+- `02_code/legacy_multimodal/`：从旧多模态工作区拆出来的历史代码
+- `02_code/workspace/`：辅助代码工作区
 
-## 推荐阅读顺序
+### 3. 结果
 
-1. `datasetprocess/final_code/README.md`
-2. `datasetprocess/final_code/processing/`
-3. `datasetprocess/final_code/dataset/`
-4. `datasetprocess/final_code/model/training/`
-5. `datasetprocess/多模态数据/00_目录说明/README.md`
+`03_results/` 里是运行产生的东西。
 
-## 仓库结构
+- `03_results/tmp/`：临时运行目录与协议安全实验输出
+- `03_results/output/`：文档、PDF、PPT、Visio 等导出
+- `03_results/artifacts/`：归档结果与分析产物
+- `03_results/多模态数据/程序运行结果/`：从旧工作区拆出的程序运行结果
+- `03_results/backups/`：Nutstore / Zotero 等备份
 
-```text
-datasetprocess/
-├─ final_code/   # 最终整理后的代码
-├─ 多模态数据/     # 多模态工作区、历史入口、归档结果
-├─ 数据预处理/     # 本地预处理工作区
-└─ 补充采集数据/   # 本地补充处理工作区
-```
+### 4. 项目日志
 
-## 使用说明
+`04_project_logs/` 里是你以后查“什么时候做了什么”的地方。
 
-- 本仓库主要保存源码、说明文档和项目结构。
-- 原始数据、模型权重、图片、视频以及自动生成产物没有上传到 GitHub。
-- 仓库中的 `final_code/` 是当前最推荐维护和继续使用的代码区域。
+- `04_project_logs/reports/progress/`：实验登记表和日更日志
+- `04_project_logs/reports/project_progress_master.md`：总进度主日志
+- `04_project_logs/references/current-state.md`：当前项目状态锚点
+- `04_project_logs/dataset_docs/`：从旧数据工作区拆出来的目录说明
 
-## 协作记录约定
+## 现在默认的工作约定
 
-- 本项目的协作进度主日志当前使用 `reports/project_progress_master.md`。
-- 后续无论是人工整理，还是 Claude / Codex 执行命令、检查文件、修改脚本、分析结果、整理方案，只要产生了实质性进展，都应先把详细进度追加到该日志，再在对话中输出压缩版总结。
-- 进度记录至少应包含：
-  - 谁做的
-  - 做了什么
-  - 为什么做
-  - 得到了什么
-  - 下一步建议
-- 如果某次操作涉及多个命令、多个文件或关键判断，请优先保留“详细过程版”记录，而不是只保留一句结论。
-- 当日志逐渐变长时，优先维护文件顶部的“当前状态速览”，便于后续快速查看最新进展，而不是每次从头通读。
-- 为了便于回看“哪天做了什么”，应同步维护日期索引；为了便于回看“某类工作做到了哪一步”，应同步维护专题索引。
+- 任何实质性推进，先写 `04_project_logs/reports/project_progress_master.md`
+- 当前维护代码默认从 `02_code/final_code/` 改，不去改结果目录里的脚本副本
+- 当前实验状态先看 `04_project_logs/references/current-state.md`
+- 如果脚本仍有硬编码路径，优先改成基于仓库根目录推导的新路径
 
-## 目标驱动自治推进模式
+## 兼容性说明
 
-如果你希望“只给目标，不想每一步都重新下指令”，本仓库现在默认支持目标驱动自治推进模式：
-
-- 用户给 `目标 + 验收 + 红线`
-- Claude 负责收口任务、控制风险、组织协作
-- Codex 负责执行、检查、实现、验证
-- 中间不因为缺少小步指令而频繁停下
-- 只有遇到高风险分叉时才请求用户拍板
-- “高风险分叉”优先指可能偏离核心研究目标，或让我们在次要小问题上反复打转
-- 默认 guardrail 是“不删除用户现有文件”
-- 每次有实质进展，必须先写 `reports/project_progress_master.md`
-
-正式说明见：
-
-- `reports/goal_driven_autonomous_workflow.md`
-
-直接可复用的输入模板见：
-
-- `reports/goal_driven_target_template.md`
+根目录里还保留了少量历史壳目录，例如 `datasetprocess/` 和空的 `startup/`。它们是为了不做破坏性删除而暂时保留，日常工作可以忽略。

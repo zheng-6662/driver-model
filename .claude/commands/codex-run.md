@@ -1,4 +1,4 @@
----
+﻿---
 description: Delegate a concrete implementation or analysis task directly to local Codex and return its result in this Claude session.
 ---
 Delegate the current task to local Codex and show the result here.
@@ -10,15 +10,15 @@ ARGUMENTS: $ARGUMENTS
 Instructions:
 
 1. Read `CLAUDE.md` first.
-2. If the user is framing the task as “give a goal and keep pushing until it is achieved,” also read `reports/goal_driven_autonomous_workflow.md` and preserve that mode's defaults, especially the no-file-deletion guardrail and the expectation to continue through bounded slices instead of stopping for routine micro-instructions.
+2. If the user is framing the task as 鈥済ive a goal and keep pushing until it is achieved,鈥?also read `04_project_logs/reports/goal_driven_autonomous_workflow.md` and preserve that mode's defaults, especially the no-file-deletion guardrail and the expectation to continue through bounded slices instead of stopping for routine micro-instructions.
 3. If the task is unsafe or too vague for direct delegation, ask one concise clarification question instead of running Codex blindly.
 4. Prefer delegating bounded implementation, debugging, inspection, or review tasks.
 5. Preserve this project's constraints when handing off to Codex.
 6. For any Python execution or code that may be run, default commands and environment notes to the conda `predict2` environment unless the user explicitly specifies another environment.
 7. For model training, evaluation, diagnostics, or other model programs, prefer GPU by default unless the user explicitly requests CPU or the target script/environment requires otherwise.
-8. If the task materially advances thesis/model work, include an explicit instruction that Codex must append a detailed progress entry to `reports/project_progress_master.md` before returning any compressed summary.
+8. If the task materially advances thesis/model work, include an explicit instruction that Codex must append a detailed progress entry to `04_project_logs/reports/project_progress_master.md` before returning any compressed summary.
 9. The progress entry should capture what was done, why it was done, what was found, and the recommended next step.
-10. If the user did not give explicit red lines, default the handoff to “do not delete user files.”
+10. If the user did not give explicit red lines, default the handoff to 鈥渄o not delete user files.鈥?
 11. Use the Bash tool to run this command exactly:
 
 ```powershell
@@ -36,4 +36,5 @@ Rules:
 - Do not invent a Codex result without actually running the command.
 - If the task is better suited to review mode, explain that and suggest `/codex-review`.
 - Keep the final summary concise but concrete.
-- For thesis/model work, treat command execution, file inspection, script edits, experiment analysis, literature整理, and plan refinement as progress worth logging when they materially move the project forward.
+- For thesis/model work, treat command execution, file inspection, script edits, experiment analysis, literature鏁寸悊, and plan refinement as progress worth logging when they materially move the project forward.
+

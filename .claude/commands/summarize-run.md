@@ -1,4 +1,4 @@
----
+﻿---
 description: Summarize one experiment run folder using run_summary.json, config.json, metrics JSON, and nearby protocol evidence.
 ---
 Summarize a single experiment run from this repository.
@@ -17,7 +17,7 @@ Before answering:
    - metrics JSON
    - protocol config files
    - copied run scripts only as supporting evidence, not as primary source
-4. Because run summaries feed thesis/model progress, append a detailed progress entry to `reports/project_progress_master.md` before returning the compressed run summary.
+4. Because run summaries feed thesis/model progress, append a detailed progress entry to `04_project_logs/reports/project_progress_master.md` before returning the compressed run summary.
 
 Your goal is to produce a concise but decision-useful summary of what this run did and what happened.
 
@@ -37,3 +37,4 @@ Rules:
 - Distinguish measured results from your interpretation.
 - Mention fairness or comparability caveats if protocol or data assumptions are unclear.
 - The progress entry should record what run was summarized, what it was testing, the main measured results, reliability notes, and the best next action.
+

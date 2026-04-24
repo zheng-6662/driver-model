@@ -1,0 +1,4 @@
+interface:
+  display_name: "GPT Pro Packager"
+  short_description: "Package repo context and GPT Pro prompts"
+  default_prompt: "Use $gptpro-packager to bundle the current repo state and the next-step GPT Pro instructions."

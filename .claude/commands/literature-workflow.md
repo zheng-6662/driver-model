@@ -1,4 +1,4 @@
----
+﻿---
 description: Use the restored ScholarAIO/Zotero literature workflow for search, screening, import, and Claude/Codex collaboration in this repository.
 ---
 Run the restored literature workflow for this repository.
@@ -10,9 +10,9 @@ ARGUMENTS: $ARGUMENTS
 Before acting:
 
 1. Read the root `CLAUDE.md`.
-2. Read `reports/codex_academic_zotero_workflow.md`.
+2. Read `04_project_logs/reports/codex_academic_zotero_workflow.md`.
 3. If the request does not clearly state both the topic and the desired action, ask one concise clarification question instead of guessing.
-4. For any substantial literature search, import, organization, or evidence synthesis work, append a detailed progress entry to `reports/project_progress_master.md` before returning the compressed summary.
+4. For any substantial literature search, import, organization, or evidence synthesis work, append a detailed progress entry to `04_project_logs/reports/project_progress_master.md` before returning the compressed summary.
 
 Default behavior for this command:
 
@@ -45,15 +45,15 @@ py -3.11 -m scholaraio.cli online-search "<QUERY>" --json
 Use the local Zotero workflow:
 
 ```powershell
-py -3.11 .\tools\academic_search_to_zotero.py import-query "<QUERY>" --limit 5 --pick 1 --collection "研究生论文/自动导入" --download-pdf
+py -3.11 .\tools\academic_search_to_zotero.py import-query "<QUERY>" --limit 5 --pick 1 --collection "鐮旂┒鐢熻鏂?鑷姩瀵煎叆" --download-pdf
 ```
 
 ```powershell
-py -3.11 .\tools\academic_search_to_zotero.py import-doi "<DOI>" --collection "研究生论文/自动导入" --download-pdf
+py -3.11 .\tools\academic_search_to_zotero.py import-doi "<DOI>" --collection "鐮旂┒鐢熻鏂?鑷姩瀵煎叆" --download-pdf
 ```
 
 ```powershell
-py -3.11 .\tools\academic_search_to_zotero.py import-url "<URL>" --collection "研究生论文/自动导入" --download-pdf
+py -3.11 .\tools\academic_search_to_zotero.py import-url "<URL>" --collection "鐮旂┒鐢熻鏂?鑷姩瀵煎叆" --download-pdf
 ```
 
 If the user gives a specific collection path, use that instead of the default.
@@ -69,8 +69,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "D:/ClaudeCode/codex-bri
 That brief should explicitly tell Codex to:
 
 - use the local ScholarAIO / Zotero workflow instead of generic browsing when possible
-- inspect `reports/codex_academic_zotero_workflow.md`
-- record detailed progress in `reports/project_progress_master.md` before returning a compressed summary
+- inspect `04_project_logs/reports/codex_academic_zotero_workflow.md`
+- record detailed progress in `04_project_logs/reports/project_progress_master.md` before returning a compressed summary
 
 Compliance boundaries:
 
@@ -91,3 +91,4 @@ Rules:
 - Keep the final response concrete and execution-oriented.
 - Mention the exact command path used: local search/import, ScholarAIO CLI, or Codex bridge.
 - If something failed, say whether it failed at search, metadata retrieval, PDF retrieval, or Zotero import.
+

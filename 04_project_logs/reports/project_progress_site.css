@@ -1,0 +1,156 @@
+:root {
+  /* 专业深色工作站主题与紫色强调 */
+  --bg: #0f111a;
+  --paper: #1e2130;
+  --ink: #f8fafc;
+  --muted: #94a3b8;
+  --line: #334155;
+  --accent: #8b5cf6;
+  --accent-light: rgba(139, 92, 246, 0.15);
+  --signal: #f97316;
+  --ok: #10b981;
+  --warn: #f59e0b;
+  --stop: #ef4444;
+  --shadow: 0 4px 20px rgba(0,0,0,0.25);
+  --max: 1600px;
+  --r: 8px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Cascadia Code", "Inter", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+}
+a { color: var(--accent); text-decoration: none; transition: 0.2s; }
+a:hover { filter: brightness(1.2); }
+code { background: var(--accent-light); color: #c4b5fd; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; }
+
+/* 顶部紧凑导航 */
+.top { background: var(--paper); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 100; }
+.topin { max-width: var(--max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 56px; padding: 0 24px; }
+.brand { font-size: 1.1rem; font-weight: bold; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+.brand span { color: var(--accent); background: var(--accent-light); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; text-transform: uppercase; }
+.nav { display: flex; gap: 16px; }
+.nav a { color: var(--muted); font-size: 0.9rem; padding: 6px 12px; border-radius: 4px; border: 1px solid transparent; }
+.nav a:hover { color: var(--ink); background: var(--line); }
+.nav a.active { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+
+/* 主体布局 */
+.layoutWrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; max-width: var(--max); margin: 24px auto; padding: 0 24px; align-items: start; }
+.pageHeader { margin-bottom: 24px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+.pageHeader h1 { margin: 0 0 8px; font-size: 1.8rem; letter-spacing: -0.02em; }
+.lead { color: var(--muted); font-size: 0.9rem; margin: 0; }
+
+/* === 可视化增强组件 === */
+
+/* 1. 呼吸状态灯 (修正为绝对居中) */
+.status-dot { 
+  display: block; 
+  width: 10px; height: 10px; border-radius: 50%; 
+  flex-shrink: 0; 
+}
+.status-dot.red { background-color: var(--stop); box-shadow: 0 0 8px var(--stop); animation: pulse-red 2s infinite; }
+.status-dot.green { background-color: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.status-dot.yellow { background-color: var(--warn); box-shadow: 0 0 8px var(--warn); }
+@keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); } 70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
+/* 2. 数据与图表网格 */
+.statusGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.chartGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.panel, .chartCard, .sideBlock { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; box-shadow: var(--shadow); }
+.panel h2, .sideBlock .title { font-size: 1.1rem; margin: 0 0 16px 0; display: flex; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+
+/* 优化后的卡片与警报色 */
+.item { 
+  padding: 20px; 
+  background: var(--paper); border: 1px solid var(--line); 
+  border-radius: var(--r); box-shadow: var(--shadow); 
+  transition: 0.2s;
+}
+.item.danger-bg {
+  background: rgba(239, 68, 68, 0.04);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.item .title { 
+  font-size: 0.85rem; color: var(--muted); text-transform: uppercase; 
+  margin-bottom: 12px; 
+  display: flex; align-items: center; gap: 10px; 
+}
+.item p { 
+  margin: 0; 
+  font-size: 0.88rem; 
+  color: var(--ink); 
+  line-height: 1.65; 
+}
+
+/* 3. 大图预览墙 (Prediction Wall) */
+.previewWall { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+.previewRun { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
+.previewRun:hover { border-color: var(--accent); transform: translateY(-3px); }
+.previewPoster { display: block; height: 200px; background: #000; position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+.previewPoster img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.3s; }
+.previewRun:hover .previewPoster img { opacity: 1; transform: scale(1.02); }
+.previewPosterCaption { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; color: #fff; }
+.wallThumbRow { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border-bottom: 1px solid var(--line); }
+.wallThumb { height: 80px; display: block; overflow: hidden; background: #000; }
+.wallThumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.3s; }
+.wallThumb:hover img { opacity: 1; }
+.previewBody { padding: 16px; flex-grow: 1; }
+.previewBody h3 { margin: 0 0 8px 0; font-size: 1rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.previewRunMeta { display: flex; gap: 8px; margin-bottom: 12px; }
+
+/* 4. 高密度紧凑列表 */
+.runGrid { display: grid; gap: 8px; margin-bottom: 24px; }
+.runCard { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; transition: 0.2s; }
+.runCard:hover { background: var(--paper); border-color: var(--accent); }
+.runCard-info { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; }
+.runCard h3 { margin: 0; font-size: 0.95rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+.metricMini { display: flex; gap: 16px; border-left: 1px solid var(--line); padding-left: 16px; }
+.metricMini div { display: flex; flex-direction: column; align-items: flex-end; }
+.metricMini span { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
+.metricMini strong { font-size: 0.9rem; color: #fff; }
+
+/* 动态仪表盘条形图 (优化发光感) */
+.stat-bar-container { 
+  width: 100%; height: 6px; 
+  background: rgba(255, 255, 255, 0.05); 
+  border-radius: 4px; overflow: hidden; 
+  margin-top: 10px; 
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+}
+.stat-bar-fill { 
+  height: 100%; background: var(--accent); border-radius: 4px; 
+  box-shadow: 0 0 8px var(--accent-light); 
+}
+
+/* 标签体系 */
+.tag, .pill { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; border: 1px solid var(--line); background: var(--bg); color: var(--muted); }
+.tag.accent { background: var(--accent-light); color: #c4b5fd; border-color: var(--accent); }
+
+/* SVG 图表兼容深色 */
+.chartSvg text { fill: var(--muted); }
+.chartSvg line { stroke: var(--line); }
+
+/* 原有表格和文章流保持深色适配 */
+.tableWrap { overflow: auto; border: 1px solid var(--line); border-radius: var(--r); }
+.dataTable { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
+.dataTable th { background: var(--bg); padding: 12px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.dataTable td { padding: 12px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.article { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.timeline { display: grid; gap: 16px; }
+.day { background: var(--paper); padding: 20px; border-radius: var(--r); border: 1px solid var(--line); }
+.entry summary { cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: bold; }
+.tools { margin-bottom: 16px; display: flex; gap: 16px; align-items: center; }
+.search input { padding: 8px 12px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); border-radius: 4px; width: 300px; }
+.chips .chipbtn { background: var(--bg); border: 1px solid var(--line); padding: 4px 12px; color: var(--muted); border-radius: 4px; cursor: pointer; }
+.chips .chipbtn.active { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 1024px) {
+  .layoutWrap { grid-template-columns: 1fr; }
+  .runCard { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .metricMini { border-left: none; padding-left: 0; width: 100%; justify-content: space-between; }
+}

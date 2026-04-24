@@ -1,0 +1,14 @@
+Run start: 2025-12-16_20-03-09
+Run end  : 2025-12-16_20-09-11
+Model version: v5.1_pathbased_multitask_roadpreview_style_vxctx
+WIN_SEC: 3.0
+FS: 200
+FUTURE_PATH: 30.0
+DS: 0.5
+FUTURE_LEN: 60
+BATCH_SIZE: 64
+EPOCHS: 40
+LR: 0.001
+INPUT_DIM: 7
+CTX_DIM: 6
+CTX_ORDER: steer_anchor, steer_rate, ay, yawrate, vx, style_id

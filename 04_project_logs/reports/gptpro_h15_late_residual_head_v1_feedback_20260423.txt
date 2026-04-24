@@ -1,0 +1,465 @@
+﻿H15_LATE_RESIDUAL_HEAD_v1 运行结论与下一步修改要求（发给 GPTPro）
+
+日期：2026-04-23
+状态：已实际合入、已实际运行、已完成 built-in evaluation 与 same-tool recalc
+用途：这是一份可直接发给 GPTPro 的单文件交接说明。GPTPro 仅看本文件，就应当能知道这次分支实际做了什么、为什么没有 promotion、下一步该往哪里改。
+
+0. 文件用途
+
+本文件用于向 GPTPro 交代 `H15_LATE_RESIDUAL_HEAD_v1` 的真实运行结果、失败边界和下一步修改要求。
+当前项目目录原本只有源代码，不包含你后续生成的外部 patch。所以这次流程不是“直接运行你给的目录”，而是先把外部 GPTPro patch 合并到当前模块化源码树，再做编译检查、preflight、smoke run、full run、evaluation 和 recalc。
+
+这份文件只总结已经真实执行过并已经记录进项目日志的内容，不追加新的实验分析，不扩展新的路线，只固化当前已经验证过的判断边界。
+
+1. 本次实际执行了什么
+
+本次已完成以下实际动作：
+- 将 `H15_LATE_RESIDUAL_HEAD_v1` 对应 patch 合并到当前 modular V5.8 源码。
+- 对修改后的代码执行 `py_compile`。
+- 执行 direct forward / loss preflight。
+- 执行 2 epoch smoke run。
+- 执行 40 epoch full run。
+- 执行 built-in evaluation。
+- 执行 same-tool recalc，分别对 `best_by_loss` 和 `best_by_structured` 进行复算。
+- 将结果记录进项目总结、daily log、experiment registry、decision log 和 current-state。
+
+本次 full run 已真实完成，不是静态推断，也不是只看 patch 文本做分析。
+
+2. patch 内容
+
+这次 patch 的核心目标，是给 `t >= 1.0 s` 的 late slice 增加一个最小化 late residual steer head，用来修正旧 `H15` 在 `strong_pos` 上的后段振幅塌陷。
+
+本次实际合入的内容包括：
+- 新增环境变量：
+  DRIVER_MODEL_LATE_RESIDUAL_HEAD
+  DRIVER_MODEL_LATE_RESIDUAL_START_SEC
+  DRIVER_MODEL_W_LATE_RESIDUAL
+- 在模型里新增 minimal late residual steer head：
+  只在 `t >= 1.0 s` 生效
+- 在 loss 里新增 late residual loss 项
+- 在 train/history/run_config 中加入新 head 的记录和导出
+- 在 evaluation 中新增 `test_late_residual_metrics.json`
+- 在 recalc 工具中增加对新 head checkpoint 的兼容
+
+本次实际落到当前源码树的主要位置包括：
+- `02_code/final_code/model/training/v58_modular/config.py`
+- `02_code/final_code/model/training/v58_modular/modeling.py`
+- `02_code/final_code/model/training/v58_modular/losses.py`
+- `02_code/final_code/model/training/v58_modular/train.py`
+- `02_code/final_code/model/training/v58_modular/evaluation.py`
+- `02_code/tools/recalc_v58_checkpoint_with_current_metrics.py`
+
+3. 验证与 full run 状态
+
+代码本身是可运行的，这次失败不是“代码跑不起来”，也不是“补丁接不进当前项目”。
+
+验证状态如下：
+- `py_compile`：通过
+- direct forward / loss preflight：通过
+- 2 epoch smoke run：通过
+- 40 epoch full run：通过
+- built-in evaluation：通过
+- same-tool recalc：通过
+
+smoke run 目录：
+`F:\data_set_process\data_process\03_results\tmp\effectiveness_followup_20260423\h15_late_residual_head_v1_smoke\TRAIN_V5_4_STATECOND_REV_20260423_163432`
+
+full run 目录：
+`F:\data_set_process\data_process\03_results\tmp\effectiveness_followup_20260423\h15_late_residual_head_v1\TRAIN_V5_4_STATECOND_REV_20260423_163844`
+
+训练轮数：
+`40`
+
+训练耗时：
+`13.29 min`
+
+full run 已导出的关键文件包括：
+- `figures/test_metrics.json`
+- `figures/test_metrics_by_reversal.json`
+- `figures/test_metrics_reversal_structure.json`
+- `figures/test_late_residual_metrics.json`
+- `figures/test_state_dump.csv`
+- `figures/recalc_best_by_loss_summary.json`
+- `figures/recalc_best_by_loss_cases.csv`
+- `figures/recalc_best_by_structured_summary.json`
+- `figures/recalc_best_by_structured_cases.csv`
+
+recalc 路径上的已知收口说明：
+- wrapper import 仍需要：
+  `PYTHONPATH=F:\data_set_process\data_process\02_code\final_code\model\training`
+- same-tool recalc 仍依赖当前已存在的 shim：
+  `F:\data_set_process\data_process\tmp\recalc_v58_metrics_shim_20260423.py`
+
+这两个点是 tooling-path closure 问题，不是模型逻辑错误。
+
+4. 实际配置
+
+本次 run 不是重新开 optimizer sweep 或 width sweep。
+它是在 `H15_AC_CF_HLF_v1` 的基础上，加了 minimal late residual head。
+
+继承自 `H15_AC_CF_HLF_v1` 的配置：
+DRIVER_MODEL_FUTURE_SEC=1.5
+DRIVER_MODEL_STEER_COARSE_FINE=1
+DRIVER_MODEL_HARD_LATE_FINE=1
+DRIVER_MODEL_HARD_LATE_START_SEC=1.00
+DRIVER_MODEL_HARD_TAIL_START_SEC=1.00
+DRIVER_MODEL_W_HARD_LATE_FINE=0.10
+DRIVER_MODEL_W_FINE_DC=0.01
+DRIVER_MODEL_W_TREND_COARSE=0.10
+DRIVER_MODEL_PHASE_ADAPTIVE_TREND=0
+DRIVER_MODEL_STRONG_POS_GATE=0
+DRIVER_MODEL_LATE_REV_GATE=0
+DRIVER_MODEL_W_FIRSTREV_LOCAL=0.0
+
+本次新增启用的 late residual 配置：
+DRIVER_MODEL_LATE_RESIDUAL_HEAD=1
+DRIVER_MODEL_LATE_RESIDUAL_START_SEC=1.00
+DRIVER_MODEL_W_LATE_RESIDUAL=0.10
+
+其他保持当前 H15 line 默认：
+BATCH_SIZE=64
+EPOCHS=40
+OPTIMIZER=adam
+LR=1e-3
+WEIGHT_DECAY=0
+INPUT_PIPELINE_VERSION=fixed_v20260421
+ENABLE_MANUAL_COARSE_UPSAMPLE=1
+
+5. 结果解读
+
+这次结果的核心结论：
+`H15_LATE_RESIDUAL_HEAD_v1` is not a new keeper。
+它不是可 promotion 的新 keeper，但它是一个有价值的 mechanism probe。
+
+5.1 `best_by_loss`
+
+`best_by_loss` 的整体平均指标很好：
+best_by_loss
+rmse_steer=0.4954
+abs_tail_last_0p5s.rmse_steer=0.6284
+late_peak_recall=0.6522
+first_reversal_time_mae_sec=0.3135
+reversal_count_exact_match_rate=0.5625
+
+但是它在危险桶 `strong_pos` 上仍然是硬塌陷：
+strong_pos.tail_amp_ratio_pred_over_gt=0.3163
+strong_pos.tail_flatness_rate=1.0000
+
+这说明：
+- 当前 late residual head 没有天然破坏全局 fit / tail / late-peak
+- 但当前 loss / routing / selection 仍允许模型用漂亮的平均指标掩盖 `strong_pos` late-tail 的失败
+- 所以 `best_by_loss` 是 collapse case，不可作为后续 control
+
+5.2 `best_by_structured`
+
+`best_by_structured` 是这次唯一有机制意义的 checkpoint：
+best_by_structured
+rmse_steer=0.5474
+abs_tail_last_0p5s.rmse_steer=0.6868
+late_peak_recall=0.6656
+first_reversal_time_mae_sec=0.2900
+reversal_count_exact_match_rate=0.6174
+strong_pos.tail_amp_ratio_pred_over_gt=0.4904
+strong_pos.tail_flatness_rate=0.5000
+
+这个 checkpoint 的意义在于：
+- 它相对于旧 `H15 best_by_structured` 明显缓解了 `strong_pos` collapse
+- 它说明 late-slice extra capacity 是有用方向
+- 它没有只停留在“理论上可能有帮助”，而是实际打到了正确 failure mode
+
+但它仍然不能 promotion，原因如下：
+- `strong_pos.tail_amp_ratio_pred_over_gt=0.4904`，仍低于目标下限 `>= 0.60`
+- `rmse_steer=0.5474`、`abs_tail_last_0p5s.rmse_steer=0.6868`，相对更强的 fit/tail checkpoint 给回太多
+
+所以：
+- `best_by_structured` 才是后续 late-residual 方向的 control checkpoint
+- 但它仍然不是 keeper
+
+6. 与关键锚点对比
+
+6.1 live fit/tail keeper：`baseline_fixed_input best_by_structured`
+
+baseline_fixed_input best_by_structured
+rmse_steer=0.5559
+abs_tail_last_0p5s.rmse_steer=0.7171
+late_peak_recall=0.6496
+strong_pos.tail_amp_ratio_pred_over_gt=1.3490
+strong_pos.tail_flatness_rate=0.2105
+
+解释：
+- 它的整体 fit/tail 不如 H15 line 中最激进的 checkpoint
+- 但它在 `strong_pos` 上不塌陷
+- 所以它仍然是 live fit/tail keeper
+
+6.2 old `H15 best_by_structured`
+
+old H15 best_by_structured
+rmse_steer=0.4930
+abs_tail_last_0p5s.rmse_steer=0.6022
+late_peak_recall=0.6355
+strong_pos.tail_amp_ratio_pred_over_gt=0.2687
+strong_pos.tail_flatness_rate=1.0000
+
+解释：
+- 旧 `H15` 的 fit/tail 很强
+- 但它通过 flatten `strong_pos` late-tail 换来了平均指标
+- 所以不能 promotion
+
+6.3 `H15_AC_CF_HLF_v1 best_by_loss`
+
+H15_AC_CF_HLF_v1 best_by_loss
+rmse_steer=0.5063
+abs_tail_last_0p5s.rmse_steer=0.6323
+late_peak_recall=0.5786
+strong_pos.tail_amp_ratio_pred_over_gt=0.5141
+strong_pos.tail_flatness_rate=0.3750
+
+解释：
+- 这个 anti-collapse bundle 能部分缓解 `strong_pos`
+- 但 late_peak_recall 不够
+- 所以它没有成为 keeper
+
+6.4 当前 `H15_LATE_RESIDUAL_HEAD_v1 best_by_loss`
+
+H15_LATE_RESIDUAL_HEAD_v1 best_by_loss
+rmse_steer=0.4954
+abs_tail_last_0p5s.rmse_steer=0.6284
+late_peak_recall=0.6522
+strong_pos.tail_amp_ratio_pred_over_gt=0.3163
+strong_pos.tail_flatness_rate=1.0000
+
+解释：
+- 平均指标很漂亮
+- 但危险桶继续塌陷
+- 所以是 collapse case
+
+6.5 当前 `H15_LATE_RESIDUAL_HEAD_v1 best_by_structured`
+
+H15_LATE_RESIDUAL_HEAD_v1 best_by_structured
+rmse_steer=0.5474
+abs_tail_last_0p5s.rmse_steer=0.6868
+late_peak_recall=0.6656
+strong_pos.tail_amp_ratio_pred_over_gt=0.4904
+strong_pos.tail_flatness_rate=0.5000
+
+解释：
+- 这是本次分支最有价值的结果
+- 它证明 late residual 方向有效
+- 但强度和 selectivity 还不够
+
+与旧 `H15 best_by_structured` 的直接对比：
+strong_pos.tail_amp_ratio_pred_over_gt: 0.2687 -> 0.4904
+strong_pos.tail_flatness_rate: 1.0000 -> 0.5000
+late_peak_recall: 0.6355 -> 0.6656
+
+这组对比是本次分支最重要的正面信号。
+
+7. late residual 诊断
+
+`test_late_residual_metrics.json` 说明新 head 不是 dead branch，它确实在工作：
+mean_abs=0.0521
+peak_abs_mean=0.1991
+nonzero_rate=1.0
+
+但是它对 `strong_pos` 的 selectivity 还不够强：
+strong_pos_mean_abs=0.0629
+non_strong_mean_abs=0.0520
+strong_pos_peak_abs=0.3091
+non_strong_peak_abs=0.1974
+
+这里最重要的解释是：
+- 问题不是 “late residual head 没有学到东西”
+- 问题是 “它学到的 correction 还不够 selective”
+- 它只是 mildly more active on `strong_pos`
+- 它还没有形成足够强的 targeted correction，去稳定修复 rare but important 的 `strong_pos` late-tail under-amplitude
+
+因此，当前瓶颈是 selectivity 不足，不是“没学到 late residual”。
+
+8. 为什么当前版本不能 promotion
+
+当前 promotion 标准可概括为：
+strong_pos.tail_amp_ratio_pred_over_gt >= 0.60
+strong_pos.tail_flatness_rate <= 0.60
+abs_tail_last_0p5s.rmse_steer <= 0.66
+rmse_steer <= 0.53
+late_peak_recall >= 0.62
+
+检查结果：
+
+对 `best_by_loss`：
+- `rmse_steer=0.4954`，通过
+- `abs_tail_last_0p5s.rmse_steer=0.6284`，通过
+- `late_peak_recall=0.6522`，通过
+- `strong_pos.tail_amp_ratio_pred_over_gt=0.3163`，失败
+- `strong_pos.tail_flatness_rate=1.0000`，失败
+
+对 `best_by_structured`：
+- `rmse_steer=0.5474`，偏弱
+- `abs_tail_last_0p5s.rmse_steer=0.6868`，偏弱
+- `late_peak_recall=0.6656`，通过
+- `strong_pos.tail_amp_ratio_pred_over_gt=0.4904`，仍失败
+- `strong_pos.tail_flatness_rate=0.5000`，通过
+
+最终结论：
+- `best_by_loss` 是平均指标好看但危险桶崩掉的 collapse solution
+- `best_by_structured` 是危险桶修复一半但还没过 amplitude floor、且 fit/tail 回退过多的 partial repair
+- 两个 checkpoint 都不能 promotion
+
+因此，本次分支的正确判断是：
+not a new keeper
+mechanism probe only
+
+9. 对 GPTPro 的明确修改要求
+
+请不要把这次失败解释为 optimizer 不够、width 不够、训练轮数不够，或者普通 loss micro-sweep 还没调到位。
+当前证据更像是：
+late residual path 有用，但它对目标 failure bucket 的 condition selectivity 还不够强。
+
+下一版请围绕下面五个方向修改。
+
+9.1 增强 late residual head 的 condition selectivity
+
+当前 head 对 `strong_pos` 只是轻微更活跃：
+strong_pos_mean_abs=0.0629
+non_strong_mean_abs=0.0520
+
+这说明 selectivity 差距太小。
+下一版需要让 late residual correction 更明确地集中到 `strong_pos` 或 late-tail under-amplitude 样本上。
+
+建议方向：
+- 给 late residual head 增加 condition gate
+- gate 输入至少考虑已有 state / reversal / sign / coarse-fine latent 信息
+- 不要默认对所有样本等强度打开 late residual path
+- residual output 最好支持按样本或按时间的 selective scaling
+- 优先目标不是继续单纯压低全局 RMSE，而是把 `strong_pos.tail_amp_ratio_pred_over_gt` 推高到安全区间
+
+9.2 阻止 `best_by_loss` 再次收敛到 collapse solution
+
+当前 `best_by_loss` 的问题非常明确：
+rmse_steer=0.4954
+late_peak_recall=0.6522
+strong_pos.tail_amp_ratio_pred_over_gt=0.3163
+strong_pos.tail_flatness_rate=1.0000
+
+这说明当前 global loss 仍会奖励一个危险解。
+
+下一版请考虑：
+- late residual loss 是否需要对 `strong_pos` late-tail under-amplitude 样本额外加权
+- selection 或 structured score 是否需要更强惩罚 `strong_pos` flatness
+- 是否需要在 training loss 中显式加入 strong_pos late amplitude floor 或 anti-flatness 项
+- 不要把 collapse 仅仅留到 evaluation 阶段才发现，而要在训练目标或 checkpoint selection 阶段就更早阻断它
+
+9.3 修复 `strong_pos` 的同时保护 fit/tail
+
+当前 `best_by_structured` 虽然更接近正确方向，但代价偏大：
+rmse_steer=0.5474
+abs_tail_last_0p5s.rmse_steer=0.6868
+
+这说明不能只靠强拉 `strong_pos`，否则容易把问题做成“结构更像了，但整体拟合和尾段更差”。
+
+下一版应争取同时满足：
+rmse_steer <= 0.53
+abs_tail_last_0p5s.rmse_steer <= 0.66
+late_peak_recall >= 0.62
+strong_pos.tail_amp_ratio_pred_over_gt >= 0.60
+strong_pos.tail_flatness_rate <= 0.60
+
+如果无法同时满足，也请明确给出 tradeoff，并明确说明哪个 checkpoint 才是 keeper candidate，哪个只是 diagnostic/control。
+
+9.4 后续 control 只使用本次 `best_by_structured`
+
+如果继续 late residual 方向，请把本次 control checkpoint 固定为：
+H15_LATE_RESIDUAL_HEAD_v1 best_by_structured
+rmse_steer=0.5474
+abs_tail_last_0p5s.rmse_steer=0.6868
+late_peak_recall=0.6656
+strong_pos.tail_amp_ratio_pred_over_gt=0.4904
+strong_pos.tail_flatness_rate=0.5000
+
+不要把本次 `best_by_loss` 当作 control，因为它是 collapse case：
+strong_pos.tail_amp_ratio_pred_over_gt=0.3163
+strong_pos.tail_flatness_rate=1.0000
+
+9.5 保持实现范围窄，不要回到 monolithic wrapper
+
+下一版如果继续做，请仍然限制在 modular 路径内：
+- `v58_modular/config.py`
+- `v58_modular/modeling.py`
+- `v58_modular/losses.py`
+- `v58_modular/train.py`
+- `v58_modular/evaluation.py`
+- `tools/recalc_v58_checkpoint_with_current_metrics.py`
+
+实现要求：
+- 保持 env flag 可控
+- 默认不破坏已有 run
+- checkpoint 加载保持兼容
+- evaluation 继续导出 late residual diagnostics
+- recalc 工具继续能评估两个 checkpoint
+- 不要把大量新逻辑重新堆回 monolithic wrapper
+
+建议新增更细粒度的 diagnostics，包括但不限于：
+late_residual.mean_abs_by_bucket
+late_residual.peak_abs_by_bucket
+late_residual.strong_pos_vs_non_strong_ratio
+late_residual.tail_amp_gain_on_strong_pos
+late_residual.correlation_with_tail_under_amp
+late_residual.gate_mean_by_bucket
+late_residual.gate_peak_by_bucket
+
+10. 推荐下一版命名与成功标准
+
+推荐下一版命名：
+H15_LATE_RESIDUAL_SELECTIVE_v1
+
+也可以命名为：
+H15_STRONGPOS_LATE_RESIDUAL_GATE_v1
+
+推荐的核心定义：
+- 保持 `FUTURE_SEC=1.5`
+- 保持 `H15_AC_CF_HLF_v1` 基础配置
+- 保持 late residual head
+- 新增 selective gate 或 targeted weighting
+- 明确目标是修复 `strong_pos` late-tail under-amplitude，而不是回去做 optimizer、width 或普通 loss sweep
+
+推荐成功标准：
+rmse_steer <= 0.53
+abs_tail_last_0p5s.rmse_steer <= 0.66
+late_peak_recall >= 0.62
+strong_pos.tail_amp_ratio_pred_over_gt >= 0.60
+strong_pos.tail_flatness_rate <= 0.60
+
+最低可接受的 mechanism progress 标准：
+strong_pos.tail_amp_ratio_pred_over_gt > 0.55
+strong_pos.tail_flatness_rate <= 0.50
+late_peak_recall >= 0.65
+rmse_steer not worse than 0.55
+abs_tail_last_0p5s.rmse_steer not worse than 0.69
+
+如果连最低 mechanism progress 都达不到，就应考虑 late residual head 方向本身需要换结构，而不是继续只加权重。
+
+11. 相关路径
+
+本次 full run：
+`F:\data_set_process\data_process\03_results\tmp\effectiveness_followup_20260423\h15_late_residual_head_v1\TRAIN_V5_4_STATECOND_REV_20260423_163844`
+
+本次 smoke run：
+`F:\data_set_process\data_process\03_results\tmp\effectiveness_followup_20260423\h15_late_residual_head_v1_smoke\TRAIN_V5_4_STATECOND_REV_20260423_163432`
+
+本次分支总结：
+`F:\data_set_process\data_process\04_project_logs\reports\effectiveness_followup_20260423\h15_late_residual_head_v1_summary.md`
+
+当日日志：
+`F:\data_set_process\data_process\04_project_logs\reports\progress\daily\2026-04-23.md`
+
+实验注册表：
+`F:\data_set_process\data_process\04_project_logs\reports\progress\experiment_registry.md`
+
+决策日志：
+`F:\data_set_process\data_process\04_project_logs\reports\progress\decision_log.md`
+
+当前状态锚点：
+`F:\data_set_process\data_process\04_project_logs\references\current-state.md`
+
+一句话总结：
+核心问题不是 late residual head 无效，而是它对 strong_pos late-tail failure bucket 的选择性还不够强。

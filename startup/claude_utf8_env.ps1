@@ -2,7 +2,7 @@ param(
     [string]$Command
 )
 
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = "Stop"
 
 function Set-Utf8Console {
     $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
@@ -10,10 +10,10 @@ function Set-Utf8Console {
     [Console]::OutputEncoding = $utf8NoBom
     $global:OutputEncoding = $utf8NoBom
 
-    $env:PYTHONUTF8 = '1'
-    $env:PYTHONIOENCODING = 'utf-8'
-    $env:LANG = 'C.UTF-8'
-    $env:LC_ALL = 'C.UTF-8'
+    $env:PYTHONUTF8 = "1"
+    $env:PYTHONIOENCODING = "utf-8"
+    $env:LANG = "C.UTF-8"
+    $env:LC_ALL = "C.UTF-8"
 
     & chcp 65001 | Out-Null
 }
