@@ -1,0 +1,5 @@
+time: 2026-05-10 20:15:08
+hostname: autodl-container-bc9y0nl5hr-9ed57ba4
+gpu:
+NVIDIA GeForce RTX 4080, 0 MiB, 32760 MiB, 0 %
+training_process:

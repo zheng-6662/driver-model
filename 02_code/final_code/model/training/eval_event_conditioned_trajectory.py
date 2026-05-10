@@ -34,7 +34,7 @@ from future_steer_speed_subjectsplit_masked import (
     FS,
     save_json,
 )
-from run_event_conditioned_trajectory_baseline import build_sample_bundle_from_manifest
+from run_event_conditioned_trajectory_baseline import apply_optional_context_augmentation, build_sample_bundle_from_manifest
 
 
 THIS_DIR = Path(__file__).resolve().parent
@@ -548,6 +548,14 @@ def _conditioned_arrays(
     )
     meta_df = _annotate_meta(meta_df, y_pool, mask_pool)
     split_mask = meta_df["split"].astype(str).eq(split).to_numpy()
+    train_idx = meta_df.index[meta_df["split"].astype(str).eq("train")].tolist()
+    ctx_pool, _context_augmentation_meta = apply_optional_context_augmentation(
+        ctx_pool=ctx_pool,
+        meta_df=meta_df,
+        train_idx=train_idx,
+        args=argparse.Namespace(**config),
+        run_root=None,
+    )
 
     ckpt = torch.load(run_root / "best_model.pt", map_location=device, weights_only=False)
     norm_stats = ckpt["norm_stats"]
@@ -569,6 +577,16 @@ def _conditioned_arrays(
     )
     loader = DataLoader(split_ds, batch_size=batch_size, shuffle=False, num_workers=0)
 
+    candidate_prototypes = None
+    if str(config.get("candidate_base_mode", "learned_delta")) == "response_prototype":
+        proto_path = run_root / "candidate_prototypes_norm.npy"
+        if not proto_path.exists() and str(config.get("candidate_prototype_path", "")).strip():
+            candidate = Path(str(config.get("candidate_prototype_path")))
+            if candidate.exists():
+                proto_path = candidate
+        if proto_path.exists():
+            candidate_prototypes = np.load(proto_path).astype(np.float32)
+
     model = EventConditionedTrajectoryModel(
         input_dim=int(split_ds.src.shape[-1]),
         context_dim=int(split_ds.ctx.shape[-1]),
@@ -586,8 +604,20 @@ def _conditioned_arrays(
         structure_width=float(config.get("structure_width", 0.065)),
         gate_temperature=float(config.get("gate_temperature", 0.040)),
         event_residual_scale=float(config.get("event_residual_scale", 1.0)),
+        enable_response_type_head=bool(config.get("enable_response_type_head", False)),
+        enable_response_type_condition=bool(config.get("enable_response_type_condition", False)),
+        response_type_hidden_dim=int(config.get("response_type_hidden_dim", 96)),
+        num_trajectory_candidates=int(config.get("num_trajectory_candidates", 1)),
+        candidate_delta_scale=float(config.get("candidate_delta_scale", 1.0)),
+        candidate_base_mode=str(config.get("candidate_base_mode", "learned_delta")),
+        candidate_prototypes=candidate_prototypes,
     ).to(device)
-    model.load_state_dict(ckpt["model_state"])
+    missing, unexpected = model.load_state_dict(ckpt["model_state"], strict=False)
+    if missing or unexpected:
+        print(
+            f"load_state_dict(strict=False): missing={len(missing)} unexpected={len(unexpected)}",
+            flush=True,
+        )
     model.eval()
 
     y_mean_t = torch.tensor(norm_stats["y_mean"], dtype=torch.float32, device=device)

@@ -10,10 +10,22 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import Dataset
 
+from baseline_eval_primary_aux import classify_eval_morphology
 from conditioned_trajectory_head import ConditionedTrajectoryHead
 from event_head import EVENT_SCHEMA_KEYS, EventHead
 from event_targets import EventTargetConfig, sequence_to_event_targets
 from future_steer_speed_subjectsplit_masked import FUTURE_LEN, WIN_LEN
+
+
+RESPONSE_TYPE_KEYS = (
+    "response_high_amp",
+    "response_reverse",
+    "response_multi",
+    "response_tail_behavior",
+    "response_late_peak",
+    "response_hard_case",
+)
+RESPONSE_CANDIDATE_CLASS_KEY = "response_candidate_class"
 
 
 def build_event_schema_targets(
@@ -44,6 +56,66 @@ def build_event_schema_targets(
     return targets
 
 
+def build_response_type_targets(
+    y_pool: np.ndarray,
+    mask_pool: np.ndarray,
+    amp_threshold: float = 0.30,
+    late_peak_threshold_s: float = 1.20,
+    tail_start_frac: float = 0.70,
+) -> dict[str, np.ndarray]:
+    rows: list[dict[str, int]] = []
+    dt = 2.0 / max(int(FUTURE_LEN), 1)
+    for i in range(int(y_pool.shape[0])):
+        valid_len = int(mask_pool[i].sum())
+        valid_len = max(1, min(valid_len, int(y_pool.shape[1])))
+        y = np.asarray(y_pool[i, :valid_len, 0], dtype=np.float64)
+        peak_idx = int(np.argmax(np.abs(y)))
+        peak = float(y[peak_idx])
+        abs_peak = abs(peak)
+        morphology = classify_eval_morphology(y, valid_len)
+        tail_start = max(0, min(valid_len - 1, int(np.floor(float(tail_start_frac) * valid_len))))
+        tail_mean = float(np.mean(y[tail_start:])) if tail_start < valid_len else float(y[-1])
+        if abs(tail_mean) < max(0.06, 0.25 * abs_peak):
+            tail_behavior = 0
+        elif np.sign(tail_mean) == np.sign(peak):
+            tail_behavior = 1
+        else:
+            tail_behavior = 2
+        high_amp = int(abs_peak >= float(amp_threshold))
+        reverse = int(morphology == "reverse_correction")
+        multi = int(morphology == "multi_correction")
+        late_peak = int((peak_idx * dt) >= float(late_peak_threshold_s))
+        hard_case = int(high_amp and (reverse or multi or late_peak or tail_behavior != 0))
+        if reverse:
+            candidate_class = 2
+        elif multi or tail_behavior == 2:
+            candidate_class = 3
+        elif high_amp or late_peak:
+            candidate_class = 1
+        else:
+            candidate_class = 0
+        rows.append(
+            {
+                "response_high_amp": high_amp,
+                "response_reverse": reverse,
+                "response_multi": multi,
+                "response_tail_behavior": tail_behavior,
+                "response_late_peak": late_peak,
+                "response_hard_case": hard_case,
+                RESPONSE_CANDIDATE_CLASS_KEY: candidate_class,
+            }
+        )
+    return {
+        "response_high_amp": np.asarray([row["response_high_amp"] for row in rows], dtype=np.float32),
+        "response_reverse": np.asarray([row["response_reverse"] for row in rows], dtype=np.float32),
+        "response_multi": np.asarray([row["response_multi"] for row in rows], dtype=np.float32),
+        "response_tail_behavior": np.asarray([row["response_tail_behavior"] for row in rows], dtype=np.int64),
+        "response_late_peak": np.asarray([row["response_late_peak"] for row in rows], dtype=np.float32),
+        "response_hard_case": np.asarray([row["response_hard_case"] for row in rows], dtype=np.float32),
+        RESPONSE_CANDIDATE_CLASS_KEY: np.asarray([row[RESPONSE_CANDIDATE_CLASS_KEY] for row in rows], dtype=np.int64),
+    }
+
+
 class EventConditionedDataset(Dataset):
     def __init__(
         self,
@@ -55,6 +127,9 @@ class EventConditionedDataset(Dataset):
         norm_stats: dict[str, np.ndarray],
         event_targets: dict[str, np.ndarray],
         meta_df: pd.DataFrame | None = None,
+        distill_target_pool: np.ndarray | None = None,
+        distill_weight_pool: np.ndarray | None = None,
+        response_targets: dict[str, np.ndarray] | None = None,
     ) -> None:
         self.src = X_norm.astype(np.float32)
         self.y = y_pool.astype(np.float32)
@@ -63,6 +138,28 @@ class EventConditionedDataset(Dataset):
         self.mask = mask_pool.astype(np.float32)
         self.event_targets = event_targets
         self.meta_df = None if meta_df is None else meta_df.reset_index(drop=True).copy()
+        self.distill_target = None if distill_target_pool is None else distill_target_pool.astype(np.float32)
+        self.distill_weight = None if distill_weight_pool is None else distill_weight_pool.astype(np.float32)
+        self.response_targets = response_targets
+        if self.distill_target is not None and int(self.distill_target.shape[0]) != int(self.src.shape[0]):
+            raise ValueError(
+                f"distill_target_pool first dimension {self.distill_target.shape[0]} "
+                f"does not match dataset length {self.src.shape[0]}"
+            )
+        if self.distill_weight is not None and int(self.distill_weight.shape[0]) != int(self.src.shape[0]):
+            raise ValueError(
+                f"distill_weight_pool first dimension {self.distill_weight.shape[0]} "
+                f"does not match dataset length {self.src.shape[0]}"
+            )
+        if self.response_targets is not None:
+            for key in RESPONSE_TYPE_KEYS:
+                if key not in self.response_targets:
+                    raise ValueError(f"response_targets missing key: {key}")
+                if int(self.response_targets[key].shape[0]) != int(self.src.shape[0]):
+                    raise ValueError(
+                        f"response_targets[{key}] first dimension {self.response_targets[key].shape[0]} "
+                        f"does not match dataset length {self.src.shape[0]}"
+                    )
 
         self.y_norm = ((self.y - norm_stats["y_mean"].reshape(1, 1, -1)) / norm_stats["y_std"].reshape(1, 1, -1)).astype(np.float32)
         self.curve_norm = (
@@ -90,7 +187,66 @@ class EventConditionedDataset(Dataset):
                 item[key] = torch.tensor(arr[idx], dtype=torch.float32)
             else:
                 item[key] = torch.tensor(arr[idx], dtype=torch.long)
+        if self.distill_target is not None:
+            item["distill_y_soft"] = torch.from_numpy(self.distill_target[idx])
+        if self.distill_weight is not None:
+            item["distill_sample_weight"] = torch.tensor(self.distill_weight[idx], dtype=torch.float32)
+        if self.response_targets is not None:
+            for key in RESPONSE_TYPE_KEYS:
+                arr = self.response_targets[key]
+                if key == "response_tail_behavior":
+                    item[key] = torch.tensor(arr[idx], dtype=torch.long)
+                else:
+                    item[key] = torch.tensor(arr[idx], dtype=torch.float32)
+            if RESPONSE_CANDIDATE_CLASS_KEY in self.response_targets:
+                item[RESPONSE_CANDIDATE_CLASS_KEY] = torch.tensor(
+                    self.response_targets[RESPONSE_CANDIDATE_CLASS_KEY][idx],
+                    dtype=torch.long,
+                )
         return item
+
+
+class ResponseTypeHead(nn.Module):
+    def __init__(self, d_model: int, hidden_dim: int = 96) -> None:
+        super().__init__()
+        hidden = max(int(hidden_dim), 16)
+        self.shared = nn.Sequential(
+            nn.Linear(d_model, hidden),
+            nn.GELU(),
+            nn.LayerNorm(hidden),
+        )
+        self.high_amp = nn.Linear(hidden, 1)
+        self.reverse = nn.Linear(hidden, 1)
+        self.multi = nn.Linear(hidden, 1)
+        self.tail_behavior = nn.Linear(hidden, 3)
+        self.late_peak = nn.Linear(hidden, 1)
+        self.hard_case = nn.Linear(hidden, 1)
+        self.summary_dim = 8
+
+    def forward(self, pooled_latent: torch.Tensor) -> dict[str, torch.Tensor]:
+        h = self.shared(pooled_latent)
+        return {
+            "response_high_amp_logit": self.high_amp(h).squeeze(-1),
+            "response_reverse_logit": self.reverse(h).squeeze(-1),
+            "response_multi_logit": self.multi(h).squeeze(-1),
+            "response_tail_behavior_logits": self.tail_behavior(h),
+            "response_late_peak_logit": self.late_peak(h).squeeze(-1),
+            "response_hard_case_logit": self.hard_case(h).squeeze(-1),
+        }
+
+    def predicted_summary(self, logits: dict[str, torch.Tensor]) -> torch.Tensor:
+        tail_probs = torch.softmax(logits["response_tail_behavior_logits"], dim=-1)
+        return torch.cat(
+            [
+                torch.sigmoid(logits["response_high_amp_logit"]).unsqueeze(-1),
+                torch.sigmoid(logits["response_reverse_logit"]).unsqueeze(-1),
+                torch.sigmoid(logits["response_multi_logit"]).unsqueeze(-1),
+                tail_probs,
+                torch.sigmoid(logits["response_late_peak_logit"]).unsqueeze(-1),
+                torch.sigmoid(logits["response_hard_case_logit"]).unsqueeze(-1),
+            ],
+            dim=-1,
+        )
 
 
 class SharedHistoryEncoder(nn.Module):
@@ -145,6 +301,13 @@ class EventConditionedTrajectoryModel(nn.Module):
         structure_width: float = 0.065,
         gate_temperature: float = 0.040,
         event_residual_scale: float = 1.0,
+        enable_response_type_head: bool = False,
+        enable_response_type_condition: bool = False,
+        response_type_hidden_dim: int = 96,
+        num_trajectory_candidates: int = 1,
+        candidate_delta_scale: float = 1.0,
+        candidate_base_mode: str = "learned_delta",
+        candidate_prototypes: torch.Tensor | np.ndarray | None = None,
     ) -> None:
         super().__init__()
         self.encoder = SharedHistoryEncoder(
@@ -162,6 +325,13 @@ class EventConditionedTrajectoryModel(nn.Module):
             event_embed_dim=event_embed_dim,
         )
         self.privileged_event_proj = nn.Linear(event_embed_dim, event_embed_dim)
+        self.enable_response_type_head = bool(enable_response_type_head or enable_response_type_condition)
+        self.enable_response_type_condition = bool(enable_response_type_condition)
+        self.response_type_head = (
+            ResponseTypeHead(d_model=d_model, hidden_dim=int(response_type_hidden_dim))
+            if self.enable_response_type_head
+            else None
+        )
         self.traj_head = ConditionedTrajectoryHead(
             d_model=d_model,
             context_dim=context_dim,
@@ -176,6 +346,15 @@ class EventConditionedTrajectoryModel(nn.Module):
             structure_width=structure_width,
             gate_temperature=gate_temperature,
             event_residual_scale=event_residual_scale,
+            response_summary_dim=(
+                self.response_type_head.summary_dim
+                if self.enable_response_type_condition and self.response_type_head is not None
+                else 0
+            ),
+            num_trajectory_candidates=int(num_trajectory_candidates),
+            candidate_delta_scale=float(candidate_delta_scale),
+            candidate_base_mode=str(candidate_base_mode),
+            candidate_prototypes=candidate_prototypes,
         )
 
     def forward(
@@ -191,6 +370,11 @@ class EventConditionedTrajectoryModel(nn.Module):
         cond_emb, cond_meta = self.event_head.build_condition_embedding(event_logits, teacher_events=event_teacher)
         if privileged_event_teacher is not None:
             cond_emb = cond_emb + self.privileged_event_proj(privileged_event_teacher)
+        response_logits = None
+        response_summary = None
+        if self.response_type_head is not None:
+            response_logits = self.response_type_head(pooled)
+            response_summary = self.response_type_head.predicted_summary(response_logits)
         y_hat, traj_extras = self.traj_head(
             memory=memory,
             pooled_latent=pooled,
@@ -198,6 +382,7 @@ class EventConditionedTrajectoryModel(nn.Module):
             curve_norm=curve_norm,
             event_condition_emb=cond_emb,
             event_condition_summary=cond_meta["summary"],
+            response_condition_summary=response_summary if self.enable_response_type_condition else None,
         )
         extras: dict[str, Any] = {
             "event_logits": event_logits,
@@ -206,6 +391,8 @@ class EventConditionedTrajectoryModel(nn.Module):
             "event_condition_predicted_summary": cond_meta["predicted_summary"],
             "event_condition_source": cond_meta["source"],
             "privileged_event_teacher_used": bool(privileged_event_teacher is not None),
+            "response_type_logits": response_logits,
+            "response_type_condition_used": bool(self.enable_response_type_condition and response_summary is not None),
         }
         extras.update(traj_extras)
         return y_hat, extras
@@ -320,6 +507,29 @@ def compute_event_loss(batch: dict[str, torch.Tensor], event_logits: dict[str, t
         peak_bin=peak_bin,
         peak_dir=peak_dir,
     )
+
+
+def compute_response_type_loss(batch: dict[str, torch.Tensor], response_logits: dict[str, torch.Tensor] | None) -> torch.Tensor:
+    if response_logits is None:
+        return torch.zeros((), dtype=torch.float32, device=batch["src"].device)
+    if not all(key in batch for key in RESPONSE_TYPE_KEYS):
+        return torch.zeros((), dtype=torch.float32, device=batch["src"].device)
+    binary_terms = [
+        ("response_high_amp_logit", "response_high_amp"),
+        ("response_reverse_logit", "response_reverse"),
+        ("response_multi_logit", "response_multi"),
+        ("response_late_peak_logit", "response_late_peak"),
+        ("response_hard_case_logit", "response_hard_case"),
+    ]
+    losses = [
+        F.binary_cross_entropy_with_logits(
+            response_logits[logit_key],
+            batch[target_key].to(dtype=response_logits[logit_key].dtype),
+        )
+        for logit_key, target_key in binary_terms
+    ]
+    losses.append(F.cross_entropy(response_logits["response_tail_behavior_logits"], batch["response_tail_behavior"].long()))
+    return torch.stack(losses).mean()
 
 
 def count_parameters(model: nn.Module) -> int:
