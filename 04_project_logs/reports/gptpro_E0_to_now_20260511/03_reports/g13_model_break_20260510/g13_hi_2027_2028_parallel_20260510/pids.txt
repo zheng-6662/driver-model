@@ -1,0 +1,4 @@
+8515 G13H 2027 /root/autodl-tmp/data_process/04_project_logs/reports/g13_model_breakthrough_20260510/g13_hi_2027_2028_parallel_20260510/logs/G13H_seed2027.log
+8523 G13H 2028 /root/autodl-tmp/data_process/04_project_logs/reports/g13_model_breakthrough_20260510/g13_hi_2027_2028_parallel_20260510/logs/G13H_seed2028.log
+8533 G13I 2027 /root/autodl-tmp/data_process/04_project_logs/reports/g13_model_breakthrough_20260510/g13_hi_2027_2028_parallel_20260510/logs/G13I_seed2027.log
+8543 G13I 2028 /root/autodl-tmp/data_process/04_project_logs/reports/g13_model_breakthrough_20260510/g13_hi_2027_2028_parallel_20260510/logs/G13I_seed2028.log
