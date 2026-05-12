@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 03:46
+
+- 当前阶段：阶段 3 top-K top1/bestK 差距复盘 v0.1 已完成；仍未冻结强车辆基线，仍处于车辆-only 可靠性/选择机制诊断阶段。
+- 当前正在做什么：归档 top-K v0.1 的选择失败样本、可靠性信号和下一版模型依据。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_topk_gap_review_v0_1.py`；不训练新模型，只合并 top-K 分支诊断、逐样本物理指标、manifest 道路/事件字段和响应分解标签；生成样本详情、总体摘要、阈值、相关性、bucket 汇总、分被试/道路/响应族汇总、top gap 样本、top1 比 RBF 更差样本、4 张诊断图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；本地复盘脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：test top-1 与 best-of-3 一致率=0.300，平均 top1-bestK gap=0.110531；train 定义的简单高风险分数捕捉 test 高 gap 样本比例=0.545，低置信规则捕捉比例=0.636；最大 gap 样本为 `vehicle_instability_allraw__gf__2025_09_26_10_52_57__000300870__pre3_label3_response_coverage`，gap=0.447251。
+- 当前最大风险：当前风险分数/低置信规则只是诊断线索，不是可部署策略；下一步若使用可靠性规则，必须在 train/val 固定后再 test 评价。
+- 下一步准备做什么：提交本轮差距复盘；后续优先做可靠性/选择头 v0.2 或关键点条件多假设，继续阻塞连续风格、生理和 EEG 增量结论。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_topk_gap_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/figures/topk_gap_top_samples.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/figures/topk_gap_risk_scatter.png`。
+
 ## 最新更新：2026-05-13 03:37
 
 - 当前阶段：阶段 3 top-K 车辆-only Transformer v0.1 已归档并完成 Git 提交；强车辆基线仍未冻结。

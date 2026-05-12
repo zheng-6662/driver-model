@@ -1,0 +1,23 @@
+{
+  "output_version": "stage03_vehicle_instability_topk_gap_review_v0_1",
+  "input_version": "stage03_vehicle_instability_topk_vehicle_transformer_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "thresholds": {
+    "gap_train_p75": 0.16120616999999998,
+    "gap_train_p90": 0.24913775250000006,
+    "branch_spread_train_p75": 0.2421198025,
+    "top1_prob_train_p25": 0.36994867,
+    "prob_margin_train_p25": 0.01448704325,
+    "risk_score_train_p75": 1.8151765479337496
+  },
+  "sample_detail_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/tables/topk_gap_review_sample_detail.csv",
+  "figures": {
+    "top_gap": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/figures/topk_gap_top_samples.png",
+    "risk_scatter": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/figures/topk_gap_risk_scatter.png",
+    "branch_confusion": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/figures/topk_gap_branch_confusion.png",
+    "error_flags": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/figures/topk_gap_error_flags.png"
+  }
+}
