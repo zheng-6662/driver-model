@@ -143,6 +143,7 @@
 - `5b8abbf Focus manual labeler on candidate event segments`
 - `4019653 Clarify manual labeler event line legend`
 - `2819f3f Add codex automatic event review`
+- `d0dbf5d Rebuild event review around vehicle instability`
 
 ## 适合用户/老师直接查看的材料
 
