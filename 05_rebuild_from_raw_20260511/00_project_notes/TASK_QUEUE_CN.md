@@ -7,7 +7,7 @@
 
 ## 已完成任务
 
-- Stage 7c 候选轨迹导出与差异审计 v0.1：已复现 RBF/KNN、keypoint residual、top-K branch/top1 预测，导出 `stage07c_candidate_trajectories.npz`，并生成指标表、差异表、oracle 摘要、gate 表、固定图、高差异图和 oracle gain 图。
+- Stage 7c 候选轨迹导出与差异审计 v0.1：已复现 RBF/KNN、keypoint residual、top-K branch/top1 预测，导出 `stage07c_candidate_trajectories.npz`，并生成指标表、差异表、oracle 摘要、gate 表、固定图、高差异图和 oracle gain 图；已提交 `48b8c438`。
 - Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
 - Stage 7a 非 oracle 选择协议 v0.1：已固定候选池、允许/禁止输入、评估计划和升级 gate。
 

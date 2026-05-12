@@ -22,7 +22,7 @@
 - 差异-上限散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_disagreement_vs_oracle_gain_test.png`
 - GPTPro 提问和回复：本阶段未调用。
 - 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`48b8c438 Add stage7c candidate trajectory export`。
 - 适合用户/老师直接查看：优先看用户查看版总结、gate 表、指标图、oracle gain 图和轨迹数组说明。
 
 # 阶段产物索引
