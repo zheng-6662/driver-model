@@ -3,7 +3,7 @@
 
 - 当前阶段：Stage 7d 非 oracle selector v0.2 已完成；gate=`no_upgrade`。
 - 当前正在做什么：收口当前多候选选择器路线，准备转向候选生成方式本身，而不是继续堆选择器。
-- 已完成什么：新增并运行 `stage07d_non_oracle_selector_v0_2.py`；只用 Stage 7c 的候选预测特征和道路/事件上下文训练 selector；显式排除 test 标签、oracle 特征、subject/session ID、生理、脑电和连续风格；生成 feature audit、allowed features、policy metrics、decision diagnostics、selected decisions、confusion、gate 表、3 张图、用户查看版总结和技术报告。
+- 已完成什么：新增并运行 `stage07d_non_oracle_selector_v0_2.py`；只用 Stage 7c 的候选预测特征和道路/事件上下文训练 selector；显式排除 test 标签、oracle 特征、subject/session ID、生理、脑电和连续风格；生成 feature audit、allowed features、policy metrics、decision diagnostics、selected decisions、confusion、gate 表、3 张图、用户查看版总结和技术报告；已提交 `eb785f4a Add stage7d non-oracle selector`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val gate 选择 `always_rbf_reference`；test RMSE=0.533667，与 RBF/KNN 完全相同；test RBF 选择比例=1.000；broad oracle test RMSE=0.410957 仍只是诊断上限。Stage 7d 不能升级为多假设主线。

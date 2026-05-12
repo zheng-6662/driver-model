@@ -19,7 +19,7 @@
 - 选择计数图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_selected_choice_counts.png`
 - GPTPro 提问和回复：本阶段未调用。
 - 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`eb785f4a Add stage7d non-oracle selector`。
 - 适合用户/老师直接查看：优先看用户查看版总结、gate 表、val delta 图和 policy metrics 图。
 
 # R2E-Steering 阶段产物索引

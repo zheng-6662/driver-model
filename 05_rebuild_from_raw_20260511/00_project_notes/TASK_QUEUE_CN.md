@@ -7,7 +7,7 @@
 
 ## 已完成任务
 
-- Stage 7d 非 oracle selector v0.2：已训练 logistic/RF selector 和置信度 fallback；val gate 选择 `always_rbf_reference`；test delta=0，RBF 选择比例=1.0；gate=`no_upgrade`。
+- Stage 7d 非 oracle selector v0.2：已训练 logistic/RF selector 和置信度 fallback；val gate 选择 `always_rbf_reference`；test delta=0，RBF 选择比例=1.0；gate=`no_upgrade`；已提交 `eb785f4a`。
 - Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
 - Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
 
