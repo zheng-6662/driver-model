@@ -9,6 +9,7 @@
 - 已新增并运行 `stage06b_keypoint_selector_error_review_v0_1.py`。
 - 已确认 selector 在 test 上 TP=5、FP=6、FN=12、TN=17，主要问题是漏选 keypoint 可收益样本。
 - 已确认 selector 平均 delta vs RBF=+0.006945，没有形成稳定可部署提升。
+- 已提交 `753525fd Add stage6b keypoint selector error review`。
 
 ### 待做任务
 - 复盘 12 个 `FN_missed_keypoint_gain` 样本，找出 keypoint 更好但 selector 概率低的原因。

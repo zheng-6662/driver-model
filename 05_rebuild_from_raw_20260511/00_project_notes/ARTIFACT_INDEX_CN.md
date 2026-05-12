@@ -18,7 +18,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/logs/keypoint_selector_error_review_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`753525fd Add stage6b keypoint selector error review`。
 - 适合用户/老师直接查看：用户查看版总结、混淆表、top regret 样本、probability vs gain 图。
 
 ## 最新新增：阶段 6 车辆-only 结构化路线审计 v0.1

@@ -4,7 +4,7 @@
 
 - 当前阶段：Stage 6b RBF/keypoint 选择器错误复盘 v0.1 已完成；生理/EEG 仍不进入。
 - 当前正在做什么：复盘 `selector_logreg_rbf_keypoint_no_subject` 在 B 轨道 test 40 个样本上为什么只形成弱候选，准备下一版 selector/reliability 特征修正。
-- 已完成什么：新增并运行 `stage06b_keypoint_selector_error_review_v0_1.py`；生成选择器样本明细、混淆表、分组摘要、top regret、漏选 keypoint 样本、错选 keypoint 样本、下一步动作表、3 张图、用户总结和技术报告。
+- 已完成什么：新增并运行 `stage06b_keypoint_selector_error_review_v0_1.py`；生成选择器样本明细、混淆表、分组摘要、top regret、漏选 keypoint 样本、错选 keypoint 样本、下一步动作表、3 张图、用户总结和技术报告；已提交 `753525fd Add stage6b keypoint selector error review`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：test 40 个样本中 selector 选 keypoint 比例=0.275，oracle 中 keypoint 更优比例=0.425；TP=5、FP=6、FN=12、TN=17；selector 平均 delta vs RBF=+0.006945，平均 oracle regret=0.059122。
