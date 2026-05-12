@@ -1,0 +1,20 @@
+{
+  "candidate_events": 11619,
+  "samples_master_rows": 46476,
+  "anchor_source_counts": {
+    "old_v400_context_trigger_idx": 6247,
+    "raw_road_curvature_onset": 359,
+    "raw_vehicle_dynamic_onset": 5013
+  },
+  "window_rows": {
+    "pre1_label2_event_trigger": 11619,
+    "pre2_label2_old_main": 11619,
+    "pre2_obs0p5_label2_early_observe": 11619,
+    "pre3_label3_response_coverage": 11619
+  },
+  "recommended_stage3_vehicle_baseline_rows": 1077,
+  "cache_status": {
+    "ok": 91
+  },
+  "road_design_files": 49
+}

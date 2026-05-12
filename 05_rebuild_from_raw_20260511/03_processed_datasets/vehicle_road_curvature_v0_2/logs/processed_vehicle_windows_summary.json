@@ -1,0 +1,69 @@
+{
+  "selected_sample_rows": 1077,
+  "window_outputs": [
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "npz_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_road_curvature_v0_2/arrays/pre1_label2_event_trigger.npz",
+      "index_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_road_curvature_v0_2/tables/sample_index_pre1_label2_event_trigger.csv",
+      "sample_count": 359,
+      "input_shape": [
+        359,
+        201,
+        9
+      ],
+      "label_shape": [
+        359,
+        401
+      ],
+      "mean_input_valid_ratio": 1.0,
+      "mean_label_valid_ratio": 1.0
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "npz_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_road_curvature_v0_2/arrays/pre2_label2_old_main.npz",
+      "index_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_road_curvature_v0_2/tables/sample_index_pre2_label2_old_main.csv",
+      "sample_count": 359,
+      "input_shape": [
+        359,
+        401,
+        9
+      ],
+      "label_shape": [
+        359,
+        401
+      ],
+      "mean_input_valid_ratio": 1.0,
+      "mean_label_valid_ratio": 1.0
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "npz_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_road_curvature_v0_2/arrays/pre3_label3_response_coverage.npz",
+      "index_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_road_curvature_v0_2/tables/sample_index_pre3_label3_response_coverage.csv",
+      "sample_count": 359,
+      "input_shape": [
+        359,
+        601,
+        9
+      ],
+      "label_shape": [
+        359,
+        601
+      ],
+      "mean_input_valid_ratio": 1.0,
+      "mean_label_valid_ratio": 1.0
+    }
+  ],
+  "feature_names": [
+    "zx|SteeringWheel",
+    "zx1|v_km/h",
+    "zx1|lanecurvatureXY",
+    "zx1|lateraldistance",
+    "zx|roll",
+    "zx|vyaw",
+    "zx|ay",
+    "zx|vx",
+    "zx|vy"
+  ],
+  "fs": 200.0,
+  "raw_files_modified": false
+}
