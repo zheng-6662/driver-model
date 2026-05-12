@@ -1,0 +1,51 @@
+{
+  "output_version": "stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1",
+  "tracks": [
+    {
+      "track_id": "A_instant2s_core",
+      "window_config_id": "pre2_label2_old_main",
+      "task_sample_role": "instant2s_core_candidate",
+      "n_samples": 84,
+      "train_n": 62,
+      "val_n": 10,
+      "test_n": 12,
+      "label_horizon_s": 2.0,
+      "vehicle_input_tokens": 101,
+      "context_feature_count": 50
+    },
+    {
+      "track_id": "B_response3s_strict_core",
+      "window_config_id": "pre3_label3_response_coverage",
+      "task_sample_role": "response3s_strict_core_candidate",
+      "n_samples": 270,
+      "train_n": 188,
+      "val_n": 42,
+      "test_n": 40,
+      "label_horizon_s": 3.0,
+      "vehicle_input_tokens": 101,
+      "context_feature_count": 51
+    }
+  ],
+  "model_name": "vehicle_transformer_context_no_subject",
+  "seed": 20260513,
+  "max_epochs": 100,
+  "patience": 15,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "uses_response_decomposition_labels_as_input": false,
+  "prediction_zero_origin_constraint": true,
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/tables/clean_task_vehicle_transformer_metrics.csv",
+  "per_sample_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/tables/clean_task_vehicle_transformer_per_sample_metrics.csv",
+  "figures": {
+    "A_instant2s_core_fixed": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/A_instant2s_core_fixed_predictions_test.png",
+    "A_instant2s_core_bad": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/A_instant2s_core_transformer_bad_samples_test.png",
+    "B_response3s_strict_core_fixed": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png",
+    "B_response3s_strict_core_bad": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/B_response3s_strict_core_transformer_bad_samples_test.png",
+    "metric_summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/clean_task_vehicle_transformer_metric_summary_test.png"
+  }
+}

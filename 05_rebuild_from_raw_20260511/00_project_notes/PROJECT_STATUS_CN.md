@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 01:43
+
+- 当前阶段：阶段 3 干净响应任务车辆-only Transformer v0.1 已完成；仍处于强车辆基线冻结前的模型对照阶段。
+- 当前正在做什么：在 A/B 两条干净响应任务轨道上补跑真正的车辆-only Transformer，并与 RBF KRR、KNN template、formal ridge 在固定图、坏样本图和物理指标上对照。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1.py`；A 轨道 84 条、B 轨道 270 条均完成 Transformer 训练、早停、test 评估、固定图、坏样本图、指标表、逐样本表、模型 checkpoint、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；本轮本地前台脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。本轮使用本机可用 CUDA 设备训练，不是远程服务器。
+- 最近一次结果：B 轨道 test 上 RBF KRR RMSE=0.533667、错侧率=0.225000、大幅响应召回=0.750000；直接 Transformer RMSE=0.566011、错侧率=0.225000、大幅响应召回=0.625000。直接 Transformer 已补跑，但当前不能替代 RBF KRR 主车辆参照。
+- 当前最大风险：如果只因为模型名称是 Transformer 就升级为主线，会忽略它在 B 轨道 RMSE、大幅响应召回、启动延迟、尾段和坏样本上的不足；下一步应做响应分解/关键点+残差结构，而不是直接进入生理/风格结论。
+- 下一步准备做什么：基于已生成的响应分解标签，设计车辆-only 结构化模型：方向、幅值桶、峰值时间/启动延迟、响应形态和尾段状态辅助头，再比较关键点+残差轨迹是否改善 B 轨道坏样本。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_transformer_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_transformer_v0_1/figures/B_response3s_strict_core_transformer_bad_samples_test.png`。
+
 ## 最新更新：2026-05-13 01:14
 
 - 当前阶段：阶段 3 车辆-only 响应分解标签 v0.1 已完成；仍处于强车辆基线/结构化车辆模型准备阶段。
