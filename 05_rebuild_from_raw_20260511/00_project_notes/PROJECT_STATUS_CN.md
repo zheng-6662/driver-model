@@ -136,3 +136,18 @@ instability_ay_roll        12
 6. 概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/figures/instability_event_score_overview_v0_1.png`
 7. 本地审查页面：`http://127.0.0.1:8766/`
 8. 当前长期目标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`
+
+## 追加更新：2026-05-12 16:35
+
+- 当前阶段：阶段 2 追加审计，正在确认道路事件位置与旧/新锚点对齐关系。
+- 当前正在做什么：不训练模型，先检查道路设计位置、原始车辆轨迹投影、旧 v400 锚点、道路曲率候选、非方向盘车身动态候选和道路引导失稳候选之间的时间关系。
+- 已完成什么：已生成 `road_event_anchor_audit_v0_1` 审计包。道路模块/实例 16 个；91 条原始车辆记录全部可投影；道路模块经过片段 890 个；旧 v400 锚点 6247 个完成对齐。
+- 最近一次结果：旧 v400 锚点中，1 秒内贴近非方向盘车身动态候选 736 个，贴近道路曲率候选 169 个，贴近道路模块边界 321 个。大量旧锚点被分到“可能早于车身响应”或“可能晚于车身响应”两类，说明旧锚点不能直接作为最终真值。
+- 当前最大风险：道路中心线映射质量不均衡，片段级可靠性中 `low/very_low` 占比不低，因此道路模块名称不能单独定义锚点，必须和车身姿态共同使用。
+- 下一步准备做什么：先查看审计图和对齐表，再把旧样本分为“可保留、偏早、偏晚、道路映射不可靠”四类；之后再生成高可信新锚点 manifest 和强车辆基线。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_road_anchor_audit_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/road_event_anchor_audit_v0_1_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/figures/road_event_position_map_v0_1.png`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/figures/road_anchor_audit_overview_v0_1.png`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/tables/old_new_anchor_alignment_v0_1.csv`

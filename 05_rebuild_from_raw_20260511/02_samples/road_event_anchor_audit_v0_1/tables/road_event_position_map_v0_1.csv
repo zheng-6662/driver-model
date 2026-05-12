@@ -1,0 +1,17 @@
+﻿module_name,instance_name,road_risk_class_cn,s_start_m,s_end_m,length_m,x_min,x_max,y_min,y_max,max_abs_curvature,mean_abs_curvature,nonzero_curvature_points,direction_mode,source_layout_path
+middle_section,section1,普通连接段,0.0,1159.625,1159.625,0.0,1159.625,0.0,0.0,0.0,0.0,0,reverse,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+longstraight,longstraight,长直线路段,1160.625,1611.517,450.892,1160.625,1611.517,0.0,0.0,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section2,普通连接段,1612.517,2771.142,1158.625,1612.517,2771.142,0.0,0.0,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+curve1,curve1,弯道路段,2772.142,4586.574,1814.433,2772.142,4181.02,-395.0,58.067,0.01007879,0.00154561,714,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section3,普通连接段,4587.574,5746.199,1158.625,4181.031,4194.759,-1554.543,-396.0,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+fix_road,fix_road,特殊道路段,5747.199,7192.256,1445.056,4194.77,4211.891,-3000.498,-1555.543,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section4,普通连接段,7193.256,8351.88,1158.625,4211.903,4225.63,-4160.041,-3001.498,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+curve2,curve2,弯道路段,8352.88,10181.287,1828.406,4206.795,4362.577,-5932.394,-4161.041,0.00583136,0.00076143,650,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section5,普通连接段,10182.287,11340.911,1158.625,4363.292,5190.975,-6743.865,-5933.093,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+stop,stop,特殊道路段,11341.911,12500.536,1158.625,5191.689,6019.373,-7555.337,-6744.565,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section6,普通连接段,12501.536,13660.161,1158.625,6020.087,6847.771,-8366.809,-7556.037,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+differentmu_road,mu1,高风险路面,13661.161,15471.325,1810.164,6848.485,8141.607,-9634.209,-8367.509,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section7,普通连接段,15472.325,16630.949,1158.625,8142.321,8970.005,-10445.681,-9634.909,1e-08,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+curve3,curve3,弯道路段,16631.949,18136.528,1504.578,8970.719,9577.542,-11519.974,-10446.381,0.00622025,0.00134596,1344,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+middle_section,section8,普通连接段,18137.528,19296.152,1158.625,8117.355,9201.398,-11929.303,-11520.326,0.0,0.0,0,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv
+zd,zd,特殊道路段,19297.152,20722.523,1425.37,6785.074,8116.419,-12431.539,-11929.656,1.01273128,0.00359136,269,forward,F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv

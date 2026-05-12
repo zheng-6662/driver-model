@@ -1,0 +1,20 @@
+﻿{
+  "generated_at": "2026-05-12 16:37:03",
+  "road_layout_path": "F:\\data_set_process\\data_process\\01_datasets\\多模态数据\\被试数据集合\\道路信息\\full_centerline_layout.csv",
+  "vehicle_file_count": 91,
+  "road_module_count": 16,
+  "session_mapping_rows": 91,
+  "session_module_segment_rows": 890,
+  "old_anchor_alignment_rows": 6247,
+  "road_guided_alignment_rows": 1227,
+  "representative_panel_count": 7,
+  "outputs": {
+    "road_event_position_map": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\road_event_anchor_audit_v0_1\\tables\\road_event_position_map_v0_1.csv",
+    "session_road_mapping_summary": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\road_event_anchor_audit_v0_1\\tables\\session_road_mapping_summary_v0_1.csv",
+    "session_module_entry_exit": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\road_event_anchor_audit_v0_1\\tables\\session_module_entry_exit_v0_1.csv",
+    "old_new_anchor_alignment": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\road_event_anchor_audit_v0_1\\tables\\old_new_anchor_alignment_v0_1.csv",
+    "road_guided_anchor_alignment": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\road_event_anchor_audit_v0_1\\tables\\road_guided_anchor_alignment_v0_1.csv",
+    "report": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\09_reports\\road_event_anchor_audit_v0_1_cn.md",
+    "user_summary": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\09_reports\\stage02_road_anchor_audit_user_summary_cn.md"
+  }
+}
