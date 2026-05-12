@@ -1,0 +1,26 @@
+{
+  "output_version": "stage07h_val_test_selection_diagnostics_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "source_stage": "stage07g_keypoint_segment_candidates_v0_1",
+  "selected_by_val": "segment_abs_rf_blend_25",
+  "selected_test_delta_vs_rbf": 0.0025089609569075577,
+  "test_best_non_oracle": "rbf_resid_keypoint_scaled",
+  "test_best_delta_vs_rbf": -0.0251289766122241,
+  "gate_status": "no_upgrade",
+  "stage08_physio_eeg_allowed": false,
+  "top_categorical_shift_feature": "response_family",
+  "top_numeric_shift_feature": "prob_entropy",
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "created_at": "2026-05-13T07:40:54",
+  "figures": {
+    "candidate_stability": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_val_test_stability.png",
+    "categorical_shift": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_val_test_categorical_shift.png",
+    "gain_by_split": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_gain_by_split.png",
+    "target_metrics": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_keypoint_target_rmse_by_split.png"
+  }
+}

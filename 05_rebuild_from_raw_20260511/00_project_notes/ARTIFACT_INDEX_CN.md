@@ -1,4 +1,29 @@
 # R2E-Steering 阶段产物索引
+## 最新更新：2026-05-13 07:42
+
+## Stage 7h val/test 选择不稳定诊断 v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07h_val_test_selection_diagnostics_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/logs/stage07h_val_test_selection_diagnostics_summary.json`
+- 候选 split 稳定性：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_split_stability.csv`
+- 类别分布长表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_categorical_shift_long.csv`
+- 类别分布摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_categorical_shift_summary.csv`
+- 数值分布摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_numeric_shift_summary.csv`
+- 逐样本候选收益：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_gain_samples.csv`
+- 分 bucket 候选收益：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_gain_by_bucket.csv`
+- keypoint target 指标副本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_keypoint_target_metrics_copy.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_gate_table.csv`
+- 候选 val/test 稳定性图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_val_test_stability.png`
+- val/test 类别偏移图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_val_test_categorical_shift.png`
+- 候选逐样本收益图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_gain_by_split.png`
+- keypoint target RMSE 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_keypoint_target_rmse_by_split.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、候选稳定性表、类别/数值偏移表和候选稳定性图。
+
 ## 最新更新：2026-05-13 07:33
 
 ## Stage 7g keypoint/segment 车辆-only 候选 v0.1

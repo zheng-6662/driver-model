@@ -1,4 +1,16 @@
 # R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 07:42
+
+- 当前阶段：Stage 7h val/test 选择不稳定诊断 v0.1 已完成；gate=`no_upgrade`，Stage 8 生理/EEG 仍阻塞。
+- 当前正在做什么：归档 Stage 7h 诊断结果，明确当前问题是车辆-only 候选选择/校准不稳定，而不是可以进入新模态增量验证。
+- 已完成什么：新增并运行 `stage07h_val_test_selection_diagnostics_v0_1.py`；不训练新模型，只读取 Stage 7g 产物，生成候选 split 稳定性、类别/数值分布偏移、逐样本收益、分 bucket 收益、gate 表、4 张诊断图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val selected=`segment_abs_rf_blend_25`，test delta=+0.002509；test-best non-oracle=`rbf_resid_keypoint_scaled`，test delta=-0.025129，但它未被 val 选中，只能作为诊断。最大类别偏移是 `response_family`，最大数值偏移是 `prob_entropy`。
+- 当前最大风险是什么：如果按 test 表现事后选 `rbf_resid_keypoint_scaled`，会形成选择泄漏；如果忽略 val/test response_family 和置信度分布偏移，会误判多候选路线已经可部署。
+- 下一步准备做什么：Stage 7i 应做候选选择校准或验证集重构，例如多折 session validation、按 response bucket/道路模块分层 gate、关键点不确定性评分；仍不进入生理/EEG。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_split_stability.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_val_test_stability.png`。
+
 ## 最新更新：2026-05-13 07:33
 
 - 当前阶段：Stage 7g keypoint/segment 车辆-only 候选 v0.1 已完成；gate=`no_upgrade`。

@@ -1,4 +1,42 @@
 # R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 07:42
+
+## 正在做任务
+
+- Stage 7h val/test 选择不稳定诊断已完成，正在归档并提交 Git。
+
+## 已完成任务
+
+- Stage 7h：已生成候选 split 稳定性、类别分布偏移、数值分布偏移、逐样本收益、分 bucket 收益、keypoint target 误差复核、gate 表和 4 张诊断图。
+- 已确认 test-best non-oracle=`rbf_resid_keypoint_scaled` 不能升级，因为它没有被 val gate 选中。
+- 已确认当前最大偏移信号：类别为 `response_family`，数值为 `prob_entropy`。
+
+## 待做任务
+
+- Stage 7i：候选选择校准或验证集重构。优先方案包括多折 session validation、response bucket 分层 gate、道路模块分层 gate、关键点不确定性/候选一致性评分。
+- 复核 `response_family` 和 `prob_entropy` 偏移是否解释 `rbf_resid_keypoint_scaled` 的 val/test 反转。
+- 在没有稳定非 oracle 选择前，不进入生理/EEG。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选选择/校准未稳定。
+- 多假设主线升级：仍阻塞。Stage 7h 只是诊断，未产生新可部署模型。
+- test-only 选择 `rbf_resid_keypoint_scaled`：禁止作为结论，只能作为下一步选择校准的目标。
+
+## 可并行任务
+
+- response_family 分层 gate 设计。
+- road module/risk class 分层 gate 设计。
+- 关键点不确定性评分和候选一致性特征复核。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7h 未使用服务器，Stage 7i 初版可本地完成。
+
+## 不需要服务器的任务
+
+- Stage 7h 归档、Git 提交、Stage 7i 校准诊断原型。
+
 ## 最新更新：2026-05-13 07:33
 
 ## 正在做任务
