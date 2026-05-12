@@ -1,3 +1,20 @@
+## 最新更新：2026-05-13 00:55
+
+- 当前阶段：阶段 3，B 轨道车辆-only 坏样本物理复查完成；仍未进入连续风格、生理或 EEG 有效性验证。
+- 当前正在做什么：把 `B_response3s_strict_core` 上 val 选中的 `rbf_kernel_ridge_context_no_subject` 的 test 坏样本失败类型整理成表、图和中文报告。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`；只分析 B 轨道 test 40 个样本，不训练新模型，不使用生理、脑电、连续风格、驾驶员 ID 或服务器。
+- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
+- 最近一次结果是什么：B 轨道 RBF KRR 的 high-RMSE top20% 阈值为 sample RMSE>=0.657，共 8 个坏样本；全部 40 个 test 样本中错侧 9/40，严重幅值不足 5/40，大幅响应漏召回 2/40，峰值时间大误差 9/40，启动延迟大误差 7/40，反向修正计数不匹配 40/40。最差 8 个样本里 wrong-side 3/8，严重幅值不足 3/8，大幅响应漏召回 2/8，峰值时间大误差 4/8。
+- 当前最大风险是什么：如果只看 B 轨道 RBF KRR 的整体 RMSE，会掩盖反向修正计数全不匹配这一结构性失败；下一步不能直接用生理/风格解释增益，必须先建立结构化车辆-only 响应分解参考。
+- 下一步准备做什么：进入车辆-only 响应分解模型设计：优先预测方向、幅值、峰值时间、反向修正/多段修正类型，再预测轨迹；同时保留 B 轨道坏样本表作为固定复查样本。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_summary.csv`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_top_bad_samples.csv`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_failure_flag_rates.png`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_peak_amp_scatter.png`
+
 ## 最新更新：2026-05-13 00:37
 
 - 当前阶段：阶段 3，干净响应任务车辆-only 对照验收完成；仍然没有进入连续风格、生理或 EEG 有效性验证。

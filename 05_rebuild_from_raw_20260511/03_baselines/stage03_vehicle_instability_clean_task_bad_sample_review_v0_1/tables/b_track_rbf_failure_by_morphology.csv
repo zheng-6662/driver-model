@@ -1,0 +1,4 @@
+﻿eval_label_morphology,n_samples,mean_rmse,median_rmse,mean_gt_peak_abs,mean_pred_peak_abs,high_rmse_top20_rate,wrong_side_flag_rate,severe_amp_under_flag_rate,large_response_missed_flag_rate,tail_drift_flag_rate,zero_crossing_mismatch_flag_rate,reversal_mismatch_flag_rate,multi_segment_mismatch_flag_rate,peak_time_large_error_flag_rate,onset_delay_large_error_flag_rate,amplitude_large_error_flag_rate
+multi_correction,38,0.4902305799095254,0.4416930675506592,1.2251153509867818,1.02328280790856,0.21052631578947367,0.21052631578947367,0.13157894736842105,0.05263157894736842,0.02631578947368421,0.05263157894736842,1.0,0.0,0.23684210526315788,0.18421052631578946,0.2631578947368421
+reverse_correction,1,0.2413583099842071,0.2413583099842071,0.0811600685119628,0.5495771765708923,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0
+single_lobe,1,0.1723215728998184,0.1723215728998184,0.1583000421524047,0.0945102125406265,0.0,1.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0

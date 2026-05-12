@@ -1,0 +1,19 @@
+{
+  "target_track": "B_response3s_strict_core",
+  "target_model": "rbf_kernel_ridge_context_no_subject",
+  "target_split": "test",
+  "n_samples": 40,
+  "high_rmse_top20_threshold": 0.6569997191429138,
+  "high_rmse_top20_n": 8,
+  "mean_rmse": 0.4760610479861498,
+  "median_rmse": 0.4321522414684295,
+  "flag_summary_path": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_clean_task_bad_sample_review_v0_1\\tables\\b_track_rbf_failure_summary.csv",
+  "top_bad_path": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_clean_task_bad_sample_review_v0_1\\tables\\b_track_rbf_top_bad_samples.csv",
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "uses_subject_id_as_model_input": false,
+  "new_training_run": false
+}
