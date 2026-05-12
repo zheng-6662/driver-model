@@ -1,0 +1,3 @@
+﻿track_id,n_samples,train_n,val_n,test_n,large_response_threshold_train_p75,difficult_response_threshold_train_p80,small_response_threshold_train_max_p25_015,threshold_scope
+A_instant2s_core,84,62,10,12,0.5007351264357567,0.8782497644424445,0.15,fit on session-level train split within each track
+B_response3s_strict_core,270,188,42,40,1.6335411965847015,1.7467955589294433,0.6604765206575394,fit on session-level train split within each track

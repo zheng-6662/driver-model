@@ -1,0 +1,53 @@
+{
+  "output_version": "stage03_vehicle_instability_response_decomposition_labels_v0_1",
+  "tracks": [
+    {
+      "track_id": "A_instant2s_core",
+      "n_samples": 84,
+      "subject_n": 16,
+      "train_n": 62,
+      "val_n": 10,
+      "test_n": 12,
+      "mean_peak_abs": 0.4666408421028228,
+      "median_peak_abs": 0.2544686496257782,
+      "large_response_rate": 0.27380952380952384,
+      "difficult_response_rate": 0.20238095238095238,
+      "needs_structure_head_rate": 1.0,
+      "late_peak_rate": 0.30952380952380953,
+      "unsettled_tail_rate": 0.3333333333333333,
+      "multi_correction_rate": 0.5595238095238095,
+      "reverse_or_multi_rate": 0.9166666666666666,
+      "positive_direction_rate": 0.5714285714285714,
+      "negative_direction_rate": 0.42857142857142855
+    },
+    {
+      "track_id": "B_response3s_strict_core",
+      "n_samples": 270,
+      "subject_n": 18,
+      "train_n": 188,
+      "val_n": 42,
+      "test_n": 40,
+      "mean_peak_abs": 1.178414112246699,
+      "median_peak_abs": 1.1816757321357727,
+      "large_response_rate": 0.24074074074074073,
+      "difficult_response_rate": 0.1962962962962963,
+      "needs_structure_head_rate": 1.0,
+      "late_peak_rate": 0.21851851851851853,
+      "unsettled_tail_rate": 0.07037037037037037,
+      "multi_correction_rate": 0.9296296296296296,
+      "reverse_or_multi_rate": 0.9888888888888889,
+      "positive_direction_rate": 0.4777777777777778,
+      "negative_direction_rate": 0.5222222222222223
+    }
+  ],
+  "n_sample_labels": 354,
+  "threshold_scope": "session-level train split per track",
+  "label_usage": "targets/evaluation only; not model input",
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "uses_subject_id_as_model_input": false,
+  "new_training_run": false
+}

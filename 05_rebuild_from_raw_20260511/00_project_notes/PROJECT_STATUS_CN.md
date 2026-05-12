@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 01:14
+
+- 当前阶段：阶段 3 车辆-only 响应分解标签 v0.1 已完成；仍处于强车辆基线/结构化车辆模型准备阶段。
+- 当前正在做什么：把 A/B 两条干净响应任务轨道的未来方向盘轨迹拆成方向、幅值、峰值时间、启动时间、尾段状态、零线穿越和反向/多段修正等目标，供下一步车辆-only 响应分解模型使用。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_response_decomposition_labels_v0_1.py`；生成 354 条响应分解样本标签、train-only 阈值表、轨道/split/形态/道路/被试汇总、3 张图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务；本轮只是本地 CPU 标签/表格/图生成。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：A 轨道 84 个样本，B 轨道 270 个样本；B 轨道 train/val/test=188/42/40，computed multi-correction 比例 0.9296，reverse/multi 合计比例 0.9889，正负方向比例接近均衡。标签只作为训练目标或评价分层，不能作为模型输入。
+- 当前最大风险：这些响应分解标签来自事件后方向盘轨迹，若误放进推理输入、split 条件或标准化条件会造成严重泄漏；下一步必须只把它们作为监督目标/辅助任务/评价维度。
+- 下一步准备做什么：在 B 轨道优先做车辆-only 响应分解/Transformer 对照，先预测方向、幅值桶、峰值时间桶、启动延迟桶、响应形态和尾段状态，再比较关键点+残差轨迹是否改善坏样本。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_response_decomposition_labels_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_response_decomposition_labels_v0_1/tables/response_decomposition_sample_labels.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_response_decomposition_labels_v0_1/figures/b_track_mean_gt_trajectories_by_morphology.png`。
+
 ## 最新更新：2026-05-13 00:55
 
 - 当前阶段：阶段 3，B 轨道车辆-only 坏样本物理复查完成；仍未进入连续风格、生理或 EEG 有效性验证。
