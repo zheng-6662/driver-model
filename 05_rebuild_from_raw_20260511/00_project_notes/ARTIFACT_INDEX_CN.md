@@ -115,7 +115,7 @@
 - `db1ff13 Record stage 3 no-subject diagnostics commit`
 - `6c3c9f3 Add stage 3 RBF KRR model card`
 - `9907aa5 Add manual event labeling review pack`
-- 待提交：键盘式人工事件标注播放器 v0.1
+- `cf9d06b Add keyboard event labeling player`
 
 ## 适合用户/老师直接查看的材料
 
