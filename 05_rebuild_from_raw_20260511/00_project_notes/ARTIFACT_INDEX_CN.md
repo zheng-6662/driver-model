@@ -1,3 +1,30 @@
+# 阶段产物索引
+
+## 最新新增：阶段 4 连续风格协议与候选特征 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_user_summary_cn.md`
+- 同内容阶段 4 协议总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_continuous_style_protocol_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_continuous_style_protocol_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/scripts/stage04_continuous_style_protocol_v0_1.py`
+- 候选风格 long 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_feature_candidate_long.csv`
+- 候选风格 wide 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_feature_candidate_wide.csv`
+- train-only 标准化后 wide 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_feature_candidate_wide_trainz_session_split.csv`
+- train-only 标准化参数：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_train_only_scaler_session_split.csv`
+- 来源协议表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_source_protocol_table.csv`
+- 泄漏边界表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_leakage_guard_table.csv`
+- 置乱对照计划：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_permutation_plan.csv`
+- split 可行性表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_split_feasibility.csv`
+- 被试/道路耦合审计：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_subject_road_coupling_audit.csv`
+- 阶段 4 gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_protocol_gate_table.csv`
+- 风格窗口可用性图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/figures/style_feature_availability_by_window.png`
+- split-道路分布图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/figures/style_split_road_distribution_heatmap.png`
+- 被试-道路耦合热图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/figures/style_subject_road_coupling_heatmap.png`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/logs/run_summary.json`
+- 服务器日志：无，本轮未使用远程服务器。
+- GPTPro 提问和回复：无。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：用户查看版总结、阶段 4 gate 表、泄漏边界表、风格窗口可用性图、被试-道路耦合热图。
+
 ## 最新新增：阶段 3 RBF 主参照冻结审计 v0.1
 
 - 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_rbf_reference_freeze_audit_user_summary_cn.md`

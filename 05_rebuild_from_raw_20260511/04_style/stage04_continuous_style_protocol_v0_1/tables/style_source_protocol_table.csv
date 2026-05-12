@@ -1,0 +1,7 @@
+﻿source,allowed_role,status,reason_cn
+raw_vehicle_prefix_until_anchor_minus_3s,continuous_style_candidate,allowed_with_guard,只使用事件前 3 秒以前的车辆历史，不接触直接输入窗口和标签未来。
+direct_vehicle_input_minus3_to_anchor,vehicle_baseline_input,not_style_feature,这是强车辆基线输入，阶段 4 风格特征刻意排除，避免把即时状态当风格。
+post_anchor_label_0_to_3s,label_only,blocked,属于方向盘响应标签窗口，不能进入任何输入、风格或标准化拟合。
+subject_id,control_only,control_required,只能作为驾驶员 ID 对照，不能把 ID 收益直接解释为连续风格收益。
+road_design_module_or_event_context,context_or_coupling_audit,audit_required,道路/事件分布可能与被试和风格耦合，必须做耦合审计和置乱对照。
+physio_eeg_emg_resp,none_in_stage4,blocked_until_stage5,阶段 4 只验证连续车辆风格；生理/脑电仍等待车辆+风格参照形成后再进入。

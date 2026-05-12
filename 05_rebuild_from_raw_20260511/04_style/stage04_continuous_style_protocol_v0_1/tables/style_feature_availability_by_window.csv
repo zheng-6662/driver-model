@@ -1,0 +1,8 @@
+﻿window_id,style_window_status,sample_count,window_total,sample_rate
+last120_guard3,insufficient_history_duration,3,270,0.011111111111111112
+last120_guard3,usable_no_future_leakage,267,270,0.9888888888888889
+last30_guard3,usable_no_future_leakage,270,270,1.0
+last60_guard3,insufficient_history_duration,2,270,0.007407407407407408
+last60_guard3,usable_no_future_leakage,268,270,0.9925925925925926
+prefix_until_guard3,insufficient_history_duration,2,270,0.007407407407407408
+prefix_until_guard3,usable_no_future_leakage,268,270,0.9925925925925926

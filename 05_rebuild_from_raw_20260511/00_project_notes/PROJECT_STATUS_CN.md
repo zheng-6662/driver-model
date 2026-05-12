@@ -1,3 +1,17 @@
+# R2E-Steering 项目总进度看板
+
+## 最新更新：2026-05-13 04:56
+
+- 当前阶段：阶段 4 连续驾驶风格协议与候选特征处理 v0.1 已完成本地运行。
+- 当前正在做什么：收口阶段 4 协议产物，准备提交脚本、候选风格特征表、train-only 标准化参数、置乱对照计划、道路/被试耦合审计、中文报告和透明化记录。
+- 已完成什么：新增并运行 `stage04_continuous_style_protocol_v0_1.py`；从 B 轨道 270 个严格核心失稳响应样本中提取事件前 3 秒以前的连续车辆历史风格候选特征，生成 long 表 1080 行、wide 表 270 行、train-only 标准化参数 440 项，其中 436 项可用。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：风格窗口泄漏检查通过，直接输入窗口重叠 0、标签未来重叠 0；`last30_guard3` 270/270 可用，`last60_guard3` 268/270 可用，`last120_guard3` 267/270 可用，`prefix_until_guard3` 268/270 可用。
+- 当前最大风险：本轮只完成候选风格处理和协议设计，还没有模型、置乱、分被试和物理指标对照；不能宣称连续风格有效。
+- 下一步准备做什么：在固定 RBF 主参照之上做阶段 4 探索性验证：原始连续风格、驾驶员 ID 对照、被试内/跨被试/跨 session/道路平衡置乱，并只用 train split 拟合标准化和选择规则。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/tables/style_protocol_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_continuous_style_protocol_v0_1/figures/style_feature_availability_by_window.png`。
+
 ## 最新更新：2026-05-13 04:37
 
 - 当前阶段：阶段 3 RBF 主参照冻结审计 v0.1 已归档并完成 Git 提交。

@@ -1,0 +1,20 @@
+﻿{
+  "run_time": "2026-05-13 05:05:54",
+  "script": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\04_style\\scripts\\stage04_continuous_style_protocol_v0_1.py",
+  "manifest_path": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\vehicle_instability_response_task_decision_v0_1\\tables\\sample_response_task_manifest.csv",
+  "output_root": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\04_style\\stage04_continuous_style_protocol_v0_1",
+  "window_config_id": "pre3_label3_response_coverage",
+  "task_role": "response3s_strict_core_candidate",
+  "sample_count": 270,
+  "style_window_count": 4,
+  "long_rows": 1080,
+  "wide_shape": [
+    270,
+    480
+  ],
+  "train_only_scaler_feature_count": 440,
+  "train_only_scaler_usable_count": 436,
+  "server_used": false,
+  "server_credential_file_read": false,
+  "effectiveness_claim": "blocked_no_model_or_permutation_result"
+}
