@@ -7,7 +7,7 @@
 
 ## 已完成任务
 
-- Stage 7e 候选生成重设计审计 v0.1：已生成响应类型表、候选覆盖表、winner 分布、候选生成蓝图、下一实验计划、gate 表和 4 张图；gate 阻塞 selector-only 继续路线。
+- Stage 7e 候选生成重设计审计 v0.1：已生成响应类型表、候选覆盖表、winner 分布、候选生成蓝图、下一实验计划、gate 表和 4 张图；gate 阻塞 selector-only 继续路线；已提交 `98552bf3`。
 - Stage 7d 非 oracle selector v0.2：val gate 选择 RBF/KNN，未升级。
 - Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
 

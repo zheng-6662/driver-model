@@ -20,7 +20,7 @@
 - 候选生成蓝图图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`
 - GPTPro 提问和回复：本阶段未调用。
 - 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`98552bf3 Add stage7e candidate generation redesign`。
 - 适合用户/老师直接查看：优先看用户查看版总结、候选生成蓝图、gate 表、oracle gain 图和 winner 分布图。
 
 # R2E-Steering 阶段产物索引

@@ -3,7 +3,7 @@
 
 - 当前阶段：Stage 7e 候选生成重设计审计 v0.1 已完成；当前不再继续 selector-only 路线。
 - 当前正在做什么：准备按 response-factorized candidate 思路实现下一版车辆-only 多候选生成，而不是继续在旧 branch 上训练选择器。
-- 已完成什么：新增并运行 `stage07e_candidate_generation_redesign_v0_1.py`；从真实方向盘标签提取方向、幅值、峰值时间、尾段、反向修正/多段修正响应类型；用 Stage 7c 候选轨迹审计每类响应的 RBF/KNN 误差、候选 oracle 误差、oracle gain 和 winner 分布；生成候选生成蓝图、下一实验计划、gate 表、4 张图、用户查看版总结和技术报告。
+- 已完成什么：新增并运行 `stage07e_candidate_generation_redesign_v0_1.py`；从真实方向盘标签提取方向、幅值、峰值时间、尾段、反向修正/多段修正响应类型；用 Stage 7c 候选轨迹审计每类响应的 RBF/KNN 误差、候选 oracle 误差、oracle gain 和 winner 分布；生成候选生成蓝图、下一实验计划、gate 表、4 张图、用户查看版总结和技术报告；已提交 `98552bf3 Add stage7e candidate generation redesign`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：test RBF/KNN RMSE=0.533667；现有可部署候选池 oracle RMSE=0.410957，delta=-0.122710；test 非 RBF oracle winner 比例=0.700；coverage 中 16 个 test bucket 属于 `selector_gap_candidate_pool_has_signal`，说明候选池有信号但当前 selector-only 路线失败。
