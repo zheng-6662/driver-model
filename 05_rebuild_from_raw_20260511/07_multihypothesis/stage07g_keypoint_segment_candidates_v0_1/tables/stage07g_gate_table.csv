@@ -1,0 +1,6 @@
+﻿gate_item,status,evidence
+selected_policy,segment_abs_rf_blend_25,validation gate reason: val_rmse_improvement_gt_0_002
+deployable_upgrade,no_upgrade,test delta vs RBF +0.002509; physical_gain=True
+keypoint_segment_oracle,diagnostic_only,oracle uses true labels and is not deployable
+stage08_physio_eeg_allowed,blocked,vehicle-only keypoint/segment candidate route is not yet stable
+server_used,no,local run only; credential file not read

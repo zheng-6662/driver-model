@@ -1,4 +1,42 @@
 # R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 07:33
+
+## 正在做任务
+
+- Stage 7g keypoint/segment 候选已完成，正在归档并提交 Git。
+
+## 已完成任务
+
+- Stage 7g：已实现 train-only 关键点回归、分段轨迹候选、RBF 关键点校正候选和 keypoint/segment oracle 诊断。
+- 已确认 val gate 选择 `segment_abs_rf_blend_25`，但 test RMSE=0.536176，比 RBF/KNN 差 +0.002509，gate=`no_upgrade`。
+- 已确认 `rbf_resid_keypoint_scaled` 在 test 上 RMSE=0.508538，但它不是 val 选中的策略，因此只能作为下一步诊断信号，不能升级主线。
+
+## 待做任务
+
+- Stage 7h：复核 val/test 分布差异、关键点回归误差、候选置信度和校准，解释为什么 test 上存在好候选但 val gate 选不中。
+- 设计不看 test 标签的候选选择置信度：例如关键点不确定性、RBF/候选一致性、道路模块分层和 response bucket 分层。
+- 继续固定 RBF/KNN 为主参照，不进入生理/EEG。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。车辆-only keypoint/segment 候选选择未稳定。
+- 多假设主线升级：仍阻塞。Stage 7g 的可部署选中策略未超过 RBF/KNN。
+- 按 test 事后选择 `rbf_resid_keypoint_scaled`：禁止。该现象只能作为下一步校准/选择器诊断。
+
+## 可并行任务
+
+- val/test 分布差异表。
+- `rbf_resid_keypoint_scaled` 收益样本和 val 失败样本复盘。
+- keypoint target scatter 和错误分层复核。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7g 未使用服务器，下一步校准诊断仍可先本地完成。
+
+## 不需要服务器的任务
+
+- Stage 7g 归档、Git 提交、Stage 7h 诊断表和图。
+
 ## 最新更新：2026-05-13 07:19
 
 ## 正在做任务

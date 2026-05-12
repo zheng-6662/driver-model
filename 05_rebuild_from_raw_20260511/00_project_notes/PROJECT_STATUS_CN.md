@@ -1,4 +1,16 @@
 # R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 07:33
+
+- 当前阶段：Stage 7g keypoint/segment 车辆-only 候选 v0.1 已完成；gate=`no_upgrade`。
+- 当前正在做什么：收口关键点/分段候选结果，继续把生理/EEG 有效性实验保持阻塞，避免把车辆-only 选择不稳误归因给生理数据。
+- 已完成什么：新增并运行 `stage07g_keypoint_segment_candidates_v0_1.py`；只用事件前车辆、道路/事件上下文和候选预测自身形态特征训练关键点回归；生成关键点预测表、target 指标、候选指标、逐样本指标、validation selection、oracle 诊断、gate 表、4 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val gate 选择 `segment_abs_rf_blend_25`，但 test RMSE=0.536176，比 RBF/KNN 0.533667 差 +0.002509；keypoint/segment oracle RMSE=0.462003。test-only 最好非 oracle 候选 `rbf_resid_keypoint_scaled` RMSE=0.508538，但它在 val 上比 RBF 差，不能事后升级。
+- 当前最大风险是什么：关键点/分段候选在 test 上出现了有价值信号，但 validation 不能稳定选中；如果按 test 事后挑 `rbf_resid_keypoint_scaled`，会造成选择泄漏。
+- 下一步准备做什么：Stage 7h 应复核 val/test 分布差异和关键点置信度/校准，不进入生理/EEG；重点解释为什么 test 上有好候选但 val gate 选不中。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07g_keypoint_segment_candidates_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_candidate_metrics.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_keypoint_target_scatter.png`。
+
 ## 最新更新：2026-05-13 07:19
 
 - 当前阶段：Stage 7f response-factorized vehicle-only candidate v0.1 已完成；gate=`no_upgrade`，当前主线仍是 RBF/KNN 车辆-only 参照。
