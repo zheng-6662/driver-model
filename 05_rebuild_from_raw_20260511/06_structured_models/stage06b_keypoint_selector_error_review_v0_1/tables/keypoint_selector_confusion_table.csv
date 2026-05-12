@@ -1,0 +1,5 @@
+﻿selected_keypoint,oracle_keypoint_better,n_samples,mean_regret_vs_oracle,mean_delta_vs_rbf
+0,0,17,0.0,0.0
+0,1,12,0.13087320824464163,0.0
+1,0,6,0.13239991416533792,0.13239991416533792
+1,1,5,0.0,-0.10332086980342861

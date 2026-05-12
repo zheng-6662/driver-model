@@ -1,5 +1,26 @@
 # 阶段产物索引
 
+## 最新新增：Stage 6b RBF/keypoint 选择器错误复盘 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06b_keypoint_selector_error_review_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06b_keypoint_selector_error_review_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/scripts/stage06b_keypoint_selector_error_review_v0_1.py`
+- 选择器样本明细：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_sample_detail.csv`
+- 混淆表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_confusion_table.csv`
+- 分组摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_group_summary.csv`
+- top regret 样本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_top_regret_samples.csv`
+- 漏选 keypoint 收益样本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_missed_keypoint_gain_samples.csv`
+- 错选 keypoint 样本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_false_keypoint_samples.csv`
+- 下一步动作表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_next_actions.csv`
+- 混淆矩阵图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/figures/keypoint_selector_confusion_matrix.png`
+- top regret 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/figures/keypoint_selector_top_regret_samples.png`
+- probability vs gain 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/figures/keypoint_selector_probability_vs_gain.png`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/logs/keypoint_selector_error_review_summary.json`
+- 服务器日志：无，本轮未使用远程服务器。
+- GPTPro 提问和回复：无。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：用户查看版总结、混淆表、top regret 样本、probability vs gain 图。
+
 ## 最新新增：阶段 6 车辆-only 结构化路线审计 v0.1
 
 - 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06_vehicle_only_structured_route_audit_user_summary_cn.md`

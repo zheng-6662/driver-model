@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 05:57
+
+- 当前阶段：Stage 6b RBF/keypoint 选择器错误复盘 v0.1 已完成；生理/EEG 仍不进入。
+- 当前正在做什么：复盘 `selector_logreg_rbf_keypoint_no_subject` 在 B 轨道 test 40 个样本上为什么只形成弱候选，准备下一版 selector/reliability 特征修正。
+- 已完成什么：新增并运行 `stage06b_keypoint_selector_error_review_v0_1.py`；生成选择器样本明细、混淆表、分组摘要、top regret、漏选 keypoint 样本、错选 keypoint 样本、下一步动作表、3 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：test 40 个样本中 selector 选 keypoint 比例=0.275，oracle 中 keypoint 更优比例=0.425；TP=5、FP=6、FN=12、TN=17；selector 平均 delta vs RBF=+0.006945，平均 oracle regret=0.059122。
+- 当前最大风险是什么：当前 selector 主要问题是漏选 keypoint 潜在收益样本，同时有 6 个错选伤害样本；如果不修选择器，best-of-K 上限无法转化成可部署增益。
+- 下一步准备做什么：基于 FN/FP 样本做 selector feature revision 和 reliability gate，优先加入候选差异、响应形态风险、道路模块和历史稳定性特征。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06b_keypoint_selector_error_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/tables/keypoint_selector_confusion_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06b_keypoint_selector_error_review_v0_1/figures/keypoint_selector_probability_vs_gain.png`。
+
 ## 最新更新：2026-05-13 05:50（本机实际时间；阶段顺序接在阶段 4 收口之后）
 
 - 当前阶段：阶段 6 车辆-only 结构化路线审计 v0.1 已完成；当前不进入生理/EEG。

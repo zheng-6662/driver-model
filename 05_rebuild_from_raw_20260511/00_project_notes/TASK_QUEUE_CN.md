@@ -1,5 +1,35 @@
 # 当前任务队列
 
+## 最新更新：2026-05-13 05:57
+
+### 正在做任务
+- Stage 6b RBF/keypoint 选择器错误复盘已完成；下一步准备修 selector/reliability 特征。
+
+### 已完成任务
+- 已新增并运行 `stage06b_keypoint_selector_error_review_v0_1.py`。
+- 已确认 selector 在 test 上 TP=5、FP=6、FN=12、TN=17，主要问题是漏选 keypoint 可收益样本。
+- 已确认 selector 平均 delta vs RBF=+0.006945，没有形成稳定可部署提升。
+
+### 待做任务
+- 复盘 12 个 `FN_missed_keypoint_gain` 样本，找出 keypoint 更好但 selector 概率低的原因。
+- 复盘 6 个 `FP_select_keypoint_hurts` 样本，找出错选 keypoint 的风险特征。
+- 设计 selector feature revision：候选间差异、响应形态风险、道路模块、历史稳定性、可靠性分数。
+
+### 阻塞任务
+- 生理、脑电有效性验证继续阻塞。
+- 多假设/关键点路线不能用 oracle 作为结论，必须先形成可部署选择策略。
+
+### 可并行任务
+- FN 样本图表复核。
+- FP 样本图表复核。
+- selector probability 与实际 keypoint gain 的分布复核。
+
+### 需要服务器的任务
+- 暂无。
+
+### 不需要服务器的任务
+- 当前 selector 错误复盘和下一版特征设计均可本地完成。
+
 ## 最新更新：2026-05-13 05:50（本机实际时间；阶段顺序接在阶段 4 收口之后）
 
 ### 正在做任务
