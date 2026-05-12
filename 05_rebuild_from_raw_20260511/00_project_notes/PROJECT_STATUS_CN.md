@@ -3,7 +3,7 @@
 
 - 当前阶段：Stage 7f response-factorized vehicle-only candidate v0.1 已完成；gate=`no_upgrade`，当前主线仍是 RBF/KNN 车辆-only 参照。
 - 当前正在做什么：收口 Stage 7f 响应分解候选结果，准备把 oracle 空间转化为下一轮可训练的关键点/分段候选设计，而不是进入生理/EEG。
-- 已完成什么：新增并运行 `stage07f_response_factorized_candidates_v0_1.py`；基于 Stage 7e 响应类型把候选拆成方向/幅值、峰值时间、尾段、反向修正和多段修正原型；生成 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、3 张图、用户查看版总结和技术报告。
+- 已完成什么：新增并运行 `stage07f_response_factorized_candidates_v0_1.py`；基于 Stage 7e 响应类型把候选拆成方向/幅值、峰值时间、尾段、反向修正和多段修正原型；生成 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、3 张图、用户查看版总结和技术报告；已提交 `12cef06b Add stage7f response factorized candidates`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val gate 选择 `rbf_kernel_ridge_context_no_subject`；test RBF/KNN RMSE=0.533667，selected RMSE=0.533667，delta=+0.000000；response-factorized oracle RMSE=0.440217，combo oracle RMSE=0.388119，但两者都是诊断上限，不是可部署性能。

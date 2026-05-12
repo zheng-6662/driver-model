@@ -25,7 +25,7 @@
 - oracle gain 预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_oracle_gain_predictions_test.png`
 - GPTPro 提问和回复：本阶段未调用。
 - 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`12cef06b Add stage7f response factorized candidates`。
 - 适合用户/老师直接查看：优先看用户查看版总结、gate 表、factor 预测指标、固定预测图和 oracle gain 预测图。
 
 ## 最新更新：2026-05-13 07:05

@@ -3,11 +3,11 @@
 
 ## 正在做任务
 
-- Stage 7f response-factorized vehicle-only candidate v0.1 已完成，正在归档结果并提交 Git。
+- Stage 7f response-factorized vehicle-only candidate v0.1 已完成并提交 Git；当前准备 Stage 7g keypoint/segment candidate 设计。
 
 ## 已完成任务
 
-- Stage 7f：已实现响应分解候选原型，输出 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、固定图、oracle gain 图、用户总结和技术报告。
+- Stage 7f：已实现响应分解候选原型，输出 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、固定图、oracle gain 图、用户总结和技术报告；已提交 `12cef06b`。
 - 已确认 validation gate 最终选择 RBF/KNN 主参照，test RMSE=0.533667，delta=+0.000000，gate=`no_upgrade`。
 - 已确认 response-factorized oracle RMSE=0.440217、combo oracle RMSE=0.388119 只说明候选空间潜力，不是可部署提升。
 
