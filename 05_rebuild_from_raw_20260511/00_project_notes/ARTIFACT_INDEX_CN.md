@@ -15,7 +15,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_selector_v0_1/logs/rbf_keypoint_selector_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`7e3d53f6 Add rbf keypoint selector`。
 - 适合用户/老师直接查看：用户查看版总结、selector 统一指标表、selector 决策表、test 指标图、阈值扫描图。
 
 ## 最新新增：阶段 3 keypoint+residual vs RBF 坏样本差异复盘 v0.1

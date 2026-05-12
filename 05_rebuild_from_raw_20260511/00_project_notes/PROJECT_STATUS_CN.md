@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 03:06
+
+- 当前阶段：阶段 3 RBF vs keypoint train/val 选择器 v0.1 已归档并完成 Git 提交；仍处于车辆-only 多候选/可靠性策略探索阶段。
+- 当前正在做什么：收口本轮 selector 结果，准备把下一步推进到更正式的车辆-only 多假设/可靠性建模，而不是进入风格、生理或 EEG 增量结论。
+- 已完成什么：提交 `7e3d53f6 Add rbf keypoint selector`；该提交包含 selector 脚本、结果表、两张图、运行摘要、用户查看版总结、技术报告以及 02:54 透明化记录。
+- 正在运行什么任务：没有后台任务；没有本地训练任务；没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：selector 在 test 上与 RBF 整体 RMSE 基本持平但未超过，RBF RMSE=0.533667，selector RMSE=0.533912；selector 将错侧率从 0.225 降到 0.200，将大幅响应召回从 0.750 提到 0.875，将困难 top20 RMSE 从 0.678907 降到 0.648368；oracle best-of-two RMSE=0.475095，说明两候选存在互补但选择器还不够强。
+- 当前最大风险：如果只看 oracle 上限会高估实际可部署收益；当前 selector 只能作为多假设/可靠性路线的证据，不能替代强车辆基线，也不能支持风格或生理有效性结论。
+- 下一步准备做什么：构建正式多假设车辆-only 评估包，至少同时报告 top-1、best-of-K、train/val selector、oracle 上限、固定预测图和误选样本分析。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_rbf_keypoint_selector_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_selector_v0_1/tables/rbf_keypoint_selector_metrics.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_selector_v0_1/figures/rbf_keypoint_selector_test_metrics.png`。
+
 ## 最新更新：2026-05-13 02:54
 
 - 当前阶段：阶段 3 RBF vs keypoint train/val 选择器 v0.1 已完成；仍处于车辆-only 多候选/可靠性策略探索阶段。
