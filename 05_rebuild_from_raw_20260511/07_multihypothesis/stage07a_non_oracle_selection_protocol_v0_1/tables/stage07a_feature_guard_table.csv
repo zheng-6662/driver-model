@@ -1,0 +1,10 @@
+﻿feature_group,feature_examples,status,rule_cn
+event_context,"road_module, event_family, window_config_id",allowed,事件/道路上下文来自样本 manifest，可用于 train/val/test 推理。
+vehicle_history_summary,pre-window speed/yaw/latacc/steer statistics,allowed,只能来自事件锚点之前输入窗口；禁止使用标签窗口。
+candidate_prediction_shape,"candidate peak_abs, peak_time, tail_abs, reversal_count, multi_segment flag",allowed_with_train_val_fit,可由候选预测自身计算；选择器训练和阈值只允许看 train/val。
+candidate_disagreement,"pairwise RMSE-like distance between candidate predictions, peak spread, sign disagreement",allowed_with_train_val_fit,不需要真实标签，适合作为不确定性和候选多样性特征。
+calibration_prior,train/val historical reliability by road_module/response_family/candidate,allowed_train_val_only,只能用 train/val 统计，测试集不能参与可靠性表或标准化。
+oracle_winner,best candidate under test label,forbidden,只能用于分析上限，禁止作为训练标签以外的测试决策依据。
+test_sample_rmse,per-candidate test RMSE or label-based error,forbidden,禁止进入选择器输入、阈值选择或可部署决策。
+physio_eeg_style,ECG/EDA/EMG/RESP/EEG/style features,blocked,车辆-only Stage 7 选择策略未闭环前继续阻塞。
+subject_id,driver identity one-hot or direct subject id,blocked,当前不允许用驾驶员 ID 解决选择问题。

@@ -1,0 +1,11 @@
+﻿model_name,candidate_role,stage07_use,test_available_samples,rmse_steer,delta_vs_rbf_rmse,wrong_side_rate,large_response_recall,difficult_top20_rmse,allowed_as_training_target,allowed_as_inference_candidate,notes_cn
+keypoint_residual_vehicle_transformer_no_subject,keypoint_candidate,candidate_for_selection,40,0.5489935187678284,0.015326829328871527,0.125,0.875,0.7288664061847274,False,True,单模型 RMSE 较差但错侧/大幅响应有信号，作为候选分支而非主线。
+ridge_rich_context_no_subject,low_variance_vehicle_candidate,candidate_for_selection,40,0.536450450516907,0.0027837610779500865,0.175,0.5,0.7571023760780592,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+ridge_rich_history_no_subject,low_variance_vehicle_candidate,candidate_for_selection,40,0.538776040937721,0.005109351498764125,0.175,0.5,0.7702127368939254,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+knn_template_context_no_subject,template_candidate,candidate_for_selection,40,0.6258290902785323,0.09216240083957539,0.175,0.75,0.7100143976557005,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+peak_scaled_template_context_no_subject,template_candidate,candidate_for_selection,40,0.6885973667109297,0.15493067727197285,0.2,0.875,0.7395625117726926,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+direction_gated_knn_template_no_subject,template_candidate,candidate_for_selection,40,0.6934965829193556,0.15982989348039867,0.2,0.875,0.7303580269705259,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+topk_vehicle_transformer_branch0_no_subject,topk_branch_candidate,candidate_for_selection,40,0.5550978533265722,0.021431163887615345,0.05,0.75,0.6981738884838609,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+topk_vehicle_transformer_branch1_no_subject,topk_branch_candidate,candidate_for_selection,40,0.5896039473554407,0.05593725791648385,0.025,0.75,0.840132278379715,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+topk_vehicle_transformer_branch2_no_subject,topk_branch_candidate,candidate_for_selection,40,0.6852535646207177,0.15158687518176084,0.15,0.625,0.7227680027959508,False,True,作为车辆-only候选分支纳入选择池；不单独升级为主线。
+rbf_kernel_ridge_context_no_subject,current_primary_reference,required_reference,40,0.5336666894389569,0.0,0.225,0.75,0.6789069643375906,False,True,当前 RBF/KNN 主参照，所有选择器必须与它公平比较。

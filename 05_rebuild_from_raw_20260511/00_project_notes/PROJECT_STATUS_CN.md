@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:31
+
+- 当前阶段：Stage 7a 非 oracle 多候选选择协议 v0.1 已完成；Stage 7 还未训练模型。
+- 当前正在做什么：把 Stage 7 的候选池、允许特征、禁止信息、评价指标、固定图和升级 gate 固定下来，防止把 oracle/best-of-K 当作可部署模型。
+- 已完成什么：新增并运行 `stage07a_non_oracle_selection_protocol_v0_1.py`；候选池 10 个，包含 RBF/KNN 主参照、ridge、KNN/template、keypoint、top-K 分支；生成 candidate pool、feature guard、selection protocol、evaluation plan、fixed plot protocol、gate 表、2 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：Stage 7a gate=`ready_for_non_oracle_design`，但 `deployable_selector_status=blocked`；RBF RMSE=0.533667，broad oracle RMSE=0.375182，当前最好可部署 selector RMSE=0.533912，仍未超过 RBF/KNN；生理/EEG 继续 blocked。
+- 当前最大风险是什么：如果直接进入多假设训练而不落实非 oracle 选择和校准，仍会得到“oracle 好看、实际不可用”的结果。
+- 下一步准备做什么：Stage 7b：导出/整理候选预测轨迹和候选间差异特征，训练只用 train、调参只用 val 的非 oracle selector，并报告 calibration、coverage-risk、固定图和 selector regret。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07a_non_oracle_selection_protocol_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07a_non_oracle_selection_protocol_v0_1/tables/stage07a_feature_guard_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07a_non_oracle_selection_protocol_v0_1/tables/stage07a_gate_table.csv`。
+
 ## 最新更新：2026-05-13 06:24
 
 - 当前阶段：Stage 6e 多候选 oracle gap 复核 v0.1 已完成；Stage 7 多假设路线只允许作为“选择策略问题”继续，不允许只报告 oracle。
