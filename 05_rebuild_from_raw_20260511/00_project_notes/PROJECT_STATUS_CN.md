@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:24
+
+- 当前阶段：Stage 6e 多候选 oracle gap 复核 v0.1 已完成；Stage 7 多假设路线只允许作为“选择策略问题”继续，不允许只报告 oracle。
+- 当前正在做什么：把已有车辆-only 候选合成候选池，量化 oracle 上限和实际可部署 selector 之间的差距。
+- 已完成什么：新增并运行 `stage06e_multicandidate_oracle_gap_v0_1.py`；读取 RBF/KNN、ridge、template、direct/structured Transformer、keypoint、top-K 分支和已有 selector 的逐样本表，生成候选池指标、winner 明细、winner 汇总、gap 表、gate 表、2 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：RBF/KNN 主参照 test RMSE=0.533667；broad oracle pool test RMSE=0.375182，delta=-0.158484，但这是用真实标签挑候选的不可部署上限；当前最好可部署 selector `selector_logreg_rbf_keypoint_no_subject` test RMSE=0.533912，比 RBF/KNN 差 +0.000245。gate=`oracle_signal_but_deployable_selection_blocked`，生理/EEG 继续 blocked。
+- 当前最大风险是什么：如果把 broad oracle 或 best-of-K 当作模型结果，会严重高估当前可部署能力；当前真正瓶颈是候选选择/可靠性校准，不是证明生理或 Transformer 有效。
+- 下一步准备做什么：如果进入 Stage 7，必须先设计非 oracle 候选选择策略、概率校准和固定坏样本选择协议；否则继续复查车辆-only 表示和样本规则。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06e_multicandidate_oracle_gap_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06e_multicandidate_oracle_gap_v0_1/tables/multicandidate_oracle_gap_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06e_multicandidate_oracle_gap_v0_1/figures/multicandidate_oracle_gap_rmse.png`。
+
 ## 最新更新：2026-05-13 06:16
 
 - 当前阶段：Stage 6d RBF/KNN reliability gate v0.1 已完成；当前 selector/reliability 路线仍不升级主线。

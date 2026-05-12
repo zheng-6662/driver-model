@@ -1,0 +1,21 @@
+{
+  "output_version": "stage06e_multicandidate_oracle_gap_v0_1",
+  "run_time_local": "2026-05-13 06:24",
+  "rbf_test_rmse": 0.5336666894389569,
+  "broad_oracle_test_rmse": 0.3751822675351606,
+  "broad_oracle_delta_vs_rbf_rmse": -0.1584844219037963,
+  "best_deployable_selector": "selector_logreg_rbf_keypoint_no_subject",
+  "best_deployable_selector_test_rmse": 0.5339117968688195,
+  "best_deployable_selector_delta_vs_rbf_rmse": 0.00024510742986261214,
+  "gate_status": "oracle_signal_but_deployable_selection_blocked",
+  "server_used": false,
+  "server_credential_file_read": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "uses_subject_id": false,
+  "raw_files_modified": false,
+  "user_summary_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06e_multicandidate_oracle_gap_user_summary_cn.md",
+  "technical_report_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06e_multicandidate_oracle_gap_v0_1_cn.md",
+  "gap_table_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06e_multicandidate_oracle_gap_v0_1/tables/multicandidate_oracle_gap_table.csv"
+}

@@ -1,0 +1,4 @@
+﻿gate,status,evidence,decision
+oracle_pool_signal,research_signal_not_deployable,"broad oracle test RMSE=0.375182, delta=-0.158484; this uses labels for selection.",只说明候选池存在上限，不可作为部署模型或生理有效性证据。
+deployable_selection_gap,blocked,"best deployable selector test RMSE=0.533912, delta=+0.000245.",Stage 7 若继续，必须优先解决非 oracle 选择策略；不能只报告 best-of-K。
+stage05_physio_eeg_allowed,blocked,车辆-only 多候选选择仍未闭环。,继续阻塞生理/EEG增量结论。
