@@ -1,0 +1,4 @@
+﻿selection_outcome,n_samples,mean_selector_prob_keypoint,mean_keypoint_delta_vs_rbf
+FN_missed_keypoint_gain,17,0.3126613549837806,-0.12276957929134363
+FP_select_keypoint_hurts,1,0.981281239811592,0.0681070983409882
+TN_keep_rbf_correct,22,0.3555164827055186,0.1378171626817096

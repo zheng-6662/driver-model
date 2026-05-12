@@ -1,5 +1,35 @@
 # 当前任务队列
 
+## 最新更新：2026-05-13 06:16
+
+### 正在做任务
+- Stage 6d RBF/KNN reliability gate 已完成；正在归档并提交本轮结果。
+
+### 已完成任务
+- 已新增并运行 `stage06d_reliability_gate_v0_1.py`。
+- 已确认当前不是把 Transformer 当主线继续训练；RBF/KNN 类车辆-only 强基线仍是主参照。
+- 已确认保守 policy `val_rmse_noninferior_conservative` test RMSE=0.534545，比 RBF/KNN 差 +0.000878，wrong-side 和 large recall 没有改善。
+- 已确认激进 policy `val_best_rmse` 只改善 wrong-side/large recall，但 RMSE 退化到 0.544356，不能升级。
+
+### 待做任务
+- 将 Stage 6d 结果 Git 提交，并在产物索引中记录 commit。
+- Stage 6 selector/reliability 当前形式降级为诊断候选后，准备多假设候选生成/实际选择策略或车辆-only 表示复查。
+
+### 阻塞任务
+- 生理、脑电有效性验证继续阻塞。
+- 不能根据 oracle/keypoint 上限或物理指标单项改善宣称主线升级。
+
+### 可并行任务
+- 多假设候选生成与非 oracle 选择策略设计。
+- RBF/KNN 当前坏样本按响应类型、道路模块、尾段/多段修正分桶复查。
+- 样本规则和车辆-only 表示的泄漏/信息量复核。
+
+### 需要服务器的任务
+- 暂无。
+
+### 不需要服务器的任务
+- 当前 Stage 6d 归档、commit、下一步路线决策均可本地完成。
+
 ## 最新更新：2026-05-13 06:06
 
 ### 正在做任务

@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:16
+
+- 当前阶段：Stage 6d RBF/KNN reliability gate v0.1 已完成；当前 selector/reliability 路线仍不升级主线。
+- 当前正在做什么：把 Stage 6c 的 RBF/keypoint selector 结果做保守门控复核，确认能否在不牺牲 RMSE 的情况下保留错侧率和大幅响应召回收益。
+- 已完成什么：新增并运行 `stage06d_reliability_gate_v0_1.py`；扫描 val 选择的 threshold policy，生成 selected policy 表、policy metrics、gate 表、best confusion、2 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：RBF/KNN 主参照 test RMSE=0.533667；保守 policy `val_rmse_noninferior_conservative` test RMSE=0.534545，比 RBF/KNN 差 +0.000878，wrong-side=0.225、large recall=0.750，均没有改善；激进 `val_best_rmse` 可把 wrong-side 降到 0.175、large recall 提到 0.875，但 RMSE=0.544356，退化更明显。gate=`no_upgrade`，stage05 physio/eeg=blocked。
+- 当前最大风险是什么：oracle/keypoint 确实存在样本级上限，但当前 selector 无法稳定把上限转成可部署增益；如果只看 wrong-side 或 large recall 单项改善，会误判为主线升级。
+- 下一步准备做什么：Stage 6 selector/reliability 当前形式降级为诊断候选；下一步更适合转向多假设候选生成/实际选择策略，或复查车辆-only 表示与样本规则，而不是进入生理/EEG。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06d_reliability_gate_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06d_reliability_gate_v0_1/tables/reliability_gate_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06d_reliability_gate_v0_1/figures/reliability_gate_physical_metrics.png`。
+
 ## 最新更新：2026-05-13 06:06
 
 - 当前阶段：Stage 6c selector feature revision v0.1 已完成；当前修订不升级主线，生理/EEG 仍不进入。
