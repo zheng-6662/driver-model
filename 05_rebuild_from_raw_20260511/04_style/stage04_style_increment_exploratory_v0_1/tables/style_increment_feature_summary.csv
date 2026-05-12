@@ -1,0 +1,6 @@
+﻿model_name,n_features,selected_alpha,feature_source
+rbf_plus_style_last60_guard3_residual_ridge,94,10000.0,train-only standardized continuous style
+rbf_plus_style_all_windows_residual_ridge,376,1000.0,train-only standardized continuous style
+rbf_plus_driver_id_residual_ridge,18,100.0,control one-hot
+rbf_plus_road_module_residual_ridge,7,10000.0,control one-hot
+rbf_plus_style_last60_with_driver_id_residual_ridge,112,10000.0,train-only standardized continuous style

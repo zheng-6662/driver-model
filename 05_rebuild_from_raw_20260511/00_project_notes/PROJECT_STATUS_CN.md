@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 05:40
+
+- 当前阶段：阶段 4 连续驾驶风格探索性增量对照 v0.1 已完成，仍处于探索阶段。
+- 当前正在做什么：已固定 RBF/KNN 类车辆-only 主参照，正在判断事件前连续风格是否值得进入更严格 split 验证。
+- 已完成什么：新增并运行 `stage04_style_increment_exploratory_v0_1.py`；在 B 轨道 270 个严格核心失稳响应样本上完成 RBF 残差 Ridge、驾驶员 ID 对照、道路模块对照和多种置乱控制；生成指标表、逐样本表、固定预测图、坏样本图、置乱汇总、gate 表和中文报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：RBF test RMSE=0.533667；RBF+last60 风格 test RMSE=0.534559；风格有效性结论仍为 blocked。
+- 当前最大风险是什么：session-level 探索性收益可能来自驾驶员身份、道路/场景分布或小样本偶然性；如果物理指标和坏样本图不改善，不能升级为主线。
+- 下一步准备做什么：补 subject-level/跨 session 风格验证，继续比较真实风格、驾驶员 ID、同被试置乱、跨被试置乱、道路均衡置乱；生理/EEG 仍阻塞。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_style_increment_exploratory_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_increment_exploratory_v0_1/tables/style_increment_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_increment_exploratory_v0_1/figures/style_increment_metric_summary_test.png`。
+
 ## 最新更新：2026-05-13 05:08
 
 - 当前阶段：阶段 4 连续驾驶风格协议与候选特征处理 v0.1 已归档并完成 Git 提交。
