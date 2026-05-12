@@ -20,7 +20,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/logs/topk_reliability_selector_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`fbb8d94d Add topk reliability selector`。
 - 适合用户/老师直接查看：用户查看版总结、指标概览图、固定预测图、坏样本图、决策计数图、fallback 风险散点图。
 
 ## 最新新增：阶段 3 top-K top1/bestK 差距复盘 v0.1

@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 04:11
+
+- 当前阶段：阶段 3 top-K 可靠性选择/回退 v0.1 已归档并完成 Git 提交；强车辆基线仍未冻结。
+- 当前正在做什么：收口可靠性选择 no-go 结果，准备下一步车辆-only 决策。
+- 已完成什么：提交 `fbb8d94d Add topk reliability selector`；该提交包含可靠性选择脚本、指标表、逐样本表、决策表、阈值表、分层汇总、6 张图、运行摘要、两份中文报告和 04:07 透明化记录。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：本轮 val 选中的 fallback test RMSE=0.542071，仍差于 RBF 的 0.533667；best-of-RBF+topK oracle RMSE=0.415652 仅作上限。
+- 当前最大风险：候选池 oracle 上限容易被误读为可部署收益；当前可部署选择器仍不能超过 RBF/KNN 类主参照。
+- 下一步准备做什么：继续阶段 3 的车辆-only 决策，优先考虑 RBF/KNN 类主参照冻结审查或更强分响应类型/关键点条件多假设；继续阻塞风格、生理和 EEG。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_topk_reliability_selector_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_metric_summary_test.png`。
+
 ## 最新更新：2026-05-13 04:07
 
 - 当前阶段：阶段 3 top-K 可靠性选择/回退 v0.1 已完成；强车辆基线仍未冻结，RBF/KNN 类车辆基线仍是主参照。
