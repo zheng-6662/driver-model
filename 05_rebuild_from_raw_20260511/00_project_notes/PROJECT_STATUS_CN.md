@@ -1,4 +1,16 @@
 # R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 07:19
+
+- 当前阶段：Stage 7f response-factorized vehicle-only candidate v0.1 已完成；gate=`no_upgrade`，当前主线仍是 RBF/KNN 车辆-only 参照。
+- 当前正在做什么：收口 Stage 7f 响应分解候选结果，准备把 oracle 空间转化为下一轮可训练的关键点/分段候选设计，而不是进入生理/EEG。
+- 已完成什么：新增并运行 `stage07f_response_factorized_candidates_v0_1.py`；基于 Stage 7e 响应类型把候选拆成方向/幅值、峰值时间、尾段、反向修正和多段修正原型；生成 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、3 张图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val gate 选择 `rbf_kernel_ridge_context_no_subject`；test RBF/KNN RMSE=0.533667，selected RMSE=0.533667，delta=+0.000000；response-factorized oracle RMSE=0.440217，combo oracle RMSE=0.388119，但两者都是诊断上限，不是可部署性能。
+- 当前最大风险是什么：方向、峰值时间等因子有信号，但幅值和尾段等关键因子仍不稳定；如果直接把 response-factorized oracle 当成模型结果，会高估车辆-only 当前能力。
+- 下一步准备做什么：Stage 7g 不应继续堆 selector，也不应进入生理/EEG；更合适的是把响应分解原型升级为可训练的 keypoint/segment candidate，并加强幅值、尾段和修正段建模。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07f_response_factorized_candidates_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_factor_prediction_metrics.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_oracle_gain_predictions_test.png`。
+
 ## 最新更新：2026-05-13 07:05
 
 - 当前阶段：Stage 7e 候选生成重设计审计 v0.1 已完成；当前不再继续 selector-only 路线。

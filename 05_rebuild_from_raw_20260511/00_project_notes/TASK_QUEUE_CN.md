@@ -1,4 +1,42 @@
 # R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 07:19
+
+## 正在做任务
+
+- Stage 7f response-factorized vehicle-only candidate v0.1 已完成，正在归档结果并提交 Git。
+
+## 已完成任务
+
+- Stage 7f：已实现响应分解候选原型，输出 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、固定图、oracle gain 图、用户总结和技术报告。
+- 已确认 validation gate 最终选择 RBF/KNN 主参照，test RMSE=0.533667，delta=+0.000000，gate=`no_upgrade`。
+- 已确认 response-factorized oracle RMSE=0.440217、combo oracle RMSE=0.388119 只说明候选空间潜力，不是可部署提升。
+
+## 待做任务
+
+- Stage 7g：把 response-factorized 原型升级为可训练 keypoint/segment candidate，重点改幅值、尾段回正/漂移、反向修正和多段修正。
+- 复核 Stage 7f 中幅值因子和尾段因子预测不稳的样本，作为下一版候选生成训练标签和失败样本清单。
+- 继续把 RBF/KNN 作为车辆-only 主参照；任何新候选必须用 train 拟合、val 选策略、test 一次报告。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选生成和非 oracle 选择仍未形成可部署提升。
+- 多假设主线升级：仍阻塞。当前只有 oracle/组合 oracle 上限，没有 validation gate 批准的可部署收益。
+- selector-only 继续堆模型：阻塞。Stage 7b、7d、7f 都未通过 gate。
+
+## 可并行任务
+
+- 幅值/尾段/修正段失败样本复盘。
+- Stage 7f oracle gain 样本图人工复核。
+- 下一版 keypoint/segment candidate 训练标签和固定图清单设计。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7f 未使用服务器，下一步原型仍可先本地完成。
+
+## 不需要服务器的任务
+
+- Stage 7f 归档、Git 提交、Stage 7g 轻量原型设计和图表复核。
+
 ## 最新更新：2026-05-13 07:05
 
 ## 正在做任务

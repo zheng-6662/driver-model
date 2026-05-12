@@ -1,0 +1,6 @@
+﻿gate_item,status,evidence
+selected_policy,rbf_kernel_ridge_context_no_subject,selected by validation gate only
+deployable_upgrade,no_upgrade,test delta vs RBF +0.000000
+response_factorized_oracle,diagnostic_only,oracle uses true labels and is not deployable
+stage08_physio_eeg_allowed,blocked,vehicle-only response-factorized candidate route is not yet stable
+server_used,no,local run only; credential file not read
