@@ -19,7 +19,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1/logs/topk_vehicle_transformer_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`03165475 Add topk vehicle transformer`。
 - 适合用户/老师直接查看：用户查看版总结、指标表、固定预测图、top1/bestK 差距图、可靠性散点图。
 
 ## 最新新增：阶段 3 RBF/keypoint 多候选车辆-only 复盘 v0.1

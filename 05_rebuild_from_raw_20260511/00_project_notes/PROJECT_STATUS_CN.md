@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 03:37
+
+- 当前阶段：阶段 3 top-K 车辆-only Transformer v0.1 已归档并完成 Git 提交；强车辆基线仍未冻结。
+- 当前正在做什么：收口 top-K v0.1，准备下一步继续车辆-only 选择机制/可靠性头或关键点条件多假设。
+- 已完成什么：提交 `03165475 Add topk vehicle transformer`；该提交包含 top-K 脚本、checkpoint、指标表、逐样本表、分支诊断、可靠性分箱、图、运行摘要、用户查看版总结、技术报告和 03:34 透明化记录。
+- 正在运行什么任务：没有后台任务；没有本地训练任务；没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：top-K top-1 没有超过 RBF，RBF RMSE=0.533667，top-1 RMSE=0.587883；best-of-3 RMSE=0.477534 说明候选覆盖有潜力，但 top-1 与 best-of-3 一致率只有 0.300，选择机制不足。
+- 当前最大风险：若把 best-of-3 当成可部署效果，会严重高估模型；当前证据支持继续研究可靠性/选择头，不支持进入风格、生理或 EEG。
+- 下一步准备做什么：分析 top1/bestK 差距样本，决定是改可靠性头，还是构建关键点条件多假设结构。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_topk_vehicle_transformer_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1/tables/topk_vehicle_transformer_metrics.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1/figures/topk_metric_summary_test.png`。
+
 ## 最新更新：2026-05-13 03:34
 
 - 当前阶段：阶段 3 top-K 车辆-only Transformer v0.1 已完成；仍未冻结强车辆基线，仍处于多假设/可靠性车辆-only 探索阶段。
