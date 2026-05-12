@@ -1,0 +1,26 @@
+{
+  "output_version": "stage03_vehicle_instability_topk_reliability_selector_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "chosen_model_by_val_rmse": "topk_top1_rbf_fallback_logreg_no_subject",
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "selector_train_split": "train only",
+  "fallback_threshold_split": "val only",
+  "test_is_report_only": true,
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/tables/topk_reliability_selector_metrics.csv",
+  "selection_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/tables/topk_reliability_selector_validation_selection.csv",
+  "figures": {
+    "fixed": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_fixed_predictions_test.png",
+    "bad": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_bad_samples_test.png",
+    "oracle_gain": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_oracle_gain_samples_test.png",
+    "metric_summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_metric_summary_test.png",
+    "decision_counts": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_decision_counts_test.png",
+    "fallback_scatter": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_fallback_scatter_test.png"
+  },
+  "selected_fallback_threshold": 0.05
+}

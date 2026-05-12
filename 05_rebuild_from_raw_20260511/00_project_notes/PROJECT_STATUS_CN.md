@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 04:07
+
+- 当前阶段：阶段 3 top-K 可靠性选择/回退 v0.1 已完成；强车辆基线仍未冻结，RBF/KNN 类车辆基线仍是主参照。
+- 当前正在做什么：把 top-K 候选覆盖、可靠性选择和 RBF 回退结果归档，判断是否能升级为车辆-only 主线。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_topk_reliability_selector_v0_1.py`；加载已有 top-K checkpoint，重建 RBF 车辆-only 预测，训练 train-only branch/candidate/fallback 选择器，用 val 固定 fallback 阈值，test 只报告；生成指标表、逐样本表、决策表、阈值表、分被试/道路模块汇总、固定图、坏样本图、oracle 增益图、决策计数图、fallback 风险散点图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；本地脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：val 选择 `topk_top1_rbf_fallback_logreg_no_subject`，test RMSE=0.542071，仍差于 RBF 的 0.533667；test 中 39/40 个样本回退到 RBF，1/40 选择 top1；best-of-RBF+topK oracle RMSE=0.415652，说明候选池有潜力但选择机制未解决。
+- 当前最大风险：如果只看 oracle 上限，会高估可部署模型；本轮可靠性选择不能升级为强车辆基线，也不能进入风格、生理或 EEG 增量结论。
+- 下一步准备做什么：把本轮 no-go 结果提交 Git；之后阶段 3 只能继续做更强的车辆-only 分响应类型/关键点条件多假设，或暂以 RBF/KNN 类车辆基线作为主参照进入更严格基线冻结审查。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_topk_reliability_selector_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/tables/topk_reliability_selector_metrics.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_reliability_selector_v0_1/figures/topk_reliability_selector_metric_summary_test.png`。
+
 ## 最新更新：2026-05-13 03:49
 
 - 当前阶段：阶段 3 top-K top1/bestK 差距复盘 v0.1 已归档并完成 Git 提交；强车辆基线仍未冻结。
