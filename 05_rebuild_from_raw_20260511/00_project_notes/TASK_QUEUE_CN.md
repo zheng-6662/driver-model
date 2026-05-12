@@ -1,15 +1,16 @@
 # R2E-Steering 当前任务队列
 
-## 最新更新：2026-05-13 07:52
+## 最新更新：2026-05-13 07:55
 
 ### 正在做任务
-- Stage 7i 稳定性校准候选选择已完成，当前归档脚本、结果、报告和透明化记录；准备 Git 提交。
+- Stage 7i 稳定性校准候选选择已完成并已提交，当前回写 commit hash 到透明化记录。
 
 ### 已完成任务
 - 已新增并运行 `stage07i_stability_calibrated_selection_v0_1.py`。
 - 已从 Stage 7h 稳定表计算 difficult/wrong-side/large-recall 相对 RBF 的 split delta，修复首跑 `KeyError: 'difficult_rmse_delta_vs_rbf_val'`。
 - 已确认稳定惩罚规则 `stability_penalty_l05` 选中 `segment_resid_rf_blend_25`，test RMSE delta=-0.005620，困难样本 RMSE delta=-0.029588。
 - 已生成 Stage 7i 用户总结、技术报告、候选分数表、policy 指标表、逐样本收益表、gate 表和 3 张非空图。
+- 已提交 `d294a520 Add stage7i stability calibrated selection`。
 
 ### 待做任务
 - Stage 7j：做多折 session validation 或分层 validation 重构，验证稳定选择规则是否可复现。
