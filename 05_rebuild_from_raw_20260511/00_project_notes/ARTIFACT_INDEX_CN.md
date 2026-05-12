@@ -872,5 +872,5 @@
 - RMSE delta 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/figures/style_route_rmse_delta_summary.png`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`4064bf64 Add style route decision`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、RMSE delta 图、下一步动作表。

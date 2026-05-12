@@ -9,6 +9,7 @@
 - 已新增并运行 `stage04_style_route_decision_v0_1.py`。
 - 已形成连续风格 no-go-current-form 决策：当前统计风格 + RBF 残差 Ridge 不升级主线。
 - 已确认生理/EEG 继续阻塞。
+- 已提交 `4064bf64 Add style route decision`。
 
 ### 待做任务
 - 阶段 6：车辆-only 响应分解/关键点+残差/多假设路线设计。
