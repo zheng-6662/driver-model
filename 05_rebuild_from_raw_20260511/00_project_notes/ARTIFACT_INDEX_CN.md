@@ -1,5 +1,32 @@
 # 阶段产物索引
 
+## 最新新增：旧 `vehicle_direct` 全量车辆-only clean 对照 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_oldcode_vehicle_direct_full_clean_user_summary_cn.md`
+- 正式中文报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_direct_full_clean_on_instability_v0_1_cn.md`
+- clean manifest 说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_deep_clean_vehicle_manifest_v0_1_cn.md`
+- clean manifest 脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_oldcode_deep_clean_vehicle_manifest_v0_1.py`
+- 评估和画图脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/evaluate_oldcode_vehicle_direct_full_instability_v0_1.py`
+- clean session-level manifest：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/tables/oldcode_manifest_session_level_split_clean_vehicle_v0_1.csv`
+- clean random split manifest：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/tables/oldcode_manifest_random_event_split_clean_vehicle_v0_1.csv`
+- clean subject-level manifest：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/tables/oldcode_manifest_subject_level_split_clean_vehicle_v0_1.csv`
+- clean 文件状态表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/tables/oldcode_deep_clean_vehicle_status_v0_1.csv`
+- clean manifest 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/logs/oldcode_deep_clean_vehicle_manifest_summary_v0_1.json`
+- 训练日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/logs/oldcode_vehicle_direct_full_clean_train_stdout.log`
+- 评估摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/logs/oldcode_vehicle_direct_full_eval_summary.json`
+- 指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/tables/oldcode_vehicle_direct_full_metrics.csv`
+- 逐样本指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/tables/oldcode_vehicle_direct_full_per_sample_metrics.csv`
+- 分被试结果：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/tables/oldcode_vehicle_direct_full_by_subject_test.csv`
+- 分响应类型结果：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/tables/oldcode_vehicle_direct_full_by_response_type_test.csv`
+- 固定预测图样本表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/tables/oldcode_vehicle_direct_full_fixed_plot_samples.csv`
+- 坏样本图样本表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/tables/oldcode_vehicle_direct_full_bad_plot_samples.csv`
+- 固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_fixed_predictions_test.png`
+- 坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_bad_samples_test.png`
+- 本地旧训练 run：`F:/data_set_process/data_process/tmp/event_conditioned_runs/OLD_FULL_INSTABILITY_HIGHCONF_VEHICLE_DIRECT_CLEAN_V0_1_20260512_181413`
+- 重要结论：旧 `vehicle_direct` active checkpoint 在 session-level test 上 RMSE=0.637366，但严重幅值不足率=0.683453、大幅响应召回=0.142857、反向修正计数完全匹配率=0.086331；只能作为旧流程历史对照和坏样本来源，不能替代新流程强车辆基线。
+- 重要风险记录：raw manifest 直读原始 CSV 的旧 deep run 已判定无效，因为旧 loader 会把原始交替缺失点填 0；正式结果只采用 clean manifest。
+- 适合用户/老师直接查看：优先看用户查看版总结、固定预测图、坏样本图和正式中文报告。
+
 ## 最新新增：道路设定引导的车辆失稳事件判定 v0.1
 
 - 中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/road_guided_instability_v0_1_cn.md`
@@ -245,3 +272,22 @@
 - 坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_baselines_on_instability_v0_1/figures/oldcode_bad_samples_pre2_session_test_ridge.png`
 - 旧 manifest loader smoke 记录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/logs/oldcode_manifest_loader_smoke_check.json`
 - 旧深度模型 smoke run 目录：`F:/data_set_process/data_process/tmp/event_conditioned_runs/OLD_SMOKE_INSTABILITY_HIGHCONF_V0_1_20260512_165950`
+
+
+## 场景触发点审计 v0.2（2026-05-12）
+
+| 产物 | 路径 | 说明 |
+|---|---|---|
+| 审计脚本 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_scene_trigger_audit_v0_2.py` | 解析 `.aed` 交通对象、触发点并和旧锚点对齐 |
+| 用户版说明 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_scene_trigger_user_summary_cn.md` | 面向用户/老师的白话说明 |
+| 完整报告 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/scene_trigger_audit_v0_2_cn.md` | 包含 longstraight 交通对象、触发点和旧锚点对齐结论 |
+| 交通对象表 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/aed_traffic_objects_v0_2.csv` | `.aed` 中交通车、车流源等对象 |
+| 场景触发点表 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/aed_traffic_triggers_v0_2.csv` | Activate、Stop、ChangeLane 触发点 |
+| 触发点时间映射 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/scene_trigger_session_times_v0_2.csv` | 触发点换算到每条被试记录相对时间轴 |
+| 旧锚点对齐表 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/old_anchor_vs_scene_trigger_v0_2.csv` | 旧 v400 锚点与最近场景触发点时间差 |
+| longstraight 图 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/figures/longstraight_scene_trigger_map_v0_2.png` | 25/26 车道交通对象与触发点图 |
+| 时间差图 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/figures/old_anchor_scene_trigger_delta_hist_v0_2.png` | 旧锚点相对最近场景触发点的时间差分布 |
+
+
+| longstraight 被试车道投影图 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/figures/longstraight_ego_lane_projection_v0_2.png` | 把被试车横向位置与交通触发车道放在同一横向坐标上 |
+| longstraight 被试车道表 | `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/longstraight_ego_lane_at_scene_triggers_v0_2.csv` | 每个 longstraight 场景触发点处的被试车道估计 |

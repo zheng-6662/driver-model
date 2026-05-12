@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 18:45
+
+- 当前阶段：阶段 3 旧流程历史对照，已完成旧 `vehicle_direct` 全量车辆-only clean run；这仍是旧代码对照，不是新流程最终强车辆基线。
+- 当前正在做什么：本地训练和评估已经结束，正在整理产物、日志和 Git 提交。
+- 已完成什么：为旧深度入口生成 clean vehicle manifest；84 个原始车辆文件完成 200Hz 插值清洗，906 个高置信失稳样本可用于旧代码；session-level split 为 train/val/test = 611/156/139；旧 `vehicle_direct` 全量 CPU run 已完成；固定预测图和坏样本图已生成。
+- 正在运行什么任务：没有本地训练任务；没有远程服务器任务。`http://127.0.0.1:8766/` 仍只是本地审查页面，不是 GPU/服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：clean 版旧 `vehicle_direct` active checkpoint 在 session-level test 上 RMSE=0.637366，主峰方向准确率=0.870504，错侧率=0.129496，严重幅值不足率=0.683453，大幅响应召回=0.142857，反向修正计数完全匹配率=0.086331。structure checkpoint RMSE=0.647720，严重幅值不足率=0.561151。
+- 当前最大风险：旧深度入口直接读取原始 CSV 时会把原始交替缺失点填 0，已导致一次 raw direct run 被判定无效并清理；后续旧代码只允许使用 clean manifest。即便 clean run 的 RMSE 比旧 ridge 诊断更低，物理指标仍显示幅值不足、复杂修正识别弱，不能直接升级为新流程强车辆基线。
+- 下一步准备做什么：用 906 个高置信失稳事件构建新流程正式 `samples_master`/split/dataset card，并建立不含驾驶员 ID、无泄漏、物理指标齐全的强车辆基线；同时把这次旧 deep 的坏样本作为失败样本库。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_oldcode_vehicle_direct_full_clean_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_direct_full_clean_on_instability_v0_1_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_bad_samples_test.png`。
+
 ## 最新更新：2026-05-12 15:52
 
 - 当前阶段：阶段 2 修正，正在从“人工逐条标注失稳候选”转为“道路设定引导的自动综合判定”。
@@ -168,3 +180,47 @@ instability_ay_roll        12
   3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_direct_smoke_on_instability_v0_1_cn.md`
   4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_baselines_on_instability_v0_1/tables/oldcode_instability_baseline_metrics.csv`
   5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/tables/oldcode_manifest_session_level_split.csv`
+
+
+## 追加更新：2026-05-12 17:18
+
+- 当前阶段：阶段 2 补充审计，已从道路模块位置审计推进到“场景交通对象与触发点审计”。
+- 当前完成内容：新增 `scene_trigger_audit_v0_2`，直接解析 SILAB `.aed` 场景文件，提取交通对象、激活点、停车点、换道点，并换算到道路纵向位置和每条被试记录的相对时间轴。
+- 最新结果：解析到交通对象 81 行、场景触发点 19 行；场景触发点换算到被试记录时间轴后 1436 行；6247 个旧 v400 锚点已和最近场景触发点完成对齐。
+- longstraight 关键发现：25/26 车道附近有交通交互设计。26 车道有车流源；25 车道有 MAN TGL 货车和 Chrysler300 小轿车；Chrysler300 有停车触发；MAN TGL 有向 26 车道换道触发。
+- 旧锚点风险：旧锚点 1 秒内接近场景触发点 175 个，2 秒内接近 356 个；大量旧锚点明显早于或晚于最近场景触发点，说明旧锚点不能直接等同于真实场景触发时刻。
+- 下一步：做被试车道投影，确认被试通过 longstraight 触发点时到底在 25/26 哪条车道，以及和交通车的相对位置。
+- 用户优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_scene_trigger_user_summary_cn.md`；`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/figures/longstraight_scene_trigger_map_v0_2.png`。
+# 最新更新：2026-05-12 17:15
+
+- 当前阶段：阶段 2/3 交界，正在用旧流程 `vehicle_direct` 入口对全原始重筛后的高置信失稳样本做全量车辆-only 对照。
+- 当前正在做什么：启动旧深度模型全量训练，不使用生理、脑电、连续风格或驾驶员风格向量；输入为 `vehicle_instability_allraw_highconf_v0_1` 的 session-level 旧 manifest。
+- 已完成什么：旧代码窗口和 manifest 已生成，906/908 个高置信失稳事件满足旧代码 3 秒历史 + 2 秒未来窗口要求；旧 ridge/无学习诊断和旧 `vehicle_direct` smoke run 已跑通。
+- 正在运行什么任务：本地 CPU 全量旧 `vehicle_direct` 训练评估，run prefix 为 `OLD_FULL_INSTABILITY_HIGHCONF_VEHICLE_DIRECT_V0_1`。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果是什么：smoke run 只证明旧入口可运行；正式对照需要本次全量 run + 固定图/坏样本图后再判断。
+- 当前最大风险是什么：旧深度模型结构和旧评价偏好可能不适合作为新流程结论；本次只作为旧代码历史对照，不能替代新流程强车辆基线。
+- 下一步准备做什么：训练结束后读取 `run_summary.json`，补逐样本评估表、固定预测图、坏样本图、中文报告，并更新产物索引。
+- 用户可以优先查看哪些文件：训练完成后优先看 `09_reports/oldcode_vehicle_direct_full_on_instability_v0_1_cn.md` 和对应固定图/坏样本图。
+
+
+## 追加更新：2026-05-12 17:25
+
+- 已补充 `longstraight` 被试车道投影 v0.2：在 595 个场景触发点时刻，被试车估计车道为 23 车道 524 行、22 车道 68 行、21 车道 3 行。
+- 关键判断：这些估计结果与 `longstraight` 中 25/26 车道的交通触发点不是同车道，也不是同方向侧；因此不能简单说“被试开的车道上有这些车”。更准确的说法是：被试多在 21/22/23 侧行驶，场景触发交通车主要在 25/26 侧，可能构成对向/相邻方向侧交通干扰，需要结合具体场景设计解释。
+- 新增图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/figures/longstraight_ego_lane_projection_v0_2.png`。
+# 最新更新：2026-05-12 18:40
+
+- 当前阶段：阶段 3 旧代码历史对照，已完成 clean manifest 版旧 `vehicle_direct` 全量车辆-only run。
+- 当前正在做什么：整理本次旧代码对照结果并准备提交；没有训练任务正在运行。
+- 已完成什么：发现旧深度入口直接读原始 CSV 会把交替缺失点填 0，导致标签高频跳变；已生成 `oldcode_deep_vehicle_csv_v0_1` clean 车辆 CSV 和 `oldcode_manifest_session_level_split_clean_vehicle_v0_1.csv`，并用 clean manifest 重跑全量 `vehicle_direct`。
+- 正在运行什么任务：无。clean full run 已结束，评估和固定图/坏样本图已生成。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果是什么：clean run 的 active legacy checkpoint 为 epoch 5，session-level test RMSE=0.637366，主峰方向准确率=0.870504，错侧率=0.129496，严重幅值不足率=0.683453，大幅响应召回=0.142857；structure checkpoint 为 epoch 9，test RMSE=0.647720。
+- 当前最大风险是什么：旧 `vehicle_direct` 在 clean 数据上仍明显幅值不足、反向/多段修正识别差，且只属于旧代码历史对照，不能作为新流程最终强车辆基线，也不能支撑风格/生理有效性结论。
+- 下一步准备做什么：把 906 个高置信失稳事件整理成新流程正式 `samples_master` 和强车辆基线；本次旧代码结果只作为历史对照和坏样本来源。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_oldcode_vehicle_direct_full_clean_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_direct_full_clean_on_instability_v0_1_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_fixed_predictions_test.png`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_bad_samples_test.png`

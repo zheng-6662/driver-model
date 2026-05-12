@@ -1,5 +1,23 @@
 # 服务器运行记录
 
+## 最新更新：2026-05-12 18:45
+
+- 本次旧 `vehicle_direct` 全量车辆-only clean 对照完全在本地 CPU 运行。
+- 未连接远程服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 远程任务状态：无。
+- GPU/显存状态：未检查，因为本次不使用远程 GPU。
+- 启动时间：2026-05-12 18:14:13，本地 CPU 训练 run。
+- 关闭时间：2026-05-12 18:39:46，本地评估和图表生成完成。
+- screen/nohup 名称：无，本地前台命令。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无远程拉回；所有输出直接写入本地项目目录。
+- 本地训练 run：`F:/data_set_process/data_process/tmp/event_conditioned_runs/OLD_FULL_INSTABILITY_HIGHCONF_VEHICLE_DIRECT_CLEAN_V0_1_20260512_181413`。
+- 本地训练日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/logs/oldcode_vehicle_direct_full_clean_train_stdout.log`。
+- 本地评估输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1`。
+- 是否还有任务在跑：否。
+- 备注：一次 raw manifest 直读原始 CSV 的本地 run 已判定无效并清理，原因是旧 loader 会把原始缺失点填 0；正式记录只采用 clean manifest 结果。
+
 ## 最新更新：2026-05-12 15:52
 
 - 本次“道路设定引导的车辆失稳事件自动判定 v0.1”完全在本地运行。
@@ -51,3 +69,10 @@
 | 2026-05-12 13:25:51 | - | 阶段 2 补充本地键盘式人工事件标注播放器 v0.2 候选段审查模式带图例 | 本地 PID 34408 | - | `02_samples/manual_event_keyboard_player_v0_1/logs` | `02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv` | 是，本地服务 | 未使用服务器 |
 | 2026-05-12 14:03:26 | 2026-05-12 14:03:26 | 阶段 2 补充 Codex 自动事件审阅 v0.1 | - | - | `02_samples/codex_event_review_v0_1/logs` | `02_samples/codex_event_review_v0_1` | 否 | 未使用服务器 |
 | 2026-05-12 16:53:00 | 2026-05-12 17:02:00 | 旧代码测试全原始车辆失稳高置信样本 v0.1：窗口生成、旧车辆基线诊断、旧 vehicle_direct CPU smoke | - | - | `03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/logs`; `03_baselines/oldcode_vehicle_baselines_on_instability_v0_1/logs`; `tmp/event_conditioned_runs/OLD_SMOKE_INSTABILITY_HIGHCONF_V0_1_20260512_165950` | `03_processed_datasets/vehicle_instability_allraw_highconf_v0_1`; `03_baselines/oldcode_vehicle_baselines_on_instability_v0_1`; `tmp/event_conditioned_runs/OLD_SMOKE_INSTABILITY_HIGHCONF_V0_1_20260512_165950` | 否 | 未使用服务器；本地 CPU smoke；未读取服务器指令与密码文件 |
+# 最新更新：2026-05-12 17:15
+
+- 本次旧 `vehicle_direct` 全量车辆-only 对照在本地 CPU 启动。
+- 未连接远程服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 远程任务状态：无。
+- GPU/显存状态：未检查，因为本次不使用远程 GPU。
+- 本地输出预计路径：`F:/data_set_process/data_process/tmp/event_conditioned_runs/OLD_FULL_INSTABILITY_HIGHCONF_VEHICLE_DIRECT_V0_1_*`；补充图表预计写入 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_on_instability_v0_1`。
