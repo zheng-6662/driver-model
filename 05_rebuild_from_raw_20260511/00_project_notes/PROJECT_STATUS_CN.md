@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:06
+
+- 当前阶段：Stage 6c selector feature revision v0.1 已完成；当前修订不升级主线，生理/EEG 仍不进入。
+- 当前正在做什么：评估加入候选模型预测差异特征后的 RBF/keypoint selector 是否能把 oracle 上限转成可部署增益。
+- 已完成什么：新增并运行 `stage06c_selector_feature_revision_v0_1.py`；比较原始 logistic、工程化 logistic、保守 logistic 和浅层随机森林 selector，生成特征协议、阈值扫描、指标表、gate 表、2 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val 选择 `rf_engineered_shallow`；test RMSE=0.544356，比 RBF 差 +0.010689；wrong-side 从 0.225 降到 0.175，large recall 从 0.750 升到 0.875；但 gate=`no_upgrade_current_revision`，stage05 physio/eeg=blocked。
+- 当前最大风险是什么：如果只看错侧率和大幅召回改善，可能误把 RMSE 退化和 FP=13 的不稳定选择忽略；当前最多说明 selector/reliability 有物理指标信号，不能升级为主线。
+- 下一步准备做什么：围绕 RF selector 的 6 个 FN 和 13 个 FP 做可靠性门控，目标是保留错侧/大幅响应收益，同时控制 RMSE 退化。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06c_selector_feature_revision_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06c_selector_feature_revision_v0_1/tables/selector_revision_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06c_selector_feature_revision_v0_1/figures/selector_revision_physical_metrics.png`。
+
 ## 最新更新：2026-05-13 05:57
 
 - 当前阶段：Stage 6b RBF/keypoint 选择器错误复盘 v0.1 已完成；生理/EEG 仍不进入。

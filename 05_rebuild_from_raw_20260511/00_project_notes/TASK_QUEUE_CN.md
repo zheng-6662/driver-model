@@ -1,5 +1,35 @@
 # 当前任务队列
 
+## 最新更新：2026-05-13 06:06
+
+### 正在做任务
+- Stage 6c selector feature revision 已完成；下一步准备做可靠性门控。
+
+### 已完成任务
+- 已新增并运行 `stage06c_selector_feature_revision_v0_1.py`。
+- 已确认 val 选择 `rf_engineered_shallow`，test RMSE=0.544356，比 RBF 差 +0.010689。
+- 已确认该 selector 改善错侧率和大幅响应召回，但当前 gate 为 `no_upgrade_current_revision`。
+
+### 待做任务
+- 复盘 RF selector 的 6 个 FN 和 13 个 FP。
+- 设计 reliability gate，控制 FP，同时尽量保留错侧率和大幅响应召回收益。
+- 如果可靠性门控仍不能同时改善 RMSE 和物理指标，则 Stage 6 selector 路线暂时降级为诊断候选。
+
+### 阻塞任务
+- 生理、脑电有效性验证继续阻塞。
+- 不能用物理指标单项改善直接宣称车辆-only结构化模型已解决。
+
+### 可并行任务
+- RF selector 的 threshold/margin 分析。
+- FP 高概率样本的道路/响应形态复核。
+- FN 低概率样本的候选预测差异复核。
+
+### 需要服务器的任务
+- 暂无。
+
+### 不需要服务器的任务
+- 当前 reliability gate 设计、表格和报告整理均可本地完成。
+
 ## 最新更新：2026-05-13 05:57
 
 ### 正在做任务
