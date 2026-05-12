@@ -1,0 +1,4 @@
+﻿gate,status,evidence,decision
+stage07b_deployable_selector_upgrade,no_upgrade,selected test RMSE delta=+0.000000; wrong-side=0.225 vs RBF 0.225; large recall=0.750 vs RBF 0.750.,当前轻量 selector 不升级主线。
+oracle_gap_remaining,still_large,oracle RMSE=0.415652; selected RMSE=0.533667.,仍需改进非 oracle 选择策略或候选表示。
+stage05_physio_eeg_allowed,blocked,车辆-only Stage 7b 轻量 selector 未形成可升级结果。,继续阻塞生理/EEG有效性结论。

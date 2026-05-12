@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:39
+
+- 当前阶段：Stage 7b 非 oracle top-K selector 轻量实验 v0.1 已完成；当前不升级多假设主线。
+- 当前正在做什么：验证 Stage 7a 协议下的轻量 selector 是否能不用 test 标签把 top-K/RBF oracle 上限转成可部署收益。
+- 已完成什么：新增并运行 `stage07b_non_oracle_topk_selector_v0_1.py`；显式剔除 label-derived 输入字段，使用 37 个允许特征训练 logistic/RF selector 和置信度 fallback；生成 feature audit、allowed features、policy metrics、decision diagnostics、coverage-risk、gate 表、3 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val 选中 `logreg_balanced_c0_2__fallback_rbf_conf_lt_0.80`；test RMSE=0.533667，与 RBF/KNN 相同，delta=+0.000000；test 上 RBF 选择比例=1.000，说明实际完全退回主参照；gate=`no_upgrade`，生理/EEG 继续 blocked。
+- 当前最大风险是什么：当前 selector 的安全性来自全部退回 RBF，而不是学会了可靠候选选择；如果不导出更完整的候选轨迹差异特征，Stage 7 仍会停在 oracle gap。
+- 下一步准备做什么：Stage 7c 或回到 Stage 6：导出完整候选预测轨迹/形态差异，或重新设计候选生成；暂不进入生理/EEG。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07b_non_oracle_topk_selector_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07b_non_oracle_topk_selector_v0_1/tables/stage07b_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07b_non_oracle_topk_selector_v0_1/tables/stage07b_feature_audit.csv`。
+
 ## 最新更新：2026-05-13 06:31
 
 - 当前阶段：Stage 7a 非 oracle 多候选选择协议 v0.1 已完成；Stage 7 还未训练模型。

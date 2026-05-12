@@ -1,0 +1,21 @@
+{
+  "output_version": "stage07b_non_oracle_topk_selector_v0_1",
+  "run_time_local": "2026-05-13 06:39",
+  "allowed_feature_count": 37,
+  "selected_policy": "logreg_balanced_c0_2__fallback_rbf_conf_lt_0.80",
+  "rbf_test_rmse": 0.5336666894389569,
+  "selected_test_rmse": 0.5336666894389569,
+  "selected_delta_vs_rbf_rmse": 0.0,
+  "selected_test_rbf_selected_rate": 1.0,
+  "gate_status": "no_upgrade",
+  "server_used": false,
+  "server_credential_file_read": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "uses_subject_id": false,
+  "raw_files_modified": false,
+  "test_used_for_model_selection": false,
+  "user_summary_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07b_non_oracle_topk_selector_user_summary_cn.md",
+  "technical_report_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07b_non_oracle_topk_selector_v0_1_cn.md"
+}
