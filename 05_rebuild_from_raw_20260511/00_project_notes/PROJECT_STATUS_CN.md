@@ -1,3 +1,19 @@
+## 最新更新：2026-05-13 00:37
+
+- 当前阶段：阶段 3，干净响应任务车辆-only 对照验收完成；仍然没有进入连续风格、生理或 EEG 有效性验证。
+- 当前正在做什么：整理 `A_instant2s_core` 和 `B_response3s_strict_core` 两条干净任务轨道的车辆-only 基线结果，并把结果写入项目看板、任务队列、产物索引和每日日志。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`；在 84 个 2 秒即时响应核心候选和 270 个 3 秒响应覆盖严格核心候选上评估零响应、趋势外推、训练均值、事件均值、ridge、rich ridge、RBF KRR、KNN template、direction-gated KNN 和 peak-scaled template。
+- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
+- 最近一次结果是什么：A 轨道按 val RMSE 选择 `knn_template_context_no_subject`，test RMSE=0.428130，错侧率=0.333333，大幅响应召回=0.600000；但 A 轨道 test 只有 12 个事件，且 KNN train RMSE 近 0，只能作为诊断候选。B 轨道按 val RMSE 选择 `rbf_kernel_ridge_context_no_subject`，test RMSE=0.533667，错侧率=0.225000，大幅响应召回=0.750000，严重幅值不足率=0.125000；但反向修正计数完全匹配率仍为 0.000000，坏样本图显示多段/反向响应仍明显不足。
+- 当前最大风险是什么：如果直接把 KNN 在小样本 A 轨道上的 val/test 表现当作主结论，会把模板记忆风险误判为泛化能力；如果只看 B 轨道 RMSE，又会忽略反向修正、多段修正和长事件仍未解决。
+- 下一步准备做什么：优先复查 B 轨道固定图和坏样本图，决定是否把 B 轨道 RBF KRR 作为下一轮结构化车辆-only 参考；A 轨道暂作为即时响应诊断，不升级为主线结论。继续阻止风格/生理/EEG 有效性结论，直到强车辆基线和物理错误闭环更稳定。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_metrics.csv`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/clean_task_vehicle_metric_summary_test.png`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_bad_samples_test.png`
+
 # R2E-Steering 项目总进度看板
 
 ## 最新更新：2026-05-13 00:18

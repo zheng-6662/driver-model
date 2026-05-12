@@ -1,0 +1,57 @@
+{
+  "tracks": [
+    {
+      "track_id": "A_instant2s_core",
+      "window_config_id": "pre2_label2_old_main",
+      "task_sample_role": "instant2s_core_candidate",
+      "n_samples": 84,
+      "train_n": 62,
+      "val_n": 10,
+      "test_n": 12,
+      "subject_n": 16,
+      "description_cn": "2秒即时响应核心候选：2秒标签稳定，可先验证事件后即时方向盘响应。"
+    },
+    {
+      "track_id": "B_response3s_strict_core",
+      "window_config_id": "pre3_label3_response_coverage",
+      "task_sample_role": "response3s_strict_core_candidate",
+      "n_samples": 270,
+      "train_n": 188,
+      "val_n": 42,
+      "test_n": 40,
+      "subject_n": 18,
+      "description_cn": "3秒响应覆盖严格核心候选：2秒不足但3秒标签相对稳定。"
+    }
+  ],
+  "metrics_rows": 72,
+  "per_sample_rows": 4248,
+  "best_val_models": [
+    {
+      "track_id": "A_instant2s_core",
+      "model_name": "knn_template_context_no_subject",
+      "rmse_steer": 0.31808298012142044
+    },
+    {
+      "track_id": "B_response3s_strict_core",
+      "model_name": "rbf_kernel_ridge_context_no_subject",
+      "rmse_steer": 0.5714822247805078
+    }
+  ],
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_metrics.csv",
+  "per_sample_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_per_sample_metrics.csv",
+  "model_info_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_model_info.csv",
+  "figures": {
+    "metric_summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/clean_task_vehicle_metric_summary_test.png",
+    "A_instant2s_core_fixed": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/A_instant2s_core_fixed_predictions_test.png",
+    "A_instant2s_core_bad": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/A_instant2s_core_bad_samples_test.png",
+    "B_response3s_strict_core_fixed": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png",
+    "B_response3s_strict_core_bad": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_bad_samples_test.png"
+  },
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id_as_model_input": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "raw_files_modified": false
+}
