@@ -1,0 +1,18 @@
+{
+  "run_time_local": "2026-05-13 06:25",
+  "session_style60_delta_rmse": 0.0008918447676785624,
+  "subject_style60_delta_rmse": -0.001337011418519496,
+  "style_route_continue_as_mainline": false,
+  "style_effectiveness_claim_allowed": false,
+  "physio_eeg_role_validation_allowed": false,
+  "next_route": "vehicle_only_structured_trajectory_modeling",
+  "evidence_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_evidence_summary.csv",
+  "gate_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_decision_gate_table.csv",
+  "next_actions_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_next_actions.csv",
+  "figure_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/figures/style_route_rmse_delta_summary.png",
+  "server_used": false,
+  "server_access_file_read": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "raw_files_modified": false
+}

@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:25
+
+- 当前阶段：阶段 4 连续风格路线收口决策 v0.1 已完成；当前连续风格直接残差融合路线不升级为主线。
+- 当前正在做什么：准备进入车辆-only 结构化轨迹建模路线，而不是进入生理/EEG。
+- 已完成什么：新增并运行 `stage04_style_route_decision_v0_1.py`；汇总风格协议、session-level 探索、subject-level 复核和 gate，形成阶段 4 收口表、下一步动作表、图和中文报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：session-level style60 delta RMSE=0.000892；subject-level style60 delta RMSE=-0.001337；物理指标未稳定改善；style route gate=no_go_current_form；physio/eeg=blocked。
+- 当前最大风险是什么：如果跳过车辆-only 结构化错误复盘，直接进入生理/EEG，会把车辆主参照未解决的问题错误归因给新模态。
+- 下一步准备做什么：阶段 6 车辆-only 结构化轨迹建模，优先响应分解、关键点+残差、多假设/可靠性，继续用固定 RBF 参照和坏样本图。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_style_route_decision_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_decision_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/figures/style_route_rmse_delta_summary.png`。
+
 ## 最新更新：2026-05-13 06:05
 
 - 当前阶段：阶段 4 连续风格跨 split 复核 v0.1 已完成；连续风格有效性结论仍阻塞。

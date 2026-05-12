@@ -860,3 +860,17 @@
 - GPTPro 提问和回复：无。
 - 重要 Git commit：`95f21aae Add style cross split validation`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、指标图、subject-level 坏样本图。
+
+## 最新新增：阶段 4 连续风格路线收口决策 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_style_route_decision_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_style_route_decision_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/scripts/stage04_style_route_decision_v0_1.py`
+- 证据摘要表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_evidence_summary.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_decision_gate_table.csv`
+- 下一步动作表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/tables/style_route_next_actions.csv`
+- RMSE delta 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_route_decision_v0_1/figures/style_route_rmse_delta_summary.png`
+- 服务器日志：无，本轮未使用远程服务器。
+- GPTPro 提问和回复：无。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：用户查看版总结、gate 表、RMSE delta 图、下一步动作表。
