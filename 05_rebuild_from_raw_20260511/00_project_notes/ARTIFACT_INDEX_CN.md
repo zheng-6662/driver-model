@@ -17,7 +17,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_gap_review_v0_1/logs/topk_gap_review_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`1ace03f2 Add topk gap review`。
 - 适合用户/老师直接查看：用户查看版总结、总体摘要、top gap 样本、top gap 图、风险散点图、分支混淆图。
 
 ## 最新新增：阶段 3 top-K 车辆-only Transformer v0.1
