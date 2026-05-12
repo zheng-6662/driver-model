@@ -4,7 +4,7 @@
 
 - 当前阶段：Stage 7b 非 oracle top-K selector 轻量实验 v0.1 已完成；当前不升级多假设主线。
 - 当前正在做什么：验证 Stage 7a 协议下的轻量 selector 是否能不用 test 标签把 top-K/RBF oracle 上限转成可部署收益。
-- 已完成什么：新增并运行 `stage07b_non_oracle_topk_selector_v0_1.py`；显式剔除 label-derived 输入字段，使用 37 个允许特征训练 logistic/RF selector 和置信度 fallback；生成 feature audit、allowed features、policy metrics、decision diagnostics、coverage-risk、gate 表、3 张图、用户总结和技术报告。
+- 已完成什么：新增并运行 `stage07b_non_oracle_topk_selector_v0_1.py`；显式剔除 label-derived 输入字段，使用 37 个允许特征训练 logistic/RF selector 和置信度 fallback；生成 feature audit、allowed features、policy metrics、decision diagnostics、coverage-risk、gate 表、3 张图、用户总结和技术报告；已提交 `d431cd11 Add stage7b non-oracle topk selector`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val 选中 `logreg_balanced_c0_2__fallback_rbf_conf_lt_0.80`；test RMSE=0.533667，与 RBF/KNN 相同，delta=+0.000000；test 上 RBF 选择比例=1.000，说明实际完全退回主参照；gate=`no_upgrade`，生理/EEG 继续 blocked。

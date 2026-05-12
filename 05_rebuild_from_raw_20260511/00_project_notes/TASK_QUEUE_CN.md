@@ -3,16 +3,16 @@
 ## 最新更新：2026-05-13 06:39
 
 ### 正在做任务
-- Stage 7b 非 oracle top-K selector 轻量实验已完成；正在归档并提交本轮结果。
+- Stage 7b 非 oracle top-K selector 轻量实验已完成；当前准备候选轨迹差异复查或候选生成复查。
 
 ### 已完成任务
 - 已新增并运行 `stage07b_non_oracle_topk_selector_v0_1.py`。
 - 已剔除 label-derived 输入字段，保留 37 个允许特征。
 - 已确认 val 选中的 learned fallback policy 在 test 上 100% 退回 RBF，RMSE 与 RBF 相同，没有形成新选择能力。
 - 已确认 gate 为 `no_upgrade`，生理/EEG 继续阻塞。
+- 已提交 `d431cd11 Add stage7b non-oracle topk selector`。
 
 ### 待做任务
-- 将 Stage 7b 结果 Git 提交，并在产物索引中记录 commit。
 - 若继续 Stage 7，需要导出完整候选预测轨迹差异特征，而不是只用现有摘要特征。
 - 复查是否应回到候选生成本身：让候选分支更可分、更稳定，而不是只改 selector。
 

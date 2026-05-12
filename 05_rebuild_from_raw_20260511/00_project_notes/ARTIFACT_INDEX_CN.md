@@ -20,7 +20,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07b_non_oracle_topk_selector_v0_1/logs/stage07b_selector_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`d431cd11 Add stage7b non-oracle topk selector`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、selected policy metrics、feature audit。
 
 ## 最新新增：Stage 7a 非 oracle 多候选选择协议 v0.1
