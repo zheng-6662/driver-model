@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 21:24
+
+- 当前阶段：阶段 3 车辆-only 统一对照 v0.1 已完成；仍处于冻结强车辆基线前的比较阶段。
+- 当前正在做什么：把 formal ridge、旧 `vehicle_direct`、RBF/KNN/template 和真正 Transformer 放入同一套指标与图表，准备提交本轮对照汇总。
+- 已完成什么：生成 15 个车辆-only test 模型的统一指标表、相对 formal ridge 差异表、候选决策表、坏样本 top28 重合表、关键指标图、物理错误热图、RMSE/错侧权衡图和坏样本重合图。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：KNN template 的 test RMSE 最低，为 0.516941，但被标记为模板记忆风险；RBF KRR test RMSE=0.540287，大幅响应召回=0.600000，但反向修正匹配率=0.043165；真正 vehicle Transformer test RMSE=0.567162，优于 formal ridge 0.649341 和旧 `vehicle_direct active` 0.637366，但多段修正预测仍为明显短板。
+- 当前最大风险：如果只按 RMSE 会错误升级 KNN/RBF；如果只看“是否 Transformer”又会忽略 Transformer 仍漏多段修正。因此阶段 3 还需要 subject-level/window 稳健性和坏样本复盘。
+- 下一步准备做什么：基于统一对照表做强车辆基线稳健性验证，重点检查 RBF/KNN 是否模板记忆、Transformer 是否需要响应分解/关键点残差结构。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_unified_vehicle_comparison_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_unified_vehicle_comparison_v0_1/tables/unified_vehicle_comparison_metrics_test.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_unified_vehicle_comparison_v0_1/figures/unified_vehicle_physical_failure_heatmap_test.png`。
+
 ## 最新更新：2026-05-12 21:10
 
 - 当前阶段：阶段 3 车辆-only Transformer 时序基线 v0.1 已完成；这次是对用户指出“KNN/RBF 不是 Transformer”的纠正与补充。

@@ -1,0 +1,21 @@
+{
+  "window_config_id": "pre2_label2_old_main",
+  "split_strategy": "session_level_split",
+  "model_count_test": 15,
+  "best_rmse_model": "knn_template_context_no_subject",
+  "best_rmse": 0.5169408972350654,
+  "formal_rmse": 0.6493414042317994,
+  "transformer_rmse": 0.5671624648735801,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "outputs": {
+    "metrics_test": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_unified_vehicle_comparison_v0_1\\tables\\unified_vehicle_comparison_metrics_test.csv",
+    "decision_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_unified_vehicle_comparison_v0_1\\tables\\unified_vehicle_candidate_decision_table.csv",
+    "user_summary": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\09_reports\\stage03_vehicle_instability_unified_vehicle_comparison_user_summary_cn.md"
+  }
+}
