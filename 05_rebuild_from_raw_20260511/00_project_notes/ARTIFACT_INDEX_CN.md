@@ -14,6 +14,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/logs/road_guided_instability_run_summary_v0_1.json`
 - 旧日志依据：`F:/data_set_process/data_process/04_project_logs/reports/trigger_response_lag_20260421/TASK_DEFINITION_AND_EVENT_LOGIC.md`
 - 道路设计依据：`F:/data_set_process/data_process/01_datasets/多模态数据/被试数据集合/道路信息/full_centerline_layout.csv`
+- 重要 Git commit：`ad981f6 Add road-guided instability event adjudication`
 - 适合用户/老师直接查看：优先看中文说明和自动采用表；这版用于替代“全人工逐条标注”的第一轮车辆失稳事件筛选。
 
 更新时间：2026-05-12 14:03:26
