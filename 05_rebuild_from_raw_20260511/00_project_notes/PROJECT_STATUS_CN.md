@@ -1,4 +1,17 @@
 # R2E-Steering 项目总进度看板
+
+## 最新更新：2026-05-13 07:52
+
+- 当前阶段：Stage 7i 稳定性校准候选选择 v0.1 已完成；gate=`weak_candidate_continue`，但主线升级仍为 `not_final`，Stage 8 生理/EEG 仍阻塞。
+- 当前正在做什么：归档 Stage 7i 结果，确认稳定惩罚规则是否比 Stage 7g 原始 val-best 规则更稳健；本阶段不训练新轨迹模型，只基于已有 Stage 7g 候选做 train/val 选择校准。
+- 已完成什么：新增并运行 `stage07i_stability_calibrated_selection_v0_1.py`；修复 Stage7h 稳定表缺少 difficult/wrong-side/large-recall delta 字段的问题；生成候选分数表、policy split 指标、test 汇总、逐样本收益、gate 表、3 张图、用户总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：稳定惩罚规则 `stability_penalty_l05` 选中 `segment_resid_rf_blend_25`；test RMSE=0.528046，相对 RBF/KNN delta=-0.005620；困难样本 RMSE delta=-0.029588；wrong-side=0.225，large recall=0.750。
+- 当前最大风险是什么：当前收益只来自一个固定 session-level split，且主要改善 RMSE/困难样本 RMSE，错侧率和大幅响应召回没有提升；不能把它直接冻结为最终车辆-only 主线。
+- 下一步准备做什么：Stage 7j 应做多折 session validation 或分层 validation 重构，验证 `stability_penalty_l05` 是否能稳定选中有收益候选；生理/EEG/连续风格仍不进入。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07i_stability_calibrated_selection_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/tables/stage07i_policy_test_summary.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/tables/stage07i_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/figures/stage07i_policy_summary.png`。
+
 ## 最新更新：2026-05-13 07:42
 
 - 当前阶段：Stage 7h val/test 选择不稳定诊断 v0.1 已完成；gate=`no_upgrade`，Stage 8 生理/EEG 仍阻塞。

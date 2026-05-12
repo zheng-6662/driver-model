@@ -1,4 +1,37 @@
 # R2E-Steering 当前任务队列
+
+## 最新更新：2026-05-13 07:52
+
+### 正在做任务
+- Stage 7i 稳定性校准候选选择已完成，当前归档脚本、结果、报告和透明化记录；准备 Git 提交。
+
+### 已完成任务
+- 已新增并运行 `stage07i_stability_calibrated_selection_v0_1.py`。
+- 已从 Stage 7h 稳定表计算 difficult/wrong-side/large-recall 相对 RBF 的 split delta，修复首跑 `KeyError: 'difficult_rmse_delta_vs_rbf_val'`。
+- 已确认稳定惩罚规则 `stability_penalty_l05` 选中 `segment_resid_rf_blend_25`，test RMSE delta=-0.005620，困难样本 RMSE delta=-0.029588。
+- 已生成 Stage 7i 用户总结、技术报告、候选分数表、policy 指标表、逐样本收益表、gate 表和 3 张非空图。
+
+### 待做任务
+- Stage 7j：做多折 session validation 或分层 validation 重构，验证稳定选择规则是否可复现。
+- 检查 Stage 7i 选中策略在响应类型、道路模块、置信度分布不同 bucket 下是否稳定。
+- 如果多折验证通过，再决定是否把 `segment_resid_rf_blend_25` 或稳定选择规则冻结为车辆-only 弱主候选。
+
+### 阻塞任务
+- 生理、脑电有效性验证继续阻塞，直到车辆-only 多候选选择校准更稳。
+- 连续风格强结论继续阻塞；当前不允许用风格/生理解释车辆-only 选择不稳定。
+- 不能把 single-split 的 `weak_candidate_continue` 直接写成最终主线升级。
+
+### 可并行任务
+- Stage 7i 收益样本按 response_family/road_design_module_name/置信度 bucket 复核。
+- Stage 7j 多折 split 方案设计。
+- 固定坏样本图和增益样本图的人工解释材料整理。
+
+### 需要服务器的任务
+- 暂无。Stage 7i 是本地诊断/选择校准任务。
+
+### 不需要服务器的任务
+- Stage 7i 归档、commit、Stage 7j split 设计和轻量复核均可本地完成。
+
 ## 最新更新：2026-05-13 07:42
 
 ## 正在做任务

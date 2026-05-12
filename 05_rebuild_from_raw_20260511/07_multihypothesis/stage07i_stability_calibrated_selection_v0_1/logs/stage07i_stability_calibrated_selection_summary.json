@@ -1,0 +1,25 @@
+{
+  "output_version": "stage07i_stability_calibrated_selection_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "source_stage": "stage07g_keypoint_segment_candidates_v0_1",
+  "selected_policy": "stability_penalty_l05",
+  "selected_model": "segment_resid_rf_blend_25",
+  "test_rmse": 0.5280463307737681,
+  "test_delta_vs_rbf": -0.0056203586651889,
+  "test_difficult_delta_vs_rbf": -0.0295878671474159,
+  "gate_status": "weak_candidate_continue",
+  "mainline_upgrade": "not_final",
+  "stage08_physio_eeg_allowed": false,
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "created_at": "2026-05-13T07:51:50",
+  "figures": {
+    "policy_summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/figures/stage07i_policy_summary.png",
+    "score_components": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/figures/stage07i_stability_score_components.png",
+    "gain_distribution": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/figures/stage07i_selected_gain_distribution.png"
+  }
+}
