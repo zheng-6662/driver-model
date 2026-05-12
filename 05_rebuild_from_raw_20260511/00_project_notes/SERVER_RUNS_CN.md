@@ -1,6 +1,6 @@
 # 服务器运行记录
 
-更新时间：2026-05-12 13:20:57
+更新时间：2026-05-12 13:26:30
 
 ## 连接命令格式
 
@@ -16,7 +16,7 @@
 - 未读取服务器指令与密码文件。
 - 当前没有已知后台服务器任务在运行。
 - GPU/显存状态：未检查，因为阶段 2 人工标注审查包、键盘播放器和阶段 3 候选诊断均在本地完成。
-- 本地标注服务：`http://127.0.0.1:8766/`，PID 16464。该服务只用于本机页面和标签保存，不是远程服务器/GPU 任务。
+- 本地标注服务：`http://127.0.0.1:8766/`，PID 34408。该服务只用于本机页面和标签保存，不是远程服务器/GPU 任务。
 
 ## 运行记录
 
@@ -30,4 +30,5 @@
 | - | - | 阶段 2 补充本地人工事件标注审查包 v0.1 | - | - | - | - | 否 | 未使用服务器 |
 | 2026-05-12 13:00:25 | 2026-05-12 13:15:27 | 阶段 2 补充本地键盘式人工事件标注播放器 v0.1 初版整段模式 | 本地 PID 33060 | - | `02_samples/manual_event_keyboard_player_v0_1/logs` | `02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv` | 否，已重启为候选段模式 | 未使用服务器 |
 | 2026-05-12 13:17:16 | 2026-05-12 13:20:17 | 阶段 2 补充本地键盘式人工事件标注播放器 v0.2 候选段审查模式初版 | 本地 PID 38204 | - | `02_samples/manual_event_keyboard_player_v0_1/logs` | `02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv` | 否，已重启以加入 N/P 记录切换 | 未使用服务器 |
-| 2026-05-12 13:20:17 | - | 阶段 2 补充本地键盘式人工事件标注播放器 v0.2 候选段审查模式 | 本地 PID 16464 | - | `02_samples/manual_event_keyboard_player_v0_1/logs` | `02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv` | 是，本地服务 | 未使用服务器 |
+| 2026-05-12 13:20:17 | 2026-05-12 13:25:51 | 阶段 2 补充本地键盘式人工事件标注播放器 v0.2 候选段审查模式 | 本地 PID 16464 | - | `02_samples/manual_event_keyboard_player_v0_1/logs` | `02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv` | 否，已重启以加入竖线图例 | 未使用服务器 |
+| 2026-05-12 13:25:51 | - | 阶段 2 补充本地键盘式人工事件标注播放器 v0.2 候选段审查模式带图例 | 本地 PID 34408 | - | `02_samples/manual_event_keyboard_player_v0_1/logs` | `02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv` | 是，本地服务 | 未使用服务器 |

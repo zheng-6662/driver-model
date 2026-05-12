@@ -1273,6 +1273,27 @@ FOCUSED_HTML = r"""<!doctype html>
       color: var(--muted);
       font-size: 12px;
     }
+    .legend {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 6px 8px;
+      color: #344054;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .swatch {
+      width: 4px;
+      height: 20px;
+      border-radius: 2px;
+      justify-self: center;
+    }
+    .swatch.blue { background: var(--blue); width: 7px; }
+    .swatch.thin-blue { background: var(--blue); }
+    .swatch.orange { background: var(--orange); }
+    .swatch.red { background: var(--red); }
+    .swatch.black { background: #000; }
+    .swatch.green { background: var(--green); }
+    .swatch.purple { background: var(--purple); }
     .key {
       text-align: center;
       background: #eef1f5;
@@ -1319,9 +1340,9 @@ FOCUSED_HTML = r"""<!doctype html>
         <span id="sessionTitle"></span>
         <span class="pill" id="timeReadout">0.000s</span>
         <span class="pill blue" id="candidateReadout">候选 0/0</span>
-        <span class="pill">蓝=道路</span>
-        <span class="pill">橙=旧流程</span>
-        <span class="pill red">红=响应</span>
+        <span class="pill">粗蓝=当前建议段</span>
+        <span class="pill">橙=旧流程参考</span>
+        <span class="pill red">红=车辆响应候选</span>
         <span class="pill green">绿=已保存</span>
       </div>
       <canvas id="plot"></canvas>
@@ -1359,6 +1380,17 @@ FOCUSED_HTML = r"""<!doctype html>
         <div class="grid2">
           <div class="metric">手动开始<strong id="manualStart">-</strong></div>
           <div class="metric">手动锚点<strong id="manualAnchor">-</strong></div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="legend">
+          <span class="swatch blue"></span><span>粗蓝线和浅蓝背景：当前正在审查的建议事件段起止。</span>
+          <span class="swatch thin-blue"></span><span>细蓝线：同一窗口里的其他道路曲率候选锚点。</span>
+          <span class="swatch orange"></span><span>橙线：旧 v400 流程的参考触发点，只作对照，不是真值。</span>
+          <span class="swatch red"></span><span>红线：车辆动态响应候选，来自方向盘/横摆/加速度等动作结果，只能辅助判断。</span>
+          <span class="swatch black"></span><span>黑线：当前播放时间。</span>
+          <span class="swatch purple"></span><span>紫线：你手动标的预测锚点。</span>
+          <span class="swatch green"></span><span>绿线/绿背景：已经保存的人工标签。</span>
         </div>
       </section>
       <section class="section">
