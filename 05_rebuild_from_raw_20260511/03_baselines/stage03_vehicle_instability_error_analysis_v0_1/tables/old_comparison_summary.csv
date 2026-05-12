@@ -1,0 +1,2 @@
+﻿comparison,n_samples,formal_aggregate_rmse,old_deep_aggregate_rmse,formal_mean_rmse,old_deep_mean_rmse,formal_better_n,formal_better_rate,shared_bad_top20pct_n,formal_bad_top20pct_n,old_deep_bad_top20pct_n
+formal_ridge_context_vs_old_vehicle_direct_active,139,0.6493414042317994,0.637365657549946,0.5142982666977018,0.545169279702919,92,0.6618705035971223,21,28,28

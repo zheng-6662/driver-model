@@ -1,5 +1,24 @@
 # 阶段产物索引
 
+## 最新新增：阶段 3 车辆基线坏样本物理错误分型 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_error_analysis_user_summary_cn.md`
+- 正式中文报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_error_analysis_v0_1_cn.md`
+- 脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_vehicle_instability_error_analysis_v0_1.py`
+- 逐样本错误标签表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/tables/per_sample_error_taxonomy.csv`
+- 错误标签汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/tables/error_flags_summary.csv`
+- 分被试汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/tables/subject_summary.csv`
+- 分响应类型汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/tables/morphology_summary.csv`
+- 与旧 deep 对照：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/tables/old_comparison_summary.csv`
+- 错误标签柱状图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/figures/formal_error_flag_counts.png`
+- 与旧 deep RMSE 散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/figures/formal_vs_old_deep_rmse_scatter.png`
+- top bad 错误矩阵：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/figures/top_bad_sample_error_matrix.png`
+- 分被试错误热图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/figures/subject_error_rate_heatmap.png`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/logs/stage03_error_analysis_summary.json`
+- 关键结果：反向修正计数不匹配 126/139，尾段漂移 87/139，严重幅值不足 81/139，多段修正结构不匹配 46/139，错侧 32/139，大幅响应漏召回 23/139；旧 deep 与 formal ridge top20%坏样本重叠 21/28。
+- 重要边界：错误标签只用于解释 test 集失败类型，不参与训练、split、标准化或任何生理/风格有效性结论。
+- 适合用户/老师直接查看：优先看用户查看版总结、错误标签柱状图、top bad 错误矩阵和逐样本错误标签表。
+
 ## 最新新增：阶段 3 正式车辆失稳样本车辆-only 基线 v0.1
 
 - 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_formal_baselines_user_summary_cn.md`

@@ -1,0 +1,31 @@
+{
+  "n_test_samples": 139,
+  "model_name": "ridge_vehicle_context_no_subject",
+  "window": "pre2_label2_old_main",
+  "split_strategy": "session_level_split",
+  "dominant_error_flag": "reversal_mismatch_flag",
+  "dominant_error_count": 126,
+  "wrong_side_count": 32,
+  "large_response_missed_count": 23,
+  "severe_amp_under_count": 81,
+  "multi_segment_missed_count": 4,
+  "multi_segment_overpred_count": 42,
+  "multi_segment_mismatch_count": 46,
+  "old_comparison": [
+    {
+      "comparison": "formal_ridge_context_vs_old_vehicle_direct_active",
+      "n_samples": 139,
+      "formal_aggregate_rmse": 0.6493414042317994,
+      "old_deep_aggregate_rmse": 0.637365657549946,
+      "formal_mean_rmse": 0.5142982666977018,
+      "old_deep_mean_rmse": 0.545169279702919,
+      "formal_better_n": 92,
+      "formal_better_rate": 0.6618705035971223,
+      "shared_bad_top20pct_n": 21,
+      "formal_bad_top20pct_n": 28,
+      "old_deep_bad_top20pct_n": 28
+    }
+  ],
+  "server_used": false,
+  "credential_file_read": false
+}

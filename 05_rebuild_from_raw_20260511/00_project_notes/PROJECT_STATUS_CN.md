@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 19:35
+
+- 当前阶段：阶段 3 车辆-only 基线错误分型，已完成 `ridge_vehicle_context_no_subject` 在 test 集上的坏样本物理错误分析。
+- 当前正在做什么：归档错误分型表、图和中文报告。
+- 已完成什么：对主窗口 `pre2_label2_old_main` + session-level test 的 139 个样本生成逐样本错误标签，并与旧 `vehicle_direct` clean 对照做样本级比较。
+- 正在运行什么任务：没有训练任务；没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果：反向修正计数不匹配 126/139，尾段漂移 87/139，严重幅值不足 81/139，启动延迟大误差 75/139，多段修正结构不匹配 46/139，其中过度预测多段 42/139、漏检多段 4/139，错侧 32/139，大幅响应漏召回 23/139。旧 deep 与 formal ridge 的 top20%坏样本重叠 21/28。
+- 当前最大风险：车辆-only 浅层模型的主要问题是复杂响应结构和尾段/幅值，而不是单一平均 RMSE；不能据此跳到“生理会解决”的结论。
+- 下一步准备做什么：先建立更强的车辆时序或结构化响应基线，再考虑连续风格和生理增量验证。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_error_analysis_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/figures/formal_error_flag_counts.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_error_analysis_v0_1/figures/top_bad_sample_error_matrix.png`。
+
 ## 最新更新：2026-05-12 19:20
 
 - 当前阶段：阶段 3 初始车辆-only 基线，已在正式 `vehicle_instability_highconf_v0_1` 样本上完成无学习基线和浅层车辆 ridge 基线。
