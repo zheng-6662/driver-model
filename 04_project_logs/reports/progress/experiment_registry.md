@@ -97,6 +97,8 @@ The goal of this file is quick orientation:
 
 | 2026-05-11 | E19 四类生理/脑电信号融合筛选 seed2026 | E19A/B/C = 四信号基线校正融合、四信号数据自动表示融合、四信号任务相关融合 | 检查四类信号去掉旧人工权重后一起融合是否能互补，而不是互相加噪声 | matched pair | 保持粗细双头和连续风格，新增 `signal_current_delta_all` / `signal_pca_all`，并保留四类信号各自有效率 | 三组均明显弱于 E2/E10C/E18C；最好 E19A `test_rmse=0.5020`，G11 RMSE `0.8058`，不建议补多种子 | no-go | [E19 summary](../style_physio_eeg_e19_signal_fusion_seed2026_summary_20260511/e19_signal_fusion_seed2026_report_cn.md) |
 
+| 2026-05-12 | G15 相似历史事件检索 + 残差修正 | G15A = 相似历史事件检索；G15B = 相似历史事件检索后再做轻量残差修正 | 检查“从训练集中找相似历史响应”能不能突破旧模型平均化问题，并用验证集选参避免测试集挑版本 | integration verification | 在 788 服务器运行，使用触发前车辆/事件、连续风格、肌电三类可用输入；验证集选择 K、特征组和残差强度 | G15B `test_rmse=0.3980`，但 `primary=0.3873`、`tail=0.4356`、`selection=0.8829`、G11 `0.8087`，整体均值好看但物理指标和困难样本不够好 | needs control | [G15 report](../g15_retrieval_residual_20260512/g15_retrieval_residual_report_cn.md) |
+
 ## Rules
 
 - One row should describe exactly one run, one controlled comparison, or one explicit analysis action.
