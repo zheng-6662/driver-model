@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 03:18
+
+- 当前阶段：阶段 3 RBF/keypoint 多候选车辆-only 复盘 v0.1 已完成；仍处于强车辆基线冻结前的多假设/可靠性评估阶段。
+- 当前正在做什么：整理 RBF、keypoint、selector 和 oracle best-of-two 的同图、同表、误选样本和 oracle 增益证据，判断是否值得做真正多假设车辆-only 模型。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1.py`；脚本不训练新模型，只重建 RBF 预测、加载 keypoint checkpoint、复用 train/val selector 决策并构造 oracle 上限；生成统一指标表、逐样本表、选择详情表、选择摘要、误选样本表、oracle 增益表、固定图、selector 坏样本图、oracle 增益图、选择混淆图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；本地脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：test 上 RBF RMSE=0.533667、keypoint RMSE=0.548993、selector RMSE=0.533912、oracle best-of-two RMSE=0.475095；selector 选择准确率=0.550，selector 选择 keypoint 比例=0.275，oracle 需要 keypoint 比例=0.425，平均选择后悔=0.059123。
+- 当前最大风险：oracle 上限明显，但 selector 只学到一部分切换规则；如果直接把 oracle 当成模型效果会高估车辆-only 能力。当前只能说明多假设/可靠性路线有潜力，不能说明强车辆基线已冻结，更不能进入风格、生理或 EEG 增量结论。
+- 下一步准备做什么：提交本轮多候选复盘；之后若继续阶段 3，应训练或构建真正 top-K/可靠性车辆-only 模型，而不是只在两个已训练模型之间做事后二选一。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/multihypothesis_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/multihypothesis_oracle_gap_samples_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/tables/multihypothesis_metrics.csv`。
+
 ## 最新更新：2026-05-13 03:06
 
 - 当前阶段：阶段 3 RBF vs keypoint train/val 选择器 v0.1 已归档并完成 Git 提交；仍处于车辆-only 多候选/可靠性策略探索阶段。

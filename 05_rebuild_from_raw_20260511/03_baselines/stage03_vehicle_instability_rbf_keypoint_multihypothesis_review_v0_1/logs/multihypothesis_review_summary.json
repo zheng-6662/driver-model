@@ -1,0 +1,22 @@
+{
+  "output_version": "stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "candidate_models": [
+    "rbf_kernel_ridge_context_no_subject",
+    "keypoint_residual_vehicle_transformer_no_subject"
+  ],
+  "selector_model": "selector_logreg_rbf_keypoint_no_subject",
+  "oracle_model": "oracle_best_of_rbf_keypoint_upper_bound",
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/tables/multihypothesis_metrics.csv",
+  "choice_summary_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/tables/choice_summary.csv",
+  "figures": {
+    "fixed": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/multihypothesis_fixed_predictions_test.png",
+    "selector_bad": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/multihypothesis_selector_bad_samples_test.png",
+    "oracle_gap": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/multihypothesis_oracle_gap_samples_test.png",
+    "confusion": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/selector_choice_confusion_test.png",
+    "gap_bar": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/oracle_gap_top_samples.png"
+  }
+}

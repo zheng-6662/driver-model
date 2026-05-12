@@ -1,3 +1,16 @@
+## 2026-05-13 03:10-03:18 本地 RBF/keypoint 多候选车辆-only 复盘
+
+- 服务器连接命令格式：未连接服务器；无 SSH 命令。
+- 启动时间：2026-05-13 03:10，本地前台运行。
+- 关闭时间：2026-05-13 03:18，本地脚本结束并完成检查。
+- 运行任务：`stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1`。
+- 是否还有任务在跑：没有。
+- GPU/显存状态摘要：未使用远程服务器；本轮加载本地 keypoint checkpoint 并重建预测，未训练新模型；未读取服务器指令与密码文件；未记录任何凭据。
+
 ## 2026-05-13 02:48-02:54 本地 RBF/keypoint train/val 选择器训练与评估
 
 - 服务器连接命令格式：未连接服务器；无 SSH 命令。
