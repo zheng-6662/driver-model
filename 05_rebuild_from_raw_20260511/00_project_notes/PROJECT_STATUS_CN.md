@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 03:22
+
+- 当前阶段：阶段 3 RBF/keypoint 多候选车辆-only 复盘 v0.1 已归档并完成 Git 提交；仍未冻结强车辆基线。
+- 当前正在做什么：收口多候选复盘，准备下一步转向真正 top-K/可靠性车辆-only 模型设计。
+- 已完成什么：提交 `01033e3e Add rbf keypoint multihypothesis review`；提交包含多候选复盘脚本、统一指标、逐样本指标、选择摘要、误选样本表、oracle 增益表、5 张图、运行摘要、用户查看版总结、技术报告和 03:18 透明化记录。
+- 正在运行什么任务：没有后台任务；没有本地训练任务；没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：oracle best-of-two 的 RMSE=0.475095 明显低于 RBF 的 0.533667，但 train/val selector 的 RMSE=0.533912 仍只与 RBF 持平；test selector choice accuracy=0.550，说明当前可部署选择器还不能兑现 oracle 上限。
+- 当前最大风险：若继续只做离线 oracle 或事后挑选，会误判模型能力；下一步必须把 top-K 候选和可靠性选择做成训练期/验证期可确定的模型或规则。
+- 下一步准备做什么：进入车辆-only top-K/可靠性模型设计；继续阻塞连续风格、生理和 EEG 增量结论。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/figures/multihypothesis_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/tables/choice_summary.csv`。
+
 ## 最新更新：2026-05-13 03:18
 
 - 当前阶段：阶段 3 RBF/keypoint 多候选车辆-only 复盘 v0.1 已完成；仍处于强车辆基线冻结前的多假设/可靠性评估阶段。

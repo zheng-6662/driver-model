@@ -17,7 +17,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_multihypothesis_review_v0_1/logs/multihypothesis_review_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`01033e3e Add rbf keypoint multihypothesis review`。
 - 适合用户/老师直接查看：用户查看版总结、统一指标表、选择摘要、固定预测图、oracle 增益样本图。
 
 ## 最新新增：阶段 3 RBF vs keypoint train/val 选择器 v0.1
