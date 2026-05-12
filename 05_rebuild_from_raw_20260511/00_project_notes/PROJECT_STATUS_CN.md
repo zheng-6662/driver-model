@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 22:34
+
+- 当前阶段：阶段 3 复发坏样本失败来源归因 v0.1 已完成；仍处于 vehicle-only 主参照冻结前的错误归因阶段。
+- 当前正在做什么：把 Top 12 复发坏样本按锚点/窗口/原始信号/车辆-only 结构不足进行自动初筛归因。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_bad_event_failure_attribution_v0_1.py`；生成归因明细表、归因旗标统计、主归因统计、归因热图、主归因计数图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：Top 12 中 10 个事件优先归为 `sample_rule_or_raw_signal_review`，1 个归为 `vehicle_only_model_structure_gap`，1 个归为 `hard_vehicle_only_case`；次级旗标显示 9/12 存在 `vehicle_only_structure_gap`，10/12 标签窗口可能偏短，11/12 反向修正计数基本不匹配。
+- 当前最大风险：自动规则只是初筛，尤其“标签窗口可能偏短”和“事件持续超过标签窗口”需要结合单事件曲线复核；不能直接用这些规则否定样本或宣称生理有效。
+- 下一步准备做什么：优先复核 10 个 `sample_rule_or_raw_signal_review` 事件，若大部分确认为窗口/锚点问题则回到阶段 2 修 manifest；若样本规则可信，再进入结构化车辆模型。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_bad_event_failure_attribution_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_failure_attribution_v0_1/tables/bad_event_failure_attribution_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_failure_attribution_v0_1/figures/bad_event_failure_attribution_flags.png`。
+
 ## 最新更新：2026-05-12 22:18
 
 - 当前阶段：阶段 3 复发坏样本详细曲线复盘 v0.1 已完成；仍处于 vehicle-only 主参照冻结前的错误归因阶段。

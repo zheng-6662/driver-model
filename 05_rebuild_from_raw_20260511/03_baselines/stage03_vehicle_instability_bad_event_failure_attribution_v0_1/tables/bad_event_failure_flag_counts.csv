@@ -1,0 +1,12 @@
+﻿flag,count,rate
+label_window_may_be_short,10,0.8333333333333334
+gt_peak_near_label_end,3,0.25
+gt_tail_unsettled,10,0.8333333333333334
+event_continues_after_label,11,0.9166666666666666
+pre_anchor_steer_active,2,0.16666666666666666
+pre_anchor_dynamics_active,1,0.08333333333333333
+raw_support_low,0,0.0
+consensus_amp_under,8,0.6666666666666666
+consensus_wrong_side,3,0.25
+consensus_reversal_failure,11,0.9166666666666666
+vehicle_only_structure_gap,9,0.75

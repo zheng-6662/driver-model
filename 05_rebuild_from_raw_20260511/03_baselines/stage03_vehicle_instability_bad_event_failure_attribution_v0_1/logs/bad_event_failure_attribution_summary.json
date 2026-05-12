@@ -1,0 +1,69 @@
+{
+  "n_events": 12,
+  "sample_rule_or_raw_signal_review_n": 10,
+  "vehicle_only_model_structure_gap_n": 1,
+  "flag_counts": [
+    {
+      "flag": "label_window_may_be_short",
+      "count": 10,
+      "rate": 0.8333333333333334
+    },
+    {
+      "flag": "gt_peak_near_label_end",
+      "count": 3,
+      "rate": 0.25
+    },
+    {
+      "flag": "gt_tail_unsettled",
+      "count": 10,
+      "rate": 0.8333333333333334
+    },
+    {
+      "flag": "event_continues_after_label",
+      "count": 11,
+      "rate": 0.9166666666666666
+    },
+    {
+      "flag": "pre_anchor_steer_active",
+      "count": 2,
+      "rate": 0.16666666666666666
+    },
+    {
+      "flag": "pre_anchor_dynamics_active",
+      "count": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "flag": "raw_support_low",
+      "count": 0,
+      "rate": 0.0
+    },
+    {
+      "flag": "consensus_amp_under",
+      "count": 8,
+      "rate": 0.6666666666666666
+    },
+    {
+      "flag": "consensus_wrong_side",
+      "count": 3,
+      "rate": 0.25
+    },
+    {
+      "flag": "consensus_reversal_failure",
+      "count": 11,
+      "rate": 0.9166666666666666
+    },
+    {
+      "flag": "vehicle_only_structure_gap",
+      "count": 9,
+      "rate": 0.75
+    }
+  ],
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id_as_model_input": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "raw_files_modified": false
+}
