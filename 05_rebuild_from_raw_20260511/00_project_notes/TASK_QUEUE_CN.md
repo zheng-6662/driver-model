@@ -3,16 +3,16 @@
 ## 最新更新：2026-05-13 06:24
 
 ### 正在做任务
-- Stage 6e 多候选 oracle gap 复核已完成；正在归档并提交本轮结果。
+- Stage 6e 多候选 oracle gap 复核已完成；当前准备 Stage 7 非 oracle 选择协议。
 
 ### 已完成任务
 - 已新增并运行 `stage06e_multicandidate_oracle_gap_v0_1.py`。
 - 已确认 broad oracle pool test RMSE=0.375182，相对 RBF/KNN delta=-0.158484，但该结果不可部署。
 - 已确认当前最好可部署 selector test RMSE=0.533912，比 RBF/KNN 差 +0.000245，实际选择策略仍未超过主参照。
 - 已确认 Stage 7 若继续，必须先解决非 oracle 选择和可靠性校准。
+- 已提交 `cb4d8eec Add stage6e multicandidate oracle gap audit`。
 
 ### 待做任务
-- 将 Stage 6e 结果 Git 提交，并在产物索引中记录 commit。
 - 设计 Stage 7 非 oracle 多候选选择协议：候选分支、选择特征、校准指标、坏样本固定图和不能使用 test 标签的规则。
 
 ### 阻塞任务
