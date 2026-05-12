@@ -1,5 +1,18 @@
 # 服务器运行记录
 
+## 2026-05-13 00:10-00:18 本地响应任务定义决策
+
+- 服务器连接命令格式：未连接服务器；无 SSH 命令。
+- 启动时间：2026-05-13 00:10，本地 CPU 运行。
+- 关闭时间：2026-05-13 00:18，本地脚本结束。
+- 运行任务：`build_vehicle_instability_response_task_decision_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1`。
+- 是否还有任务在跑：没有。
+- GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。
+
 ## 2026-05-12 22:50-22:54 本地窗口覆盖审计
 
 - 服务器连接命令格式：未连接服务器；无 SSH 命令。

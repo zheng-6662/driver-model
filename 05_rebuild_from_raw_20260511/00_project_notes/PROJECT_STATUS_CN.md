@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 00:18
+
+- 当前阶段：阶段 3 响应任务定义决策 v0.1 已完成；仍不进入连续风格/生理/EEG 增量验证。
+- 当前正在做什么：基于标签窗口覆盖审计，把 906 个高置信失稳事件分成 2 秒即时响应、3 秒响应覆盖、手动锚点/尾段复核、长事件/持续控制复核几个任务轨道。
+- 已完成什么：新增并运行 `build_vehicle_instability_response_task_decision_v0_1.py`；生成事件级任务决策表、样本级任务 manifest、任务类别/轨道/split/subject 汇总、2 张图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：906 个事件中，84 个可作为 2 秒即时响应核心候选，294 个可作为 3 秒响应覆盖候选，其中 270 个是 3 秒严格核心候选；588 个需要长事件/持续控制复核；现有 2718 个窗口样本中，下一轮车辆-only 基线可优先使用的候选窗口样本为 462 个。
+- 当前最大风险：如果继续用原来的 906 个事件直接训练 2 秒或 3 秒“完整响应”模型，会把大量长事件/持续控制样本混入核心任务，导致模型失败被误归因到结构或生理缺失。
+- 下一步准备做什么：基于 `sample_response_task_manifest.csv` 只在两个干净轨道上重跑车辆-only 对照：A 轨道 2 秒即时响应核心候选，B 轨道 3 秒响应覆盖严格核心候选；D 轨道长事件先不进最终训练结论。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_response_task_decision_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1/tables/event_response_task_decision_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1/tables/sample_response_task_manifest.csv`。
+
 ## 最新更新：2026-05-12 22:54
 
 - 当前阶段：阶段 3 标签窗口覆盖审计 v0.1 已完成；仍处于冻结车辆-only 主参照前的样本/标签规则复核阶段。

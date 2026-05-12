@@ -1,0 +1,25 @@
+{
+  "n_events": 906,
+  "n_sample_rows": 2718,
+  "instant2s_core_candidate_n": 84,
+  "response3s_candidate_n": 294,
+  "response3s_strict_core_n": 270,
+  "long_event_review_n": 588,
+  "manual_window_or_anchor_review_n": 636,
+  "next_vehicle_baseline_window_sample_n": 462,
+  "event_decision_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1/tables/event_response_task_decision_table.csv",
+  "sample_manifest_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1/tables/sample_response_task_manifest.csv",
+  "figures": {
+    "task_counts": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1/figures/response_task_decision_counts.png",
+    "sample_roles": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_response_task_decision_v0_1/figures/response_task_sample_roles_by_window.png"
+  },
+  "source_policy_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/tables/label_window_event_policy_table.csv",
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id_as_model_input": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "model_training_performed": false,
+  "raw_files_modified": false
+}
