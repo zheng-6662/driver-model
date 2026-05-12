@@ -1,3 +1,16 @@
+## 2026-05-13 03:25-03:34 本地 top-K 车辆-only Transformer 训练与评估
+
+- 服务器连接命令格式：未连接服务器；无 SSH 命令。
+- 启动时间：2026-05-13 03:25，本地前台运行。
+- 关闭时间：2026-05-13 03:34，本地脚本结束并完成检查。
+- 运行任务：`stage03_vehicle_instability_topk_vehicle_transformer_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1`。
+- 是否还有任务在跑：没有。
+- GPU/显存状态摘要：未使用远程服务器；本机 PyTorch 使用 CUDA 训练；未读取服务器指令与密码文件；未记录任何凭据。
+
 ## 2026-05-13 03:10-03:18 本地 RBF/keypoint 多候选车辆-only 复盘
 
 - 服务器连接命令格式：未连接服务器；无 SSH 命令。

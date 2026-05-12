@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 03:34
+
+- 当前阶段：阶段 3 top-K 车辆-only Transformer v0.1 已完成；仍未冻结强车辆基线，仍处于多假设/可靠性车辆-only 探索阶段。
+- 当前正在做什么：归档真正 top-K 车辆-only 模型结果，判断它相对 RBF、keypoint、selector 和 oracle 上限的价值。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_topk_vehicle_transformer_v0_1.py`；模型只用事件前车辆历史和道路/事件上下文，输出 3 条候选轨迹和分支概率；checkpoint 按 val top-1 RMSE 选择；生成 top-1、best-of-3、各分支、RBF 参照的指标表、逐样本表、分支诊断、可靠性分箱、固定图、坏样本图、top1/bestK 差距图、可靠性散点图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；本地训练/评估已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。本轮使用本机 CUDA 训练，不是远程服务器。
+- 最近一次结果：test RBF RMSE=0.533667、错侧率=0.225、大幅响应召回=0.750；top-1 RMSE=0.587883、错侧率=0.100、大幅响应召回=0.750；best-of-3 RMSE=0.477534、错侧率=0.025、大幅响应召回=0.875；top-1 与 best-of-3 分支一致率=0.300。
+- 当前最大风险：best-of-3 上限很好，但 top-1 选择头明显不可靠，不能把 best-of-3 当成可部署效果；本轮 top-K 只能说明“候选覆盖有潜力，选择机制不足”，不能替代 RBF 主参照。
+- 下一步准备做什么：提交本轮 top-K 结果；如果继续阶段 3，优先修选择机制/可靠性头或做关键点条件多假设，而不是进入风格、生理或 EEG。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_topk_vehicle_transformer_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1/figures/topk_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1/figures/topk_top1_bestk_gap_samples_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_topk_vehicle_transformer_v0_1/tables/topk_vehicle_transformer_metrics.csv`。
+
 ## 最新更新：2026-05-13 03:22
 
 - 当前阶段：阶段 3 RBF/keypoint 多候选车辆-only 复盘 v0.1 已归档并完成 Git 提交；仍未冻结强车辆基线。
