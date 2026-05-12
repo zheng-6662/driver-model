@@ -117,6 +117,7 @@
 - `9907aa5 Add manual event labeling review pack`
 - `cf9d06b Add keyboard event labeling player`
 - `5b8abbf Focus manual labeler on candidate event segments`
+- `4019653 Clarify manual labeler event line legend`
 
 ## 适合用户/老师直接查看的材料
 
