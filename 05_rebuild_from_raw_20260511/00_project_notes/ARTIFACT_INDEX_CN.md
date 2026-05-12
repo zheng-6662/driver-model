@@ -1,10 +1,11 @@
 # 阶段产物索引
 
-更新时间：2026-05-12 10:44:41
+更新时间：2026-05-12 10:55:23
 
 ## 阶段 0：旧流程冻结与重建准则
 
-- 用户/老师可读说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
+- 阶段 0 规则说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
+- 阶段 0 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage00_user_summary_cn.md`
 - 旧流程参考定位：`04_project_logs/reports/progress/experiment_registry.md`、`04_project_logs/reports/physio_to_g14_progress_review_20260511/`
 - GPTPro 原始数据重建建议：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_replies/20260512_rebuild_steering_reply_summary_cn.md`
 
@@ -24,6 +25,7 @@
 - 审计脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/scripts/raw_csv_audit.py`
 - 审计图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit`
 - 审计运行日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/logs/raw_csv_audit.log`
+- 阶段 0/1 完成审计：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/STAGE00_01_COMPLETION_AUDIT_CN.md`
 
 ## 服务器日志
 
@@ -31,12 +33,14 @@
 
 ## 重要 Git commit
 
-- 待提交。
+- `e9d302f Add raw rebuild stage 0 and 1 audit`
 
 ## 适合用户/老师直接查看的材料
 
 1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage01_user_summary_cn.md`
-2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
-3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit/modality_overlap_timeline_sample.png`
-4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit/raw_waveform_vehicle_sample.png`
-5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/leakage_risk_report.csv`
+2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage00_user_summary_cn.md`
+3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
+4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/STAGE00_01_COMPLETION_AUDIT_CN.md`
+5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit/modality_overlap_timeline_sample.png`
+6. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit/raw_waveform_vehicle_sample.png`
+7. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/leakage_risk_report.csv`
