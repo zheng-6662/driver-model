@@ -109,7 +109,7 @@
 - `82d6a1a Add stage 3 no-subject vehicle diagnostics`
 - `db1ff13 Record stage 3 no-subject diagnostics commit`
 - `6c3c9f3 Add stage 3 RBF KRR model card`
-- 待提交：人工事件标注审查包 v0.1
+- `9907aa5 Add manual event labeling review pack`
 
 ## 适合用户/老师直接查看的材料
 
