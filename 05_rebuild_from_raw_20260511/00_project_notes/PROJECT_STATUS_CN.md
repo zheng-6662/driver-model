@@ -3,7 +3,7 @@
 
 - 当前阶段：Stage 7g keypoint/segment 车辆-only 候选 v0.1 已完成；gate=`no_upgrade`。
 - 当前正在做什么：收口关键点/分段候选结果，继续把生理/EEG 有效性实验保持阻塞，避免把车辆-only 选择不稳误归因给生理数据。
-- 已完成什么：新增并运行 `stage07g_keypoint_segment_candidates_v0_1.py`；只用事件前车辆、道路/事件上下文和候选预测自身形态特征训练关键点回归；生成关键点预测表、target 指标、候选指标、逐样本指标、validation selection、oracle 诊断、gate 表、4 张图、用户总结和技术报告。
+- 已完成什么：新增并运行 `stage07g_keypoint_segment_candidates_v0_1.py`；只用事件前车辆、道路/事件上下文和候选预测自身形态特征训练关键点回归；生成关键点预测表、target 指标、候选指标、逐样本指标、validation selection、oracle 诊断、gate 表、4 张图、用户总结和技术报告；已提交 `52de7176 Add stage7g keypoint segment candidates`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val gate 选择 `segment_abs_rf_blend_25`，但 test RMSE=0.536176，比 RBF/KNN 0.533667 差 +0.002509；keypoint/segment oracle RMSE=0.462003。test-only 最好非 oracle 候选 `rbf_resid_keypoint_scaled` RMSE=0.508538，但它在 val 上比 RBF 差，不能事后升级。

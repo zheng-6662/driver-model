@@ -22,7 +22,7 @@
 - oracle gain 预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_oracle_gain_predictions_test.png`
 - GPTPro 提问和回复：本阶段未调用。
 - 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`52de7176 Add stage7g keypoint segment candidates`。
 - 适合用户/老师直接查看：优先看用户查看版总结、gate 表、候选指标、关键点散点图和 oracle gain 预测图。
 
 ## 最新更新：2026-05-13 07:19

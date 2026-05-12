@@ -3,11 +3,11 @@
 
 ## 正在做任务
 
-- Stage 7g keypoint/segment 候选已完成，正在归档并提交 Git。
+- Stage 7g keypoint/segment 候选已完成并提交 Git；当前准备 Stage 7h val/test 选择不稳定诊断。
 
 ## 已完成任务
 
-- Stage 7g：已实现 train-only 关键点回归、分段轨迹候选、RBF 关键点校正候选和 keypoint/segment oracle 诊断。
+- Stage 7g：已实现 train-only 关键点回归、分段轨迹候选、RBF 关键点校正候选和 keypoint/segment oracle 诊断；已提交 `52de7176`。
 - 已确认 val gate 选择 `segment_abs_rf_blend_25`，但 test RMSE=0.536176，比 RBF/KNN 差 +0.002509，gate=`no_upgrade`。
 - 已确认 `rbf_resid_keypoint_scaled` 在 test 上 RMSE=0.508538，但它不是 val 选中的策略，因此只能作为下一步诊断信号，不能升级主线。
 
