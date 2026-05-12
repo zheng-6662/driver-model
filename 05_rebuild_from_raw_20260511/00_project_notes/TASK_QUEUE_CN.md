@@ -1,3 +1,39 @@
+# R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 06:50
+
+## 正在做任务
+
+- Stage 7 后续方向判断：基于 Stage 7c 导出的完整候选轨迹，决定继续做非 oracle selector v0.2，还是重新设计候选生成。
+
+## 已完成任务
+
+- Stage 7c 候选轨迹导出与差异审计 v0.1：已复现 RBF/KNN、keypoint residual、top-K branch/top1 预测，导出 `stage07c_candidate_trajectories.npz`，并生成指标表、差异表、oracle 摘要、gate 表、固定图、高差异图和 oracle gain 图。
+- Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
+- Stage 7a 非 oracle 选择协议 v0.1：已固定候选池、允许/禁止输入、评估计划和升级 gate。
+
+## 待做任务
+
+- Stage 7d：非 oracle selector v0.2。只允许使用事件前信息和候选预测自身特征，训练只用 train，调参只用 val，test 只报告。
+- 如果 Stage 7d 仍不能超过 RBF/KNN：重新设计候选生成，使候选覆盖方向、幅值、峰值时间、尾段回正/漂移和多段修正，而不是继续堆 selector。
+- 继续保持 Stage 5 生理/EEG blocked，直到车辆-only 候选选择问题有可复验结果。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：当前阻塞。原因是车辆-only 多候选的非 oracle 选择仍未解决，不能把车辆-only 未解决误差归因给生理/EEG。
+- 最终多假设主线升级：当前阻塞。原因是 oracle 上限明显，但还没有非 oracle 可部署策略超过 RBF/KNN。
+
+## 可并行任务
+
+- 候选差异特征审查、坏样本图人工快速复核、Stage 7d selector 协议设计、候选生成新路线草案。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7c 未使用服务器；下一步轻量 selector 也优先本地。
+
+## 不需要服务器的任务
+
+- Stage 7d selector v0.2、候选差异图表复核、报告更新、Git 提交。
+
 # 当前任务队列
 
 ## 最新更新：2026-05-13 06:39

@@ -1,4 +1,17 @@
 # R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 06:50
+
+- 当前阶段：Stage 7c 候选轨迹导出与差异审计 v0.1 已完成；当前仍不升级多假设为主线。
+- 当前正在做什么：基于已导出的候选轨迹，准备判断下一步应改非 oracle selector，还是重新设计候选生成方式。
+- 已完成什么：新增并运行 `stage07c_candidate_trajectory_export_v0_1.py`；加载已有 RBF/KNN、keypoint residual 和 top-K checkpoint，导出 270 个 B 轨道严格核心失稳样本的候选轨迹 npz；生成候选指标表、逐样本指标、候选两两差异、候选特征与标签诊断、oracle 摘要、gate 表、5 张图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：B 轨道 test 上 RBF/KNN RMSE=0.533667；top-K top1 RMSE=0.587865；RBF+topK oracle RMSE=0.415652，delta=-0.118014；broad oracle RMSE=0.410957，delta=-0.122710。oracle 上限明显，但 Stage 7c 没有训练非 oracle selector，不能作为可部署提升。
+- 当前最大风险是什么：候选池存在事后上限，但可部署选择机制仍没有解决；如果直接把 best-of-K/oracle 结果当模型性能，会高估当前车辆-only 能力，也会错误放行生理/EEG。
+- 下一步准备做什么：优先做 Stage 7d 非 oracle selector v0.2，使用 Stage 7c 导出的候选差异特征并严格 train/val/test 隔离；若仍退回 RBF/KNN，则转向重新设计候选生成方式，而不是进入生理/EEG。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_metric_summary_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz`。
+
+# R2E-Steering 项目总进度看板
 
 ## 最新更新：2026-05-13 06:39
 

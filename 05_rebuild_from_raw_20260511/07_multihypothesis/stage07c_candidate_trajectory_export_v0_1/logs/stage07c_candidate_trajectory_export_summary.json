@@ -1,0 +1,33 @@
+{
+  "output_version": "stage07c_candidate_trajectory_export_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "split_strategy": "session_level_split",
+  "n_samples": 270,
+  "train_n": 188,
+  "val_n": 42,
+  "test_n": 40,
+  "rbf_test_rmse": 0.533666689438957,
+  "topk_top1_test_rmse": 0.5878650132191942,
+  "rbf_topk_oracle_test_rmse": 0.4156523622942522,
+  "rbf_topk_oracle_delta_vs_rbf": -0.11801432714470483,
+  "broad_oracle_test_rmse": 0.41095652802584764,
+  "broad_oracle_delta_vs_rbf": -0.12271016141310936,
+  "candidate_arrays_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz",
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_metrics.csv",
+  "feature_diagnosis_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_feature_and_label_diagnosis.csv",
+  "figures": {
+    "metric_summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_metric_summary_test.png",
+    "disagreement_gain": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_disagreement_vs_oracle_gain_test.png",
+    "fixed_predictions": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_fixed_predictions_test.png",
+    "high_disagreement_predictions": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_high_disagreement_predictions_test.png",
+    "oracle_gain_predictions": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_oracle_gain_predictions_test.png"
+  },
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "created_at": "2026-05-13T06:50:21"
+}
