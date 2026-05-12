@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 22:54
+
+- 当前阶段：阶段 3 标签窗口覆盖审计 v0.1 已完成；仍处于冻结车辆-only 主参照前的样本/标签规则复核阶段。
+- 当前正在做什么：把 Top 坏样本里暴露出的“标签窗口可能偏短/长事件未拆分”问题扩展到 906 个正式高置信失稳事件全集，判断 2 秒主标签和 3 秒诊断标签是否覆盖完整方向盘响应。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_label_window_coverage_audit_v0_1.py`；生成窗口级覆盖统计、事件级推荐窗口策略、split/subject 汇总、Top 12 坏事件叠加表、3 张图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务；本轮只是本地 CPU 表格与图表审计。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：906 个事件中，247 个在 3 秒标签中主峰出现在 2 秒之后，635 个在 2 秒之后仍有明显方向盘变化，822 个被标记为“2 秒标签需要复核”；即使用 3 秒标签，仍有 612 个存在峰值靠近末端或尾段未稳定。Top 12 复发坏事件中，12/12 需要复核 2 秒窗口，9/12 在 3 秒标签下仍需复核。
+- 当前最大风险：当前 2 秒标签窗口不能直接作为“完整响应”标签；3 秒标签也不一定解决长失稳或持续控制问题。尾段未回零并不等于样本错误，可能是真实保持转向，所以必须先明确任务定义：即时响应、完整响应，还是持续控制。
+- 下一步准备做什么：先形成阶段 2/3 的标签窗口决策：保留 2 秒作为即时响应对照、把 3 秒作为完整响应候选，或把长事件拆成启动响应与持续控制两个任务；在决策前不继续训练风格/生理模型。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_label_window_coverage_audit_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/tables/label_window_event_policy_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/figures/label_window_policy_counts.png`。
+
 ## 最新更新：2026-05-12 22:34
 
 - 当前阶段：阶段 3 复发坏样本失败来源归因 v0.1 已完成；仍处于 vehicle-only 主参照冻结前的错误归因阶段。

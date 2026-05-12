@@ -1,0 +1,27 @@
+{
+  "n_events": 906,
+  "n_window_sample_rows": 2718,
+  "late_peak_after_2s_n": 247,
+  "post2_substantial_change_n": 635,
+  "label2_needs_review_n": 822,
+  "label3_still_needs_review_n": 612,
+  "top_bad_events_n": 12,
+  "top_bad_label2_needs_review_n": 12,
+  "top_bad_label3_still_needs_review_n": 9,
+  "window_summary_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/tables/label_window_window_summary.csv",
+  "event_policy_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/tables/label_window_event_policy_table.csv",
+  "bad_overlay_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/tables/label_window_bad_event_overlay.csv",
+  "figures": {
+    "rates": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/figures/label_window_coverage_rates_by_window.png",
+    "policy": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/figures/label_window_policy_counts.png",
+    "scatter": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_label_window_coverage_audit_v0_1/figures/label_window_peak_tail_scatter_pre3.png"
+  },
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id_as_model_input": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "model_training_performed": false,
+  "raw_files_modified": false
+}
