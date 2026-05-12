@@ -1,0 +1,26 @@
+{
+  "output_version": "stage07d_non_oracle_selector_v0_2",
+  "track_id": "B_response3s_strict_core",
+  "selected_policy": "always_rbf_reference",
+  "gate_status": "no_upgrade",
+  "selected_test_rmse": 0.5336666894389569,
+  "rbf_test_rmse": 0.5336666894389569,
+  "selected_test_delta_vs_rbf": 0.0,
+  "selected_test_rbf_selected_rate": 1.0,
+  "allowed_feature_count": 34,
+  "numeric_feature_count": 27,
+  "categorical_feature_count": 7,
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "created_at": "2026-05-13T06:58:27",
+  "figures": {
+    "policy_metrics": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_policy_metrics_test.png",
+    "val_delta": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png",
+    "choice_counts": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_selected_choice_counts.png"
+  }
+}

@@ -1,4 +1,40 @@
 # R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 06:58
+
+## 正在做任务
+
+- Stage 7e 候选生成重设计协议：基于 Stage 7c/7d 的证据，把下一步从“继续堆 selector”改为“重新设计可解释候选生成”。
+
+## 已完成任务
+
+- Stage 7d 非 oracle selector v0.2：已训练 logistic/RF selector 和置信度 fallback；val gate 选择 `always_rbf_reference`；test delta=0，RBF 选择比例=1.0；gate=`no_upgrade`。
+- Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
+- Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
+
+## 待做任务
+
+- Stage 7e：定义新的候选生成协议，要求候选覆盖方向、幅值、峰值时间、尾段、反向修正、多段修正和困难样本。
+- 决定是否需要先做一个不训练的候选模板/规则上限审计，再进入可训练多假设模型。
+- 继续保持 Stage 5 生理/EEG blocked，直到车辆-only 候选生成与选择问题有稳定基线。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。原因是车辆-only 多候选非 oracle 选择未解决。
+- 多假设主线升级：仍阻塞。原因是 Stage 7d 选择器无法超过 RBF/KNN。
+
+## 可并行任务
+
+- 复核 Stage 7c oracle gain 样本图；整理候选生成设计维度；准备 Stage 7e 方案表。
+
+## 需要服务器的任务
+
+- 当前无。
+
+## 不需要服务器的任务
+
+- Stage 7e 协议设计、图表复核、报告更新、Git 提交。
+
+# R2E-Steering 当前任务队列
 ## 最新更新：2026-05-13 06:50
 
 ## 正在做任务

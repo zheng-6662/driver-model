@@ -1,4 +1,28 @@
 # R2E-Steering 阶段产物索引
+## 最新更新：2026-05-13 06:58
+
+## Stage 7d 非 oracle selector v0.2
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07d_non_oracle_selector_v0_2.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/logs/stage07d_non_oracle_selector_summary.json`
+- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_feature_audit.csv`
+- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_allowed_features.csv`
+- policy metrics：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_policy_metrics.csv`
+- decision diagnostics：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_decision_diagnostics.csv`
+- selected decisions：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_selected_policy_decisions.csv`
+- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_validation_selection_table.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_gate_table.csv`
+- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_policy_metrics_test.png`
+- val delta 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png`
+- 选择计数图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_selected_choice_counts.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、val delta 图和 policy metrics 图。
+
+# R2E-Steering 阶段产物索引
 ## 最新更新：2026-05-13 06:50
 
 ## Stage 7c 候选轨迹导出与差异审计 v0.1

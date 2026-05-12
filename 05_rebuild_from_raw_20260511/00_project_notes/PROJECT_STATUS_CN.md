@@ -1,4 +1,17 @@
 # R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 06:58
+
+- 当前阶段：Stage 7d 非 oracle selector v0.2 已完成；gate=`no_upgrade`。
+- 当前正在做什么：收口当前多候选选择器路线，准备转向候选生成方式本身，而不是继续堆选择器。
+- 已完成什么：新增并运行 `stage07d_non_oracle_selector_v0_2.py`；只用 Stage 7c 的候选预测特征和道路/事件上下文训练 selector；显式排除 test 标签、oracle 特征、subject/session ID、生理、脑电和连续风格；生成 feature audit、allowed features、policy metrics、decision diagnostics、selected decisions、confusion、gate 表、3 张图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val gate 选择 `always_rbf_reference`；test RMSE=0.533667，与 RBF/KNN 完全相同；test RBF 选择比例=1.000；broad oracle test RMSE=0.410957 仍只是诊断上限。Stage 7d 不能升级为多假设主线。
+- 当前最大风险是什么：当前候选池有上限，但非 oracle 特征无法稳定选择；继续堆 selector 很可能只得到“安全退回 RBF/KNN”或“test 退化”的结果。
+- 下一步准备做什么：Stage 7e 候选生成重设计协议：把候选显式绑定到方向、幅值、峰值时间、尾段回正/漂移、反向修正和多段修正，而不是先用现有 branch 再补 selector。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png`。
+
+# R2E-Steering 项目总进度看板
 ## 最新更新：2026-05-13 06:50
 
 - 当前阶段：Stage 7c 候选轨迹导出与差异审计 v0.1 已完成；当前仍不升级多假设为主线。
