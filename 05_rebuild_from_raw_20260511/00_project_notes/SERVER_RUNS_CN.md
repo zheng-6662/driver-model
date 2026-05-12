@@ -1,5 +1,19 @@
 # 服务器运行记录
 
+## 最新更新：2026-05-12 21:44
+
+- 本次阶段 3 稳健性坏样本复盘 v0.1 完全在本地 CPU 运行。
+- 未连接远程服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 启动时间：2026-05-12 21:43 左右，本地前台运行坏样本复盘脚本。
+- 关闭时间：2026-05-12 21:44 左右，表格、图表和报告生成完成。
+- 运行任务：`stage03_vehicle_instability_robustness_bad_sample_review_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地输出路径：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1`。
+- 是否还有任务在跑：否。
+- GPU/显存状态摘要：未检查，因为未使用服务器/GPU。
+
 ## 最新更新：2026-05-12 21:37
 
 - 本次阶段 3 强车辆基线稳健性验证 v0.1 完全在本地 CPU 运行。

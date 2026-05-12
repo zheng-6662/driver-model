@@ -1,0 +1,18 @@
+{
+  "source_per_sample": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_strong_vehicle_robustness_v0_1\\tables\\strong_vehicle_robustness_per_sample_metrics.csv",
+  "n_test_rows": 3265,
+  "n_unique_events": 389,
+  "n_config_models": 20,
+  "top_event_uid": "vehicle_instability_allraw__hzh__2025_09_26_20_50_27__000337435",
+  "top_event_subject": "hzh",
+  "top_event_high_rmse_top20_count": 15,
+  "top_event_possible_config_model_count": 15,
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "raw_files_modified": false,
+  "representative_bad_events": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_robustness_bad_sample_review_v0_1\\tables\\robustness_representative_bad_events.csv"
+}

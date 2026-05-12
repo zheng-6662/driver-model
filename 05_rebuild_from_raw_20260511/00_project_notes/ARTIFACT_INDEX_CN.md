@@ -1,5 +1,26 @@
 # 阶段产物索引
 
+## 最新新增：阶段 3 稳健性坏样本复盘 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_robustness_bad_sample_review_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_robustness_bad_sample_review_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_vehicle_instability_robustness_bad_sample_review_v0_1.py`
+- 复发坏样本总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_bad_event_recurrence.csv`
+- 代表坏样本表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_representative_bad_events.csv`
+- 带错误标记的逐样本表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_test_per_sample_with_error_flags.csv`
+- 物理错误汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_error_flag_summary_by_config_model.csv`
+- 分被试坏样本汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_subject_bad_summary.csv`
+- 坏样本矩阵表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_bad_event_matrix.csv`
+- 复发事件图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/figures/robustness_recurrent_bad_events.png`
+- 物理错误热图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/figures/robustness_error_flag_heatmap.png`
+- 分被试坏样本率图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/figures/robustness_subject_bad_rate.png`
+- 坏样本矩阵图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/figures/robustness_bad_event_matrix.png`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/logs/robustness_bad_sample_review_summary.json`
+- 服务器日志：无，本轮未使用服务器。
+- GPTPro 提问和回复：无。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：用户查看版总结、代表坏样本表、复发坏样本图、物理错误热图、坏样本矩阵图。
+
 ## 最新新增：阶段 3 强车辆基线稳健性验证 v0.1
 
 - 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_strong_vehicle_robustness_user_summary_cn.md`

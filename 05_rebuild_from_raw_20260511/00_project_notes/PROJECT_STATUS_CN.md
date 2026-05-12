@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 21:44
+
+- 当前阶段：阶段 3 稳健性坏样本复盘 v0.1 已完成；仍处于车辆-only 失败样本归因阶段。
+- 当前正在做什么：归档跨配置/跨模型反复失败事件，为下一步画原始波形和预测曲线做候选清单。
+- 已完成什么：从强车辆稳健性逐样本指标中读取 3265 行 test 记录，覆盖 389 个事件、20 个 config-model 对照；生成复发坏样本总表、代表坏样本表、物理错误汇总、分被试坏样本汇总、坏样本矩阵和 4 张图。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：复发最高的坏事件是 `vehicle_instability_allraw__hzh__2025_09_26_20_50_27__000337435`，subject=`hzh`，在 15/15 个可见 config-model 对照中进入 top20 高误差；前 4 个复发坏事件都达到 15/15 或 14/15。
+- 当前最大风险：这些坏样本还不能直接归因于模型结构，也可能来自锚点偏差、标签窗口覆盖不足或原始车辆局部异常；必须继续画原始车辆波形和预测曲线确认。
+- 下一步准备做什么：对代表坏样本前 10-20 个事件画详细曲线，包含事件锚点、车辆姿态、方向盘 GT、RBF/KNN/template 预测；Transformer 只作为已经单独跑过的参照，必要时另行叠加。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_robustness_bad_sample_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/tables/robustness_representative_bad_events.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_robustness_bad_sample_review_v0_1/figures/robustness_bad_event_matrix.png`。
+
 ## 最新更新：2026-05-12 21:37
 
 - 当前阶段：阶段 3 强车辆基线稳健性验证 v0.1 已完成；仍不进入连续风格/生理/EEG 增量结论。
