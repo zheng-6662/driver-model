@@ -88,7 +88,7 @@
 - `114208d Add stage 2 samples and processed vehicle windows`
 - `b61e427 Add stage 3 vehicle baseline evaluation`
 - `a2379c5 Record stage 3 artifact commit`
-- 阶段 3 v0.3 commit：待提交
+- `82d6a1a Add stage 3 no-subject vehicle diagnostics`
 
 ## 适合用户/老师直接查看的材料
 
