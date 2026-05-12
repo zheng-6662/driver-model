@@ -34,6 +34,7 @@
 ## 重要 Git commit
 
 - `e9d302f Add raw rebuild stage 0 and 1 audit`
+- `bae5618 Add stage 0 and 1 completion audit`
 
 ## 适合用户/老师直接查看的材料
 
