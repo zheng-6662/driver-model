@@ -1,16 +1,16 @@
 # R2E-Steering 项目总进度看板
 
-更新时间：2026-05-12 13:26:30
+更新时间：2026-05-12 14:03:26
 
 ## 当前阶段
 
-阶段 2 补充：事件锚点人工确认准备，已启动键盘式人工标注播放器。
+阶段 2 补充：事件锚点 Codex 自动审阅与少量人工复核准备。
 
-说明：阶段 3 已经做过一轮候选车辆基线诊断，但这些结果依赖 `raw_road_curvature_onset` 候选锚点。用户质疑“事件锚点是否已经确定”后，当前正式路线暂停继续训练，把阶段 3 结果降级为候选锚点诊断材料，不作为最终强车辆基线结论。下一步先通过人工标注确认事件从哪里到哪里，再生成 `manual_verified` 样本清单。
+说明：阶段 3 已经做过一轮候选车辆基线诊断，但这些结果依赖 `raw_road_curvature_onset` 候选锚点。用户质疑“事件锚点是否已经确定”后，当前正式路线暂停继续训练，把阶段 3 结果降级为候选锚点诊断材料，不作为最终强车辆基线结论。由于逐个播放人工标注成本太高，当前先由 Codex 对低泄漏道路曲率候选做自动审阅，输出高/中置信可采用标签和少量需复核标签。
 
 ## 当前正在做什么
 
-运行候选段审查版键盘播放器：默认不再让用户从整条记录中寻找事件，而是优先跳到疑似事件窗口，显示建议起止、建议锚点、证据来源和附近候选数量。用户可以直接按 `Y` 采用候选，也可以用 `A/S/D` 微调。
+整理 Codex 自动事件审阅 v0.1 结果：主线不再要求用户逐个标全部事件，而是用原始车辆、低泄漏道路曲率候选、方向盘响应和附近旧流程/车辆动态候选做第一轮自动审阅。用户后续只需要看低置信或冲突样本。
 
 ## 已完成什么
 
@@ -28,10 +28,11 @@
 - 键盘式人工事件标注播放器 v0.1 已生成并启动，本地页面为 `http://127.0.0.1:8766/`。
 - 键盘播放器已升级为候选段审查模式：长道路曲率段会拆成入弯和出弯/回正短窗口。
 - 键盘播放器已补充竖线图例：明确区分粗蓝当前建议段、细蓝道路候选、橙色旧流程参考、红色车辆响应候选、黑色播放时间、紫色手动锚点和绿色已保存人工标签。
+- Codex 自动事件审阅 v0.1 已完成：把 359 个道路曲率候选拆成 404 个候选事件段，并基于道路曲率、方向盘响应、横向加速度、车速、旧流程邻近点和车辆动态邻近点打分。
 
 ## 正在运行什么任务
 
-当前有一个本地键盘标注服务在运行：
+当前有一个本地键盘标注服务在运行，作为低置信样本复核工具：
 
 - URL：`http://127.0.0.1:8766/`
 - 本地进程 PID：34408
@@ -51,18 +52,22 @@
 - 键盘播放器接口验证通过：第一条记录 `rjy / 2025_09_28_20_02_20` 返回 7000 个时间点、7 个车辆信号、178 个候选事件。
 - 候选段审查模式验证通过：该记录生成 7 个道路候选审查段；第一条长弯道已拆为 `road_001_entry` 入弯窗口 138.565-150.565 秒和 `road_002_exit` 出弯/回正窗口 278.710-290.710 秒。
 - 键盘播放器标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`。
+- Codex 自动事件审阅：总标签 404；自动高置信采用 224；自动中置信采用 136；需要人工复核 43；证据不足建议剔除 1。
+- 自动采用标签合计 360，需人工处理从几百个候选下降到 44 个。
+- 自动事件角色：`curve_short` 314、`curve_entry` 45、`curve_exit_or_return` 45。
+- 自动审阅输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/tables/codex_reviewed_event_labels_v0_1.csv`。
 
 ## 当前最大风险
 
-事件锚点仍未人工确认。`raw_road_curvature_onset` 是较低泄漏候选，但不等于真实事件；`old_v400_context_trigger_idx` 是旧流程参考；`raw_vehicle_dynamic_onset` 来自车辆响应，存在把动作结果当事件触发的泄漏风险。必须先完成人工标注或道路设计对齐确认，才能进入正式样本 manifest 和强车辆基线。
+事件锚点仍未人工最终确认。Codex 自动审阅可以显著减少人工负担，但它不是人工真值。`raw_road_curvature_onset` 是较低泄漏候选；`old_v400_context_trigger_idx` 和 `raw_vehicle_dynamic_onset` 只作为辅助证据，不能当无泄漏锚点。下一步必须把自动采用版本标成 `codex_auto_accepted`，不能冒充 `manual_verified`。
 
 ## 下一步准备做什么
 
-1. 用户刷新 `http://127.0.0.1:8766/`，试用候选段审查模式。
-2. 根据用户反馈调整播放器，例如窗口长度、播放速度、候选线显示、按键习惯或信号通道。
-3. 用户标注完成后，读取 `keyboard_event_labels_v0_1.csv` 做一致性检查。
-4. 根据人工标签生成 `manual_verified` 样本清单、版本卡和新的低泄漏处理后窗口。
-5. 重新运行阶段 3 车辆基线；此前候选阶段 3 结果只作历史诊断对照。
+1. 用 `codex_auto_accepted_event_labels_v0_1.csv` 生成候选数据版本卡，明确它是 Codex 自动审阅版本，不是人工真值。
+2. 只抽查 `codex_needs_human_review_v0_1.csv` 中 44 个低置信/冲突样本。
+3. 根据自动采用标签和少量复核标签生成下一版样本清单。
+4. 重新生成处理后车辆窗口。
+5. 在新样本上重新运行阶段 3 车辆基线；此前候选阶段 3 结果只作历史诊断对照。
 
 ## 用户可以优先查看哪些文件
 
@@ -75,3 +80,7 @@
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_user_summary_cn.md`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_anchor_rebuild_summary_cn.md`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/codex_event_review_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/tables/codex_auto_accepted_event_labels_v0_1.csv`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/tables/codex_needs_human_review_v0_1.csv`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/figures/codex_event_review_score_overview_v0_1.png`

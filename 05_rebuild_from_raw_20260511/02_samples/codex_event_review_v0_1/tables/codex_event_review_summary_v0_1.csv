@@ -1,0 +1,11 @@
+﻿codex_recommended_decision,auto_event_role,n,score_mean,steer_delta_peak_abs_median,curve_peak_abs_median,nearby_dynamic_median
+auto_accept_high,curve_entry,16,94.38150322534233,3.761883,0.0108848,4.0
+auto_accept_high,curve_exit_or_return,9,83.63173080435826,4.33347,0.00778077,5.0
+auto_accept_high,curve_short,199,87.58142451554941,2.4562019999999998,0.0108941,3.0
+auto_accept_medium,curve_entry,23,64.68886754129426,1.2063679999999999,0.00585769,6.0
+auto_accept_medium,curve_exit_or_return,23,60.749904555007284,0.8857539999999999,0.00240431,7.0
+auto_accept_medium,curve_short,90,64.73849828163416,1.261215125,0.00108575,3.0
+needs_human_review,curve_entry,6,51.61969217719608,0.7875801499999999,0.00252377,2.0
+needs_human_review,curve_exit_or_return,13,54.2399890266219,0.580322,0.00233874,4.0
+needs_human_review,curve_short,24,53.774174249237426,0.439561,0.001082385,2.0
+reject_low_evidence,curve_short,1,40.96766511627907,0.2846634,0.00108485,0.0
