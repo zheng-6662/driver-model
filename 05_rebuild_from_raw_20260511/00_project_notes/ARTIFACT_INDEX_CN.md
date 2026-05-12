@@ -1,6 +1,6 @@
 # 阶段产物索引
 
-更新时间：2026-05-12 13:02:04
+更新时间：2026-05-12 13:18:07
 
 ## 阶段 0：旧流程冻结与重建准则
 
@@ -56,7 +56,7 @@
 - 人工标注包脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_manual_event_label_review_pack.py`
 - 人工标注包运行日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_label_review_v0_1/logs`
 - 键盘式人工标注播放器页面：`http://127.0.0.1:8766/`
-- 键盘式人工标注播放器说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_event_keyboard_player_v0_1_cn.md`
+- 键盘式人工标注播放器说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_event_keyboard_player_v0_1_cn.md`；当前页面已升级为候选段审查模式，初版整段播放器可从 `/legacy` 查看。
 - 键盘式人工标注播放器脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/run_manual_event_keyboard_player.py`
 - 键盘式人工标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`
 - 键盘式人工标注播放器日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/logs`
