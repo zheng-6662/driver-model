@@ -75,7 +75,7 @@
 - `bae5618 Add stage 0 and 1 completion audit`
 - `9bef223 Record completion audit commit`
 - `114208d Add stage 2 samples and processed vehicle windows`
-- 阶段 3 commit：待提交
+- `b61e427 Add stage 3 vehicle baseline evaluation`
 
 ## 适合用户/老师直接查看的材料
 
