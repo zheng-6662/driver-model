@@ -1,0 +1,107 @@
+{
+  "windows": [
+    "pre1_label2_event_trigger",
+    "pre2_label2_old_main",
+    "pre3_label3_response_coverage"
+  ],
+  "split_strategies": [
+    "random_event_split",
+    "session_level_split",
+    "subject_level_split"
+  ],
+  "models": [
+    "history_trend_250ms",
+    "hold_current",
+    "ridge_vehicle_summary",
+    "train_mean_all",
+    "train_mean_by_event_type",
+    "zero_response"
+  ],
+  "metric_rows": 162,
+  "per_sample_rows": 19386,
+  "best_test": [
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "split_strategy": "random_event_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.46419704270464107,
+      "peak_direction_accuracy": 0.9019607843137255,
+      "wrong_side_rate": 0.09803921568627451,
+      "severe_amp_under_rate": 0.21568627450980393
+    },
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "split_strategy": "session_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.4239727061793686,
+      "peak_direction_accuracy": 0.7611940298507462,
+      "wrong_side_rate": 0.23880597014925373,
+      "severe_amp_under_rate": 0.5074626865671642
+    },
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "split_strategy": "subject_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.5640794936016101,
+      "peak_direction_accuracy": 0.7714285714285715,
+      "wrong_side_rate": 0.22857142857142856,
+      "severe_amp_under_rate": 0.3
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "split_strategy": "random_event_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.41708565327589736,
+      "peak_direction_accuracy": 0.8627450980392157,
+      "wrong_side_rate": 0.13725490196078433,
+      "severe_amp_under_rate": 0.29411764705882354
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "split_strategy": "session_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.4222040741772114,
+      "peak_direction_accuracy": 0.6865671641791045,
+      "wrong_side_rate": 0.31343283582089554,
+      "severe_amp_under_rate": 0.5223880597014925
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "split_strategy": "subject_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.5215962275556124,
+      "peak_direction_accuracy": 0.7285714285714285,
+      "wrong_side_rate": 0.2714285714285714,
+      "severe_amp_under_rate": 0.6428571428571429
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "split_strategy": "random_event_split",
+      "model_name": "train_mean_by_event_type",
+      "rmse_steer": 0.5890565968729707,
+      "peak_direction_accuracy": 0.7647058823529411,
+      "wrong_side_rate": 0.23529411764705882,
+      "severe_amp_under_rate": 0.6470588235294118
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "split_strategy": "session_level_split",
+      "model_name": "train_mean_by_event_type",
+      "rmse_steer": 0.515794506583606,
+      "peak_direction_accuracy": 0.6865671641791045,
+      "wrong_side_rate": 0.31343283582089554,
+      "severe_amp_under_rate": 0.6716417910447762
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "split_strategy": "subject_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.6349496225144965,
+      "peak_direction_accuracy": 0.7285714285714285,
+      "wrong_side_rate": 0.2714285714285714,
+      "severe_amp_under_rate": 0.5
+    }
+  ],
+  "server_used": false,
+  "raw_files_modified": false
+}

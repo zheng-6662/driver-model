@@ -1,0 +1,10 @@
+﻿window_config_id,split_strategy,model_name,status,selected_alpha,val_rmse_for_alpha,train_rmse_selected_alpha,feature_count
+pre1_label2_event_trigger,random_event_split,ridge_vehicle_summary,ok,10.0,0.292431503534317,0.3589538335800171,78
+pre1_label2_event_trigger,session_level_split,ridge_vehicle_summary,ok,100.0,0.5135305523872375,0.3774031102657318,78
+pre1_label2_event_trigger,subject_level_split,ridge_vehicle_summary,ok,10.0,0.407723069190979,0.3304857611656189,78
+pre2_label2_old_main,random_event_split,ridge_vehicle_summary,ok,10.0,0.34698978066444397,0.36717489361763,78
+pre2_label2_old_main,session_level_split,ridge_vehicle_summary,ok,100.0,0.472130686044693,0.382352352142334,78
+pre2_label2_old_main,subject_level_split,ridge_vehicle_summary,ok,100.0,0.4327334761619568,0.3783780634403229,78
+pre3_label3_response_coverage,random_event_split,ridge_vehicle_summary,ok,10.0,0.4063582122325897,0.4581330418586731,78
+pre3_label3_response_coverage,session_level_split,ridge_vehicle_summary,ok,1000.0,0.5488131642341614,0.5568917989730835,78
+pre3_label3_response_coverage,subject_level_split,ridge_vehicle_summary,ok,100.0,0.5097434520721436,0.4457278549671173,78
