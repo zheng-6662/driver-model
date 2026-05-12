@@ -1,0 +1,6 @@
+﻿gate_item,status,evidence,decision_cn
+vehicle_main_reference_available,partial,"RBF test RMSE=0.533667, wrong_side=0.225, large_recall=0.750",可以作为当前主参照，但不能说物理问题已解决。
+strong_vehicle_baseline_frozen,no,RBF 反向修正完全匹配仍为 0，错侧率 0.225；top-K fallback 未超过 RBF。,阶段 3 仍未完全冻结，进入风格/生理前需明确接受 RBF 作为保守主参照或继续车辆-only 结构。
+topk_reliability_selector_upgrade,no,fallback test RMSE=0.542071 > RBF 0.533667,本轮选择器 no-go。
+oracle_upper_bound_interpretable,yes_but_not_deployable,best-of-RBF+topK oracle RMSE=0.415652,只说明候选池还有上限空间，不能作为模型效果。
+style_physio_eeg_allowed_now,no,强车辆基线/主参照冻结仍未闭环。,继续阻塞连续风格、生理和 EEG 增量结论。

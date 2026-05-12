@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 04:18
+
+- 当前阶段：阶段 3 车辆-only 主参照决策表 v0.2 已完成；强车辆基线仍未完全冻结。
+- 当前正在做什么：把阶段 3 的 RBF/KNN、direct Transformer、structured Transformer、keypoint、selector、top-K 和 oracle 上限统一成决策表，防止后续误把弱候选或 oracle 当主线。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_vehicle_only_decision_table_v0_2.py`；读取既有阶段 3 指标表，不重新训练；生成车辆-only 候选决策表、gate 状态表、角色汇总、指标库存、3 张图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：当前主参照仍是 `rbf_kernel_ridge_context_no_subject`，B 轨道 test RMSE=0.533667、错侧率=0.225、大幅响应召回=0.750；但反向修正完全匹配仍为 0，top-K fallback 未超过 RBF，因此 `strong_vehicle_baseline_frozen=no`，`style_physio_eeg_allowed_now=no`。
+- 当前最大风险：如果此时进入风格/生理/EEG，会把车辆-only 未解决的错侧、反向修正和多段响应问题误归因给新模态；oracle 上限只能作为潜力，不是可部署性能。
+- 下一步准备做什么：提交本轮决策表；之后要么做 RBF 主参照冻结审查并明确接受其缺陷，要么继续更强车辆-only 分响应类型/关键点条件多假设。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_vehicle_only_decision_table_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_vehicle_only_decision_table_v0_2/tables/vehicle_only_stage3_gate_status_v0_2.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_vehicle_only_decision_table_v0_2/figures/vehicle_only_decision_key_metrics_test.png`。
+
 ## 最新更新：2026-05-13 04:11
 
 - 当前阶段：阶段 3 top-K 可靠性选择/回退 v0.1 已归档并完成 Git 提交；强车辆基线仍未冻结。
