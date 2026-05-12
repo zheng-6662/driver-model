@@ -1,0 +1,21 @@
+{
+  "top_n_requested": 12,
+  "n_events_plotted": 12,
+  "n_model_event_rows": 60,
+  "configs_rebuilt_for_plotting": [
+    "random_main",
+    "session_pre1",
+    "session_pre3",
+    "subject_main"
+  ],
+  "contact_sheet_png": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_curve_review_v0_1/figures/bad_event_curve_contact_sheet.png",
+  "contact_sheet_pdf": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_curve_review_v0_1/figures/bad_event_curve_contact_sheet.pdf",
+  "figure_index": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_curve_review_v0_1/tables/bad_event_curve_figure_index.csv",
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id_as_model_input": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "raw_files_modified": false
+}

@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 22:18
+
+- 当前阶段：阶段 3 复发坏样本详细曲线复盘 v0.1 已完成；仍处于 vehicle-only 主参照冻结前的错误归因阶段。
+- 当前正在做什么：把鲁棒性复盘中 Top 12 反复失败事件转成可直接查看的曲线图，用于判断失败来自锚点/窗口/原始车辆信号还是车辆-only 模型结构不足。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_bad_event_curve_review_v0_1.py`；重建 4 个鲁棒性配置的 RBF/KNN/template 预测用于绘图；生成 12 张单事件详细曲线、1 张总览拼图、图索引、模型逐事件误差表、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：Top 12 事件 * 5 个车辆-only 候选模型共 60 条逐事件误差记录；平均样本 RMSE 从低到高为 KNN template 1.249436、RBF KRR 1.271182、peak-scaled template 1.277831、direction-gated KNN 1.283170、formal ridge 1.470337；严重幅值不足率 0.700、错侧率 0.233、反向修正计数完全匹配率 0.033。
+- 当前最大风险：这些曲线显示 RMSE 改善后复杂物理结构仍弱，但仍不能直接归因于模型结构；需要先看曲线里是否存在锚点偏早/偏晚、标签窗口覆盖不足或原始车辆局部异常。
+- 下一步准备做什么：基于 Top 12 曲线做人工/规则复核，把失败分成“锚点/窗口问题”“原始信号异常”“车辆-only 信息不足”“需要结构化响应模型”几类，再决定是否进入响应分解、关键点+残差或多假设车辆模型。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_bad_event_curve_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_curve_review_v0_1/figures/bad_event_curve_contact_sheet.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_bad_event_curve_review_v0_1/tables/bad_event_curve_model_error_table.csv`。
+
 ## 最新更新：2026-05-12 21:44
 
 - 当前阶段：阶段 3 稳健性坏样本复盘 v0.1 已完成；仍处于车辆-only 失败样本归因阶段。
