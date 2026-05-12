@@ -126,7 +126,7 @@
 - `cf9d06b Add keyboard event labeling player`
 - `5b8abbf Focus manual labeler on candidate event segments`
 - `4019653 Clarify manual labeler event line legend`
-- 待提交：Codex 自动事件审阅 v0.1
+- `2819f3f Add codex automatic event review`
 
 ## 适合用户/老师直接查看的材料
 
