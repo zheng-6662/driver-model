@@ -1,5 +1,37 @@
 # 当前任务队列
 
+## 最新更新：2026-05-12 19:05
+
+### 正在做任务
+- 阶段 2 正式车辆失稳样本清单 `vehicle_instability_highconf_v0_1` 已完成；当前准备进入阶段 3 新流程车辆基线。
+
+### 已完成任务
+- 生成正式 `samples_master.csv/jsonl`：906 个高置信失稳事件、3 个窗口、2718 行样本。
+- 生成 `event_anchor_table.csv`：908 个高置信事件全部保留锚点追溯，其中 2 个有明确排除原因。
+- 生成 `split_table.csv` 和 `split_feasibility_report.csv`：默认 session-level split 为 train 611、val 156、test 139，同时保留 random-event 和 subject-level split。
+- 生成 `sample_exclusion_reasons.csv`：2 个事件因 `history_underflow_for_3s_oldcode` 未进入正式 v0.1 样本。
+- 生成数据版本卡和用户查看版总结。
+
+### 待做任务
+- 阶段 3：基于 `vehicle_instability_highconf_v0_1` 的主窗口 `pre2_label2_old_main` 建立无学习基线。
+- 阶段 3：建立新流程强车辆基线，禁止使用驾驶员 ID，标准化只在 train split 拟合。
+- 将旧 `vehicle_direct` 坏样本与新流程车辆基线坏样本做交叉对比。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 教师路线仍被新流程强车辆基线阻塞。
+- 生理/脑电窗口构建被模态可用性和同步复核阻塞；当前只记录文件可用性，未提取生理/脑电窗口。
+
+### 可并行任务
+- 设计新流程强车辆基线特征协议和固定图协议。
+- 汇总主窗口响应类型分布和困难样本候选。
+- 检查三模态齐全子集是否足够支撑后续生理/EEG 公平对照。
+
+### 需要服务器的任务
+- 暂无。阶段 3 初始无学习/车辆基线可以先本地运行。
+
+### 不需要服务器的任务
+- 新流程无学习基线、强车辆基线小规模验证、报告和图表生成。
+
 ## 最新更新：2026-05-12 18:45
 
 ### 正在做任务

@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 19:05
+
+- 当前阶段：阶段 2 收口，已把全原始重筛的高置信车辆失稳事件整理成新流程正式样本清单 `vehicle_instability_highconf_v0_1`。
+- 当前正在做什么：样本清单、split、排除原因、模态可用性和数据版本卡已生成；准备进入新流程阶段 3 的无学习基线和强车辆基线。
+- 已完成什么：908 个高置信失稳事件中 906 个满足完整窗口要求，2 个因 3 秒历史窗口不足被排除；906 个事件各生成 3 个窗口，共 2718 行样本。主窗口 `pre2_label2_old_main` 的 session-level split 为 train 611、val 156、test 139。
+- 正在运行什么任务：没有训练任务；没有服务器任务；本次只做本地表格/manifest 构建。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果：`samples_master.csv` 已包含原始车辆文件、sha256、原始时间戳、锚点、输入窗口、标签窗口、split、模态可用性、泄漏标签和 eval-only 响应类型字段。主窗口模态可用性为车辆 906、生理 815、脑电 846、三模态齐全 755。
+- 当前最大风险：生理/脑电并非所有样本都可用，后续做生理或 EEG 增量时必须用可比子集和置乱/错位对照；`eval_label_*` 字段来自未来标签，只能用于评估分层，不能作为训练输入、split 或标准化依据。
+- 下一步准备做什么：基于正式 `samples_master` 运行新流程无学习基线和强车辆基线；先不进入风格/生理有效性结论。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_vehicle_instability_highconf_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_vehicle_instability_highconf_v0_1_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/samples_master.csv`。
+
 ## 最新更新：2026-05-12 18:45
 
 - 当前阶段：阶段 3 旧流程历史对照，已完成旧 `vehicle_direct` 全量车辆-only clean run；这仍是旧代码对照，不是新流程最终强车辆基线。

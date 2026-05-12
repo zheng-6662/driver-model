@@ -1,0 +1,10 @@
+﻿window_config_id,eval_label_morphology,n_samples,peak_abs_mean,peak_abs_p75
+pre1_label2_event_trigger,multi_correction,642,1.119242970747554,1.414850503206253
+pre1_label2_event_trigger,reverse_correction,192,0.9219845729336763,1.1992566585540771
+pre1_label2_event_trigger,single_lobe,72,0.6893157679587603,0.909709095954895
+pre2_label2_old_main,multi_correction,642,1.119242970747554,1.414850503206253
+pre2_label2_old_main,reverse_correction,192,0.9219845729336763,1.1992566585540771
+pre2_label2_old_main,single_lobe,72,0.6893157679587603,0.909709095954895
+pre3_label3_response_coverage,multi_correction,805,1.2486076700854005,1.5289053916931152
+pre3_label3_response_coverage,reverse_correction,64,1.2402040008455515,1.5159066915512085
+pre3_label3_response_coverage,single_lobe,37,0.6249785483688921,0.5164430141448975

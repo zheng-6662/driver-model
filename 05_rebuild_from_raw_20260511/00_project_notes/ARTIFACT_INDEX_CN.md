@@ -1,5 +1,24 @@
 # 阶段产物索引
 
+## 最新新增：车辆失稳高置信正式样本清单 v0.1
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_vehicle_instability_highconf_user_summary_cn.md`
+- 数据版本卡：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_vehicle_instability_highconf_v0_1_cn.md`
+- 正式中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/vehicle_instability_highconf_samples_v0_1_cn.md`
+- 脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_vehicle_instability_highconf_samples_v0_1.py`
+- 样本主表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/samples_master.csv`
+- 样本 JSONL：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/samples_master.jsonl`
+- 事件锚点表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/event_anchor_table.csv`
+- split 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/split_table.csv`
+- split 可行性报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/split_feasibility_report.csv`
+- 排除原因表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/sample_exclusion_reasons.csv`
+- eval-only 响应类型统计：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/label_eval_only_response_summary.csv`
+- 窗口配置表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/window_config_table.csv`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/logs/vehicle_instability_highconf_samples_summary_v0_1.json`
+- 关键数量：908 个高置信事件，906 个进入正式 v0.1，2 个因 3 秒历史窗口不足排除；3 个窗口共 2718 行；主窗口 session-level split 为 train 611、val 156、test 139。
+- 重要边界：`eval_label_*` 字段只允许用于评估分层、固定图和困难样本分析，不允许作为模型输入、split 决策或标准化依据。
+- 适合用户/老师直接查看：优先看用户查看版总结、数据版本卡、split 可行性报告和排除原因表。
+
 ## 最新新增：旧 `vehicle_direct` 全量车辆-only clean 对照 v0.1
 
 - 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_oldcode_vehicle_direct_full_clean_user_summary_cn.md`

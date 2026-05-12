@@ -1,0 +1,35 @@
+{
+  "dataset_version": "vehicle_instability_highconf_v0_1",
+  "source_event_version": "vehicle_instability_all_raw_rescreen_v0_1",
+  "processed_dataset_version": "vehicle_instability_allraw_highconf_v0_1",
+  "input_high_confidence_events": 908,
+  "usable_events": 906,
+  "excluded_events": 2,
+  "sample_rows": 2718,
+  "primary_window_samples": 906,
+  "window_counts": {
+    "pre1_label2_event_trigger": 906,
+    "pre2_label2_old_main": 906,
+    "pre3_label3_response_coverage": 906
+  },
+  "default_split_strategy": "session_level_split",
+  "default_split_counts": {
+    "train": 611,
+    "val": 156,
+    "test": 139
+  },
+  "modality_available_primary_counts": {
+    "vehicle_available": 906,
+    "physio_available": 815,
+    "eeg_available": 846,
+    "all_three_modalities_available": 755
+  },
+  "response_morphology_primary_counts": {
+    "multi_correction": 642,
+    "reverse_correction": 192,
+    "single_lobe": 72
+  },
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_csv_modified": false
+}

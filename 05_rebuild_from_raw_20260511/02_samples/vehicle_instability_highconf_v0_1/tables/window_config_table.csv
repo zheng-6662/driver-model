@@ -1,0 +1,4 @@
+﻿window_config_id,input_start_rel_s,input_end_rel_s,label_start_rel_s,label_end_rel_s,role,is_primary_window,description_cn
+pre1_label2_event_trigger,-1.0,0.0,0.0,2.0,early_vehicle_history_control,False,事件前 1 秒车辆历史预测事件后 2 秒方向盘响应。
+pre2_label2_old_main,-2.0,0.0,0.0,2.0,main_old_comparison_and_initial_new_baseline,True,事件前 2 秒车辆历史预测事件后 2 秒方向盘响应，作为旧代码对照和新流程初始主窗口。
+pre3_label3_response_coverage,-3.0,0.0,0.0,3.0,response_coverage_diagnostic,False,事件前 3 秒车辆历史预测事件后 3 秒方向盘响应，用于检查尾段和完整响应覆盖。

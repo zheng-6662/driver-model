@@ -1,5 +1,19 @@
 # 服务器运行记录
 
+## 最新更新：2026-05-12 19:05
+
+- 本次 `vehicle_instability_highconf_v0_1` 正式样本清单构建完全在本地运行。
+- 未连接远程服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 启动时间：2026-05-12 19:00 左右，本地前台表格构建。
+- 关闭时间：2026-05-12 19:05 左右，样本清单和报告生成完成。
+- 运行任务：阶段 2 正式车辆失稳 `samples_master`、split、排除原因、数据版本卡构建。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地输出路径：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1`。
+- 是否还有任务在跑：否。
+- GPU/显存状态摘要：未检查，因未使用服务器/GPU。
+
 ## 最新更新：2026-05-12 18:45
 
 - 本次旧 `vehicle_direct` 全量车辆-only clean 对照完全在本地 CPU 运行。
