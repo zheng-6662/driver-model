@@ -15,7 +15,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06d_reliability_gate_v0_1/logs/reliability_gate_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`4264db88 Add stage6d reliability gate`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、policy 指标表、物理指标图。
 
 ## 最新新增：Stage 6c selector feature revision v0.1

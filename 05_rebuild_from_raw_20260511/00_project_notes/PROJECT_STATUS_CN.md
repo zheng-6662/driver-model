@@ -4,7 +4,7 @@
 
 - 当前阶段：Stage 6d RBF/KNN reliability gate v0.1 已完成；当前 selector/reliability 路线仍不升级主线。
 - 当前正在做什么：把 Stage 6c 的 RBF/keypoint selector 结果做保守门控复核，确认能否在不牺牲 RMSE 的情况下保留错侧率和大幅响应召回收益。
-- 已完成什么：新增并运行 `stage06d_reliability_gate_v0_1.py`；扫描 val 选择的 threshold policy，生成 selected policy 表、policy metrics、gate 表、best confusion、2 张图、用户总结和技术报告。
+- 已完成什么：新增并运行 `stage06d_reliability_gate_v0_1.py`；扫描 val 选择的 threshold policy，生成 selected policy 表、policy metrics、gate 表、best confusion、2 张图、用户总结和技术报告；已提交 `4264db88 Add stage6d reliability gate`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：RBF/KNN 主参照 test RMSE=0.533667；保守 policy `val_rmse_noninferior_conservative` test RMSE=0.534545，比 RBF/KNN 差 +0.000878，wrong-side=0.225、large recall=0.750，均没有改善；激进 `val_best_rmse` 可把 wrong-side 降到 0.175、large recall 提到 0.875，但 RMSE=0.544356，退化更明显。gate=`no_upgrade`，stage05 physio/eeg=blocked。
