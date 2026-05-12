@@ -1,0 +1,22 @@
+{
+  "feature_protocol_correction": "stage03 v0.2 ridge_vehicle_summary included subject one-hot; v0.3 no_subject models are the corrected pure-vehicle baselines",
+  "windows": [
+    "pre1_label2_event_trigger",
+    "pre2_label2_old_main",
+    "pre3_label3_response_coverage"
+  ],
+  "split_strategies": [
+    "random_event_split",
+    "session_level_split",
+    "subject_level_split"
+  ],
+  "new_models": [
+    "ridge_vehicle_no_subject",
+    "knn_vehicle_no_subject",
+    "rbf_krr_vehicle_no_subject"
+  ],
+  "stronger_metric_rows": 81,
+  "stronger_per_sample_rows": 9693,
+  "server_used": false,
+  "raw_files_modified": false
+}

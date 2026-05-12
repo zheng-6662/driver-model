@@ -6,6 +6,10 @@
 
 本阶段只使用阶段 2 生成的低泄漏 `raw_road_curvature_onset` 车辆窗口，不使用生理、脑电、连续风格，也不使用 old v400 或 raw dynamic 锚点作为主线。
 
+## v0.3 方法修正
+
+阶段 3 v0.2 的 `ridge_vehicle_summary` 特征函数中包含 `subject` one-hot。被试 ID 不属于车辆历史或道路事件信息，因此 v0.2 的 ridge 结果现在只作为“带驾驶员 ID 的控制参考”，不能作为最终纯车辆基线。已补充 `stage03_vehicle_diagnostics_v0_3_cn.md`，其中 `ridge_vehicle_no_subject`、`knn_vehicle_no_subject`、`rbf_krr_vehicle_no_subject` 才是当前无被试 ID 的纯车辆基线。
+
 ## 已完成
 
 1. 无学习基线：`zero_response`、`hold_current`、`history_trend_250ms`、`train_mean_all`、`train_mean_by_event_type`。
