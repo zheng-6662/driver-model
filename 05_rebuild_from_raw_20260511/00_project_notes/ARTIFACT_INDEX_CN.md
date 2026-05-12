@@ -843,5 +843,5 @@
 - 坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_increment_exploratory_v0_1/figures/style_increment_bad_samples_test.png`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`e93ffab6 Add style increment exploratory audit`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、指标概览图、固定预测图、坏样本图。

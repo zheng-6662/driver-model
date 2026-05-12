@@ -7,7 +7,7 @@
 
 ### 已完成任务
 - 已新增并运行 `stage04_style_increment_exploratory_v0_1.py`。
-- 已生成 RBF+连续风格、RBF+驾驶员 ID、RBF+道路模块、RBF+风格+ID 和置乱控制的指标、逐样本表、固定预测图、坏样本图和 gate 表。
+- 已生成 RBF+连续风格、RBF+驾驶员 ID、RBF+道路模块、RBF+风格+ID 和置乱控制的指标、逐样本表、固定预测图、坏样本图和 gate 表；已提交 `e93ffab6 Add style increment exploratory audit`。
 - 当前 RBF test RMSE=0.533667，RBF+last60 风格 test RMSE=0.534559。
 
 ### 待做任务
