@@ -1,3 +1,16 @@
+## 2026-05-13 02:38-02:44 本地 keypoint vs RBF 坏样本差异复盘
+
+- 服务器连接命令格式：未连接服务器；无 SSH 命令。
+- 启动时间：2026-05-13 02:38，本地前台运行。
+- 关闭时间：2026-05-13 02:44，本地脚本结束并完成检查。
+- 运行任务：`stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1`。
+- 是否还有任务在跑：没有。
+- GPU/显存状态摘要：未使用 GPU；未使用远程服务器；未读取服务器指令与密码文件；未记录任何凭据。
+
 ## 2026-05-13 02:20-02:34 本地 keypoint+residual Transformer 训练
 
 - 服务器连接命令格式：未连接服务器；无 SSH 命令。

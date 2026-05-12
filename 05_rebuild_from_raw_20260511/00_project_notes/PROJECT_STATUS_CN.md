@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 02:44
+
+- 当前阶段：阶段 3 keypoint+residual vs RBF 坏样本差异复盘 v0.1 已完成；仍处于车辆-only 主参照冻结前的错误转移分析阶段。
+- 当前正在做什么：归档 keypoint+residual 与 RBF KRR 的逐样本差异，判断 keypoint 的收益是否稳定到可以成为主线，或更适合作为多假设/可靠性分支。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1.py`；只读取 B 轨道 test 40 个样本的逐样本指标，不训练模型；生成样本级 RMSE 差异表、错误变化计数、分被试摘要、Top 改善/退化表、两张复盘图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；本轮本地前台脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：keypoint - RBF 的样本 RMSE 平均差为 +0.025325，说明整体仍略差；RMSE 明显改善 11/40，明显退化 20/40；keypoint 修复错侧 5 个样本、新增错侧 1 个样本；修复大幅响应召回 1 个样本、没有丢失大幅响应召回；新增尾段漂移 1 个样本。
+- 当前最大风险：keypoint 的收益主要是方向和大幅响应召回，但启动延迟退化较多、RMSE 退化样本更多；如果把它单独升级为主线，会牺牲稳定整体误差。更合理的方向是多假设候选选择或可靠性/困难样本识别。
+- 下一步准备做什么：准备多假设车辆-only 或模型选择/可靠性门控：用 RBF 保住整体 RMSE，用 keypoint 分支覆盖错侧和大幅响应，先做可用选择策略，再考虑是否进入连续风格/生理阶段。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/figures/keypoint_vs_rbf_rmse_delta_top_samples.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/figures/keypoint_vs_rbf_error_change_counts.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/tables/keypoint_vs_rbf_sample_delta.csv`。
+
 ## 最新更新：2026-05-13 02:34
 
 - 当前阶段：阶段 3 B 轨道车辆-only 关键点 + 残差 Transformer v0.1 已完成；仍处于强车辆基线冻结前的结构候选筛选阶段。

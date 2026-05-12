@@ -1,0 +1,32 @@
+{
+  "output_version": "stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "rbf_model": "rbf_kernel_ridge_context_no_subject",
+  "keypoint_model": "keypoint_residual_vehicle_transformer_no_subject",
+  "n_test_samples": 40,
+  "overall_summary": {
+    "n_test_samples": 40,
+    "rmse_delta_mean_keypoint_minus_rbf": 0.025325045734643954,
+    "rmse_delta_median_keypoint_minus_rbf": 0.04297649115324019,
+    "rmse_improved_n": 11,
+    "rmse_degraded_n": 20,
+    "wrong_side_fixed_n": 5,
+    "new_wrong_side_n": 1,
+    "large_recall_fixed_n": 1,
+    "large_recall_lost_n": 0,
+    "tail_drift_fixed_n": 0,
+    "new_tail_drift_n": 1
+  },
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "figures": {
+    "rmse_delta": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/figures/keypoint_vs_rbf_rmse_delta_top_samples.png",
+    "change_counts": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/figures/keypoint_vs_rbf_error_change_counts.png"
+  },
+  "tables": {
+    "sample_delta": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/tables/keypoint_vs_rbf_sample_delta.csv",
+    "change_counts": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/tables/keypoint_vs_rbf_change_counts.csv",
+    "subject_summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_vs_rbf_bad_sample_review_v0_1/tables/keypoint_vs_rbf_subject_summary.csv"
+  }
+}
