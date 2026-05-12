@@ -3,11 +3,11 @@
 
 ## 正在做任务
 
-- Stage 7h val/test 选择不稳定诊断已完成，正在归档并提交 Git。
+- Stage 7h val/test 选择不稳定诊断已完成并提交 Git；当前准备 Stage 7i 候选选择校准/验证集重构。
 
 ## 已完成任务
 
-- Stage 7h：已生成候选 split 稳定性、类别分布偏移、数值分布偏移、逐样本收益、分 bucket 收益、keypoint target 误差复核、gate 表和 4 张诊断图。
+- Stage 7h：已生成候选 split 稳定性、类别分布偏移、数值分布偏移、逐样本收益、分 bucket 收益、keypoint target 误差复核、gate 表和 4 张诊断图；已提交 `d990f8e3`。
 - 已确认 test-best non-oracle=`rbf_resid_keypoint_scaled` 不能升级，因为它没有被 val gate 选中。
 - 已确认当前最大偏移信号：类别为 `response_family`，数值为 `prob_entropy`。
 

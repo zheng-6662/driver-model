@@ -3,7 +3,7 @@
 
 - 当前阶段：Stage 7h val/test 选择不稳定诊断 v0.1 已完成；gate=`no_upgrade`，Stage 8 生理/EEG 仍阻塞。
 - 当前正在做什么：归档 Stage 7h 诊断结果，明确当前问题是车辆-only 候选选择/校准不稳定，而不是可以进入新模态增量验证。
-- 已完成什么：新增并运行 `stage07h_val_test_selection_diagnostics_v0_1.py`；不训练新模型，只读取 Stage 7g 产物，生成候选 split 稳定性、类别/数值分布偏移、逐样本收益、分 bucket 收益、gate 表、4 张诊断图、用户总结和技术报告。
+- 已完成什么：新增并运行 `stage07h_val_test_selection_diagnostics_v0_1.py`；不训练新模型，只读取 Stage 7g 产物，生成候选 split 稳定性、类别/数值分布偏移、逐样本收益、分 bucket 收益、gate 表、4 张诊断图、用户总结和技术报告；已提交 `d990f8e3 Add stage7h selection diagnostics`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val selected=`segment_abs_rf_blend_25`，test delta=+0.002509；test-best non-oracle=`rbf_resid_keypoint_scaled`，test delta=-0.025129，但它未被 val 选中，只能作为诊断。最大类别偏移是 `response_family`，最大数值偏移是 `prob_entropy`。
