@@ -1,5 +1,26 @@
 # 阶段 2 用户查看版总结：事件锚点与样本清单重建
 
+## 最新修正：车辆失稳事件不再靠用户逐条人工标注
+
+用户指出之前 404 个样本其实是弯道样本，不是车辆失稳样本；随后又指出 1227 个失稳候选如果逐条人工看，工作量太大。因此阶段 2 当前主线已经改成：从旧项目日志中找道路事件设定，用道路设定和旧 v400 事件上下文作为辅助先验，再结合原始车辆动态证据自动判定车辆失稳事件。
+
+当前已生成 `vehicle_instability_road_guided_v0_1`：
+
+- 全量失稳候选：1227 个；
+- 自动/已确认采用：701 个；
+- 中间复核：177 个；
+- 低证据剔除：349 个。
+
+这 701 个不是“人工真值”，但可以作为下一步车辆失稳样本 manifest 的主输入。道路模块只提供场景先验，不能单独证明失稳；事件成立仍然要看 `ay`、`roll_rate`、横摆角速度、横向偏移和事件后方向盘响应等车辆动态证据。
+
+建议优先查看：
+
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/road_guided_instability_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_vehicle_instability_road_guided_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/tables/road_guided_auto_accepted_events_v0_1.csv`
+
+下一步应基于这 701 个采用候选生成车辆失稳版样本清单和处理后车辆窗口，然后重新做无学习/纯车辆基线。之前基于 404 个弯道样本的阶段 3 结果只保留为历史诊断材料。
+
 ## 2026-05-12 重要修正：主线改为车辆失稳事件
 
 用户已明确指出，之前自动审阅得到的 404 个样本都是弯道/道路曲率样本，而不是车辆失稳样本。这个修正已经纳入阶段 2：

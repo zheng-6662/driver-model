@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-05-12 15:52:16",
+  "input_instability_table": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv",
+  "input_candidate_events": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/tables/candidate_events_master.csv",
+  "input_manual_labels": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_instability_event_labels_v0_1.csv",
+  "input_road_layout": "F:/data_set_process/data_process/01_datasets/多模态数据/被试数据集合/道路信息/full_centerline_layout.csv",
+  "road_mapper_status": "ok",
+  "all_candidates": 1227,
+  "accepted_candidates": 701,
+  "review_candidates": 177,
+  "decision_counts": {
+    "hybrid_reject_low_evidence": 349,
+    "hybrid_accept_medium": 344,
+    "hybrid_accept_high": 326,
+    "hybrid_review_conflict_or_medium": 177,
+    "manual_confirmed_accept": 31
+  },
+  "outputs": {
+    "full": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/tables/road_guided_instability_events_v0_1.csv",
+    "accepted": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/tables/road_guided_auto_accepted_events_v0_1.csv",
+    "review": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/tables/road_guided_review_queue_v0_1.csv",
+    "summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/tables/road_guided_instability_summary_v0_1.csv",
+    "report": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/road_guided_instability_v0_1_cn.md"
+  }
+}

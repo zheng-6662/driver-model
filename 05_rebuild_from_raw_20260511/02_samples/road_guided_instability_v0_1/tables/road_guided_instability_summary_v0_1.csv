@@ -1,0 +1,17 @@
+﻿summary_type,key,value
+decision_count,hybrid_reject_low_evidence,349
+decision_count,hybrid_accept_medium,344
+decision_count,hybrid_accept_high,326
+decision_count,hybrid_review_conflict_or_medium,177
+decision_count,manual_confirmed_accept,31
+road_design_risk_class_count,design_regular_road,478
+road_design_risk_class_count,design_high_risk_surface,326
+road_design_risk_class_count,design_curve_context,293
+road_design_risk_class_count,design_special_event_segment,130
+old_v400_road_type_count,straight,695
+old_v400_road_type_count,none,311
+old_v400_road_type_count,curve,221
+total,all_candidates,1227
+total,accepted_candidates,701
+total,review_candidates,177
+total,manual_label_rows_used_as_calibration,31
