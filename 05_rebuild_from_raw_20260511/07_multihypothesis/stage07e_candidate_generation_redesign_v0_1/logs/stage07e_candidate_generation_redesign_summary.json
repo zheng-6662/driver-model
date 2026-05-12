@@ -1,0 +1,27 @@
+{
+  "output_version": "stage07e_candidate_generation_redesign_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "n_samples": 270,
+  "test_n": 40,
+  "test_rbf_rmse": 0.5336666703224182,
+  "test_deployable_oracle_rmse": 0.4109565317630768,
+  "test_oracle_delta_vs_rbf": -0.12271013855934143,
+  "test_mean_sample_gain_over_rbf": 0.10857570171356201,
+  "test_non_rbf_oracle_rate": 0.7,
+  "candidate_family_count": 6,
+  "next_plan_rows": 17,
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "created_at": "2026-05-13T07:05:53",
+  "figures": {
+    "oracle_gain_by_family": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_gain_by_response_family_test.png",
+    "winner_distribution": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_winner_distribution_test.png",
+    "gap_scatter": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_gap_scatter_test.png",
+    "blueprint": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png"
+  }
+}

@@ -1,0 +1,7 @@
+﻿gate_item,status,evidence
+stage07d_deployable_upgrade,no_upgrade,Stage 7d val gate selected always_rbf_reference; test delta vs RBF is 0.
+continue_selector_only_route,blocked,Two selector rounds fell back to RBF/KNN; next improvement should redesign candidate generation.
+candidate_generation_redesign_needed,pass,"test bucket statuses: selector_gap=16, generation_gap=0."
+next_training_allowed,conditional,Allowed only after implementing response-factorized candidates and keeping RBF/KNN as fixed reference.
+stage08_physio_eeg_allowed,blocked,Do not enter physio/EEG until vehicle-only candidate generation and non-oracle selection are stable.
+server_used,no,Local audit only; credential file was not read.

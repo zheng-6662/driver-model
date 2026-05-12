@@ -1,4 +1,29 @@
 # R2E-Steering 阶段产物索引
+## 最新更新：2026-05-13 07:05
+
+## Stage 7e 候选生成重设计审计 v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07e_candidate_generation_redesign_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/logs/stage07e_candidate_generation_redesign_summary.json`
+- 响应类型表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_response_label_table.csv`
+- 样本候选缺口表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_sample_candidate_gap_table.csv`
+- bucket 覆盖表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_existing_candidate_coverage_by_bucket.csv`
+- oracle winner 分布：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_oracle_winner_distribution.csv`
+- 候选生成蓝图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`
+- 下一实验计划：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_next_experiment_plan.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`
+- oracle gain by family 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_gain_by_response_family_test.png`
+- winner 分布图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_winner_distribution_test.png`
+- 样本缺口散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_gap_scatter_test.png`
+- 候选生成蓝图图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看：优先看用户查看版总结、候选生成蓝图、gate 表、oracle gain 图和 winner 分布图。
+
+# R2E-Steering 阶段产物索引
 ## 最新更新：2026-05-13 06:58
 
 ## Stage 7d 非 oracle selector v0.2

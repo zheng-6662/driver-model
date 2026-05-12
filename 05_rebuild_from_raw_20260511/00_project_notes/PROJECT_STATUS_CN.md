@@ -1,4 +1,17 @@
 # R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 07:05
+
+- 当前阶段：Stage 7e 候选生成重设计审计 v0.1 已完成；当前不再继续 selector-only 路线。
+- 当前正在做什么：准备按 response-factorized candidate 思路实现下一版车辆-only 多候选生成，而不是继续在旧 branch 上训练选择器。
+- 已完成什么：新增并运行 `stage07e_candidate_generation_redesign_v0_1.py`；从真实方向盘标签提取方向、幅值、峰值时间、尾段、反向修正/多段修正响应类型；用 Stage 7c 候选轨迹审计每类响应的 RBF/KNN 误差、候选 oracle 误差、oracle gain 和 winner 分布；生成候选生成蓝图、下一实验计划、gate 表、4 张图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：test RBF/KNN RMSE=0.533667；现有可部署候选池 oracle RMSE=0.410957，delta=-0.122710；test 非 RBF oracle winner 比例=0.700；coverage 中 16 个 test bucket 属于 `selector_gap_candidate_pool_has_signal`，说明候选池有信号但当前 selector-only 路线失败。
+- 当前最大风险是什么：如果继续只堆 selector，会反复得到退回 RBF/KNN 的安全策略；如果直接训练复杂多假设模型但不绑定响应物理类型，仍可能生成平滑相似候选。
+- 下一步准备做什么：Stage 7f 实现 response-factorized vehicle-only candidate v0.1：保留 RBF/KNN anchor，并增加方向/幅值、峰值时间、尾段模式、反向修正/多段修正和可靠性门控候选。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`。
+
+# R2E-Steering 项目总进度看板
 ## 最新更新：2026-05-13 06:58
 
 - 当前阶段：Stage 7d 非 oracle selector v0.2 已完成；gate=`no_upgrade`。

@@ -1,4 +1,41 @@
 # R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 07:05
+
+## 正在做任务
+
+- Stage 7f response-factorized vehicle-only candidate v0.1 准备：按 Stage 7e 蓝图实现新的候选生成，而不是继续调旧 selector。
+
+## 已完成任务
+
+- Stage 7e 候选生成重设计审计 v0.1：已生成响应类型表、候选覆盖表、winner 分布、候选生成蓝图、下一实验计划、gate 表和 4 张图；gate 阻塞 selector-only 继续路线。
+- Stage 7d 非 oracle selector v0.2：val gate 选择 RBF/KNN，未升级。
+- Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
+
+## 待做任务
+
+- Stage 7f：实现 response-factorized candidates。候选至少包括 RBF anchor、方向/幅值 quantile、峰值时间/onset、尾段模式、反向/多段修正、可靠性门控。
+- 建立 Stage 7f 固定图和坏样本图：必须覆盖 Stage 7e 的高优先级 response buckets。
+- 如果 Stage 7f 仍不能产生非 oracle 增益，再回到样本定义或响应分解标签，而不是进入生理/EEG。
+
+## 阻塞任务
+
+- selector-only 路线：阻塞。Stage 7b 和 Stage 7d 均退回 RBF/KNN。
+- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选生成和非 oracle 选择仍未稳定。
+- 多假设主线升级：仍阻塞。当前只有 oracle 上限，没有可部署提升。
+
+## 可并行任务
+
+- 复核 Stage 7e 高优先级 bucket；准备 Stage 7f 训练标签；设计固定图样本清单。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7f 初版优先本地小规模实现和验证。
+
+## 不需要服务器的任务
+
+- Stage 7f 脚本实现、协议表、图表和报告。
+
+# R2E-Steering 当前任务队列
 ## 最新更新：2026-05-13 06:58
 
 ## 正在做任务
