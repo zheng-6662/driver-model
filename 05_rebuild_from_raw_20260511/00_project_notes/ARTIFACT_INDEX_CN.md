@@ -17,7 +17,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06c_selector_feature_revision_v0_1/logs/selector_feature_revision_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`eae76c2f Add stage6c selector feature revision`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、指标表、物理指标图。
 
 ## 最新新增：Stage 6b RBF/keypoint 选择器错误复盘 v0.1

@@ -9,6 +9,7 @@
 - 已新增并运行 `stage06c_selector_feature_revision_v0_1.py`。
 - 已确认 val 选择 `rf_engineered_shallow`，test RMSE=0.544356，比 RBF 差 +0.010689。
 - 已确认该 selector 改善错侧率和大幅响应召回，但当前 gate 为 `no_upgrade_current_revision`。
+- 已提交 `eae76c2f Add stage6c selector feature revision`。
 
 ### 待做任务
 - 复盘 RF selector 的 6 个 FN 和 13 个 FP。

@@ -4,7 +4,7 @@
 
 - 当前阶段：Stage 6c selector feature revision v0.1 已完成；当前修订不升级主线，生理/EEG 仍不进入。
 - 当前正在做什么：评估加入候选模型预测差异特征后的 RBF/keypoint selector 是否能把 oracle 上限转成可部署增益。
-- 已完成什么：新增并运行 `stage06c_selector_feature_revision_v0_1.py`；比较原始 logistic、工程化 logistic、保守 logistic 和浅层随机森林 selector，生成特征协议、阈值扫描、指标表、gate 表、2 张图、用户总结和技术报告。
+- 已完成什么：新增并运行 `stage06c_selector_feature_revision_v0_1.py`；比较原始 logistic、工程化 logistic、保守 logistic 和浅层随机森林 selector，生成特征协议、阈值扫描、指标表、gate 表、2 张图、用户总结和技术报告；已提交 `eae76c2f Add stage6c selector feature revision`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val 选择 `rf_engineered_shallow`；test RMSE=0.544356，比 RBF 差 +0.010689；wrong-side 从 0.225 降到 0.175，large recall 从 0.750 升到 0.875；但 gate=`no_upgrade_current_revision`，stage05 physio/eeg=blocked。
