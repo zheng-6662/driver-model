@@ -2,6 +2,17 @@
 
 生成时间：2026-05-12
 
+## 2026-05-12 重要修正
+
+用户已确认本项目真正需要的是“车辆失稳样本”，不是“弯道样本”。因此本报告中的 404 个候选只能解释为弯道/道路曲率候选，现已降级为道路上下文参考材料，不能作为主事件样本继续训练正式模型。
+
+新的主线已改为 `vehicle_instability_onset_codex_v0_1`，输出见：
+
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/instability_event_review_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv`
+
+后续不得把本报告中的 404 个弯道候选称为车辆失稳样本。
+
 ## 为什么做
 
 用户认为逐个播放和人工标注事件仍然太耗时，因此本阶段先由 Codex 对低泄漏道路曲率候选进行规则化自动审阅。输出不是最终真值，而是带证据、分数和置信度的候选标签，用来减少人工复核范围。

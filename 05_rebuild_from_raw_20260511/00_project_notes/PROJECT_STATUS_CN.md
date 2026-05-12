@@ -1,86 +1,114 @@
 # R2E-Steering 项目总进度看板
 
-更新时间：2026-05-12 14:03:26
+更新时间：2026-05-12 14:55:00
 
 ## 当前阶段
 
-阶段 2 补充：事件锚点 Codex 自动审阅与少量人工复核准备。
+阶段 2 修正：事件锚点与样本清单重建，当前主线已从“弯道/道路曲率事件”切换为“车辆失稳事件”。
 
-说明：阶段 3 已经做过一轮候选车辆基线诊断，但这些结果依赖 `raw_road_curvature_onset` 候选锚点。用户质疑“事件锚点是否已经确定”后，当前正式路线暂停继续训练，把阶段 3 结果降级为候选锚点诊断材料，不作为最终强车辆基线结论。由于逐个播放人工标注成本太高，当前先由 Codex 对低泄漏道路曲率候选做自动审阅，输出高/中置信可采用标签和少量需复核标签。
+重要修正：
+
+- 之前的 `codex_event_review_v0_1` 产出的 404 个候选，本质是弯道/道路曲率样本，不是用户真正要的车辆失稳样本。
+- 这 404 个候选已经降级为道路上下文参考，不再作为主事件样本，也不再用于继续训练正式车辆模型。
+- 当前主事件候选改为 `vehicle_instability_onset_codex_v0_1`，锚点来自非方向盘车辆动态异常：`ay` 和 `roll_rate`。
+- `steer_rate` 不再作为失稳事件锚点，因为它已经是驾驶员方向盘动作，不能用来定义“失稳开始”；方向盘只作为事件后的响应/标签证据。
 
 ## 当前正在做什么
 
-整理 Codex 自动事件审阅 v0.1 结果：主线不再要求用户逐个标全部事件，而是用原始车辆、低泄漏道路曲率候选、方向盘响应和附近旧流程/车辆动态候选做第一轮自动审阅。用户后续只需要看低置信或冲突样本。
+正在整理车辆失稳候选事件版本 v0.1，并把本地浏览器审查工具切换到失稳候选：
+
+- 读取阶段 2 的 `candidate_events_master.csv`。
+- 从 `raw_vehicle_dynamic_onset` 中只保留 `ay` 和 `roll_rate` 作为非方向盘动态种子。
+- 将相邻动态种子合并为车辆失稳候选片段。
+- 计算每段的横向加速度、横滚速率、横摆角速度、横向偏移、车速、事件后方向盘修正幅度等证据。
+- 输出全量候选、自动采用候选、需复核候选和概览图。
+- 本地页面 `http://127.0.0.1:8766/` 已改为默认读取车辆失稳候选，而不是弯道候选。
 
 ## 已完成什么
 
-- 阶段 0 旧流程冻结说明已生成。
-- 新流程目录结构已建立。
-- 长期目标已写入 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`，作为后续新聊天继续执行的正式目标文本。
-- 三个原始目录下被试名文件夹内 CSV 清单和哈希已生成。
-- 原始车辆/生理/脑电深度审计表已生成。
-- 阶段 1 用户查看版中文总结已生成。
-- 阶段 0/1 完成审计清单已生成。
-- 阶段 2 候选事件清单、样本清单、split 表、道路设计清单和数据版本卡已生成。
-- 低泄漏道路曲率候选的处理后车辆窗口 v0.2 已生成，原始 CSV 未修改。
-- 阶段 3 候选诊断已完成：无学习基线、v0.2 ridge、v0.3 无被试 ID 车辆基线、v0.4 RBF KRR 候选模型卡。当前这些结果只作为候选锚点诊断，不作为最终可发表结论。
-- 人工事件标注审查包 v0.1 已生成：12 个原始车辆记录的多通道行驶过程图、HTML 审查页、人工标注 CSV 模板和中文说明。
-- 键盘式人工事件标注播放器 v0.1 已生成并启动，本地页面为 `http://127.0.0.1:8766/`。
-- 键盘播放器已升级为候选段审查模式：长道路曲率段会拆成入弯和出弯/回正短窗口。
-- 键盘播放器已补充竖线图例：明确区分粗蓝当前建议段、细蓝道路候选、橙色旧流程参考、红色车辆响应候选、黑色播放时间、紫色手动锚点和绿色已保存人工标签。
-- Codex 自动事件审阅 v0.1 已完成：把 359 个道路曲率候选拆成 404 个候选事件段，并基于道路曲率、方向盘响应、横向加速度、车速、旧流程邻近点和车辆动态邻近点打分。
+- 阶段 0：旧流程冻结与重建准则已完成。
+- 阶段 1：原始车辆/生理/脑电 CSV 审计已完成；只纳入 `原始车辆数据`、`原始脑电数据`、`原始生理数据` 三个原始目录下被试名文件夹里的 CSV；原始 CSV 未被修改。
+- 阶段 2 初版：候选事件总表、样本清单、split 表、道路设计清单和低泄漏道路曲率车辆窗口已生成。
+- 阶段 3 诊断版：曾在道路曲率候选上运行过无学习/车辆基线，但现在这些结果只作为诊断材料，不作为正式强车辆基线结论。
+- 人工标注播放器已建立，并可在本地用键盘审查候选片段。
+- Codex 弯道自动审阅 v0.1 已完成，但已降级为道路上下文参考。
+- 新增车辆失稳自动审阅 v0.1：
+  - 非方向盘动态种子：1833 个。
+  - 合并后车辆失稳候选片段：1227 个。
+  - 自动高/中置信采用：358 个。
+  - 需要人工复核：462 个。
+  - 低失稳证据建议剔除：407 个。
+  - 覆盖被试：18 个。
 
 ## 正在运行什么任务
 
-当前有一个本地键盘标注服务在运行，作为低置信样本复核工具：
+当前有一个本地审查服务正在运行：
 
 - URL：`http://127.0.0.1:8766/`
-- 本地进程 PID：34408
-- 作用：只服务本地网页和保存人工标签，不训练模型，不使用远程服务器。
+- 本地进程 PID：33512
+- 模式：`vehicle_instability_event_reviewer_v0_1`
+- 作用：展示车辆失稳候选片段，支持人工复核和键盘标注。
+- 标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_instability_event_labels_v0_1.csv`
+
+该服务只读原始车辆 CSV 和候选事件表，不训练模型，不读取服务器密码，不修改原始 CSV。
 
 ## 服务器是否在运行
 
-未使用远程服务器；未读取服务器指令与密码文件；未检查服务器状态；当前没有已知远程服务器后台任务。本地播放器服务不属于远程服务器任务。
+未使用远程服务器；未读取服务器指令与密码文件；未检查或启动 AutoDL；当前没有已知远程后台任务。
 
-## 最近一次结果
+本地 8766 页面是本机 HTTP 服务，不属于远程服务器任务。
 
-- 阶段 1 纳入审计 CSV：258；车辆/生理/脑电：91/82/85。
-- 候选事件：11619，其中 old v400 6247、raw road curvature 359、raw vehicle dynamic 5013。
-- 低泄漏道路曲率候选处理后车辆窗口：3 个 NPZ，样本数均为 359，特征数 9。
-- 阶段 3 候选车辆模型曾显示：pre2 + session-level test 的 `rbf_krr_vehicle_no_subject` RMSE 0.382337、方向准确率 0.820896、错侧率 0.179104。但该结果依赖候选锚点，当前不能作为最终强车辆结论。
-- 人工事件标注审查包 v0.1：生成 12 个记录、12 张整段车辆时间线图、1878 行人工标注模板。
-- 键盘播放器接口验证通过：第一条记录 `rjy / 2025_09_28_20_02_20` 返回 7000 个时间点、7 个车辆信号、178 个候选事件。
-- 候选段审查模式验证通过：该记录生成 7 个道路候选审查段；第一条长弯道已拆为 `road_001_entry` 入弯窗口 138.565-150.565 秒和 `road_002_exit` 出弯/回正窗口 278.710-290.710 秒。
-- 键盘播放器标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`。
-- Codex 自动事件审阅：总标签 404；自动高置信采用 224；自动中置信采用 136；需要人工复核 43；证据不足建议剔除 1。
-- 自动采用标签合计 360，需人工处理从几百个候选下降到 44 个。
-- 自动事件角色：`curve_short` 314、`curve_entry` 45、`curve_exit_or_return` 45。
-- 自动审阅输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/tables/codex_reviewed_event_labels_v0_1.csv`。
+## 最近一次结果是什么
+
+车辆失稳候选 v0.1 已生成：
+
+- 全量表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv`
+- 自动采用表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_auto_accepted_events_v0_1.csv`
+- 需复核表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_needs_human_review_v0_1.csv`
+- 汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_event_review_summary_v0_1.csv`
+- 中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/instability_event_review_v0_1_cn.md`
+- 概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/figures/instability_event_score_overview_v0_1.png`
+
+按决策统计：
+
+```text
+needs_human_review                 462
+reject_low_instability_evidence    407
+auto_accept_instability_medium     224
+auto_accept_instability_high       134
+```
+
+按失稳证据类型统计：
+
+```text
+instability_ay_only      1150
+instability_roll_only      65
+instability_ay_roll        12
+```
 
 ## 当前最大风险
 
-事件锚点仍未人工最终确认。Codex 自动审阅可以显著减少人工负担，但它不是人工真值。`raw_road_curvature_onset` 是较低泄漏候选；`old_v400_context_trigger_idx` 和 `raw_vehicle_dynamic_onset` 只作为辅助证据，不能当无泄漏锚点。下一步必须把自动采用版本标成 `codex_auto_accepted`，不能冒充 `manual_verified`。
+1. 当前失稳锚点来自车辆动态异常，因此任务定义是“检测到车辆失稳动态开始后，预测未来方向盘响应”，不是“失稳发生前预警”。后续样本版本卡必须明确这个因果设定。
+2. 高横向加速度可能来自正常过弯，也可能来自车辆失稳；需要结合横滚、横摆、横向偏移、事件后方向盘修正和道路上下文进一步区分。
+3. 358 个自动采用样本是 Codex 规则筛选，不是人工真值；只能命名为 `codex_auto_accepted` 或 `vehicle_instability_onset_codex_v0_1`，不能冒充 `manual_verified`。
+4. 之前道路曲率上的阶段 3 模型不能继续当正式基线；必须在失稳样本 manifest 确认后重新生成处理窗口和基线。
+5. 5000 多个 `raw_vehicle_dynamic_onset` 不能直接当失稳样本数量，因为里面包含大量 `steer_rate`，这属于驾驶员动作结果，不适合定义失稳开始。
 
 ## 下一步准备做什么
 
-1. 用 `codex_auto_accepted_event_labels_v0_1.csv` 生成候选数据版本卡，明确它是 Codex 自动审阅版本，不是人工真值。
-2. 只抽查 `codex_needs_human_review_v0_1.csv` 中 44 个低置信/冲突样本。
-3. 根据自动采用标签和少量复核标签生成下一版样本清单。
-4. 重新生成处理后车辆窗口。
-5. 在新样本上重新运行阶段 3 车辆基线；此前候选阶段 3 结果只作历史诊断对照。
+1. 抽查 `auto_accept_instability_high` 和 `needs_human_review` 的示例图，确认规则是否把正常过弯误判为失稳。
+2. 为 `vehicle_instability_onset_codex_v0_1` 写数据版本卡，明确样本定义、排除规则、因果设定和泄漏边界。
+3. 生成车辆失稳版本的处理后车辆窗口，窗口必须以失稳锚点为 0 秒，方向盘只作为未来响应标签。
+4. 在生成正式 manifest 前，不继续训练新模型。
+5. 如果需要人工复核，优先只复核 462 个 `needs_human_review` 和少量高置信抽样，不要求用户逐个看 1227 个。
 
 ## 用户可以优先查看哪些文件
 
-- `http://127.0.0.1:8766/`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_event_keyboard_player_v0_1_cn.md`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/run_manual_event_keyboard_player.py`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_label_review_v0_1/review_index.html`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_event_label_review_pack_v0_1_cn.md`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_user_summary_cn.md`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_anchor_rebuild_summary_cn.md`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/codex_event_review_v0_1_cn.md`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/tables/codex_auto_accepted_event_labels_v0_1.csv`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/tables/codex_needs_human_review_v0_1.csv`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/figures/codex_event_review_score_overview_v0_1.png`
+1. 车辆失稳说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/instability_event_review_v0_1_cn.md`
+2. 车辆失稳数据版本卡：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_vehicle_instability_v0_1_cn.md`
+3. 全量失稳候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv`
+4. 自动采用候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_auto_accepted_events_v0_1.csv`
+5. 需复核候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_needs_human_review_v0_1.csv`
+6. 概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/figures/instability_event_score_overview_v0_1.png`
+7. 本地审查页面：`http://127.0.0.1:8766/`
+8. 当前长期目标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`

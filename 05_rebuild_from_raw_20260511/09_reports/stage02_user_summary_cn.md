@@ -1,5 +1,21 @@
 # 阶段 2 用户查看版总结：事件锚点与样本清单重建
 
+## 2026-05-12 重要修正：主线改为车辆失稳事件
+
+用户已明确指出，之前自动审阅得到的 404 个样本都是弯道/道路曲率样本，而不是车辆失稳样本。这个修正已经纳入阶段 2：
+
+- 404 个弯道候选不再作为主事件样本，只保留为道路上下文参考。
+- 新主线改为 `vehicle_instability_onset_codex_v0_1`。
+- 新锚点来自非方向盘车辆动态异常：`ay` 和 `roll_rate`。
+- `steer_rate` 不再用于定义失稳开始，因为它属于驾驶员方向盘动作结果。
+- 当前车辆失稳候选为 1227 个，其中自动高/中置信采用 358 个，需要复核 462 个。
+
+推荐优先查看：
+
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/instability_event_review_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_vehicle_instability_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv`
+
 更新时间：2026-05-12
 
 ## 这个阶段为什么做

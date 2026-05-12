@@ -69,6 +69,22 @@
 - Codex 自动审阅图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/figures`
 - Codex 自动审阅运行日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/codex_event_review_v0_1/logs`
 
+## 阶段 2 修正：车辆失稳事件候选 v0.1
+
+- 说明：`codex_event_review_v0_1` 的 404 个样本是弯道/道路曲率候选，已降级为道路上下文参考；当前主线改为车辆失稳候选。
+- 车辆失稳中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/instability_event_review_v0_1_cn.md`
+- 车辆失稳数据版本卡：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_vehicle_instability_v0_1_cn.md`
+- 车辆失稳审阅脚本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_instability_event_review_v0_1.py`
+- 全量车辆失稳候选表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv`
+- 自动采用车辆失稳候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_auto_accepted_events_v0_1.csv`
+- 需要人工复核车辆失稳候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_needs_human_review_v0_1.csv`
+- 车辆失稳审阅汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_event_review_summary_v0_1.csv`
+- 车辆失稳概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/figures/instability_event_score_overview_v0_1.png`
+- 车辆失稳示例图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/figures`
+- 车辆失稳运行日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/logs/build_instability_event_review_v0_1.json`
+- 本地车辆失稳审查页面：`http://127.0.0.1:8766/`
+- 车辆失稳人工标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_instability_event_labels_v0_1.csv`
+
 ## 阶段 3：无学习基线与纯车辆基线
 
 - 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_user_summary_cn.md`

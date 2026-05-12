@@ -20,12 +20,19 @@ import pandas as pd
 
 
 ROOT = Path(r"F:/data_set_process/data_process/05_rebuild_from_raw_20260511")
-CANDIDATE_PATH = ROOT / "02_samples" / "tables" / "candidate_events_master.csv"
+INSTABILITY_CANDIDATE_PATH = (
+    ROOT
+    / "02_samples"
+    / "instability_event_review_v0_1"
+    / "tables"
+    / "instability_reviewed_events_v0_1.csv"
+)
+FALLBACK_CANDIDATE_PATH = ROOT / "02_samples" / "tables" / "candidate_events_master.csv"
 OUT_DIR = ROOT / "02_samples" / "manual_event_keyboard_player_v0_1"
 TABLE_DIR = OUT_DIR / "tables"
 LOG_DIR = OUT_DIR / "logs"
 REPORT_DIR = ROOT / "09_reports"
-LABEL_PATH = TABLE_DIR / "keyboard_event_labels_v0_1.csv"
+LABEL_PATH = TABLE_DIR / "keyboard_instability_event_labels_v0_1.csv"
 
 VEHICLE_COLS = [
     "StorageTime",
@@ -37,6 +44,7 @@ VEHICLE_COLS = [
     "zx|vyaw",
     "zx|ay",
     "zx|roll",
+    "zx|vroll",
     "zx|yaw",
     "zx|AcceleratorPedal",
     "zx|BrakePedal",
@@ -50,6 +58,7 @@ SIGNALS = [
     ("yaw_rate", "yaw rate", ["zx|vyaw"]),
     ("ay", "lateral accel", ["zx|ay"]),
     ("roll", "roll", ["zx|roll"]),
+    ("roll_rate", "roll rate", ["zx|vroll"]),
 ]
 
 LABEL_FIELDS = [
@@ -108,7 +117,15 @@ def to_seconds(storage_time: pd.Series) -> np.ndarray:
 
 @lru_cache(maxsize=1)
 def load_candidates() -> pd.DataFrame:
-    df = pd.read_csv(CANDIDATE_PATH)
+    if INSTABILITY_CANDIDATE_PATH.exists():
+        df = pd.read_csv(INSTABILITY_CANDIDATE_PATH)
+        df["event_uid"] = df["instability_event_uid"].astype(str)
+        df["anchor_source"] = "raw_vehicle_instability_onset"
+        df["event_type"] = df["instability_role"].astype(str)
+        df["event_level"] = df["codex_recommended_decision"].astype(str)
+        df["source_detail"] = df["leakage_note"].astype(str)
+    else:
+        df = pd.read_csv(FALLBACK_CANDIDATE_PATH)
     for col in ["anchor_time_rel_s", "event_start_rel_s", "event_end_rel_s"]:
         df[col] = pd.to_numeric(df[col], errors="coerce")
     return df
@@ -126,11 +143,17 @@ def get_sessions() -> list[dict[str, Any]]:
         .unstack(fill_value=0)
         .reset_index()
     )
-    for col in ["raw_road_curvature_onset", "old_v400_context_trigger_idx", "raw_vehicle_dynamic_onset"]:
+    for col in [
+        "raw_vehicle_instability_onset",
+        "raw_road_curvature_onset",
+        "old_v400_context_trigger_idx",
+        "raw_vehicle_dynamic_onset",
+    ]:
         if col not in grouped.columns:
             grouped[col] = 0
+    grouped["sort_instability"] = grouped["raw_vehicle_instability_onset"].astype(int)
     grouped["sort_road"] = grouped["raw_road_curvature_onset"].astype(int)
-    grouped = grouped.sort_values(["sort_road", "subject", "session_stamp"], ascending=[False, True, True])
+    grouped = grouped.sort_values(["sort_instability", "sort_road", "subject", "session_stamp"], ascending=[False, False, True, True])
     sessions: list[dict[str, Any]] = []
     for _, row in grouped.iterrows():
         subject = str(row["subject"])
@@ -140,6 +163,7 @@ def get_sessions() -> list[dict[str, Any]]:
                 "key": session_key(subject, stamp),
                 "subject": subject,
                 "session_stamp": stamp,
+                "raw_vehicle_instability_onset": int(row.get("raw_vehicle_instability_onset", 0)),
                 "raw_road_curvature_onset": int(row.get("raw_road_curvature_onset", 0)),
                 "old_v400_context_trigger_idx": int(row.get("old_v400_context_trigger_idx", 0)),
                 "raw_vehicle_dynamic_onset": int(row.get("raw_vehicle_dynamic_onset", 0)),
@@ -190,6 +214,56 @@ def build_review_segments(events: pd.DataFrame, duration_s: float) -> list[dict[
         }
 
     segments: list[dict[str, Any]] = []
+    instability = events[events["anchor_source"] == "raw_vehicle_instability_onset"].copy()
+    if not instability.empty:
+        seg_idx = 1
+        instability = instability.sort_values(["anchor_time_rel_s", "event_start_rel_s"])
+        for _, ev in instability.iterrows():
+            anchor = finite_float(ev.get("anchor_time_rel_s"))
+            if anchor is None:
+                continue
+            start = finite_float(ev.get("event_start_rel_s"))
+            end = finite_float(ev.get("event_end_rel_s"))
+            if start is None:
+                start = anchor
+            if end is None or end <= start:
+                end = anchor + 1.0
+            review_start = clipped(anchor - 8.0)
+            review_end = clipped(anchor + 10.0)
+            if review_end - review_start < 12.0:
+                review_start = clipped(anchor - 6.0)
+                review_end = clipped(anchor + 6.0)
+            decision = str(ev.get("event_level", ""))
+            score = finite_float(ev.get("instability_review_score"))
+            role = str(ev.get("event_type", "vehicle_instability"))
+            signed_ay = finite_float(ev.get("signed_peak_ay_window"))
+            direction = "left_or_positive" if signed_ay is not None and signed_ay > 0 else "right_or_negative" if signed_ay is not None and signed_ay < 0 else "unclear"
+            counts = count_sources(review_start, review_end)
+            reason = (
+                f"vehicle instability candidate; score={score if score is not None else 'NA'}; "
+                f"decision={decision}; role={role}; use ay/roll_rate as onset, steering only as future response evidence"
+            )
+            segments.append(
+                {
+                    "review_segment_id": f"instability_{seg_idx:04d}",
+                    "priority": 1,
+                    "candidate_source": "raw_vehicle_instability_onset",
+                    "candidate_event_uid": str(ev.get("event_uid", "")),
+                    "anchor_time_rel_s": round(float(anchor), 3),
+                    "event_start_rel_s": round(float(start), 3),
+                    "event_end_rel_s": round(float(end), 3),
+                    "review_start_rel_s": round(float(review_start), 3),
+                    "review_end_rel_s": round(float(review_end), 3),
+                    "event_type": role,
+                    "direction": direction,
+                    "event_level": decision,
+                    "reason": reason,
+                    "nearby_counts": counts,
+                }
+            )
+            seg_idx += 1
+        return segments
+
     road = events[events["anchor_source"] == "raw_road_curvature_onset"].copy()
     seg_idx = 1
     for _, ev in road.sort_values("anchor_time_rel_s").iterrows():
@@ -460,21 +534,27 @@ def undo_last_label() -> dict[str, Any]:
 
 
 def write_report(host: str, port: int) -> None:
-    report = f"""# 阶段 2 补充：键盘式人工事件标注播放器 v0.1
+    report = f"""# 阶段 2 补充：车辆失稳候选键盘审查播放器 v0.1
 
 生成时间：2026-05-12
 
 ## 为什么做
 
-人工填写整张事件表太复杂，因此新增本地键盘标注播放器。用户可以播放原始车辆时间线，用键盘标记事件开始和结束，标签由本地 Python 服务写入 CSV。
-
-2026-05-12 更新：播放器已改为候选段审查模式。页面默认跳转到较可能的事件窗口，优先使用道路曲率候选；如果没有道路曲率候选，则把旧流程和车辆动态候选按时间聚类成候选段。每段会显示建议起止、建议锚点、证据来源和附近候选数量，降低人工从整段长时间线里寻找事件的负担。
+用户指出逐个从整段行驶过程中找事件太复杂，并进一步指出之前 404 个自动审阅样本都是弯道样本，不是车辆失稳样本。因此本地播放器已从“弯道候选审查”切换为“车辆失稳候选审查”。
 
 ## 使用入口
 
 - 本地页面：`http://{host}:{port}/`
-- 标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`
+- 当前读取候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1/tables/instability_reviewed_events_v0_1.csv`
+- 标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_instability_event_labels_v0_1.csv`
 - 脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/run_manual_event_keyboard_player.py`
+
+## 当前事件定义
+
+- 主事件是车辆失稳候选。
+- 失稳锚点来自 `ay` 和 `roll_rate` 等非方向盘车辆动态异常。
+- `steer_rate` 不作为主锚点，因为它已经是驾驶员方向盘动作。
+- 方向盘只作为事件后响应证据。
 
 ## 默认按键
 
@@ -487,6 +567,15 @@ def write_report(host: str, port: int) -> None:
 - 左/右方向键：小步后退/前进；按住 Shift 为大步。
 - `N` / `P`：切换下一条/上一条记录。
 - `U`：撤销最后一条保存的标签。
+
+## 页面竖线说明
+
+- 红线：车辆失稳候选锚点，来自横向加速度或横滚速率。
+- 浅蓝背景：当前正在审查的候选事件段。
+- 黑线：当前播放时间。
+- 橙线：用户手动调整的事件开始点。
+- 紫线：用户手动标记的预测锚点。
+- 绿色背景/绿线：已经保存的人工标签。
 
 ## 边界
 
@@ -705,6 +794,10 @@ INDEX_HTML = r"""<!doctype html>
         <div class="field">
           <label>事件类型</label>
           <select id="eventType">
+            <option value="vehicle_instability">vehicle_instability</option>
+            <option value="instability_ay_only">instability_ay_only</option>
+            <option value="instability_roll_only">instability_roll_only</option>
+            <option value="instability_ay_roll">instability_ay_roll</option>
             <option value="curve">curve</option>
             <option value="lane_change">lane_change</option>
             <option value="avoidance">avoidance</option>
@@ -798,7 +891,7 @@ async function loadSessions() {
   state.sessions.forEach((s, i) => {
     const opt = document.createElement("option");
     opt.value = i;
-    opt.textContent = `${s.subject} ${s.session_stamp} | road ${s.raw_road_curvature_onset}`;
+    opt.textContent = `${s.subject} ${s.session_stamp} | instability ${s.raw_vehicle_instability_onset || 0}`;
     select.appendChild(opt);
   });
   await loadSession(0);
@@ -862,6 +955,7 @@ function panelLimits(values, loT, hiT, times) {
 }
 
 function colorForSource(source) {
+  if (source === "raw_vehicle_instability_onset") return "#cf3333";
   if (source === "raw_road_curvature_onset") return "#286ed6";
   if (source === "old_v400_context_trigger_idx") return "#d98520";
   if (source === "raw_vehicle_dynamic_onset") return "#cf3333";
@@ -1121,7 +1215,7 @@ FOCUSED_HTML = r"""<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>R2E Steering Focused Event Reviewer</title>
+  <title>R2E Vehicle Instability Event Reviewer</title>
   <style>
     :root {
       --bg: #f5f6f8;
@@ -1318,7 +1412,7 @@ FOCUSED_HTML = r"""<!doctype html>
 </head>
 <body>
   <header>
-    <h1>R2E 事件段审查</h1>
+    <h1>R2E 车辆失稳候选审查</h1>
     <select id="sessionSelect"></select>
     <button id="prevSessionBtn">上一记录</button>
     <button id="nextSessionBtn">下一记录</button>
@@ -1340,9 +1434,9 @@ FOCUSED_HTML = r"""<!doctype html>
         <span id="sessionTitle"></span>
         <span class="pill" id="timeReadout">0.000s</span>
         <span class="pill blue" id="candidateReadout">候选 0/0</span>
-        <span class="pill">粗蓝=当前建议段</span>
-        <span class="pill">橙=旧流程参考</span>
-        <span class="pill red">红=车辆响应候选</span>
+        <span class="pill">蓝色背景=当前失稳片段</span>
+        <span class="pill red">红线=失稳锚点</span>
+        <span class="pill">方向盘只看事件后响应</span>
         <span class="pill green">绿=已保存</span>
       </div>
       <canvas id="plot"></canvas>
@@ -1384,10 +1478,10 @@ FOCUSED_HTML = r"""<!doctype html>
       </section>
       <section class="section">
         <div class="legend">
-          <span class="swatch blue"></span><span>粗蓝线和浅蓝背景：当前正在审查的建议事件段起止。</span>
-          <span class="swatch thin-blue"></span><span>细蓝线：同一窗口里的其他道路曲率候选锚点。</span>
-          <span class="swatch orange"></span><span>橙线：旧 v400 流程的参考触发点，只作对照，不是真值。</span>
-          <span class="swatch red"></span><span>红线：车辆动态响应候选，来自方向盘/横摆/加速度等动作结果，只能辅助判断。</span>
+          <span class="swatch blue"></span><span>浅蓝背景：当前正在审查的车辆失稳候选片段。</span>
+          <span class="swatch red"></span><span>红线：失稳锚点，来自横向加速度或横滚速率，不来自方向盘。</span>
+          <span class="swatch thin-blue"></span><span>蓝线：当前候选片段起止边界。</span>
+          <span class="swatch orange"></span><span>橙线：手动调整的候选开始点。</span>
           <span class="swatch black"></span><span>黑线：当前播放时间。</span>
           <span class="swatch purple"></span><span>紫线：你手动标的预测锚点。</span>
           <span class="swatch green"></span><span>绿线/绿背景：已经保存的人工标签。</span>
@@ -1397,6 +1491,10 @@ FOCUSED_HTML = r"""<!doctype html>
         <div class="field">
           <label>事件类型</label>
           <select id="eventType">
+            <option value="vehicle_instability">vehicle_instability</option>
+            <option value="instability_ay_only">instability_ay_only</option>
+            <option value="instability_roll_only">instability_roll_only</option>
+            <option value="instability_ay_roll">instability_ay_roll</option>
             <option value="curve">curve</option>
             <option value="lane_change">lane_change</option>
             <option value="avoidance">avoidance</option>
@@ -1535,6 +1633,10 @@ function gotoSegment(index, autoplay = false) {
 
 function normalizeEventType(value) {
   value = String(value || "unclear");
+  if (value.includes("instability_ay_roll")) return "instability_ay_roll";
+  if (value.includes("instability_roll_only")) return "instability_roll_only";
+  if (value.includes("instability_ay_only")) return "instability_ay_only";
+  if (value.includes("instability") || value.includes("vehicle")) return "vehicle_instability";
   if (value.includes("curve")) return "curve";
   if (value.includes("lane")) return "lane_change";
   if (value.includes("return")) return "return";
@@ -1581,6 +1683,7 @@ function updatePanel() {
 }
 
 function colorForSource(source) {
+  if (source === "raw_vehicle_instability_onset") return "#c3342b";
   if (source === "raw_road_curvature_onset") return "#1d5fd1";
   if (source === "old_v400_context_trigger_idx") return "#ba6b00";
   if (source === "raw_vehicle_dynamic_onset") return "#c3342b";
@@ -1655,7 +1758,7 @@ function draw() {
       ctx.lineTo(marginL + plotW, zy);
       ctx.stroke();
     }
-    const colors = {curvature:"#1d5fd1", steer:"#121826", speed:"#167443", lateral:"#6d35c5", yaw_rate:"#c3342b", ay:"#ba6b00", roll:"#8b5e34"};
+    const colors = {curvature:"#1d5fd1", steer:"#121826", speed:"#167443", lateral:"#6d35c5", yaw_rate:"#c3342b", ay:"#ba6b00", roll:"#8b5e34", roll_rate:"#7f56d9"};
     ctx.strokeStyle = colors[sig.name] || "#121826";
     ctx.lineWidth = 1.8;
     ctx.beginPath();

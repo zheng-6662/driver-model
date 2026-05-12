@@ -1,0 +1,11 @@
+{
+  "input_events": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/tables/candidate_events_master.csv",
+  "output_dir": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/instability_event_review_v0_1",
+  "seed_count": 1833,
+  "episode_count": 1227,
+  "accepted_count": 358,
+  "needs_human_review_count": 462,
+  "merge_gap_s": 2.5,
+  "review_pre_s": 5.0,
+  "review_post_s": 8.0
+}
