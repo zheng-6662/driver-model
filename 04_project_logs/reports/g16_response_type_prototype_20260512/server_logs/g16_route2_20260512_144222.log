@@ -1,0 +1,28 @@
+G16 route2: loading FAIR sample bundle...
+G16 scheme=方向幅值 feature=触发前车辆和事件信息
+G16 scheme=方向幅值 feature=触发前车辆事件加连续风格
+G16 scheme=方向幅值 feature=触发前车辆事件加连续风格和肌电
+G16 scheme=方向幅值形态 feature=触发前车辆和事件信息
+G16 scheme=方向幅值形态 feature=触发前车辆事件加连续风格
+G16 scheme=方向幅值形态 feature=触发前车辆事件加连续风格和肌电
+G16 scheme=方向形态 feature=触发前车辆和事件信息
+G16 scheme=方向形态 feature=触发前车辆事件加连续风格
+G16 scheme=方向形态 feature=触发前车辆事件加连续风格和肌电
+Traceback (most recent call last):
+  File "/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py", line 923, in <module>
+    main()
+  File "/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py", line 917, in main
+    report = build_report(val_df, test_df, chosen_df, classifier_df, group_df, g11_df, regime_df)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py", line 428, in build_report
+    clf_show = classifier_df.sort_values(["val_label_macro_f1", "val_label_accuracy"], ascending=False).head(12)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/pandas/core/frame.py", line 8339, in sort_values
+    keys_data = list(keys)  # type: ignore[arg-type]
+                ^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/pandas/core/frame.py", line 8328, in <genexpr>
+    keys = (self._get_label_or_level_values(x, axis=axis) for x in by)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/lib/python3.12/site-packages/pandas/core/generic.py", line 1776, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'val_label_macro_f1'

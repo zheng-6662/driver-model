@@ -1,0 +1,33 @@
+G16 route2: loading FAIR sample bundle...
+G16 scheme=方向幅值 feature=触发前车辆和事件信息
+G16 scheme=方向幅值 feature=触发前车辆事件加连续风格
+G16 scheme=方向幅值 feature=触发前车辆事件加连续风格和肌电
+G16 scheme=方向幅值形态 feature=触发前车辆和事件信息
+G16 scheme=方向幅值形态 feature=触发前车辆事件加连续风格
+G16 scheme=方向幅值形态 feature=触发前车辆事件加连续风格和肌电
+G16 scheme=方向形态 feature=触发前车辆和事件信息
+G16 scheme=方向形态 feature=触发前车辆事件加连续风格
+G16 scheme=方向形态 feature=触发前车辆事件加连续风格和肌电
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 39044 (\N{CJK UNIFIED IDEOGRAPH-9884}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 27979 (\N{CJK UNIFIED IDEOGRAPH-6D4B}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 21709 (\N{CJK UNIFIED IDEOGRAPH-54CD}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 24212 (\N{CJK UNIFIED IDEOGRAPH-5E94}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 31867 (\N{CJK UNIFIED IDEOGRAPH-7C7B}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 22411 (\N{CJK UNIFIED IDEOGRAPH-578B}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 36719 (\N{CJK UNIFIED IDEOGRAPH-8F6F}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 21407 (\N{CJK UNIFIED IDEOGRAPH-539F}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 21152 (\N{CJK UNIFIED IDEOGRAPH-52A0}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 27531 (\N{CJK UNIFIED IDEOGRAPH-6B8B}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/run_g16_response_type_prototype.py:381: UserWarning: Glyph 24046 (\N{CJK UNIFIED IDEOGRAPH-5DEE}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=160)
+G16 done. Report: /root/autodl-tmp/data_process/04_project_logs/reports/g16_response_type_prototype_20260512/g16_response_type_prototype_report_cn.md

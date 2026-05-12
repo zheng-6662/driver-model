@@ -1,4 +1,4 @@
-# Project Experiment Registry
+﻿# Project Experiment Registry
 
 The goal of this file is quick orientation:
 
@@ -99,6 +99,7 @@ The goal of this file is quick orientation:
 
 | 2026-05-12 | G15 相似历史事件检索 + 残差修正 | G15A = 相似历史事件检索；G15B = 相似历史事件检索后再做轻量残差修正 | 检查“从训练集中找相似历史响应”能不能突破旧模型平均化问题，并用验证集选参避免测试集挑版本 | integration verification | 在 788 服务器运行，使用触发前车辆/事件、连续风格、肌电三类可用输入；验证集选择 K、特征组和残差强度 | G15B `test_rmse=0.3980`，但 `primary=0.3873`、`tail=0.4356`、`selection=0.8829`、G11 `0.8087`，整体均值好看但物理指标和困难样本不够好 | needs control | [G15 report](../g15_retrieval_residual_20260512/g15_retrieval_residual_report_cn.md) |
 
+| 2026-05-12 | G16 路线2：先判断响应类型再选原型轨迹 | G16O = 真实响应类型原型上限；G16A/B/C = 预测响应类型硬原型、软原型、软原型加残差 | 检查“先分清方向、幅值、形态，再预测轨迹”能否解决旧流程平均化和物理意义错误 | integration verification | 服务器运行响应类型判断器与训练集原型选择，比较车辆事件、连续风格、肌电三类触发前输入 | 可部署 G16C `test_rmse=0.4193`，但 `primary=0.4119`、`tail=0.4706`、`selection=0.9046`、G11 `0.8694`，弱于 E5A/E10C 的物理指标 | no-go | [G16 report](../g16_response_type_prototype_20260512/g16_response_type_prototype_report_cn.md) |
 ## Rules
 
 - One row should describe exactly one run, one controlled comparison, or one explicit analysis action.
@@ -114,3 +115,4 @@ The goal of this file is quick orientation:
 | Date | Experiment / analysis | Name decode | Plain-language meaning | Comparability | Change | Key result | Decision | Details |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | YYYY-MM-DD | Name | Explain abbreviation / suffix here | State the exact question this run is answering | single variable / matched pair / integration verification | State the main change | State the result in one line | proceed / no-go / needs control / archive | Link |
+
