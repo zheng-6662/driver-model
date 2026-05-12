@@ -4,7 +4,7 @@
 
 - 当前阶段：阶段 6 车辆-only 结构化路线审计 v0.1 已完成；当前不进入生理/EEG。
 - 当前正在做什么：把已有 RBF、direct Transformer、响应分解 Transformer、keypoint、top-K/multihypothesis 和选择器结果统一到车辆-only 结构化 gate 表，准备进入 Stage 6b。
-- 已完成什么：新增并运行 `stage06_vehicle_only_structured_route_audit_v0_1.py`；汇总 26 个 B 轨道车辆-only候选，生成 scorecard、delta 表、gate 表、下一步动作表、2 张图、用户查看版总结和技术报告。
+- 已完成什么：新增并运行 `stage06_vehicle_only_structured_route_audit_v0_1.py`；汇总 26 个 B 轨道车辆-only候选，生成 scorecard、delta 表、gate 表、下一步动作表、2 张图、用户查看版总结和技术报告；已提交 `b4d7ac20 Add stage6 vehicle structured route audit`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：RBF 仍为 limited primary reference，test RMSE=0.533667；响应分解 Transformer v0.1 为 no_go_current_form，test RMSE=0.602174；keypoint selector 为 weak_candidate_continue，RMSE delta=+0.000245；最佳 oracle/best-of-K RMSE=0.415652 但不可部署；stage05 physio/eeg=blocked。

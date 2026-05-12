@@ -9,6 +9,7 @@
 - 已新增并运行 `stage06_vehicle_only_structured_route_audit_v0_1.py`。
 - 已形成车辆-only结构化 gate：RBF 保留为 limited primary reference；响应分解 Transformer v0.1 no-go；keypoint selector weak candidate；oracle/best-of-K 只能作为研究上限。
 - 已确认生理/EEG 继续阻塞。
+- 已提交 `b4d7ac20 Add stage6 vehicle structured route audit`。
 
 ### 待做任务
 - Stage 6b：复盘 `selector_logreg_rbf_keypoint_no_subject` 的样本级选择错误。
