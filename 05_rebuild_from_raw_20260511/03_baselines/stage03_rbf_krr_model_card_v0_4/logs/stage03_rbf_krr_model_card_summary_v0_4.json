@@ -1,0 +1,14 @@
+{
+  "model_name": "rbf_krr_vehicle_no_subject",
+  "split_strategy": "session_level_split",
+  "windows": [
+    "pre2_label2_old_main",
+    "pre3_label3_response_coverage"
+  ],
+  "metric_rows": 2,
+  "subject_rows": 20,
+  "group_rows": 34,
+  "plot_samples": 48,
+  "server_used": false,
+  "raw_files_modified": false
+}

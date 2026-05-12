@@ -17,6 +17,14 @@
 
 ## 目前发现了什么
 
+v0.4 进一步把当前最强的无被试 ID 车辆模型 `rbf_krr_vehicle_no_subject` 做成了候选模型卡。它在 `pre2 + session-level test` 上是当前最强车辆参照候选，但还不能直接进入风格/生理阶段：
+
+             window_config_id      split_strategy split                 model_name  n_samples  rmse_steer  peak_direction_accuracy  wrong_side_rate  large_response_recall  peak_amp_ratio_pred_over_gt_mean  severe_amp_under_rate  difficult_top20_rmse
+         pre2_label2_old_main session_level_split  test rbf_krr_vehicle_no_subject         67    0.382337                 0.820896         0.179104               0.545455                          1.083850               0.283582              0.642092
+pre3_label3_response_coverage session_level_split  test rbf_krr_vehicle_no_subject         67    0.466957                 0.791045         0.208955               0.470588                          0.741498               0.358209              0.832563
+
+v0.4 同时生成了固定轨迹图、坏样本轨迹图、分被试表和分响应组表。pre3 长窗口和反向修正仍有明显问题，因此阶段 3 还不能结束。
+
 pre2 窗口、session-level test 的 v0.3 关键结果如下：
 
                 model_name  n_samples  rmse_steer  peak_direction_accuracy  wrong_side_rate  large_response_recall  peak_amp_ratio_pred_over_gt_mean  severe_amp_under_rate  difficult_top20_rmse
@@ -43,6 +51,7 @@ train_mean_by_event_type         67    0.471718                 0.671642        
 - 车辆窗口处理没有改原始 CSV，没有用生理/脑电，没有用测试集统计做标准化。
 - v0.3 的 `*_no_subject` 模型没有使用被试 ID，更适合作为纯车辆基线。
 - 指标、固定图、坏样本诊断表和小样本过拟合表可以作为阶段 3 继续调车辆模型的起点。
+- v0.4 的 RBF KRR 模型卡补齐了固定轨迹图、坏样本轨迹图、分被试和分响应组结果，更适合作为老师直接查看的阶段 3 候选模型材料。
 
 ## 哪些结果还不能下结论
 
@@ -51,15 +60,20 @@ train_mean_by_event_type         67    0.471718                 0.671642        
 - 不能把 old v400 和 raw dynamic 的结果混进无泄漏主结论。
 - 不能把含 `subject` 的 v0.2 ridge 当成最终纯车辆基线。
 - 虽然 v0.3 RBF KRR 明显改善 RMSE、方向和幅值不足，但它仍只覆盖低泄漏道路曲率子集，不能代表全部事件。
+- v0.4 显示 pre3 长窗口、反向修正 exact rate 和大幅响应幅值不足仍未解决，所以不能说强车辆基线已经稳定到足以进入风格/生理结论。
 
 ## 下一阶段是否可以继续
 
-可以继续阶段 3，但不是进入风格/生理阶段。下一步应先复核 v0.3 的坏样本诊断和大幅响应错误桶，必要时扩展低泄漏道路锚点或改进车辆时序基线。
+可以继续阶段 3，但不是进入风格/生理阶段。下一步应先人工复核 v0.4 固定轨迹图和坏样本轨迹图，并考虑响应关键点/分解车辆模型。
 
 ## 推荐优先查看
 
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_baseline_summary_cn.md`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_diagnostics_v0_3_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_rbf_krr_candidate_model_card_v0_4_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_rbf_krr_model_card_v0_4/figures/stage03_rbf_krr_fixed_predictions_pre2_session_v0_4.png`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_rbf_krr_model_card_v0_4/figures/stage03_rbf_krr_bad_samples_pre2_session_v0_4.png`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_rbf_krr_model_card_v0_4/tables/stage03_rbf_krr_per_subject_v0_4.csv`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_diagnostics_v0_3/tables/stage03_vehicle_model_comparison_v0_3.csv`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_diagnostics_v0_3/tables/stage03_bad_sample_diagnostics_v0_3.csv`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_diagnostics_v0_3/figures/stage03_pre2_session_model_rmse_comparison_v0_3.png`
