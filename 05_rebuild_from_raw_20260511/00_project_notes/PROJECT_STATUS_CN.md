@@ -151,3 +151,20 @@ instability_ay_roll        12
   3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/figures/road_event_position_map_v0_1.png`
   4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/figures/road_anchor_audit_overview_v0_1.png`
   5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/tables/old_new_anchor_alignment_v0_1.csv`
+
+## 追加更新：2026-05-12 17:05
+
+- 当前阶段：阶段 2/3 交界，使用全原始车辆失稳高置信样本测试旧车辆代码。
+- 当前正在做什么：已把 `all_raw_vehicle_instability_primary_high_confidence_v0_1.csv` 转成旧阶段 3 诊断 `.npz` 窗口和旧深度模型 `sample_manifest`，并完成旧车辆基线诊断和旧 `vehicle_direct` smoke run。
+- 已完成什么：908 个高置信失稳事件中 906 个满足旧代码 3 秒历史 + 2 秒未来要求，2 个因锚点太靠前被排除；生成 2718 行窗口样本；旧深度模型 loader smoke 保留 12/12 样本；旧 `vehicle_direct` smoke 训练闭环成功。
+- 正在运行什么任务：没有正在运行的训练任务；本次旧深度模型 smoke 已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果：pre2 + session-level test 中，旧 `ridge_vehicle_summary` RMSE=0.675055，错侧率=0.273381，严重幅值不足率=0.654676；去掉被试 one-hot 的 `ridge_vehicle_no_subject` RMSE=0.675174，错侧率=0.280576。旧 `vehicle_direct` smoke run 仅用 96/32/32 子集跑通，test steer RMSE=0.400123，但不是正式性能结论。
+- 当前最大风险：旧代码诊断仍可能继承旧模型结构和旧评价偏好；smoke 子集太小，不能证明旧深度模型有效，也不能支持风格/生理有效。
+- 下一步准备做什么：如果继续使用旧代码，应先跑全量车辆-only 旧模型并生成固定预测图/坏样本图；更稳妥的正式路线仍是把 906 个可用高置信失稳事件整理成新流程 manifest，再建立强车辆基线。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_oldcode_instability_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_baseline_on_instability_v0_1_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_direct_smoke_on_instability_v0_1_cn.md`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_baselines_on_instability_v0_1/tables/oldcode_instability_baseline_metrics.csv`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1/tables/oldcode_manifest_session_level_split.csv`

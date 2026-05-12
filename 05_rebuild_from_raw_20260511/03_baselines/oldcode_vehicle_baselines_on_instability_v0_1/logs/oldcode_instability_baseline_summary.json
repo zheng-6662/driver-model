@@ -1,0 +1,109 @@
+{
+  "dataset_dir": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_processed_datasets/vehicle_instability_allraw_highconf_v0_1",
+  "windows": [
+    "pre1_label2_event_trigger",
+    "pre2_label2_old_main",
+    "pre3_label3_response_coverage"
+  ],
+  "split_strategies": [
+    "random_event_split",
+    "session_level_split",
+    "subject_level_split"
+  ],
+  "models": [
+    "history_trend_250ms",
+    "hold_current",
+    "ridge_vehicle_no_subject",
+    "ridge_vehicle_summary",
+    "train_mean_all",
+    "train_mean_by_event_type",
+    "zero_response"
+  ],
+  "metric_rows": 189,
+  "per_sample_rows": 57078,
+  "best_test": [
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "split_strategy": "random_event_split",
+      "model_name": "ridge_vehicle_no_subject",
+      "rmse_steer": 0.6571646802363302,
+      "peak_direction_accuracy": 0.7573529411764706,
+      "wrong_side_rate": 0.2426470588235294,
+      "severe_amp_under_rate": 0.4117647058823529
+    },
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "split_strategy": "session_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.6550424816535608,
+      "peak_direction_accuracy": 0.7697841726618705,
+      "wrong_side_rate": 0.2302158273381295,
+      "severe_amp_under_rate": 0.5899280575539568
+    },
+    {
+      "window_config_id": "pre1_label2_event_trigger",
+      "split_strategy": "subject_level_split",
+      "model_name": "ridge_vehicle_no_subject",
+      "rmse_steer": 0.627599876920064,
+      "peak_direction_accuracy": 0.8535564853556485,
+      "wrong_side_rate": 0.14644351464435146,
+      "severe_amp_under_rate": 0.28870292887029286
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "split_strategy": "random_event_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.6615315994809221,
+      "peak_direction_accuracy": 0.7573529411764706,
+      "wrong_side_rate": 0.2426470588235294,
+      "severe_amp_under_rate": 0.4852941176470588
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "split_strategy": "session_level_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.6750550211339793,
+      "peak_direction_accuracy": 0.7266187050359713,
+      "wrong_side_rate": 0.2733812949640288,
+      "severe_amp_under_rate": 0.6546762589928058
+    },
+    {
+      "window_config_id": "pre2_label2_old_main",
+      "split_strategy": "subject_level_split",
+      "model_name": "ridge_vehicle_no_subject",
+      "rmse_steer": 0.6939073441683536,
+      "peak_direction_accuracy": 0.8368200836820083,
+      "wrong_side_rate": 0.16317991631799164,
+      "severe_amp_under_rate": 0.6652719665271967
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "split_strategy": "random_event_split",
+      "model_name": "ridge_vehicle_summary",
+      "rmse_steer": 0.7563504148739933,
+      "peak_direction_accuracy": 0.7426470588235294,
+      "wrong_side_rate": 0.25735294117647056,
+      "severe_amp_under_rate": 0.5808823529411765
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "split_strategy": "session_level_split",
+      "model_name": "train_mean_by_event_type",
+      "rmse_steer": 0.7404355341557332,
+      "peak_direction_accuracy": 0.5467625899280576,
+      "wrong_side_rate": 0.45323741007194246,
+      "severe_amp_under_rate": 0.935251798561151
+    },
+    {
+      "window_config_id": "pre3_label3_response_coverage",
+      "split_strategy": "subject_level_split",
+      "model_name": "ridge_vehicle_no_subject",
+      "rmse_steer": 0.8044035326142948,
+      "peak_direction_accuracy": 0.7782426778242678,
+      "wrong_side_rate": 0.2217573221757322,
+      "severe_amp_under_rate": 0.7949790794979079
+    }
+  ],
+  "server_used": false,
+  "raw_files_modified": false
+}
