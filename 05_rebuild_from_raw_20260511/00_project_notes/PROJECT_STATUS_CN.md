@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 21:37
+
+- 当前阶段：阶段 3 强车辆基线稳健性验证 v0.1 已完成；仍不进入连续风格/生理/EEG 增量结论。
+- 当前正在做什么：归档 RBF/KNN/template 在 random-event、subject-level、1 秒窗口、3 秒窗口下的稳健性结果。
+- 已完成什么：复用强车辆-only 训练逻辑，在 4 个配置上重新评估 formal ridge、RBF KRR、KNN template、direction-gated KNN、peak-scaled template；生成决策表、完整指标表、逐样本指标表、模型信息表和 RMSE/大幅响应召回/反向修正热图。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：subject-level 主窗口中，val 选择 RBF KRR，test RMSE=0.609792，相比 formal ridge 0.672788 提升约 9.36%；KNN template test RMSE=0.597936 更低，但 train RMSE=0.000001，继续标记为模板记忆风险。窗口敏感性下，1 秒窗口 RBF test RMSE=0.520104，3 秒窗口 KNN test RMSE=0.590207，但 RBF 反向修正匹配率仍很低。
+- 当前最大风险：RBF/KNN 的 RMSE 收益有一定稳健性，但反向修正和多段结构仍弱；KNN 的近零训练误差说明它不能作为无条件主线。车辆-only 主参照需要结合结构化响应模型继续推进。
+- 下一步准备做什么：复盘 subject-level 和窗口敏感性下的坏样本，决定下一版车辆模型采用响应分解、关键点 + 残差、多假设或可靠性门控。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_strong_vehicle_robustness_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_robustness_v0_1/tables/strong_vehicle_robustness_decision_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_robustness_v0_1/figures/strong_vehicle_robustness_rmse_heatmap.png`。
+
 ## 最新更新：2026-05-12 21:24
 
 - 当前阶段：阶段 3 车辆-only 统一对照 v0.1 已完成；仍处于冻结强车辆基线前的比较阶段。

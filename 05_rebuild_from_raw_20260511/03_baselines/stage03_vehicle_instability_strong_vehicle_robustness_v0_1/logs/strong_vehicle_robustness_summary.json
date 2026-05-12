@@ -1,0 +1,34 @@
+{
+  "config_count": 4,
+  "configs": [
+    "random_main",
+    "subject_main",
+    "session_pre1",
+    "session_pre3"
+  ],
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "raw_files_modified": false,
+  "decision_path": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_vehicle_instability_strong_vehicle_robustness_v0_1\\tables\\strong_vehicle_robustness_decision_table.csv",
+  "subject_main": {
+    "robustness_config_id": "subject_main",
+    "window_config_id": "pre2_label2_old_main",
+    "split_strategy": "subject_level_split",
+    "val_selected_model": "rbf_kernel_ridge_context_no_subject",
+    "val_selected_test_rmse": 0.6097916981485598,
+    "best_test_model": "knn_template_context_no_subject",
+    "best_test_rmse": 0.5979357894118985,
+    "formal_rmse": 0.6727879068913338,
+    "selected_rmse_improvement_pct_vs_formal": 9.363457353722756,
+    "rbf_test_rmse": 0.6097916981485598,
+    "rbf_reversal_exact": 0.03765690376569038,
+    "knn_test_rmse": 0.5979357894118985,
+    "knn_train_rmse": 1.1863582138176063e-06,
+    "knn_memory_risk": true,
+    "interpretation_cn": "KNN 训练集近零误差，仍按模板记忆风险处理；val 选择候选相对 formal 有提升。"
+  }
+}
