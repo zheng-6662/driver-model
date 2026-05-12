@@ -58,6 +58,7 @@
 - `e9d302f Add raw rebuild stage 0 and 1 audit`
 - `bae5618 Add stage 0 and 1 completion audit`
 - `9bef223 Record completion audit commit`
+- `114208d Add stage 2 samples and processed vehicle windows`
 
 ## 适合用户/老师直接查看的材料
 
