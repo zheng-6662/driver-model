@@ -1,5 +1,35 @@
 # 当前任务队列
 
+## 最新更新：2026-05-13 05:50（本机实际时间；阶段顺序接在阶段 4 收口之后）
+
+### 正在做任务
+- 阶段 6 车辆-only 结构化路线审计已完成；下一步准备做 Stage 6b 可部署选择器/可靠性门控。
+
+### 已完成任务
+- 已新增并运行 `stage06_vehicle_only_structured_route_audit_v0_1.py`。
+- 已形成车辆-only结构化 gate：RBF 保留为 limited primary reference；响应分解 Transformer v0.1 no-go；keypoint selector weak candidate；oracle/best-of-K 只能作为研究上限。
+- 已确认生理/EEG 继续阻塞。
+
+### 待做任务
+- Stage 6b：复盘 `selector_logreg_rbf_keypoint_no_subject` 的样本级选择错误。
+- 将 oracle/best-of-K 上限转化为非 oracle 的可部署选择策略。
+- 做可靠性门控和坏样本分桶，重点检查错侧、幅值不足、峰时、尾段、反向修正和多段修正。
+
+### 阻塞任务
+- 生理、脑电有效性验证继续阻塞。
+- 连续风格有效性强结论继续阻塞；当前风格路线不升级主线。
+
+### 可并行任务
+- keypoint selector 错选样本复盘。
+- best-of-K oracle 增益样本复盘。
+- RBF top bad 与 selector 改善/退化样本交叉表。
+
+### 需要服务器的任务
+- 暂无。
+
+### 不需要服务器的任务
+- 当前 Stage 6b 选择器复盘、可靠性门控原型和报告整理均可先本地完成。
+
 ## 最新更新：2026-05-13 06:25
 
 ### 正在做任务

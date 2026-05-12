@@ -1,0 +1,9 @@
+﻿gate,status,evidence,decision
+rbf_primary_reference,pass_limited,"RBF test RMSE=0.533667, wrong_side=0.225, large_recall=0.750.",保留为当前车辆-only主参照，但不是问题已解决。
+direct_transformer_upgrade,fail,direct Transformer RMSE delta=+0.032345，大幅响应召回 delta=-0.125。,不升级为主线。
+response_decomposition_transformer_upgrade,fail,结构化 Transformer RMSE delta=+0.068507，尾段漂移 delta=+0.200，困难样本 RMSE delta=+0.123382。,当前版本 no-go，只保留为失败样本和辅助头诊断。
+keypoint_residual_upgrade,weak_no_go,keypoint residual RMSE delta=+0.015327，wrong-side delta=-0.100，large recall delta=+0.125。,有方向/大幅响应信号，但整体和若干物理指标不足，不能单独升级。
+rbf_keypoint_selector,weak_candidate_continue,selector RMSE delta=+0.000245，物理指标改善数=7，退化数=3。,作为下一版选择器/可靠性候选继续，但不能作为已完成强基线。
+multi_hypothesis_oracle_bound,research_signal_not_deployable,最优 oracle/best-of-K RMSE=0.415652，RBF RMSE=0.533667。,说明多候选空间有潜力；必须做可部署选择策略，不能用 oracle 当结论。
+stage05_physio_eeg_allowed,blocked,车辆-only结构化主参照尚未形成稳定可解释升级，风格路线也刚被 no-go。,继续阻塞生理/EEG有效性结论。
+stage06_next_route,go_stage06b,RBF仍为主参照；keypoint selector和oracle多候选给出有限但真实的研究信号。,下一步优先做RBF+关键点/多假设的可部署选择器、可靠性门控和坏样本复盘。

@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 05:50（本机实际时间；阶段顺序接在阶段 4 收口之后）
+
+- 当前阶段：阶段 6 车辆-only 结构化路线审计 v0.1 已完成；当前不进入生理/EEG。
+- 当前正在做什么：把已有 RBF、direct Transformer、响应分解 Transformer、keypoint、top-K/multihypothesis 和选择器结果统一到车辆-only 结构化 gate 表，准备进入 Stage 6b。
+- 已完成什么：新增并运行 `stage06_vehicle_only_structured_route_audit_v0_1.py`；汇总 26 个 B 轨道车辆-only候选，生成 scorecard、delta 表、gate 表、下一步动作表、2 张图、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：RBF 仍为 limited primary reference，test RMSE=0.533667；响应分解 Transformer v0.1 为 no_go_current_form，test RMSE=0.602174；keypoint selector 为 weak_candidate_continue，RMSE delta=+0.000245；最佳 oracle/best-of-K RMSE=0.415652 但不可部署；stage05 physio/eeg=blocked。
+- 当前最大风险是什么：如果把 oracle/best-of-K 上限当成实际可用模型，或跳过可部署选择器直接进入生理/EEG，会产生错误增量归因。
+- 下一步准备做什么：Stage 6b：复盘 `selector_logreg_rbf_keypoint_no_subject` 的样本级选择错误，把 best-of-K/oracle 上限转化为非 oracle 的可部署选择策略和可靠性门控。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage06_vehicle_only_structured_route_audit_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06_vehicle_only_structured_route_audit_v0_1/tables/vehicle_structured_route_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/06_structured_models/stage06_vehicle_only_structured_route_audit_v0_1/figures/vehicle_structured_route_delta_vs_rbf.png`。
+
 ## 最新更新：2026-05-13 06:25
 
 - 当前阶段：阶段 4 连续风格路线收口决策 v0.1 已完成；当前连续风格直接残差融合路线不升级为主线。
