@@ -1,0 +1,9 @@
+﻿metric,value,interpretation_cn
+n_test_samples,40.0,B 轨道严格响应覆盖 test 样本数。
+rmse_steer,0.5336666894389569,主参照整体误差。
+wrong_side_rate,0.225,主峰方向错侧率，仍偏高。
+large_response_recall,0.75,大幅响应召回，仍有漏召回。
+severe_amp_under_rate,0.125,严重幅值不足率。
+tail_drift_risk_rate,0.05,尾段漂移风险。
+reversal_count_exact_match_rate,0.0,反向修正计数完全匹配率，是当前最大物理缺陷。
+difficult_top20_rmse,0.6789069643375906,困难峰值样本 RMSE。

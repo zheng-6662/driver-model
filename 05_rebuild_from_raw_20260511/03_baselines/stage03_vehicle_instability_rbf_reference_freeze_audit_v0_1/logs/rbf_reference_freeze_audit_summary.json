@@ -1,0 +1,17 @@
+{
+  "output_version": "stage03_vehicle_instability_rbf_reference_freeze_audit_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "main_reference_model": "rbf_kernel_ridge_context_no_subject",
+  "freeze_type": "limited_reference_freeze",
+  "vehicle_problem_solved": false,
+  "stage04_style_protocol_allowed": "conditional_pass",
+  "stage05_physio_eeg_allowed": "blocked",
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "gate_table": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_reference_freeze_audit_v0_1/tables/rbf_reference_freeze_gate_table.csv",
+  "figures": {
+    "failure_profile": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_reference_freeze_audit_v0_1/figures/rbf_reference_failure_profile.png",
+    "key_metrics": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_reference_freeze_audit_v0_1/figures/rbf_reference_key_metrics.png"
+  }
+}

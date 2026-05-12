@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 04:31
+
+- 当前阶段：阶段 3 RBF 主参照冻结审计 v0.1 已完成；结论是有限冻结，不是车辆-only 问题已解决。
+- 当前正在做什么：归档 RBF 主参照冻结审计产物，并准备把本轮脚本、图表、表格、报告和透明化记录提交 Git。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_rbf_reference_freeze_audit_v0_1.py`；生成 RBF 指标画像、失败画像、top bad 样本、冻结 gate 表、稳健性快照、2 张图、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：`reference_identity_fixed=pass_limited`，`vehicle_only_problem_solved=fail`，`stage04_style_protocol_allowed=conditional_pass`，`stage05_physio_eeg_allowed=blocked`。
+- 当前最大风险：RBF 虽可作为保守车辆-only 主参照，但错侧、反向修正计数、复杂多段修正和困难样本仍未解决；后续若忽略这些缺陷，会误把风格/生理增量归因为模型已解决的问题。
+- 下一步准备做什么：先提交本轮冻结审计；随后可进入阶段 4 连续风格的协议设计/探索性实验，但必须固定 RBF 对照并做置乱、分被试、物理指标和坏样本分析；生理/EEG 仍不能进入有效性验证。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_rbf_reference_freeze_audit_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_reference_freeze_audit_v0_1/tables/rbf_reference_freeze_gate_table.csv`。
+
 ## 最新更新：2026-05-13 04:21
 
 - 当前阶段：阶段 3 车辆-only 主参照决策表 v0.2 已归档并完成 Git 提交；强车辆基线仍未完全冻结。
