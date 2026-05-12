@@ -1,0 +1,30 @@
+{
+  "window_config_id": "pre2_label2_old_main",
+  "split_strategy": "session_level_split",
+  "train_n": 611,
+  "val_n": 156,
+  "test_n": 139,
+  "selected_model_by_val_rmse": "rbf_kernel_ridge_context_no_subject",
+  "models": [
+    "direction_gated_knn_template_no_subject",
+    "formal_ridge_vehicle_context_no_subject",
+    "knn_template_context_no_subject",
+    "peak_scaled_template_context_no_subject",
+    "rbf_kernel_ridge_context_no_subject",
+    "ridge_rich_context_no_subject",
+    "ridge_rich_history_no_subject"
+  ],
+  "server_used": false,
+  "credential_file_read": false,
+  "uses_subject_id": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "raw_files_modified": false,
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/tables/strong_vehicle_baseline_metrics.csv",
+  "per_sample_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/tables/strong_vehicle_baseline_per_sample_metrics.csv",
+  "fixed_plot": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/figures/strong_vehicle_fixed_predictions_test.png",
+  "bad_plot": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/figures/strong_vehicle_bad_samples_test.png",
+  "metric_bars": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/figures/strong_vehicle_model_metric_bars_test.png",
+  "delta_plot": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/figures/strong_vehicle_selected_vs_formal_rmse_delta.png"
+}

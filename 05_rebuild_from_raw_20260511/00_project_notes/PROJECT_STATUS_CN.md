@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 20:23
+
+- 当前阶段：阶段 3 更强车辆-only 时序/结构化基线 v0.1 已完成，仍处于“先把纯车辆基线压实”的阶段。
+- 当前正在做什么：归档强车辆-only 基线结果、图表、报告和 Git 提交；没有进入连续风格、生理或 EEG 增量验证。
+- 已完成什么：在正式高置信失稳样本 `vehicle_instability_highconf_v0_1` 的主窗口 `pre2_label2_old_main` + `session_level_split` 上，评估 formal ridge、rich ridge、RBF kernel ridge、KNN 模板、方向门控模板、峰值缩放模板；全部不使用驾驶员 ID、生理、脑电或连续风格。
+- 正在运行什么任务：无训练任务、无服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：按预设 val RMSE 选择 `rbf_kernel_ridge_context_no_subject`；它在 test 上 RMSE=0.540287、错侧率=0.215827、大幅响应召回=0.600000、严重幅值不足率=0.251799、反向修正精确匹配率=0.043165。test RMSE 最低的是 `knn_template_context_no_subject`，RMSE=0.516941，但不是按 val 选择出的模型，因此只能作为候选观察，不用 test 事后升级。
+- 当前最大风险：RBF/KNN 已明显改善 RMSE、幅值不足和大幅响应召回，但反向修正仍很差，RBF 的反向修正不匹配 133/139；KNN 模板 train RMSE 接近 0，存在模板记忆风险，需要跨窗口、subject-level split 或更严格对照后才能升级为主线。
+- 下一步准备做什么：先做强车辆基线稳健性验证，包括 subject-level/窗口敏感性、KNN 模板过拟合检查、以及面向反向修正/多段修正的结构化响应模型；继续阻塞风格/生理有效性结论。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_strong_vehicle_baselines_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/figures/strong_vehicle_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/figures/strong_vehicle_bad_samples_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_strong_vehicle_baselines_v0_1/tables/strong_vehicle_baseline_metrics.csv`。
+
 ## 最新更新：2026-05-12 19:35
 
 - 当前阶段：阶段 3 车辆-only 基线错误分型，已完成 `ridge_vehicle_context_no_subject` 在 test 集上的坏样本物理错误分析。
@@ -260,3 +272,15 @@ instability_ay_roll        12
   2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/oldcode_vehicle_direct_full_clean_on_instability_v0_1_cn.md`
   3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_fixed_predictions_test.png`
   4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_clean_on_instability_v0_1/figures/oldcode_vehicle_direct_full_bad_samples_test.png`
+## 追加更新：2026-05-12 20:30
+
+- 当前阶段：阶段 2 补充审计，正在把“场景交通触发点”进一步拆成“背景交通设计”和“被试方向事件设计”两层。
+- 当前正在做什么：根据用户补充，修正 `longstraight` 25/26 车道交通触发的解释，并把其他场景统一纳入被试方向事件来源工作表。
+- 已完成什么：新增 `ego_direction_scene_event_source_map_v0_3.csv` 和 `scene_design_working_map_v0_3_cn.md`。当前判断是：显式 `.aed` 交通触发点不能直接作为被试方向主锚点；其他场景有实验设计，但主锚点更可能来自道路几何、路面附着、任务点或车身姿态确认。
+- 最近一次结果：全场景 1436 行 `.aed` 交通触发映射中，当前没有一行被判定为被试方向同侧主触发；这不说明场景无事件，只说明交通触发不是主事件锚点。
+- 当前最大风险：如果继续把背景车/对侧车触发点当成被试方向锚点，会导致样本语义错位；如果只用车身姿态或方向盘反推锚点，又可能把响应当成触发。
+- 下一步准备做什么：继续查旧论文/实验设计日志，结构化解析 `_Area2.cfg` 中道路几何和 `mu` 信息，生成“被试方向设计点 + 车身姿态确认”的候选锚点清单。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/scene_design_working_map_v0_3_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/ego_direction_scene_event_source_map_v0_3.csv`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_scene_trigger_user_summary_cn.md`

@@ -1,5 +1,35 @@
 # 当前任务队列
 
+## 最新更新：2026-05-12 20:23
+
+### 正在做任务
+- 阶段 3 强车辆-only 基线 v0.1 已完成，当前正在归档产物并准备 Git 提交。
+
+### 已完成任务
+- 新增并运行 `stage03_vehicle_instability_strong_vehicle_baselines_v0_1.py`。
+- 在 `pre2_label2_old_main` + `session_level_split` 上评估 formal ridge、rich ridge、RBF kernel ridge、KNN 模板、方向门控模板、峰值缩放模板。
+- 生成强车辆-only 指标表、逐样本指标、模型信息、固定预测图、坏样本图、指标柱状图、与 formal ridge 的逐样本 RMSE 差异图。
+- 生成用户查看版和技术版中文报告。
+
+### 待做任务
+- 做强车辆基线稳健性验证：subject-level split、其它窗口、KNN 模板记忆风险、session/subject 分布偏置。
+- 设计下一版结构化响应模型，重点处理反向修正计数、多段修正、尾段回正和大幅响应幅值。
+- 将强车辆基线与旧 `vehicle_direct`、formal ridge、无学习基线整理成统一阶段 3 对照表。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 教师路线仍被“强车辆基线尚未完成稳健性验证”阻塞。
+
+### 可并行任务
+- 分析 KNN test RMSE 最低但 train RMSE 近 0 的模板记忆风险。
+- 抽查 RBF/KNN 在固定图和坏样本图中的物理错误。
+- 准备 subject-level split 的强车辆-only 对照。
+
+### 需要服务器的任务
+- 暂无。本轮强车辆-only 基线已在本地 CPU 完成。
+
+### 不需要服务器的任务
+- 报告归档、表格核对、图像抽查、Git 提交、下一版本地强车辆基线验证。
+
 ## 最新更新：2026-05-12 19:35
 
 ### 正在做任务
