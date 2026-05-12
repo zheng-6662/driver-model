@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-13 06:05
+
+- 当前阶段：阶段 4 连续风格跨 split 复核 v0.1 已完成；连续风格有效性结论仍阻塞。
+- 当前正在做什么：准备把连续风格路线暂时降级收口，并回到车辆-only 结构化轨迹建模问题。
+- 已完成什么：新增并运行 `stage04_style_cross_split_validation_v0_1.py`；在 B 轨道 270 个严格核心样本上完成 session-level 与 subject-level 两类切分的 RBF+风格残差对照，且每个 split 都重新使用 train-only 风格标准化。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：session-level RBF RMSE=0.533667、RBF+last60 风格 RMSE=0.534559；subject-level RBF RMSE=0.484847、RBF+last60 风格 RMSE=0.483510；风格有效性 gate 仍为 blocked。
+- 当前最大风险是什么：如果继续强推风格，可能把小样本波动、被试/道路分布或融合方式不足误解释为风格有效或无效；当前证据只支持“当前表示和融合方式下没有形成强证据”。
+- 下一步准备做什么：阶段 4 先收口，返回阶段 6/车辆-only 结构化轨迹路线，优先解决错侧、幅值、尾段、反向修正、多段修正和困难样本。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_style_cross_split_validation_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_cross_split_validation_v0_1/tables/style_cross_split_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_cross_split_validation_v0_1/figures/style_cross_split_metric_summary_test.png`。
+
 ## 最新更新：2026-05-13 05:40
 
 - 当前阶段：阶段 4 连续驾驶风格探索性增量对照 v0.1 已完成，仍处于探索阶段。

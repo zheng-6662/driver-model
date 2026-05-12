@@ -1,0 +1,17 @@
+﻿split_strategy,model_name,n_features,usable_train_standardized_features,source,selected_alpha,split,n_samples,n_subjects,subjects,n_sessions
+session_level_split,rbf_plus_style_last60_guard3_residual_ridge,94.0,93.0,raw last60 style; standardized on train only,10000.0,,,,,
+session_level_split,rbf_plus_style_all_windows_residual_ridge,376.0,371.0,raw all style windows; standardized on train only,1000.0,,,,,
+session_level_split,rbf_plus_driver_id_residual_ridge,18.0,18.0,train-subject one-hot control,100.0,,,,,
+session_level_split,rbf_plus_road_module_residual_ridge,7.0,7.0,train-road-module one-hot control,10000.0,,,,,
+session_level_split,rbf_plus_style_last60_with_driver_id_residual_ridge,112.0,111.0,raw last60 style + train-subject one-hot control,10000.0,,,,,
+session_level_split,,,,,,train,188.0,18.0,"byx,cwh,gf,gzj,hzh,jy,lx,lxy,rjy,txj,tyy,xst,yyl,yzy,zdq,zt,zx,zxy",54.0
+session_level_split,,,,,,val,42.0,7.0,"cwh,jy,rjy,txj,yzy,zx,zxy",10.0
+session_level_split,,,,,,test,40.0,8.0,"byx,gf,gzj,hzh,tyy,yyl,zx,zxy",12.0
+subject_level_split,rbf_plus_style_last60_guard3_residual_ridge,94.0,93.0,raw last60 style; standardized on train only,10000.0,,,,,
+subject_level_split,rbf_plus_style_all_windows_residual_ridge,376.0,370.0,raw all style windows; standardized on train only,1000.0,,,,,
+subject_level_split,rbf_plus_driver_id_residual_ridge,13.0,13.0,train-subject one-hot control,10000.0,,,,,
+subject_level_split,rbf_plus_road_module_residual_ridge,7.0,7.0,train-road-module one-hot control,10000.0,,,,,
+subject_level_split,rbf_plus_style_last60_with_driver_id_residual_ridge,107.0,106.0,raw last60 style + train-subject one-hot control,10000.0,,,,,
+subject_level_split,,,,,,train,159.0,13.0,"cwh,gf,jy,lx,lxy,rjy,txj,tyy,xst,yyl,yzy,zdq,zxy",49.0
+subject_level_split,,,,,,val,43.0,2.0,"zt,zx",11.0
+subject_level_split,,,,,,test,68.0,3.0,"byx,gzj,hzh",16.0
