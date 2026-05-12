@@ -12,6 +12,18 @@
 - 下一步准备做什么：基于道路设定引导后的 701 个采用候选生成车辆失稳版 `samples_master`、split 表和处理后车辆窗口，然后重新做无学习/纯车辆基线。
 - 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/road_guided_instability_v0_1_cn.md`，以及 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1/tables/road_guided_auto_accepted_events_v0_1.csv`。
 
+## 最新更新：2026-05-12 16:25
+
+- 当前阶段：阶段 2 修正，全量原始车辆 CSV 失稳样本重筛。
+- 当前正在做什么：已按“非方向盘车辆动态 + 旧 v400 事件上下文 + 道路设定先验”的标准，从 `原始车辆数据/<被试名>/*.csv` 直接重筛全部原始车辆文件。
+- 已完成什么：91 个原始车辆 CSV 全部可读；检测到 4581 个非方向盘动态种子，合并为 1991 个车辆失稳候选；高置信主清单 908 个，自动/已确认采用扩展清单 1348 个，中间复核 269 个，低证据剔除 374 个。
+- 正在运行什么任务：没有远程任务；本地 8766 页面仍可用于抽查，但当前不要求用户逐条标注。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果：`all_raw_vehicle_instability_primary_high_confidence_v0_1.csv` 和 `all_raw_vehicle_instability_auto_accepted_v0_1.csv` 已生成。
+- 当前最大风险：全量重筛使用更直接的 `ay/roll_rate` 种子规则，比旧候选表更宽；正式 manifest 建议先用 908 个高置信主清单，1348 个扩展采用清单作为补充/敏感性分析。
+- 下一步准备做什么：用高置信主清单生成车辆失稳版 `samples_master`、split 表和处理后车辆窗口，随后重新做车辆基线。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/all_raw_vehicle_instability_rescreen_v0_1_cn.md` 和 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_primary_high_confidence_v0_1.csv`。
+
 更新时间：2026-05-12 14:55:00
 
 ## 当前阶段

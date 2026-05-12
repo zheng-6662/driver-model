@@ -8,6 +8,14 @@
 - GPU/显存状态：未检查，因为本次只做本地 CSV 表格处理和规则判定。
 - 本地输出路径：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/road_guided_instability_v0_1`。
 
+## 最新更新：2026-05-12 16:25
+
+- 本次“全部原始车辆 CSV 失稳样本重筛 v0.1”完全在本地运行。
+- 未连接远程服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 远程任务状态：无。
+- GPU/显存状态：未检查，因为本次只做本地 CSV 读取、200Hz 插值、规则筛选和表格生成。
+- 本地输出路径：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1`。
+
 更新时间：2026-05-12 14:03:26
 
 ## 连接命令格式

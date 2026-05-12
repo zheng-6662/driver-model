@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-05-12 16:25:03",
+  "raw_vehicle_csv_files": 91,
+  "read_ok_files": 91,
+  "all_candidates": 1991,
+  "accepted_candidates": 1348,
+  "primary_high_confidence_candidates": 908,
+  "review_candidates": 269,
+  "decision_counts": {
+    "hybrid_accept_high": 885,
+    "hybrid_accept_medium": 440,
+    "hybrid_reject_low_evidence": 374,
+    "hybrid_review_conflict_or_medium": 269,
+    "manual_confirmed_accept": 23
+  },
+  "outputs": {
+    "full": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_candidates_v0_1.csv",
+    "accepted": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_auto_accepted_v0_1.csv",
+    "primary_high_confidence": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_primary_high_confidence_v0_1.csv",
+    "review": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_review_queue_v0_1.csv",
+    "rejected": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_rejected_v0_1.csv",
+    "summary": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_summary_v0_1.csv",
+    "file_status": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_rescreen_file_status_v0_1.csv",
+    "report": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/all_raw_vehicle_instability_rescreen_v0_1_cn.md",
+    "dataset_card": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_all_raw_vehicle_instability_rescreen_v0_1_cn.md"
+  }
+}

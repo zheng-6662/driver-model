@@ -21,6 +21,29 @@
 
 下一步应基于这 701 个采用候选生成车辆失稳版样本清单和处理后车辆窗口，然后重新做无学习/纯车辆基线。之前基于 404 个弯道样本的阶段 3 结果只保留为历史诊断材料。
 
+## 进一步修正：已经对全部原始车辆 CSV 重新筛选
+
+用户进一步要求按上述标准对所有原始数据重新筛选一遍。因此现在不再只依赖已有候选表，而是直接读取 `原始车辆数据/<被试名>/*.csv` 下全部 91 个原始车辆文件重新扫描。
+
+当前全量重筛版本是 `vehicle_instability_all_raw_rescreen_v0_1`：
+
+- 原始车辆 CSV：91 个；
+- 可读取：91 个；
+- 非方向盘动态种子：4581 个；
+- 合并后失稳候选：1991 个；
+- 高置信主清单：908 个；
+- 自动/已确认采用扩展清单：1348 个；
+- 中间复核：269 个；
+- 低证据剔除：374 个。
+
+建议后续正式样本构建先使用 908 个高置信主清单；1348 个扩展采用清单可以作为敏感性对照或后续扩展，不建议一开始全部并入正式主训练集。
+
+建议优先查看：
+
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/all_raw_vehicle_instability_rescreen_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/dataset_version_card_all_raw_vehicle_instability_rescreen_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_all_raw_rescreen_v0_1/tables/all_raw_vehicle_instability_primary_high_confidence_v0_1.csv`
+
 ## 2026-05-12 重要修正：主线改为车辆失稳事件
 
 用户已明确指出，之前自动审阅得到的 404 个样本都是弯道/道路曲率样本，而不是车辆失稳样本。这个修正已经纳入阶段 2：
