@@ -1,0 +1,31 @@
+2026-05-12 10:20:27 [start] R2E-Steering raw CSV audit
+2026-05-12 10:20:27 [paths] raw_root=F:\data_set_process\data_process\01_datasets\数据预处理
+2026-05-12 10:20:36 [inventory] 50/1267 CSV files scanned
+2026-05-12 10:20:37 [inventory] 100/1267 CSV files scanned
+2026-05-12 10:20:37 [inventory] 150/1267 CSV files scanned
+2026-05-12 10:20:38 [inventory] 200/1267 CSV files scanned
+2026-05-12 10:20:48 [inventory] 250/1267 CSV files scanned
+2026-05-12 10:21:04 [inventory] 300/1267 CSV files scanned
+2026-05-12 10:21:14 [inventory] 350/1267 CSV files scanned
+2026-05-12 10:21:20 [inventory] 400/1267 CSV files scanned
+2026-05-12 10:21:27 [inventory] 450/1267 CSV files scanned
+2026-05-12 10:21:36 [inventory] 500/1267 CSV files scanned
+2026-05-12 10:21:39 [inventory] 550/1267 CSV files scanned
+2026-05-12 10:21:42 [inventory] 600/1267 CSV files scanned
+2026-05-12 10:21:45 [inventory] 650/1267 CSV files scanned
+2026-05-12 10:21:46 [inventory] 700/1267 CSV files scanned
+2026-05-12 10:21:47 [inventory] 750/1267 CSV files scanned
+2026-05-12 10:21:50 [inventory] 800/1267 CSV files scanned
+2026-05-12 10:21:55 [inventory] 850/1267 CSV files scanned
+2026-05-12 10:21:58 [inventory] 900/1267 CSV files scanned
+2026-05-12 10:22:02 [inventory] 950/1267 CSV files scanned
+2026-05-12 10:22:05 [inventory] 1000/1267 CSV files scanned
+2026-05-12 10:22:10 [inventory] 1050/1267 CSV files scanned
+2026-05-12 10:22:15 [inventory] 1100/1267 CSV files scanned
+2026-05-12 10:22:18 [inventory] 1150/1267 CSV files scanned
+2026-05-12 10:22:21 [inventory] 1200/1267 CSV files scanned
+2026-05-12 10:22:24 [inventory] 1250/1267 CSV files scanned
+2026-05-12 10:22:25 [inventory] 1267/1267 CSV files scanned
+2026-05-12 10:22:25 [write] raw_file_inventory.csv rows=1267
+2026-05-12 10:22:47 [deep-audit] 10/423 raw-scope CSV files processed
+2026-05-12 10:23:11 [deep-audit] 20/423 raw-scope CSV files processed

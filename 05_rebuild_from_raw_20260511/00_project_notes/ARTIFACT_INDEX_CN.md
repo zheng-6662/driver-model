@@ -1,62 +1,42 @@
-# R2E-Steering 阶段产物索引
+# 阶段产物索引
 
-更新时间：2026-05-12
+更新时间：2026-05-12 10:44:41
 
-## 目标与计划
+## 阶段 0：旧流程冻结与重建准则
 
-- 新聊天长期目标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`
-- 初始重建范围说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/00_rebuild_scope_cn.md`
-- 总进度看板：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/PROJECT_STATUS_CN.md`
-- 当前任务队列：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/TASK_QUEUE_CN.md`
-- 服务器运行记录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/SERVER_RUNS_CN.md`
+- 用户/老师可读说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
+- 旧流程参考定位：`04_project_logs/reports/progress/experiment_registry.md`、`04_project_logs/reports/physio_to_g14_progress_review_20260511/`
+- GPTPro 原始数据重建建议：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_replies/20260512_rebuild_steering_reply_summary_cn.md`
 
-## 每日执行日志
+## 阶段 1：原始数据审计
 
-- 2026-05-12：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/daily_logs/2026-05-12.md`
-
-## GPTPro 材料
-
-- 原始数据重建提问词：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_prompts/20260511_raw_rebuild_goal_prompt_cn.md`
-- GPTPro 原始回复归档：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_replies/20260512_rebuild_steering_reply_copymarkdown.md`
-- GPTPro 回复中文摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_replies/20260512_rebuild_steering_reply_summary_cn.md`
-
-## 阶段报告
-
-- 阶段 0 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage00_user_summary_cn.md`
-- 阶段 1 用户查看版总结：待生成。
-
-## 表格
-
-- 阶段 1 原始文件清单：待生成。
-- 阶段 1 字段审计表：待生成。
-- 阶段 1 模态完整性矩阵：待生成。
-- 阶段 1 时间戳连续性报告：待生成。
-
-## 图
-
-- 阶段 1 原始波形图：待生成。
-- 阶段 1 采样间隔图：待生成。
-- 阶段 1 模态重叠图：待生成。
-
-## 代码入口
-
-- 阶段 1 原始数据审计脚本：待生成。
-- 阶段 2 样本清单构建脚本：待生成。
-- 阶段 3 基线模型脚本：待生成。
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage01_user_summary_cn.md`
+- 审计中文总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/raw_data_audit_summary_cn.md`
+- 文件清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/raw_file_inventory.csv`
+- 字段报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/raw_schema_report.csv`
+- 被试/记录/模态矩阵：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/subject_session_modality_matrix.csv`
+- 时间连续性报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/timestamp_continuity_report.csv`
+- 采样率报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/sampling_rate_report.csv`
+- 模态重叠报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/modality_overlap_report.csv`
+- 信号质量报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/signal_quality_report.csv`
+- EEG 初审报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/eeg_artifact_report.csv`
+- 泄漏风险报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/leakage_risk_report.csv`
+- 审计脚本入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/scripts/raw_csv_audit.py`
+- 审计图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit`
+- 审计运行日志：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/logs/raw_csv_audit.log`
 
 ## 服务器日志
 
-- 当前没有服务器任务。
-- 服务器运行记录见：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/SERVER_RUNS_CN.md`
+- 本阶段未使用服务器。
 
 ## 重要 Git commit
 
-- `ca419e4`：添加原始数据重建规划提问词。
-- `88b2dd3`：归档原始数据重建 GPTPro 回复。
-- 本次长期目标与透明化文件提交：提交后以 Git 记录为准。
+- 待提交。
 
-## 适合用户或老师直接查看的材料
+## 适合用户/老师直接查看的材料
 
-- `R2E_STEERING_LONG_GOAL_CN.md`：说明新流程最终要做什么。
-- `PROJECT_STATUS_CN.md`：随时查看当前进度。
-- `stage00_user_summary_cn.md`：解释为什么要从原始数据重建。
+1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage01_user_summary_cn.md`
+2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
+3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit/modality_overlap_timeline_sample.png`
+4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/figures/audit/raw_waveform_vehicle_sample.png`
+5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/leakage_risk_report.csv`

@@ -1,53 +1,54 @@
-# R2E-Steering 总进度看板
+# R2E-Steering 项目总进度看板
 
-更新时间：2026-05-12
+更新时间：2026-05-12 10:44:41
 
 ## 当前阶段
 
-阶段 0：长期目标与执行透明化规则已落地，尚未开始原始数据审计。
+阶段 1：原始数据审计已完成本地第一轮；下一步进入阶段 2 的事件锚点与样本清单重建。
 
 ## 当前正在做什么
 
-正在把“从原始数据重建方向盘事件响应预测流程”的长期目标整理成可复制到新聊天的正式文件，并初始化后续可持续更新的项目看板、任务队列、产物索引和服务器运行记录。
+把原始 CSV 的文件清单、字段、时间戳、采样率、模态重叠、信号质量和泄漏风险整理成可追溯产物。
 
 ## 已完成什么
 
-- 已创建新流程主目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511`
-- 已保存 GPTPro 关于“从原始数据重建”的外部回复和摘要。
-- 已创建两个全局辅助 skill：`autodl-server-control` 和 `gptpro-browser-bridge`。
-- 已生成正式长期目标文件：`R2E_STEERING_LONG_GOAL_CN.md`。
-- 已初始化当前看板、任务队列、产物索引、服务器运行记录和每日日志。
+- 阶段 0 旧流程冻结说明已生成。
+- 新流程目录结构已建立。
+- 三个原始目录下被试名文件夹内 CSV 清单和哈希已生成。
+- 原始车辆/生理/脑电深度审计表已生成。
+- 阶段 1 用户查看版中文总结已生成。
 
 ## 正在运行什么任务
 
-当前没有后台训练任务，也没有服务器任务在运行。
+当前没有后台审计或训练任务在运行。
 
-## 服务器状态
+## 服务器是否在运行
 
-当前没有连接服务器，也没有读取 `F:/data_set_process/data_process/服务器指令与密码.txt`。
+本阶段未使用服务器；未读取服务器密码文件。服务器状态未主动检查。
 
 ## 最近一次结果
 
-本次结果是“新聊天长期目标和执行透明化文件”落地。尚未产生新的数据审计结果、模型结果或预测图。
+- 本次纳入审计 CSV：258
+- 原始范围 CSV：258
+- 原始车辆/生理/脑电：91/82/85
+- 三模态齐全组合：76
+- overlap>0 组合：91
 
 ## 当前最大风险
 
-新流程正式执行前，不能继续沿用旧流程结论。旧流程中的事件锚点、时间同步、标准化、生理处理、样本切分和模型排名都需要重新审计后才能作为证据使用。
+旧事件锚点和旧窗口定义不能直接继承；EMG 可能存在事件后动作结果泄漏；跨模态时间单位和重叠仍需在阶段 2 逐样本确认。
 
 ## 下一步准备做什么
 
-新聊天启动后应先执行：
-
-1. 建立完整目录结构；
-2. 整理旧流程参考清单和风险清单；
-3. 扫描原始 CSV 文件；
-4. 生成文件清单、字段表、时间戳审计和模态完整性矩阵；
-5. 输出阶段 1 的中文审计报告和用户查看版总结。
+1. 读取原始车辆事件线索和旧事件文件，重建候选事件锚点。
+2. 生成 `samples_master.csv/jsonl` 的第一版字段设计。
+3. 明确输入窗口、标签窗口和 causal setting。
+4. 生成 split_table 和 dataset_version_card。
 
 ## 用户可以优先查看哪些文件
 
-- 长期目标文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/R2E_STEERING_LONG_GOAL_CN.md`
-- 当前任务队列：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/TASK_QUEUE_CN.md`
-- 产物索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/ARTIFACT_INDEX_CN.md`
-- 服务器记录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/SERVER_RUNS_CN.md`
-- 阶段 0 用户总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage00_user_summary_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage01_user_summary_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/raw_data_audit_summary_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/00_project_notes/stage00_old_flow_freeze_and_rules_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/leakage_risk_report.csv`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/01_audit/tables/subject_session_modality_matrix.csv`

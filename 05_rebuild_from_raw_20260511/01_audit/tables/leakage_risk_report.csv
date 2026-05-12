@@ -1,0 +1,8 @@
+﻿risk_id,risk_area,severity,current_evidence,why_it_matters,required_action
+L01,旧事件锚点,high,旧样本构建脚本存在 anchor peak 选择逻辑，参考文件：F:/data_set_process/data_process/02_code/final_code/dataset/build_event_dataset_v2_pad_mask_multipeak.py,如果锚点是方向盘/横摆/侧倾响应峰值，而不是事件原因发生时刻，预测任务可能变成从响应中段预测响应后段。,阶段 2 重新定义事件锚点来源；保留旧锚点为历史对照和失败样本定位，不作为默认真相。
+L02,输入/标签窗口,high,旧脚本中可见 WINDOW_PRE=2.0、WINDOW_POST=2.0；训练脚本中也存在 FUTURE_SEC/输入历史窗口假设。,若输入窗口跨过真实事件发生点或包含主响应动作，车辆/生理特征会混入未来标签信息。,samples_master 中逐样本记录 input_start/input_end/label_start/label_end，并明确 causal setting。
+L03,EMG 动作结果泄漏,high,肌电与方向盘动作高度相关，旧流程曾显示 EMG 候选有效，但原始窗口未重新审计。,事件后 EMG 可能已经包含手臂动作结果，不能直接证明驾驶员内部状态先验有效。,将 EMG 分为事件前输入、早期观察后预测剩余轨迹、上限分析三类，报告中显式标注。
+L04,标准化/基线校正,high,旧训练入口和特征脚本需要复核 train-only fit，参考入口：F:/data_set_process/data_process/02_code/final_code/model/training/run_event_conditioned_trajectory_baseline.py,如果标准化、PCA、风格统计或生理基线使用了测试集，就会虚增风格/生理收益。,阶段 2 数据版本卡中记录每个统计量的 fit 范围；阶段 3 以后所有 scaler 必须只在训练集 fit。
+L05,随机切分与被试泄漏,medium,旧流程中存在随机样本切分历史争论；新流程目标要求 session/subject-level 可行性说明。,随机切分可能让同一被试或同一记录的相近事件同时进入训练和测试。,阶段 2 同时输出 random/session/subject split_table；阶段 4/5 不能只用随机切分声明风格或生理有效。
+L06,200Hz 对齐与重采样,medium,原始目录中同时存在原始 CSV、处理后 200Hz、生理 reclean、对齐后车辆生理目录。,处理后数据可能已经引入插值、裁剪或跨模态对齐假设；新流程需要先从原始时间戳确认。,阶段 1 使用原始 CSV 审计时间轴；处理后目录只用于核对，不直接作为可信输入。
+L07,评价指标不足,medium,旧 RMSE 排名与预测图物理问题存在冲突。,小 RMSE 波动不能证明方向、幅值、尾段回正、反向修正和困难样本被真正改善。,阶段 3 开始固定物理指标和固定预测图协议；RMSE 只能作为指标之一。

@@ -1,0 +1,208 @@
+2026-05-12 10:04:40 [start] R2E-Steering raw CSV audit
+2026-05-12 10:04:40 [paths] raw_root=F:\data_set_process\data_process\01_datasets\数据预处理
+2026-05-12 10:04:48 [inventory] 50/1267 CSV files scanned
+2026-05-12 10:04:49 [inventory] 100/1267 CSV files scanned
+2026-05-12 10:04:49 [inventory] 150/1267 CSV files scanned
+2026-05-12 10:04:49 [inventory] 200/1267 CSV files scanned
+2026-05-12 10:04:56 [inventory] 250/1267 CSV files scanned
+2026-05-12 10:05:11 [inventory] 300/1267 CSV files scanned
+2026-05-12 10:05:21 [inventory] 350/1267 CSV files scanned
+2026-05-12 10:05:27 [inventory] 400/1267 CSV files scanned
+2026-05-12 10:05:33 [inventory] 450/1267 CSV files scanned
+2026-05-12 10:05:42 [inventory] 500/1267 CSV files scanned
+2026-05-12 10:05:45 [inventory] 550/1267 CSV files scanned
+2026-05-12 10:05:48 [inventory] 600/1267 CSV files scanned
+2026-05-12 10:05:50 [inventory] 650/1267 CSV files scanned
+2026-05-12 10:05:51 [inventory] 700/1267 CSV files scanned
+2026-05-12 10:05:51 [inventory] 750/1267 CSV files scanned
+2026-05-12 10:05:55 [inventory] 800/1267 CSV files scanned
+2026-05-12 10:05:58 [inventory] 850/1267 CSV files scanned
+2026-05-12 10:06:02 [inventory] 900/1267 CSV files scanned
+2026-05-12 10:06:05 [inventory] 950/1267 CSV files scanned
+2026-05-12 10:06:07 [inventory] 1000/1267 CSV files scanned
+2026-05-12 10:06:12 [inventory] 1050/1267 CSV files scanned
+2026-05-12 10:06:17 [inventory] 1100/1267 CSV files scanned
+2026-05-12 10:06:19 [inventory] 1150/1267 CSV files scanned
+2026-05-12 10:06:22 [inventory] 1200/1267 CSV files scanned
+2026-05-12 10:06:25 [inventory] 1250/1267 CSV files scanned
+2026-05-12 10:06:25 [inventory] 1267/1267 CSV files scanned
+2026-05-12 10:06:26 [write] raw_file_inventory.csv rows=1267
+2026-05-12 10:06:39 [deep-audit] 10/426 raw-scope CSV files processed
+2026-05-12 10:06:56 [deep-audit] 20/426 raw-scope CSV files processed
+2026-05-12 10:07:16 [deep-audit] 30/426 raw-scope CSV files processed
+2026-05-12 10:07:33 [deep-audit] 40/426 raw-scope CSV files processed
+2026-05-12 10:07:37 [deep-audit] 50/426 raw-scope CSV files processed
+2026-05-12 10:07:37 [deep-audit] 60/426 raw-scope CSV files processed
+2026-05-12 10:07:37 [deep-audit] 70/426 raw-scope CSV files processed
+2026-05-12 10:07:38 [deep-audit] 80/426 raw-scope CSV files processed
+2026-05-12 10:07:38 [deep-audit] 90/426 raw-scope CSV files processed
+2026-05-12 10:07:38 [deep-audit] 100/426 raw-scope CSV files processed
+2026-05-12 10:07:38 [deep-audit] 110/426 raw-scope CSV files processed
+2026-05-12 10:07:38 [deep-audit] 120/426 raw-scope CSV files processed
+2026-05-12 10:07:38 [deep-audit] 130/426 raw-scope CSV files processed
+2026-05-12 10:07:39 [deep-audit] 140/426 raw-scope CSV files processed
+2026-05-12 10:07:39 [deep-audit] 150/426 raw-scope CSV files processed
+2026-05-12 10:07:39 [deep-audit] 160/426 raw-scope CSV files processed
+2026-05-12 10:07:39 [deep-audit] 170/426 raw-scope CSV files processed
+2026-05-12 10:07:39 [deep-audit] 180/426 raw-scope CSV files processed
+2026-05-12 10:07:40 [deep-audit] 190/426 raw-scope CSV files processed
+2026-05-12 10:07:40 [deep-audit] 200/426 raw-scope CSV files processed
+2026-05-12 10:07:45 [deep-audit] 210/426 raw-scope CSV files processed
+2026-05-12 10:08:04 [deep-audit] 220/426 raw-scope CSV files processed
+2026-05-12 10:08:21 [deep-audit] 230/426 raw-scope CSV files processed
+2026-05-12 10:08:32 [deep-audit] 240/426 raw-scope CSV files processed
+2026-05-12 10:08:49 [deep-audit] 250/426 raw-scope CSV files processed
+2026-05-12 10:09:14 [deep-audit] 260/426 raw-scope CSV files processed
+2026-05-12 10:09:40 [deep-audit] 270/426 raw-scope CSV files processed
+2026-05-12 10:10:10 [deep-audit] 280/426 raw-scope CSV files processed
+2026-05-12 10:10:38 [deep-audit] 290/426 raw-scope CSV files processed
+2026-05-12 10:11:04 [deep-audit] 300/426 raw-scope CSV files processed
+2026-05-12 10:11:30 [deep-audit] 310/426 raw-scope CSV files processed
+2026-05-12 10:11:57 [deep-audit] 320/426 raw-scope CSV files processed
+2026-05-12 10:12:11 [deep-audit] 330/426 raw-scope CSV files processed
+2026-05-12 10:12:28 [deep-audit] 340/426 raw-scope CSV files processed
+2026-05-12 10:12:38 [deep-audit] 350/426 raw-scope CSV files processed
+2026-05-12 10:12:49 [deep-audit] 360/426 raw-scope CSV files processed
+2026-05-12 10:13:01 [deep-audit] 370/426 raw-scope CSV files processed
+2026-05-12 10:13:11 [deep-audit] 380/426 raw-scope CSV files processed
+2026-05-12 10:13:23 [deep-audit] 390/426 raw-scope CSV files processed
+2026-05-12 10:13:36 [deep-audit] 400/426 raw-scope CSV files processed
+2026-05-12 10:13:47 [deep-audit] 410/426 raw-scope CSV files processed
+2026-05-12 10:13:55 [deep-audit] 420/426 raw-scope CSV files processed
+2026-05-12 10:14:01 [deep-audit] 426/426 raw-scope CSV files processed
+2026-05-12 10:14:02 [write] core stage 1 tables complete
+2026-05-12 10:14:02 [write] audit figures complete
+2026-05-12 10:14:02 [write] markdown reports and transparency files complete
+2026-05-12 10:14:02 [done] raw CSV audit finished
+2026-05-12 10:17:43 [start] R2E-Steering raw CSV audit
+2026-05-12 10:17:43 [paths] raw_root=F:\data_set_process\data_process\01_datasets\数据预处理
+2026-05-12 10:17:52 [inventory] 50/1267 CSV files scanned
+2026-05-12 10:17:52 [inventory] 100/1267 CSV files scanned
+2026-05-12 10:17:53 [inventory] 150/1267 CSV files scanned
+2026-05-12 10:17:53 [inventory] 200/1267 CSV files scanned
+2026-05-12 10:18:03 [inventory] 250/1267 CSV files scanned
+2026-05-12 10:18:19 [inventory] 300/1267 CSV files scanned
+2026-05-12 10:18:30 [inventory] 350/1267 CSV files scanned
+2026-05-12 10:18:36 [inventory] 400/1267 CSV files scanned
+2026-05-12 10:18:43 [inventory] 450/1267 CSV files scanned
+2026-05-12 10:18:54 [inventory] 500/1267 CSV files scanned
+2026-05-12 10:18:58 [inventory] 550/1267 CSV files scanned
+2026-05-12 10:19:01 [inventory] 600/1267 CSV files scanned
+2026-05-12 10:19:03 [inventory] 650/1267 CSV files scanned
+2026-05-12 10:19:05 [inventory] 700/1267 CSV files scanned
+2026-05-12 10:19:05 [inventory] 750/1267 CSV files scanned
+2026-05-12 10:19:10 [inventory] 800/1267 CSV files scanned
+2026-05-12 10:19:14 [inventory] 850/1267 CSV files scanned
+2026-05-12 10:20:27 [start] R2E-Steering raw CSV audit
+2026-05-12 10:20:27 [paths] raw_root=F:\data_set_process\data_process\01_datasets\数据预处理
+2026-05-12 10:20:36 [inventory] 50/1267 CSV files scanned
+2026-05-12 10:20:37 [inventory] 100/1267 CSV files scanned
+2026-05-12 10:20:37 [inventory] 150/1267 CSV files scanned
+2026-05-12 10:20:38 [inventory] 200/1267 CSV files scanned
+2026-05-12 10:20:48 [inventory] 250/1267 CSV files scanned
+2026-05-12 10:21:04 [inventory] 300/1267 CSV files scanned
+2026-05-12 10:21:14 [inventory] 350/1267 CSV files scanned
+2026-05-12 10:21:20 [inventory] 400/1267 CSV files scanned
+2026-05-12 10:21:27 [inventory] 450/1267 CSV files scanned
+2026-05-12 10:21:36 [inventory] 500/1267 CSV files scanned
+2026-05-12 10:21:39 [inventory] 550/1267 CSV files scanned
+2026-05-12 10:21:42 [inventory] 600/1267 CSV files scanned
+2026-05-12 10:21:45 [inventory] 650/1267 CSV files scanned
+2026-05-12 10:21:46 [inventory] 700/1267 CSV files scanned
+2026-05-12 10:21:47 [inventory] 750/1267 CSV files scanned
+2026-05-12 10:21:50 [inventory] 800/1267 CSV files scanned
+2026-05-12 10:21:55 [inventory] 850/1267 CSV files scanned
+2026-05-12 10:21:58 [inventory] 900/1267 CSV files scanned
+2026-05-12 10:22:02 [inventory] 950/1267 CSV files scanned
+2026-05-12 10:22:05 [inventory] 1000/1267 CSV files scanned
+2026-05-12 10:22:10 [inventory] 1050/1267 CSV files scanned
+2026-05-12 10:22:15 [inventory] 1100/1267 CSV files scanned
+2026-05-12 10:22:18 [inventory] 1150/1267 CSV files scanned
+2026-05-12 10:22:21 [inventory] 1200/1267 CSV files scanned
+2026-05-12 10:22:24 [inventory] 1250/1267 CSV files scanned
+2026-05-12 10:22:25 [inventory] 1267/1267 CSV files scanned
+2026-05-12 10:22:25 [write] raw_file_inventory.csv rows=1267
+2026-05-12 10:22:47 [deep-audit] 10/423 raw-scope CSV files processed
+2026-05-12 10:23:11 [deep-audit] 20/423 raw-scope CSV files processed
+2026-05-12 10:25:00 [start] R2E-Steering raw CSV audit
+2026-05-12 10:25:00 [paths] raw_root=F:\data_set_process\data_process\01_datasets\数据预处理
+2026-05-12 10:25:00 [inventory-skip] derived/non-subject dir skipped: 原始生理数据/physio_features_v2_10Hz
+2026-05-12 10:25:00 [inventory-skip] derived/non-subject dir skipped: 原始生理数据/physio_features_v2_1_10Hz_from_sparse
+2026-05-12 10:25:09 [inventory] 50/258 CSV files scanned
+2026-05-12 10:25:21 [inventory] 100/258 CSV files scanned
+2026-05-12 10:25:37 [inventory] 150/258 CSV files scanned
+2026-05-12 10:25:44 [inventory] 200/258 CSV files scanned
+2026-05-12 10:25:49 [inventory] 250/258 CSV files scanned
+2026-05-12 10:25:50 [inventory] 258/258 CSV files scanned
+2026-05-12 10:25:50 [write] raw_file_inventory.csv rows=258
+2026-05-12 10:26:12 [deep-audit] 10/258 raw-scope CSV files processed
+2026-05-12 10:26:34 [deep-audit] 20/258 raw-scope CSV files processed
+2026-05-12 10:27:01 [deep-audit] 30/258 raw-scope CSV files processed
+2026-05-12 10:27:20 [deep-audit] 40/258 raw-scope CSV files processed
+2026-05-12 10:27:43 [deep-audit] 50/258 raw-scope CSV files processed
+2026-05-12 10:28:08 [deep-audit] 60/258 raw-scope CSV files processed
+2026-05-12 10:28:26 [deep-audit] 70/258 raw-scope CSV files processed
+2026-05-12 10:28:42 [deep-audit] 80/258 raw-scope CSV files processed
+2026-05-12 10:29:09 [deep-audit] 90/258 raw-scope CSV files processed
+2026-05-12 10:29:36 [deep-audit] 100/258 raw-scope CSV files processed
+2026-05-12 10:30:08 [deep-audit] 110/258 raw-scope CSV files processed
+2026-05-12 10:30:39 [deep-audit] 120/258 raw-scope CSV files processed
+2026-05-12 10:31:03 [deep-audit] 130/258 raw-scope CSV files processed
+2026-05-12 10:31:39 [deep-audit] 140/258 raw-scope CSV files processed
+2026-05-12 10:32:08 [deep-audit] 150/258 raw-scope CSV files processed
+2026-05-12 10:32:24 [deep-audit] 160/258 raw-scope CSV files processed
+2026-05-12 10:32:51 [deep-audit] 170/258 raw-scope CSV files processed
+2026-05-12 10:33:03 [deep-audit] 180/258 raw-scope CSV files processed
+2026-05-12 10:33:15 [deep-audit] 190/258 raw-scope CSV files processed
+2026-05-12 10:33:31 [deep-audit] 200/258 raw-scope CSV files processed
+2026-05-12 10:33:40 [deep-audit] 210/258 raw-scope CSV files processed
+2026-05-12 10:33:53 [deep-audit] 220/258 raw-scope CSV files processed
+2026-05-12 10:34:09 [deep-audit] 230/258 raw-scope CSV files processed
+2026-05-12 10:34:21 [deep-audit] 240/258 raw-scope CSV files processed
+2026-05-12 10:34:29 [deep-audit] 250/258 raw-scope CSV files processed
+2026-05-12 10:34:38 [deep-audit] 258/258 raw-scope CSV files processed
+2026-05-12 10:34:38 [write] core stage 1 tables complete
+2026-05-12 10:34:39 [write] audit figures complete
+2026-05-12 10:34:39 [write] markdown reports and transparency files complete
+2026-05-12 10:34:39 [done] raw CSV audit finished
+2026-05-12 10:36:13 [start] R2E-Steering raw CSV audit
+2026-05-12 10:36:13 [paths] raw_root=F:\data_set_process\data_process\01_datasets\数据预处理
+2026-05-12 10:36:13 [inventory-skip] derived/non-subject dir skipped: 原始生理数据/physio_features_v2_10Hz
+2026-05-12 10:36:13 [inventory-skip] derived/non-subject dir skipped: 原始生理数据/physio_features_v2_1_10Hz_from_sparse
+2026-05-12 10:36:22 [inventory] 50/258 CSV files scanned
+2026-05-12 10:36:33 [inventory] 100/258 CSV files scanned
+2026-05-12 10:36:50 [inventory] 150/258 CSV files scanned
+2026-05-12 10:36:58 [inventory] 200/258 CSV files scanned
+2026-05-12 10:37:03 [inventory] 250/258 CSV files scanned
+2026-05-12 10:37:04 [inventory] 258/258 CSV files scanned
+2026-05-12 10:37:04 [write] raw_file_inventory.csv rows=258
+2026-05-12 10:37:28 [deep-audit] 10/258 raw-scope CSV files processed
+2026-05-12 10:37:53 [deep-audit] 20/258 raw-scope CSV files processed
+2026-05-12 10:38:21 [deep-audit] 30/258 raw-scope CSV files processed
+2026-05-12 10:38:38 [deep-audit] 40/258 raw-scope CSV files processed
+2026-05-12 10:38:59 [deep-audit] 50/258 raw-scope CSV files processed
+2026-05-12 10:39:21 [deep-audit] 60/258 raw-scope CSV files processed
+2026-05-12 10:39:37 [deep-audit] 70/258 raw-scope CSV files processed
+2026-05-12 10:39:51 [deep-audit] 80/258 raw-scope CSV files processed
+2026-05-12 10:40:12 [deep-audit] 90/258 raw-scope CSV files processed
+2026-05-12 10:40:36 [deep-audit] 100/258 raw-scope CSV files processed
+2026-05-12 10:41:02 [deep-audit] 110/258 raw-scope CSV files processed
+2026-05-12 10:41:25 [deep-audit] 120/258 raw-scope CSV files processed
+2026-05-12 10:41:43 [deep-audit] 130/258 raw-scope CSV files processed
+2026-05-12 10:42:11 [deep-audit] 140/258 raw-scope CSV files processed
+2026-05-12 10:42:36 [deep-audit] 150/258 raw-scope CSV files processed
+2026-05-12 10:42:50 [deep-audit] 160/258 raw-scope CSV files processed
+2026-05-12 10:43:08 [deep-audit] 170/258 raw-scope CSV files processed
+2026-05-12 10:43:19 [deep-audit] 180/258 raw-scope CSV files processed
+2026-05-12 10:43:30 [deep-audit] 190/258 raw-scope CSV files processed
+2026-05-12 10:43:42 [deep-audit] 200/258 raw-scope CSV files processed
+2026-05-12 10:43:49 [deep-audit] 210/258 raw-scope CSV files processed
+2026-05-12 10:44:00 [deep-audit] 220/258 raw-scope CSV files processed
+2026-05-12 10:44:12 [deep-audit] 230/258 raw-scope CSV files processed
+2026-05-12 10:44:24 [deep-audit] 240/258 raw-scope CSV files processed
+2026-05-12 10:44:32 [deep-audit] 250/258 raw-scope CSV files processed
+2026-05-12 10:44:40 [deep-audit] 258/258 raw-scope CSV files processed
+2026-05-12 10:44:40 [write] core stage 1 tables complete
+2026-05-12 10:44:41 [write] audit figures complete
+2026-05-12 10:44:41 [write] markdown reports and transparency files complete
+2026-05-12 10:44:41 [done] raw CSV audit finished
