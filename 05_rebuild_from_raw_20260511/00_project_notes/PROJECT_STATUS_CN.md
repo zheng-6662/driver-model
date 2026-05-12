@@ -1,16 +1,16 @@
 # R2E-Steering 项目总进度看板
 
-更新时间：2026-05-12 12:43:21
+更新时间：2026-05-12 13:02:04
 
 ## 当前阶段
 
-阶段 2 补充：事件锚点人工确认准备。
+阶段 2 补充：事件锚点人工确认准备，已启动键盘式人工标注播放器。
 
 说明：阶段 3 已经做过一轮候选车辆基线诊断，但这些结果依赖 `raw_road_curvature_onset` 候选锚点。用户质疑“事件锚点是否已经确定”后，当前正式路线暂停继续训练，把阶段 3 结果降级为候选锚点诊断材料，不作为最终强车辆基线结论。下一步先通过人工标注确认事件从哪里到哪里，再生成 `manual_verified` 样本清单。
 
 ## 当前正在做什么
 
-构建人工事件标注审查包：用原始车辆 CSV 重现每个记录的行驶过程参数，叠加三类候选事件位置，让用户在图上判断事件起止、预测锚点、方向和置信度。
+运行键盘式人工事件标注播放器：用原始车辆 CSV 重现每个记录的行驶过程参数，叠加三类候选事件位置，让用户在本地网页中播放时间线，并用键盘标记事件开始、结束和预测锚点。
 
 ## 已完成什么
 
@@ -25,14 +25,19 @@
 - 低泄漏道路曲率候选的处理后车辆窗口 v0.2 已生成，原始 CSV 未修改。
 - 阶段 3 候选诊断已完成：无学习基线、v0.2 ridge、v0.3 无被试 ID 车辆基线、v0.4 RBF KRR 候选模型卡。当前这些结果只作为候选锚点诊断，不作为最终可发表结论。
 - 人工事件标注审查包 v0.1 已生成：12 个原始车辆记录的多通道行驶过程图、HTML 审查页、人工标注 CSV 模板和中文说明。
+- 键盘式人工事件标注播放器 v0.1 已生成并启动，本地页面为 `http://127.0.0.1:8766/`。
 
 ## 正在运行什么任务
 
-当前没有后台审计、处理或训练任务在运行。
+当前有一个本地键盘标注服务在运行：
+
+- URL：`http://127.0.0.1:8766/`
+- 本地进程 PID：33060
+- 作用：只服务本地网页和保存人工标签，不训练模型，不使用远程服务器。
 
 ## 服务器是否在运行
 
-未使用服务器；未读取服务器指令与密码文件；未检查服务器状态；当前没有已知服务器后台任务。
+未使用远程服务器；未读取服务器指令与密码文件；未检查服务器状态；当前没有已知远程服务器后台任务。本地播放器服务不属于远程服务器任务。
 
 ## 最近一次结果
 
@@ -41,8 +46,9 @@
 - 低泄漏道路曲率候选处理后车辆窗口：3 个 NPZ，样本数均为 359，特征数 9。
 - 阶段 3 候选车辆模型曾显示：pre2 + session-level test 的 `rbf_krr_vehicle_no_subject` RMSE 0.382337、方向准确率 0.820896、错侧率 0.179104。但该结果依赖候选锚点，当前不能作为最终强车辆结论。
 - 人工事件标注审查包 v0.1：生成 12 个记录、12 张整段车辆时间线图、1878 行人工标注模板。
-- 人工标注包中每张图重现：道路曲率 `lanecurvatureXY`、方向盘转角 `SteeringWheel`、车速 `v_km/h`、横向位置 `lateraldistance`、横摆角速度 `vyaw`、横向加速度 `ay`、横滚角 `roll`。
-- 图中叠加三类候选：蓝色 `raw_road_curvature_onset`、橙色 `old_v400_context_trigger_idx`、红色 `raw_vehicle_dynamic_onset`。
+- 键盘播放器接口验证通过：第一条记录 `rjy / 2025_09_28_20_02_20` 返回 7000 个时间点、7 个车辆信号、178 个候选事件。
+- 键盘播放器保存/撤销 API 探针通过，测试标签已撤销。
+- 键盘播放器标签输出：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`。
 
 ## 当前最大风险
 
@@ -50,18 +56,19 @@
 
 ## 下一步准备做什么
 
-1. 用户先查看人工标注审查包 v0.1，判断图的参数和格式是否足够支持人工标注。
-2. 如果格式可用，把审查包扩展到全部可用原始车辆记录。
-3. 用户填写或批注人工事件起止、锚点、方向和置信度。
+1. 用户打开 `http://127.0.0.1:8766/`，试用键盘播放器标注事件开始和结束。
+2. 根据用户反馈调整播放器，例如窗口长度、播放速度、候选线显示、按键习惯或信号通道。
+3. 用户标注完成后，读取 `keyboard_event_labels_v0_1.csv` 做一致性检查。
 4. 根据人工标签生成 `manual_verified` 样本清单、版本卡和新的低泄漏处理后窗口。
 5. 重新运行阶段 3 车辆基线；此前候选阶段 3 结果只作历史诊断对照。
 
 ## 用户可以优先查看哪些文件
 
+- `http://127.0.0.1:8766/`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_keyboard_player_v0_1/tables/keyboard_event_labels_v0_1.csv`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_event_keyboard_player_v0_1_cn.md`
+- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/run_manual_event_keyboard_player.py`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_label_review_v0_1/review_index.html`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_label_review_v0_1/tables/manual_event_labels_template_v0_1.csv`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_label_review_v0_1/tables/session_review_manifest_v0_1.csv`
-- `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/manual_event_label_review_v0_1/figures`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_event_label_review_pack_v0_1_cn.md`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_user_summary_cn.md`
 - `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_anchor_rebuild_summary_cn.md`
