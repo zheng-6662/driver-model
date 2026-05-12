@@ -1,0 +1,44 @@
+{
+  "output_version": "stage03_vehicle_instability_rbf_keypoint_selector_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "selector_model": "selector_logreg_rbf_keypoint_no_subject",
+  "candidate_models": [
+    "rbf_kernel_ridge_context_no_subject",
+    "keypoint_residual_vehicle_transformer_no_subject"
+  ],
+  "selected_threshold": 0.55,
+  "selected_val_rmse": 0.5611893623512285,
+  "test_keypoint_selected_rate": 0.275,
+  "numeric_features": [
+    "anchor_time_rel_s",
+    "curvature_anchor",
+    "input_valid_ratio",
+    "pred_peak_abs__rbf_kernel_ridge_context_no_subject",
+    "pred_reversal_count__rbf_kernel_ridge_context_no_subject",
+    "pred_multi_segment__rbf_kernel_ridge_context_no_subject",
+    "pred_peak_abs__keypoint_residual_vehicle_transformer_no_subject",
+    "pred_reversal_count__keypoint_residual_vehicle_transformer_no_subject",
+    "pred_multi_segment__keypoint_residual_vehicle_transformer_no_subject",
+    "pred_peak_abs__delta_keypoint_minus_rbf",
+    "pred_reversal_count__delta_keypoint_minus_rbf",
+    "pred_multi_segment__delta_keypoint_minus_rbf"
+  ],
+  "categorical_features": [
+    "event_type",
+    "event_level",
+    "road_type_anchor",
+    "old_v400_road_type_mode",
+    "old_v400_phase_mode",
+    "road_design_module_name",
+    "road_design_instance_name",
+    "road_design_risk_class",
+    "road_design_mapping_reliability"
+  ],
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "figures": {
+    "test_metrics": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_selector_v0_1/figures/rbf_keypoint_selector_test_metrics.png",
+    "threshold_sweep": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_rbf_keypoint_selector_v0_1/figures/rbf_keypoint_selector_threshold_sweep.png"
+  }
+}

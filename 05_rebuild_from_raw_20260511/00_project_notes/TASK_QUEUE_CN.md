@@ -1,3 +1,34 @@
+## 最新更新：2026-05-13 02:54
+
+### 正在做任务
+- 阶段 3 RBF vs keypoint train/val 选择器 v0.1 已完成，当前准备归档并 Git 提交。
+
+### 已完成任务
+- 新增并运行 `stage03_vehicle_instability_rbf_keypoint_selector_v0_1.py`。
+- 训练一个不使用 subject ID、生理、脑电、连续风格或 test 标签的 RBF/keypoint 选择器。
+- selector 只用 train 拟合，阈值只用 val 选择，test 只做最终评价。
+- 生成 selector 训练表、数值/类别特征表、阈值扫描表、test 决策表、统一指标表、选择后逐样本表、test 指标图、阈值扫描图、运行摘要、用户查看版总结和技术报告。
+
+### 待做任务
+- 决定是否进入正式多假设车辆-only 版本：报告 top-1、best-of-K、可部署选择策略、固定预测图和校准。
+- 分析 selector 在 test 选择的 11 个 keypoint 样本是否对应 keypoint 真正优势样本，以及误选样本的共性。
+- 在多候选车辆-only 稳定前，继续阻塞连续风格、生理和 EEG 增量结论。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 增量验证继续被“车辆-only 多候选/可靠性策略尚未稳定”阻塞。
+- selector 与 RBF RMSE 近似持平但未明显超过 RBF，不能宣称强车辆基线已经最终解决。
+
+### 可并行任务
+- 分析 selector 的误选样本。
+- 准备多假设车辆-only 预测图，展示 RBF/keypoint/oracle/selector 四种曲线。
+- 设计可靠性标签：何时 RBF 更可信、何时 keypoint 更可信、何时两者都不可信。
+
+### 需要服务器的任务
+- 暂无。本轮是本地表格/轻量 sklearn 选择器，没有远程服务器任务。
+
+### 不需要服务器的任务
+- selector 产物归档、报告更新、Git 提交、多假设/可靠性车辆-only 方案设计。
+
 ## 最新更新：2026-05-13 02:44
 
 ### 正在做任务
