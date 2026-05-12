@@ -1,5 +1,35 @@
 # 当前任务队列
 
+## 最新更新：2026-05-12 21:10
+
+### 正在做任务
+- 阶段 3 车辆-only Transformer v0.1 已完成，当前正在归档并准备 Git 提交。
+
+### 已完成任务
+- 新增并运行 `stage03_vehicle_instability_vehicle_transformer_v0_1.py`。
+- 使用 `pre2_label2_old_main` + `session_level_split` 训练真正的 vehicle-only Transformer，而不是 KNN/RBF。
+- 输入约束已确认：只用事件前车辆时序和事件/道路上下文；不使用驾驶员 ID、生理、脑电、连续风格或未来标签。
+- 生成 Transformer 指标表、逐样本指标、训练历史、模型信息、checkpoint、固定预测图、坏样本图、用户查看版中文总结和技术报告。
+
+### 待做任务
+- 生成阶段 3 统一强车辆对照表：formal ridge、旧 `vehicle_direct` clean、RBF/KNN/template 候选和 Transformer 放在同一张表里解释。
+- 抽查 Transformer 固定图和坏样本图中的大峰值、错侧、尾段漂移、反向修正、多段修正失败类型。
+- 决定阶段 3 后续主车辆基线是 Transformer、RBF/KNN 诊断候选、还是进一步结构化响应模型。
+
+### 阻塞任务
+- 连续风格、生理、EEG 教师和多模态增量验证仍被“强车辆基线主参照尚未最终冻结”阻塞。
+
+### 可并行任务
+- 整理 RBF/KNN 的模板记忆风险说明。
+- 对 Transformer 和 RBF/KNN 的坏样本重合度做交叉表。
+- 准备 subject-level split 或其它窗口配置的稳健性检查。
+
+### 需要服务器的任务
+- 暂无。本轮 Transformer 在本地 CPU 完成。
+
+### 不需要服务器的任务
+- 阶段 3 对照汇总、固定图人工抽查、报告更新、Git 提交、下一版结构化车辆模型设计。
+
 ## 最新更新：2026-05-12 20:23
 
 ### 正在做任务

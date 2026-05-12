@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 21:10
+
+- 当前阶段：阶段 3 车辆-only Transformer 时序基线 v0.1 已完成；这次是对用户指出“KNN/RBF 不是 Transformer”的纠正与补充。
+- 当前正在做什么：归档真正的车辆-only Transformer 结果、固定预测图、坏样本图、指标表和 Git 提交；仍停留在强车辆基线阶段。
+- 已完成什么：在正式高置信失稳样本 `vehicle_instability_highconf_v0_1` 的主窗口 `pre2_label2_old_main` + `session_level_split` 上训练并评估 `vehicle_transformer_context_no_subject`。输入只包含事件前 2 秒车辆时序和事件/道路上下文；不使用驾驶员 ID、生理、脑电、连续风格或未来 `eval_label_*` 字段。
+- 正在运行什么任务：没有训练任务、没有评估任务、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：Transformer 在 session-level test 上 RMSE=0.567162、主峰方向准确率=0.820144、错侧率=0.179856、大幅响应召回=0.440000、严重幅值不足率=0.266187、反向修正计数完全匹配率=0.201439、困难 top20 RMSE=1.089107。相比 formal ridge 的 RMSE=0.649341 有提升；但它仍不如上一轮 RBF/KNN 的最低 RMSE，且仍不会预测多段修正，不能直接升级为最终主线。
+- 当前最大风险：Transformer 改善了 formal ridge 的整体和若干物理指标，但仍存在大峰值漏预测、多段修正预测为 0 的问题；KNN/RBF 结果虽然 RMSE 更低，但有模板记忆或物理错误风险。因此下一步需要统一比较强车辆候选，而不是只按 RMSE 选主线。
+- 下一步准备做什么：把 formal ridge、旧 `vehicle_direct`、RBF/KNN 和 Transformer 放入统一阶段 3 对照表，结合固定图/坏样本图判断强车辆基线主参照；在此之前继续阻塞连续风格、生理和 EEG 有效性结论。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_vehicle_transformer_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_vehicle_transformer_v0_1/figures/vehicle_transformer_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_vehicle_transformer_v0_1/figures/vehicle_transformer_bad_samples_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_vehicle_transformer_v0_1/tables/vehicle_transformer_metrics.csv`。
+
 ## 最新更新：2026-05-12 20:23
 
 - 当前阶段：阶段 3 更强车辆-only 时序/结构化基线 v0.1 已完成，仍处于“先把纯车辆基线压实”的阶段。
