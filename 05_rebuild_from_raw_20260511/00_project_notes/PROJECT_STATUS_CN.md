@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 04:21
+
+- 当前阶段：阶段 3 车辆-only 主参照决策表 v0.2 已归档并完成 Git 提交；强车辆基线仍未完全冻结。
+- 当前正在做什么：收口阶段 3 车辆-only 决策表，准备后续是否冻结 RBF 主参照的判断。
+- 已完成什么：提交 `e04bdb2f Add vehicle-only decision table`；该提交包含决策表脚本、候选决策表、gate 状态表、角色汇总、指标库存、3 张图、运行摘要、两份中文报告和 04:18 透明化记录。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果：`vehicle_main_reference_available=partial`，`strong_vehicle_baseline_frozen=no`，`style_physio_eeg_allowed_now=no`。
+- 当前最大风险：如果不先明确接受 RBF 的物理缺陷或继续车辆-only 结构，就进入新模态验证，会造成增量归因不干净。
+- 下一步准备做什么：做 RBF 主参照冻结审查，或者继续阶段 3 的分响应类型/关键点条件多假设；风格、生理、EEG 仍阻塞。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_vehicle_only_decision_table_user_summary_cn.md`。
+
 ## 最新更新：2026-05-13 04:18
 
 - 当前阶段：阶段 3 车辆-only 主参照决策表 v0.2 已完成；强车辆基线仍未完全冻结。
