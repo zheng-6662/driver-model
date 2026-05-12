@@ -1,5 +1,17 @@
 # R2E-Steering 项目总进度看板
 
+## 最新更新：2026-05-12 19:20
+
+- 当前阶段：阶段 3 初始车辆-only 基线，已在正式 `vehicle_instability_highconf_v0_1` 样本上完成无学习基线和浅层车辆 ridge 基线。
+- 当前正在做什么：整理阶段 3 v0.1 结果、图表和提交。
+- 已完成什么：在主窗口 `pre2_label2_old_main` + session-level test 上评估零响应、历史趋势、训练均值、按事件均值、`ridge_vehicle_history_no_subject`、`ridge_vehicle_context_no_subject`；全部不使用生理、脑电、连续风格或驾驶员 ID。
+- 正在运行什么任务：没有训练任务；没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件。
+- 最近一次结果：`ridge_vehicle_context_no_subject` 在主窗口 session-level test 上 RMSE=0.649341、方向准确率=0.769784、错侧率=0.230216、大幅响应召回=0.080000、严重幅值不足率=0.582734、反向修正计数完全匹配率=0.093525。它略差于旧 `vehicle_direct` clean 对照 RMSE=0.637366，但训练边界更清楚。
+- 当前最大风险：车辆-only 浅层基线仍然明显无法覆盖大幅响应、多段修正和部分方向；这说明还不能进入“风格/生理有效”的结论，只能继续强化车辆基线和错误分型。
+- 下一步准备做什么：检查固定图/坏样本图中的主要失败类型，决定是否先增强车辆模型结构，或建立更强的无泄漏车辆时序模型。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_formal_baselines_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/figures/formal_baseline_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/figures/formal_baseline_bad_samples_test.png`。
+
 ## 最新更新：2026-05-12 19:05
 
 - 当前阶段：阶段 2 收口，已把全原始重筛的高置信车辆失稳事件整理成新流程正式样本清单 `vehicle_instability_highconf_v0_1`。

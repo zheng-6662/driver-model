@@ -1,0 +1,25 @@
+{
+  "samples_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/vehicle_instability_highconf_v0_1/tables/samples_master.csv",
+  "out_dir": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1",
+  "server_used": false,
+  "credential_file_read": false,
+  "windows": [
+    "pre1_label2_event_trigger",
+    "pre2_label2_old_main",
+    "pre3_label3_response_coverage"
+  ],
+  "split_strategies": [
+    "random_event_split",
+    "session_level_split",
+    "subject_level_split"
+  ],
+  "default_window": "pre2_label2_old_main",
+  "default_split_strategy": "session_level_split",
+  "per_sample_rows": 48924,
+  "metrics_rows": 162,
+  "metrics_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/tables/formal_baseline_metrics.csv",
+  "per_sample_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/tables/formal_baseline_per_sample_metrics.csv",
+  "model_info_path": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/tables/formal_baseline_model_info.csv",
+  "fixed_plot": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/figures/formal_baseline_fixed_predictions_test.png",
+  "bad_plot": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_formal_baselines_v0_1/figures/formal_baseline_bad_samples_test.png"
+}
