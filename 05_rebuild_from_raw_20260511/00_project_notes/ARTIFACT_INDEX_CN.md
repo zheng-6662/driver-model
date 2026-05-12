@@ -101,7 +101,7 @@
 - `a2379c5 Record stage 3 artifact commit`
 - `82d6a1a Add stage 3 no-subject vehicle diagnostics`
 - `db1ff13 Record stage 3 no-subject diagnostics commit`
-- 阶段 3 v0.4 commit：待提交
+- `6c3c9f3 Add stage 3 RBF KRR model card`
 
 ## 适合用户/老师直接查看的材料
 
