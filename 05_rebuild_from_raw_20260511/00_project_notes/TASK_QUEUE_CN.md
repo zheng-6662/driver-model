@@ -3,16 +3,16 @@
 ## 最新更新：2026-05-13 06:31
 
 ### 正在做任务
-- Stage 7a 非 oracle 多候选选择协议已完成；正在归档并提交本轮结果。
+- Stage 7a 非 oracle 多候选选择协议已完成；当前准备 Stage 7b 非 oracle selector 轻量实验。
 
 ### 已完成任务
 - 已新增并运行 `stage07a_non_oracle_selection_protocol_v0_1.py`。
 - 已固定 10 个车辆-only候选和 RBF/KNN 主参照。
 - 已明确允许特征、禁止信息、train/val/test 边界、校准指标、coverage-risk 和固定图协议。
 - 已确认 Stage 7 可以进入非 oracle 选择器设计，但不能进入生理/EEG 有效性结论。
+- 已提交 `dfacb38d Add stage7a non-oracle selection protocol`。
 
 ### 待做任务
-- 将 Stage 7a 协议结果 Git 提交，并在产物索引中记录 commit。
 - Stage 7b：构建候选预测差异和可靠性特征，训练/验证非 oracle selector。
 - 输出 selector top-1、RBF fallback、低置信度 abstain/fallback、oracle upper bound 的公平对照。
 

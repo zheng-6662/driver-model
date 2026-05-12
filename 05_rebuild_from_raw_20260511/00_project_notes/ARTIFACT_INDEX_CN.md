@@ -16,7 +16,7 @@
 - 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07a_non_oracle_selection_protocol_v0_1/logs/stage07a_protocol_summary.json`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`dfacb38d Add stage7a non-oracle selection protocol`。
 - 适合用户/老师直接查看：用户查看版总结、特征守卫表、选择流程表、gate 表。
 
 ## 最新新增：Stage 6e 多候选 oracle gap 复核 v0.1
