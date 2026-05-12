@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 02:34
+
+- 当前阶段：阶段 3 B 轨道车辆-only 关键点 + 残差 Transformer v0.1 已完成；仍处于强车辆基线冻结前的结构候选筛选阶段。
+- 当前正在做什么：归档关键点 + 残差车辆-only 结果，并判断它相对 RBF KRR、direct Transformer、上一版 structured Transformer 的价值。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_keypoint_residual_vehicle_transformer_v0_1.py`；模型只在 B 轨道 270 条 3 秒严格核心样本上训练，输入只用事件前车辆历史和道路/事件上下文；关键点标签只作为训练目标，不作为推理输入；生成指标表、逐样本表、关键点误差表、固定图、坏样本图、checkpoint、运行摘要、用户查看版总结和技术报告。
+- 正在运行什么任务：没有后台任务；本轮本地前台脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。本轮使用本机可用 CUDA 设备训练，不是远程服务器。
+- 最近一次结果：B 轨道 test 上 RBF KRR RMSE=0.533667、错侧率=0.225000、大幅响应召回=0.750000；keypoint+residual RMSE=0.548994、错侧率=0.125000、大幅响应召回=0.875000、尾段漂移风险=0.075000、反向修正完全匹配率=0.025000；direct Transformer RMSE=0.566011；structured Transformer RMSE=0.602174。按 val RMSE 仍选择 RBF KRR，keypoint+residual 是有价值的结构候选，但还不能冻结成主线。
+- 当前最大风险：keypoint+residual 改善了错侧率和大幅响应召回，但 RMSE、峰值时间、启动延迟、困难样本和反向修正仍未全面超过 RBF；不能因为它是结构模型就跳到生理/风格有效性结论。
+- 下一步准备做什么：对 keypoint+residual 与 RBF KRR 的坏样本差异做复盘；若继续结构路线，优先尝试多假设车辆-only 或可靠性/困难样本识别，而不是继续堆单一轨迹回归头。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_keypoint_residual_vehicle_transformer_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_residual_vehicle_transformer_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_residual_vehicle_transformer_v0_1/figures/B_response3s_strict_core_keypoint_residual_bad_samples_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_keypoint_residual_vehicle_transformer_v0_1/tables/keypoint_residual_vehicle_transformer_metrics.csv`。
+
 ## 最新更新：2026-05-13 02:10
 
 - 当前阶段：阶段 3 B 轨道车辆-only 响应分解/结构化 Transformer v0.1 已完成；仍处于强车辆基线冻结前的结构化车辆模型筛选阶段。

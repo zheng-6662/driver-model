@@ -1,3 +1,35 @@
+## 最新更新：2026-05-13 02:34
+
+### 正在做任务
+- 阶段 3 B 轨道车辆-only 关键点 + 残差 Transformer v0.1 已完成，当前准备归档并 Git 提交。
+
+### 已完成任务
+- 新增并运行 `stage03_vehicle_instability_keypoint_residual_vehicle_transformer_v0_1.py`。
+- 在 B 轨道 `response3s_strict_core_candidate` 上训练关键点 + 残差车辆-only Transformer，输入只使用事件前车辆时序和可因果获得的事件/道路上下文。
+- 关键点标签只作为训练目标和评价目标，不作为推理输入；模型不使用生理、脑电、连续风格、驾驶员 ID 或未来 `eval_label_*` 字段。
+- 生成 keypoint+residual 指标表、逐样本表、关键点误差表、模型信息表、训练历史、val 选择表、固定预测图、坏样本图、checkpoint、用户查看版总结和技术报告。
+- 报告表中已加入 RBF KRR、direct Transformer、上一版 structured Transformer 和 KNN 模板参照。
+
+### 待做任务
+- 对 keypoint+residual 与 RBF KRR 的坏样本差异做复盘，明确它改善的是方向/大幅响应，还是只改变了错误分布。
+- 如果继续车辆结构路线，优先测试多假设车辆-only 或可靠性/困难样本识别，而不是继续堆单输出回归模型。
+- 形成阶段 3 车辆-only 主参照暂定规则：RBF KRR 仍是 val 选择主参照，keypoint+residual 是结构候选。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 增量验证继续被“强车辆主参照和困难样本处理策略尚未冻结”阻塞。
+- keypoint+residual 还没有在 val 选择、困难样本和反向修正上全面超过 RBF，不能升级为最终车辆主线。
+
+### 可并行任务
+- 对 keypoint+residual 的 top 坏样本图做人工摘要。
+- 按响应形态、被试和道路模块分析 keypoint+residual 相比 RBF 的收益/退化。
+- 准备多假设车辆-only 模型或困难样本可靠性模型脚本骨架。
+
+### 需要服务器的任务
+- 暂无。本轮使用本机可用 CUDA 前台完成；没有远程服务器任务。
+
+### 不需要服务器的任务
+- keypoint+residual 产物归档、报告更新、Git 提交、下一版车辆-only 结构设计。
+
 ## 最新更新：2026-05-13 02:10
 
 ### 正在做任务
