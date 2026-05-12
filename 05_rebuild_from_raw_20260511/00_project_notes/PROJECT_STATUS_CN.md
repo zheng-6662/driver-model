@@ -1,3 +1,15 @@
+## 最新更新：2026-05-13 02:10
+
+- 当前阶段：阶段 3 B 轨道车辆-only 响应分解/结构化 Transformer v0.1 已完成；仍处于强车辆基线冻结前的结构化车辆模型筛选阶段。
+- 当前正在做什么：归档结构化 Transformer 结果，并判断它是否能替代或补强 B 轨道 RBF KRR / direct Transformer 车辆-only 参照。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_structured_vehicle_transformer_v0_1.py`；只在 B 轨道 270 条 3 秒严格核心响应样本上训练结构化车辆-only Transformer，生成指标表、逐样本表、辅助标签准确率表、固定预测图、坏样本图、checkpoint、运行摘要、用户查看版总结和技术报告；同表引入上一轮真正 direct Transformer 指标作参照，KNN 只保留为模板参考。
+- 正在运行什么任务：没有后台任务；本轮本地前台脚本已结束。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。本轮使用本机可用 CUDA 设备训练，不是远程服务器。
+- 最近一次结果：B 轨道 test 上 RBF KRR RMSE=0.533667、错侧率=0.225000、大幅响应召回=0.750000；direct Transformer RMSE=0.566011、错侧率=0.225000、大幅响应召回=0.625000；结构化 Transformer RMSE=0.602174、错侧率=0.225000、大幅响应召回=0.500000、尾段漂移风险=0.250000。结构化版本只把反向修正完全匹配率从 direct 的 0.050000 小幅提高到 0.075000，但整体、幅值、尾段和困难样本明显更差，不能升级为主线。
+- 当前最大风险：如果只看到“结构化辅助头”或反向修正指标小幅变化就继续加复杂结构，会掩盖 RMSE、幅值、大幅响应召回、尾段漂移和困难样本同步变差的问题。当前证据更支持把该版本记录为 no-go/弱候选，而不是进入风格、生理或 EEG 结论。
+- 下一步准备做什么：把 B 轨道 RBF KRR 作为当前车辆-only 主参照，direct Transformer 作为深度车辆-only参照，结构化 Transformer v0.1 作为失败/弱候选；下一步若继续车辆结构，应优先尝试关键点 + 残差或多假设车辆-only，而不是直接加入生理。
+- 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_structured_vehicle_transformer_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_structured_vehicle_transformer_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_structured_vehicle_transformer_v0_1/figures/B_response3s_strict_core_structured_bad_samples_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_structured_vehicle_transformer_v0_1/tables/structured_vehicle_transformer_metrics.csv`。
+
 ## 最新更新：2026-05-13 01:43
 
 - 当前阶段：阶段 3 干净响应任务车辆-only Transformer v0.1 已完成；仍处于强车辆基线冻结前的模型对照阶段。

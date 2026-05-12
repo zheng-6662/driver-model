@@ -1,0 +1,2 @@
+﻿track_id,window_config_id,task_sample_role,n_samples,train_n,val_n,test_n,label_horizon_s,vehicle_input_tokens,context_feature_count
+B_response3s_strict_core,pre3_label3_response_coverage,response3s_strict_core_candidate,270,188,42,40,3.0,101,51
