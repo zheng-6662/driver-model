@@ -7,7 +7,7 @@
 
 ### 已完成任务
 - 已新增并运行 `stage04_style_cross_split_validation_v0_1.py`。
-- 已完成 session-level 与 subject-level 两类切分的 RBF+连续风格残差对照。
+- 已完成 session-level 与 subject-level 两类切分的 RBF+连续风格残差对照；已提交 `95f21aae Add style cross split validation`。
 - 已确认当前 last60 连续风格在两类切分下没有稳定超过 RBF：session 0.533667->0.534559，subject 0.484847->0.483510。
 
 ### 待做任务

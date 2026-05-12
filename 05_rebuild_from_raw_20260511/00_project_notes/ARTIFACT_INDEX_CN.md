@@ -858,5 +858,5 @@
 - subject-level 坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_cross_split_validation_v0_1/figures/style_cross_split_subject_bad_samples_test.png`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`95f21aae Add style cross split validation`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、指标图、subject-level 坏样本图。

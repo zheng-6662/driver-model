@@ -4,7 +4,7 @@
 
 - 当前阶段：阶段 4 连续风格跨 split 复核 v0.1 已完成；连续风格有效性结论仍阻塞。
 - 当前正在做什么：准备把连续风格路线暂时降级收口，并回到车辆-only 结构化轨迹建模问题。
-- 已完成什么：新增并运行 `stage04_style_cross_split_validation_v0_1.py`；在 B 轨道 270 个严格核心样本上完成 session-level 与 subject-level 两类切分的 RBF+风格残差对照，且每个 split 都重新使用 train-only 风格标准化。
+- 已完成什么：新增并运行 `stage04_style_cross_split_validation_v0_1.py`；在 B 轨道 270 个严格核心样本上完成 session-level 与 subject-level 两类切分的 RBF+风格残差对照，且每个 split 都重新使用 train-only 风格标准化；已提交 `95f21aae Add style cross split validation`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：session-level RBF RMSE=0.533667、RBF+last60 风格 RMSE=0.534559；subject-level RBF RMSE=0.484847、RBF+last60 风格 RMSE=0.483510；风格有效性 gate 仍为 blocked。
