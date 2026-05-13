@@ -1,5 +1,38 @@
 # R2E-Steering 当前任务队列
 
+## 最新更新：2026-05-13 08:09
+
+### 正在做任务
+- Stage 7j session 多折稳定性验证已完成，当前归档脚本、结果、报告和透明化记录；准备 Git 提交。
+
+### 已完成任务
+- 已新增并运行 `stage07j_session_cv_stability_v0_1.py`。
+- 已完成 5 折 session-CV，每折重训 RBF/KNN 基座，避免固定 split 预测泄漏。
+- 已排除固定 split top-K/Transformer/keypoint 预测特征，只使用事件前车辆/道路上下文和 fold-retrained RBF 形态特征。
+- 已确认 `stability_penalty_l05` 平均 test delta=+0.000329，gate=`no_upgrade`。
+- 已生成 Stage 7j 用户总结、技术报告、5 折指标表、policy 汇总表、feature audit、gate 表和 3 张非空图。
+
+### 待做任务
+- Stage 7k：回到候选生成/选择规则设计，重点处理 wrong-side、幅值不足、困难样本和 response_family 分布偏移。
+- 复核原始 Stage7g val gate 为什么在严格 CV 中平均 RMSE 略好但 wrong-side 变差，判断是否需要物理指标优先的选择规则。
+- 如果要继续多候选路线，需做完整上游候选重训或更保守的候选池，而不是直接用固定 split 的 top-K/Transformer 特征。
+
+### 阻塞任务
+- 生理、脑电有效性验证继续阻塞。
+- 连续风格强结论继续阻塞。
+- Stage7i single-split 弱收益不能升级为主线。
+
+### 可并行任务
+- 按 fold/response_family/road module 分析候选退化样本。
+- 设计 wrong-side 优先或困难样本优先的 selection gate。
+- 生成固定坏样本对照图，解释为什么平均 RMSE 小幅改善不等于物理预测可靠。
+
+### 需要服务器的任务
+- 暂无。Stage 7j 是本地 CPU 复核任务。
+
+### 不需要服务器的任务
+- Stage 7j 归档、commit、Stage 7k 轻量选择规则诊断均可本地完成。
+
 ## 最新更新：2026-05-13 07:55
 
 ### 正在做任务

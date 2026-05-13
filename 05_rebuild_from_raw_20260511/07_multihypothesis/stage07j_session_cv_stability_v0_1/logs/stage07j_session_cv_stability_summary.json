@@ -1,0 +1,27 @@
+{
+  "output_version": "stage07j_session_cv_stability_v0_1",
+  "track_id": "B_response3s_strict_core",
+  "cv_track": "B_response3s_strict_core",
+  "n_outer_folds": 5,
+  "feature_protocol": "strict_retrained_rbf_context_only",
+  "selected_policy": "stability_penalty_l05",
+  "mean_test_delta_vs_rbf": 0.00032934662721049166,
+  "improved_fold_rate": 0.6,
+  "difficult_improved_fold_rate": 0.8,
+  "gate_status": "no_upgrade",
+  "mainline_upgrade": "not_final",
+  "stage08_physio_eeg_allowed": false,
+  "server_used": false,
+  "credential_file_read": false,
+  "raw_files_modified": false,
+  "uses_physio": false,
+  "uses_eeg": false,
+  "uses_continuous_style": false,
+  "uses_subject_id": false,
+  "created_at": "2026-05-13T08:08:24",
+  "figures": {
+    "fold_deltas": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07j_session_cv_stability_v0_1/figures/stage07j_policy_fold_deltas.png",
+    "selected_counts": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07j_session_cv_stability_v0_1/figures/stage07j_selected_model_counts.png",
+    "val_test_scatter": "F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07j_session_cv_stability_v0_1/figures/stage07j_candidate_val_test_delta_scatter.png"
+  }
+}
