@@ -3,8 +3,8 @@
 ## 最新更新：2026-05-13 08:09
 
 - 当前阶段：Stage 7j session 多折稳定性验证 v0.1 已完成；gate=`no_upgrade`，Stage 8 生理/EEG 仍阻塞。
-- 当前正在做什么：归档严格 session-CV 结果，判断 Stage 7i 的 single-split 弱收益是否能升级为车辆-only 主线。
-- 已完成什么：新增并运行 `stage07j_session_cv_stability_v0_1.py`；每折重训 RBF/KNN 基座；排除固定 split 的 top-K/Transformer/keypoint 预测特征；只使用事件前车辆/道路上下文和该折重训 RBF 形态特征；生成 5 折指标、候选分数、policy 汇总、gate 表、3 张图、用户总结和技术报告。
+- 当前正在做什么：Stage 7j 严格 session-CV 已归档并提交；准备进入 Stage 7k 候选生成/选择规则复核。
+- 已完成什么：新增并运行 `stage07j_session_cv_stability_v0_1.py`；每折重训 RBF/KNN 基座；排除固定 split 的 top-K/Transformer/keypoint 预测特征；只使用事件前车辆/道路上下文和该折重训 RBF 形态特征；生成 5 折指标、候选分数、policy 汇总、gate 表、3 张图、用户总结和技术报告；已提交 `11296297 Add stage7j session cv stability audit`。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：`stability_penalty_l05` 5 折平均 test delta vs fold RBF=+0.000329，improved fold rate=0.600，difficult improved fold rate=0.800，gate=`no_upgrade`；原始 Stage7g val gate 平均 delta=-0.004170 但也只有 3/5 折改善且 wrong-side 平均略差，不能直接升级。

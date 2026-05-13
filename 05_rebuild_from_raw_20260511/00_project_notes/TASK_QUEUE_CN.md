@@ -3,7 +3,7 @@
 ## 最新更新：2026-05-13 08:09
 
 ### 正在做任务
-- Stage 7j session 多折稳定性验证已完成，当前归档脚本、结果、报告和透明化记录；准备 Git 提交。
+- Stage 7j session 多折稳定性验证已完成并已提交；当前准备进入 Stage 7k 候选生成/选择规则复核。
 
 ### 已完成任务
 - 已新增并运行 `stage07j_session_cv_stability_v0_1.py`。
@@ -11,6 +11,7 @@
 - 已排除固定 split top-K/Transformer/keypoint 预测特征，只使用事件前车辆/道路上下文和 fold-retrained RBF 形态特征。
 - 已确认 `stability_penalty_l05` 平均 test delta=+0.000329，gate=`no_upgrade`。
 - 已生成 Stage 7j 用户总结、技术报告、5 折指标表、policy 汇总表、feature audit、gate 表和 3 张非空图。
+- 已提交 `11296297 Add stage7j session cv stability audit`。
 
 ### 待做任务
 - Stage 7k：回到候选生成/选择规则设计，重点处理 wrong-side、幅值不足、困难样本和 response_family 分布偏移。

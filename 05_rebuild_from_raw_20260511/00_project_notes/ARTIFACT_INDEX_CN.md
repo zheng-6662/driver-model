@@ -24,7 +24,7 @@
 - val/test delta 散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07j_session_cv_stability_v0_1/figures/stage07j_candidate_val_test_delta_scatter.png`
 - GPTPro 提问和回复：本阶段未调用。
 - 服务器日志：本阶段未使用服务器，未读取服务器指令与密码文件。
-- 重要 Git commit：待提交。
+- 重要 Git commit：`11296297 Add stage7j session cv stability audit`。
 - 适合用户/老师直接查看：优先看用户查看版总结、policy 汇总、gate 表和 fold delta 图。
 
 ## 最新更新：2026-05-13 07:52
