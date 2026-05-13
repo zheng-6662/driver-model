@@ -1,4 +1,4 @@
-# R2E-Steering 阶段产物索引
+# 阶段产物索引
 
 ## 最新更新：2026-05-13 08:09
 
@@ -27,8 +27,6 @@
 - 重要 Git commit：`11296297 Add stage7j session cv stability audit`。
 - 适合用户/老师直接查看：优先看用户查看版总结、policy 汇总、gate 表和 fold delta 图。
 
-## 最新更新：2026-05-13 07:52
-
 ## Stage 7i 稳定性校准候选选择 v0.1
 
 - 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07i_stability_calibrated_selection_v0_1.py`
@@ -47,163 +45,6 @@
 - 服务器日志：本阶段未使用服务器，未读取服务器指令与密码文件。
 - 重要 Git commit：`d294a520 Add stage7i stability calibrated selection`。
 - 适合用户/老师直接查看：优先看用户查看版总结、gate 表、policy test 汇总和 policy 对照图。
-
-## 最新更新：2026-05-13 07:42
-
-## Stage 7h val/test 选择不稳定诊断 v0.1
-
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07h_val_test_selection_diagnostics_v0_1.py`
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_v0_1_cn.md`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/logs/stage07h_val_test_selection_diagnostics_summary.json`
-- 候选 split 稳定性：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_split_stability.csv`
-- 类别分布长表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_categorical_shift_long.csv`
-- 类别分布摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_categorical_shift_summary.csv`
-- 数值分布摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_numeric_shift_summary.csv`
-- 逐样本候选收益：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_gain_samples.csv`
-- 分 bucket 候选收益：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_gain_by_bucket.csv`
-- keypoint target 指标副本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_keypoint_target_metrics_copy.csv`
-- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_gate_table.csv`
-- 候选 val/test 稳定性图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_val_test_stability.png`
-- val/test 类别偏移图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_val_test_categorical_shift.png`
-- 候选逐样本收益图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_gain_by_split.png`
-- keypoint target RMSE 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_keypoint_target_rmse_by_split.png`
-- GPTPro 提问和回复：本阶段未调用。
-- 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：`d990f8e3 Add stage7h selection diagnostics`。
-- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、候选稳定性表、类别/数值偏移表和候选稳定性图。
-
-## 最新更新：2026-05-13 07:33
-
-## Stage 7g keypoint/segment 车辆-only 候选 v0.1
-
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07g_keypoint_segment_candidates_v0_1.py`
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07g_keypoint_segment_candidates_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07g_keypoint_segment_candidates_v0_1_cn.md`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/logs/stage07g_keypoint_segment_candidates_summary.json`
-- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_feature_audit.csv`
-- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_allowed_features.csv`
-- 关键点预测表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_keypoint_prediction_table.csv`
-- 关键点 target 指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_keypoint_target_metrics.csv`
-- 候选指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_candidate_metrics.csv`
-- 候选逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_candidate_per_sample_metrics.csv`
-- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_validation_selection_table.csv`
-- oracle 诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_oracle_diag.csv`
-- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_gate_table.csv`
-- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_metric_summary_test.png`
-- 关键点散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_keypoint_target_scatter.png`
-- 固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_fixed_predictions_test.png`
-- oracle gain 预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_oracle_gain_predictions_test.png`
-- GPTPro 提问和回复：本阶段未调用。
-- 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：`52de7176 Add stage7g keypoint segment candidates`。
-- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、候选指标、关键点散点图和 oracle gain 预测图。
-
-## 最新更新：2026-05-13 07:19
-
-## Stage 7f response-factorized vehicle-only candidate v0.1
-
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07f_response_factorized_candidates_v0_1.py`
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07f_response_factorized_candidates_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07f_response_factorized_candidates_v0_1_cn.md`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/logs/stage07f_response_factorized_candidates_summary.json`
-- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_feature_audit.csv`
-- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_allowed_features.csv`
-- factor 预测指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_factor_prediction_metrics.csv`
-- factor 预测明细：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_factor_predictions_long.csv`
-- 候选逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_candidate_per_sample_metrics.csv`
-- policy 指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_policy_metrics.csv`
-- policy 逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_policy_per_sample_metrics.csv`
-- policy 和候选总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_policy_and_candidate_metrics.csv`
-- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_validation_selection_table.csv`
-- response-factorized oracle 诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_response_factorized_oracle_diag.csv`
-- combo oracle 诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_combo_oracle_diag.csv`
-- prototype trace：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_prototype_trace.csv`
-- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_gate_table.csv`
-- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_metric_summary_test.png`
-- 固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_fixed_predictions_test.png`
-- oracle gain 预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_oracle_gain_predictions_test.png`
-- GPTPro 提问和回复：本阶段未调用。
-- 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：`12cef06b Add stage7f response factorized candidates`。
-- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、factor 预测指标、固定预测图和 oracle gain 预测图。
-
-## 最新更新：2026-05-13 07:05
-
-## Stage 7e 候选生成重设计审计 v0.1
-
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07e_candidate_generation_redesign_v0_1.py`
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_v0_1_cn.md`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/logs/stage07e_candidate_generation_redesign_summary.json`
-- 响应类型表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_response_label_table.csv`
-- 样本候选缺口表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_sample_candidate_gap_table.csv`
-- bucket 覆盖表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_existing_candidate_coverage_by_bucket.csv`
-- oracle winner 分布：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_oracle_winner_distribution.csv`
-- 候选生成蓝图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`
-- 下一实验计划：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_next_experiment_plan.csv`
-- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`
-- oracle gain by family 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_gain_by_response_family_test.png`
-- winner 分布图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_winner_distribution_test.png`
-- 样本缺口散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_gap_scatter_test.png`
-- 候选生成蓝图图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`
-- GPTPro 提问和回复：本阶段未调用。
-- 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：`98552bf3 Add stage7e candidate generation redesign`。
-- 适合用户/老师直接查看：优先看用户查看版总结、候选生成蓝图、gate 表、oracle gain 图和 winner 分布图。
-
-# R2E-Steering 阶段产物索引
-## 最新更新：2026-05-13 06:58
-
-## Stage 7d 非 oracle selector v0.2
-
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07d_non_oracle_selector_v0_2.py`
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_cn.md`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/logs/stage07d_non_oracle_selector_summary.json`
-- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_feature_audit.csv`
-- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_allowed_features.csv`
-- policy metrics：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_policy_metrics.csv`
-- decision diagnostics：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_decision_diagnostics.csv`
-- selected decisions：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_selected_policy_decisions.csv`
-- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_validation_selection_table.csv`
-- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_gate_table.csv`
-- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_policy_metrics_test.png`
-- val delta 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png`
-- 选择计数图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_selected_choice_counts.png`
-- GPTPro 提问和回复：本阶段未调用。
-- 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：`eb785f4a Add stage7d non-oracle selector`。
-- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、val delta 图和 policy metrics 图。
-
-# R2E-Steering 阶段产物索引
-## 最新更新：2026-05-13 06:50
-
-## Stage 7c 候选轨迹导出与差异审计 v0.1
-
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07c_candidate_trajectory_export_v0_1.py`
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_v0_1_cn.md`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/logs/stage07c_candidate_trajectory_export_summary.json`
-- 轨迹数组：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz`
-- 指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_metrics.csv`
-- 逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_per_sample_metrics.csv`
-- 候选两两差异明细：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_pairwise_disagreement_long.csv`
-- 候选两两差异摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_pairwise_disagreement_summary.csv`
-- 候选特征与标签诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_feature_and_label_diagnosis.csv`
-- oracle 摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_oracle_summary.csv`
-- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_gate_table.csv`
-- 固定样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_fixed_predictions_test.png`
-- 高候选差异图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_high_disagreement_predictions_test.png`
-- oracle gain 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_oracle_gain_predictions_test.png`
-- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_metric_summary_test.png`
-- 差异-上限散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_disagreement_vs_oracle_gain_test.png`
-- GPTPro 提问和回复：本阶段未调用。
-- 服务器日志：本阶段未使用服务器。
-- 重要 Git commit：`48b8c438 Add stage7c candidate trajectory export`。
-- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、指标图、oracle gain 图和轨迹数组说明。
-
-# 阶段产物索引
 
 ## 最新新增：Stage 7b 非 oracle top-K selector 轻量实验 v0.1
 
@@ -621,45 +462,6 @@
 - GPTPro 提问和回复：无。
 - 重要 Git commit：待提交。
 - 适合用户/老师直接查看：用户查看版总结、轨道汇总、响应形态计数图、B 轨道分形态平均轨迹图。
-
-## 阶段 3 追加：B 轨道 RBF KRR 坏样本物理复查 v0.1（2026-05-13）
-
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1_cn.md`
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/logs/clean_task_bad_sample_review_summary.json`
-- B 轨道坏样本总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_bad_sample_table.csv`
-- 失败标记汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_summary.csv`
-- top bad 样本表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_top_bad_samples.csv`
-- 分响应形态汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_by_morphology.csv`
-- 分被试汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_by_subject.csv`
-- 分道路模块汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_by_road_module.csv`
-- 失败标记率图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_failure_flag_rates.png`
-- top bad RMSE 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_top_bad_rmse.png`
-- 主峰幅值散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_peak_amp_scatter.png`
-- 重要 Git commit：待提交。
-- 适合用户/老师直接查看的材料：优先看用户查看版总结、失败标记率图、top bad 样本表和主峰幅值散点图。
-
-## 阶段 3 追加：干净响应任务车辆-only 基线 v0.1（2026-05-13）
-
-- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_user_summary_cn.md`
-- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1_cn.md`
-- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`
-- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/logs/clean_task_vehicle_baselines_summary.json`
-- 指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_metrics.csv`
-- 逐样本指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_per_sample_metrics.csv`
-- 模型信息表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_model_info.csv`
-- 任务轨道汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_track_summary.csv`
-- val 选择模型表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_val_selected_models.csv`
-- test 指标概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/clean_task_vehicle_metric_summary_test.png`
-- A 轨道固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/A_instant2s_core_fixed_predictions_test.png`
-- A 轨道坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/A_instant2s_core_bad_samples_test.png`
-- B 轨道固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png`
-- B 轨道坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_bad_samples_test.png`
-- 重要 Git commit：待提交。
-- 适合用户/老师直接查看的材料：优先看用户查看版总结、test 指标概览图和 B 轨道坏样本图。
-
-# 阶段产物索引
 
 ## 最新新增：阶段 3 响应任务定义决策 v0.1
 
@@ -1173,7 +975,139 @@
 - 更新后的用户总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_scene_trigger_user_summary_cn.md`
 - 依赖的完整触发审计报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/scene_trigger_audit_v0_2_cn.md`
 - 依赖的触发审计表目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables`
-- 说明：根据用户补充，`longstraight` 25/26 车道交通触发按背景交通处理；其他场景继续按被试方向道路/任务设计和车身姿态确认来重建锚点。
+- 说明：根据用户最新补充，`longstraight` 25/26 普通连续车流按背景处理，但 MAN TGL 25->26 变道和 Chrysler300 Stop 要进入候选锚点审查；`fix_road` 也已确认存在显式变道触发。
+## 阶段 2 追加：被试方向设计点与候选锚点重建 v0.4
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_ego_direction_design_anchor_user_summary_cn.md`
+- 完整中文报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/ego_direction_design_anchor_rebuild_v0_4_cn.md`
+- 小论文场景依据摘录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/small_paper_scene_design_extract_v0_4.md`
+- 审计脚本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_ego_direction_design_anchors_v0_4.py`
+- 小论文场景表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/small_paper_scene_design_tables_v0_4.csv`
+- 配置车道/附着表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/cfg_lane_mu_geometry_v0_4.csv`
+- 被试方向低附着段表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/cfg_ego_direction_mu_segments_v0_4.csv`
+- 候选锚点清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_candidates_v0_4.csv`
+- 场景模块汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_module_summary_v0_4.csv`
+- 说明：本轮确认小论文中弯道、低附着、急停、施工/维修、汇入等场景设计可作为锚点重建依据；根据后续用户补充，`middle_section`、`longstraight` 和 `fix_road` 也已纳入高优先级候选锚点审查。
+
+### middle_section 连续超车修正
+
+- 修正说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/middle_section_continuous_overtaking_correction_20260512_cn.md`
+- 更新后的候选锚点清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_candidates_v0_4.csv`
+- 更新后的模块汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_module_summary_v0_4.csv`
+- 说明：用户确认道路连接段存在连续超车事件，因此 `middle_section` 已从“背景/过渡段”修正为“连续超车负荷事件段”。当前新增连续超车段入口、中点、横向偏移变化峰值、横向加速度峰值、横摆角速度峰值五类候选。
+
+### longstraight 与维修路段变道触发修正
+
+- 修正说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/longstraight_fixroad_lanechange_trigger_correction_20260512_cn.md`
+- 更新后的候选锚点清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_candidates_v0_4.csv`
+- 更新后的模块汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_module_summary_v0_4.csv`
+- 更新后的场景事件来源工作表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/ego_direction_scene_event_source_map_v0_3.csv`
+- 说明：用户确认 `longstraight` 和维修路段都涉及变道触发点。当前 `longstraight` 已新增显式变道/停车候选，`fix_road` 已新增两类显式变道候选。候选总数更新为 4519 行。
+
+## 阶段 2 追加：事件候选筛选 v0.5
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_event_filter_user_summary_cn.md`
+- 完整中文报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_candidate_filter_v0_5_cn.md`
+- 筛选脚本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/filter_event_anchor_candidates_v0_5.py`
+- 全部候选评分表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidate_scores_v0_5.csv`
+- 去重后复核清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidates_for_review_v0_5.csv`
+- 高置信复核清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidates_high_confidence_v0_5.csv`
+- 分场景汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidate_module_summary_v0_5.csv`
+- 分类型汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidate_decision_summary_v0_5.csv`
+- 复核图索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidate_review_panel_index_v0_5.csv`
+- 概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/figures/event_candidate_filter_overview_v0_5.png`
+- 代表性复核图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/figures/review_panels`
+- 说明：本轮没有训练模型，只是把 4519 个候选锚点按设计证据、车身响应、窗口可用性和旧锚点接近程度进行初筛。去重后建议复核 534 个，高置信复核 314 个。
+
+## GPTPro 事件锚点审查证据包（2026-05-12）
+
+- 证据包目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512`
+- 压缩包：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512.zip`
+- README：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512/00_README_CN.md`
+- GPTPro 提问词：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512/01_GPTPRO_PROMPT_CN.md`
+- 说明：该包包含事件筛选中文报告、核心表格、概览图和按场景精选的 19 张复核图，不包含原始数据、模型 checkpoint、服务器密码或连接凭据。
+
+## GPTPro 事件锚点审查回复与 v0.6 规则（2026-05-12）
+
+- GPTPro 回复归档：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_reply_20260512/20260512_event_anchor_v05_response_manualpaste.md`
+- 已填充决策记录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_reply_20260512/20260512_event_anchor_v05_decision_filled.md`
+- 已填充行动项：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_reply_20260512/20260512_event_anchor_v05_action_items_filled.md`
+- v0.6 筛选规则草案：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_v0_6_screening_rule_from_gptpro_20260512_cn.md`
+- 说明：GPTPro 支持先重审事件锚点，建议 v0.6 输出四类事件表，并先用小而干净的核心样本训练车辆/道路-only 基线。
+## 阶段 3 追加：干净响应任务车辆-only 基线 v0.1（2026-05-13）
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/logs/clean_task_vehicle_baselines_summary.json`
+- 指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_metrics.csv`
+- 逐样本指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_per_sample_metrics.csv`
+- 模型信息表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_model_info.csv`
+- 任务轨道汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_track_summary.csv`
+- val 选择模型表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_val_selected_models.csv`
+- test 指标概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/clean_task_vehicle_metric_summary_test.png`
+- A 轨道固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/A_instant2s_core_fixed_predictions_test.png`
+- A 轨道坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/A_instant2s_core_bad_samples_test.png`
+- B 轨道固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_fixed_predictions_test.png`
+- B 轨道坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_bad_samples_test.png`
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看的材料：优先看用户查看版总结、test 指标概览图和 B 轨道坏样本图。
+## 阶段 3 追加：B 轨道 RBF KRR 坏样本物理复查 v0.1（2026-05-13）
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/logs/clean_task_bad_sample_review_summary.json`
+- B 轨道坏样本总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_bad_sample_table.csv`
+- 失败标记汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_summary.csv`
+- top bad 样本表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_top_bad_samples.csv`
+- 分响应形态汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_by_morphology.csv`
+- 分被试汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_by_subject.csv`
+- 分道路模块汇总：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_by_road_module.csv`
+- 失败标记率图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_failure_flag_rates.png`
+- top bad RMSE 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_top_bad_rmse.png`
+- 主峰幅值散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_peak_amp_scatter.png`
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看的材料：优先看用户查看版总结、失败标记率图、top bad 样本表和主峰幅值散点图。
+
+## 阶段 2 回补：episode-first 事件样本 v0.6（2026-05-13）
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_episode_first_v0_6_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/episode_first_event_v0_6_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scripts/build_episode_first_events_v0_6.py`
+- episode 总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_candidates_v0_6.csv`
+- 第一版最干净核心候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/primary_training_events_v0_6.csv`
+- 坐标需复核扩展候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/coordinate_flagged_expansion_events_v0_6.csv`
+- 弱响应/负样本候选：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/trigger_no_effect_or_weak_response_v0_6.csv`
+- 分桶汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_decision_summary_v0_6.csv`
+- 类型汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_label_summary_v0_6.csv`
+- 场景汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_module_summary_v0_6.csv`
+- 代表图索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_review_panel_index_v0_6.csv`
+- 概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/figures/episode_first_v0_6_summary.png`
+- 分组代表图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/figures/episode_review_panels`
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看的材料：优先看用户查看版总结、概览图、严格核心表、坐标需复核扩展表和分组代表图目录。
+
+## 阶段 3 追加：episode-first v0.6 纯车辆/道路预测对照 v0.1（2026-05-13）
+
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_episode_first_vehicle_baselines_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_episode_first_vehicle_baselines_v0_1_cn.md`
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_episode_first_vehicle_baselines_v0_1.py`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/logs/episode_first_vehicle_baselines_summary.json`
+- 指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_vehicle_metrics.csv`
+- 逐样本指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_vehicle_per_sample_metrics.csv`
+- 模型信息表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_vehicle_model_info.csv`
+- 轨道汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_track_summary.csv`
+- val 选择表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_vehicle_val_selected_models.csv`
+- test 指标概览图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/figures/episode_first_vehicle_metric_summary_test.png`
+- 3 秒不使用横向偏移坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/figures/EP3_expanded_no_lateral_3s_bad_samples_test.png`
+- 重要 Git commit：待提交。
+- 适合用户/老师直接查看的材料：优先看用户查看版总结、val 选择表、指标概览图和 3 秒不使用横向偏移坏样本图。
+
+## 目标完成审计：事件锚点筛选与样本重建（2026-05-13）
+
+- 完成审计报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/goal_completion_audit_event_v0_6_20260513_cn.md`
+- 审计结论：v0.6 样本清单、四类/多类分桶、复核图、分层统计、物理指标和纯车辆/道路预测对照均已完成；车辆-only 指标未优于旧 B 轨道，但证明 v0.6 更集中在复杂真实 episode，下一阶段应进入车辆-only 响应分解模型。
 
 ## 最新新增：阶段 4 连续驾驶风格探索性增量对照 v0.1
 
@@ -1188,7 +1122,7 @@
 - 坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_increment_exploratory_v0_1/figures/style_increment_bad_samples_test.png`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：`e93ffab6 Add style increment exploratory audit`。
+- 重要 Git commit：待提交。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、指标概览图、固定预测图、坏样本图。
 
 ## 最新新增：阶段 4 连续风格跨 split 复核 v0.1
@@ -1203,7 +1137,7 @@
 - subject-level 坏样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_cross_split_validation_v0_1/figures/style_cross_split_subject_bad_samples_test.png`
 - 服务器日志：无，本轮未使用远程服务器。
 - GPTPro 提问和回复：无。
-- 重要 Git commit：`95f21aae Add style cross split validation`。
+- 重要 Git commit：待提交。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、指标图、subject-level 坏样本图。
 
 ## 最新新增：阶段 4 连续风格路线收口决策 v0.1
@@ -1219,3 +1153,156 @@
 - GPTPro 提问和回复：无。
 - 重要 Git commit：`4064bf64 Add style route decision`。
 - 适合用户/老师直接查看：用户查看版总结、gate 表、RMSE delta 图、下一步动作表。
+# R2E-Steering 阶段产物索引
+## 最新更新：2026-05-13 07:42
+
+## Stage 7h val/test 选择不稳定诊断 v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07h_val_test_selection_diagnostics_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07h_val_test_selection_diagnostics_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/logs/stage07h_val_test_selection_diagnostics_summary.json`
+- 候选 split 稳定性：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_split_stability.csv`
+- 类别分布长表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_categorical_shift_long.csv`
+- 类别分布摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_categorical_shift_summary.csv`
+- 数值分布摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_numeric_shift_summary.csv`
+- 逐样本候选收益：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_gain_samples.csv`
+- 分 bucket 候选收益：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_candidate_gain_by_bucket.csv`
+- keypoint target 指标副本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_keypoint_target_metrics_copy.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/tables/stage07h_gate_table.csv`
+- 候选 val/test 稳定性图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_val_test_stability.png`
+- val/test 类别偏移图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_val_test_categorical_shift.png`
+- 候选逐样本收益图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_candidate_gain_by_split.png`
+- keypoint target RMSE 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07h_val_test_selection_diagnostics_v0_1/figures/stage07h_keypoint_target_rmse_by_split.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：`d990f8e3 Add stage7h selection diagnostics`。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、候选稳定性表、类别/数值偏移表和候选稳定性图。
+
+## 最新更新：2026-05-13 07:33
+
+## Stage 7g keypoint/segment 车辆-only 候选 v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07g_keypoint_segment_candidates_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07g_keypoint_segment_candidates_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07g_keypoint_segment_candidates_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/logs/stage07g_keypoint_segment_candidates_summary.json`
+- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_feature_audit.csv`
+- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_allowed_features.csv`
+- 关键点预测表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_keypoint_prediction_table.csv`
+- 关键点 target 指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_keypoint_target_metrics.csv`
+- 候选指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_candidate_metrics.csv`
+- 候选逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_candidate_per_sample_metrics.csv`
+- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_validation_selection_table.csv`
+- oracle 诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_oracle_diag.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/tables/stage07g_gate_table.csv`
+- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_metric_summary_test.png`
+- 关键点散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_keypoint_target_scatter.png`
+- 固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_fixed_predictions_test.png`
+- oracle gain 预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07g_keypoint_segment_candidates_v0_1/figures/stage07g_oracle_gain_predictions_test.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：`52de7176 Add stage7g keypoint segment candidates`。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、候选指标、关键点散点图和 oracle gain 预测图。
+
+## 最新更新：2026-05-13 07:19
+
+## Stage 7f response-factorized vehicle-only candidate v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07f_response_factorized_candidates_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07f_response_factorized_candidates_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07f_response_factorized_candidates_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/logs/stage07f_response_factorized_candidates_summary.json`
+- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_feature_audit.csv`
+- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_allowed_features.csv`
+- factor 预测指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_factor_prediction_metrics.csv`
+- factor 预测明细：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_factor_predictions_long.csv`
+- 候选逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_candidate_per_sample_metrics.csv`
+- policy 指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_policy_metrics.csv`
+- policy 逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_policy_per_sample_metrics.csv`
+- policy 和候选总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_policy_and_candidate_metrics.csv`
+- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_validation_selection_table.csv`
+- response-factorized oracle 诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_response_factorized_oracle_diag.csv`
+- combo oracle 诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_combo_oracle_diag.csv`
+- prototype trace：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_prototype_trace.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_gate_table.csv`
+- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_metric_summary_test.png`
+- 固定预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_fixed_predictions_test.png`
+- oracle gain 预测图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_oracle_gain_predictions_test.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：`12cef06b Add stage7f response factorized candidates`。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、factor 预测指标、固定预测图和 oracle gain 预测图。
+
+## 最新更新：2026-05-13 06:50
+
+## Stage 7c 候选轨迹导出与差异审计 v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07c_candidate_trajectory_export_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/logs/stage07c_candidate_trajectory_export_summary.json`
+- 轨迹数组：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz`
+- 指标表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_metrics.csv`
+- 逐样本指标：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_per_sample_metrics.csv`
+- 候选两两差异明细：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_pairwise_disagreement_long.csv`
+- 候选两两差异摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_pairwise_disagreement_summary.csv`
+- 候选特征与标签诊断：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_feature_and_label_diagnosis.csv`
+- oracle 摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_oracle_summary.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_gate_table.csv`
+- 固定样本图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_fixed_predictions_test.png`
+- 高候选差异图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_high_disagreement_predictions_test.png`
+- oracle gain 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_oracle_gain_predictions_test.png`
+- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_metric_summary_test.png`
+- 差异-上限散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_disagreement_vs_oracle_gain_test.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：`48b8c438 Add stage7c candidate trajectory export`。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、指标图、oracle gain 图和轨迹数组说明。
+# R2E-Steering 阶段产物索引
+## 最新更新：2026-05-13 06:58
+
+## Stage 7d 非 oracle selector v0.2
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07d_non_oracle_selector_v0_2.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/logs/stage07d_non_oracle_selector_summary.json`
+- feature audit：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_feature_audit.csv`
+- allowed features：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_allowed_features.csv`
+- policy metrics：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_policy_metrics.csv`
+- decision diagnostics：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_decision_diagnostics.csv`
+- selected decisions：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_selected_policy_decisions.csv`
+- validation selection：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_validation_selection_table.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_gate_table.csv`
+- 指标图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_policy_metrics_test.png`
+- val delta 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png`
+- 选择计数图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_selected_choice_counts.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：`eb785f4a Add stage7d non-oracle selector`。
+- 适合用户/老师直接查看：优先看用户查看版总结、gate 表、val delta 图和 policy metrics 图。
+# R2E-Steering 阶段产物索引
+## 最新更新：2026-05-13 07:05
+
+## Stage 7e 候选生成重设计审计 v0.1
+
+- 代码入口：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/scripts/stage07e_candidate_generation_redesign_v0_1.py`
+- 用户查看版总结：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`
+- 技术报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_v0_1_cn.md`
+- 运行摘要：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/logs/stage07e_candidate_generation_redesign_summary.json`
+- 响应类型表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_response_label_table.csv`
+- 样本候选缺口表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_sample_candidate_gap_table.csv`
+- bucket 覆盖表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_existing_candidate_coverage_by_bucket.csv`
+- oracle winner 分布：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_oracle_winner_distribution.csv`
+- 候选生成蓝图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`
+- 下一实验计划：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_next_experiment_plan.csv`
+- gate 表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`
+- oracle gain by family 图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_gain_by_response_family_test.png`
+- winner 分布图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_oracle_winner_distribution_test.png`
+- 样本缺口散点图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_gap_scatter_test.png`
+- 候选生成蓝图图：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`
+- GPTPro 提问和回复：本阶段未调用。
+- 服务器日志：本阶段未使用服务器。
+- 重要 Git commit：`98552bf3 Add stage7e candidate generation redesign`。
+- 适合用户/老师直接查看：优先看用户查看版总结、候选生成蓝图、gate 表、oracle gain 图和 winner 分布图。

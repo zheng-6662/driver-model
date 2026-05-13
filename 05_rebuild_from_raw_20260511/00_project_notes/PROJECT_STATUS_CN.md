@@ -23,7 +23,6 @@
 - 当前最大风险是什么：当前收益只来自一个固定 session-level split，且主要改善 RMSE/困难样本 RMSE，错侧率和大幅响应召回没有提升；不能把它直接冻结为最终车辆-only 主线。
 - 下一步准备做什么：Stage 7j 应做多折 session validation 或分层 validation 重构，验证 `stability_penalty_l05` 是否能稳定选中有收益候选；生理/EEG/连续风格仍不进入。
 - 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07i_stability_calibrated_selection_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/tables/stage07i_policy_test_summary.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/tables/stage07i_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07i_stability_calibrated_selection_v0_1/figures/stage07i_policy_summary.png`。
-
 ## 最新更新：2026-05-13 07:42
 
 - 当前阶段：Stage 7h val/test 选择不稳定诊断 v0.1 已完成；gate=`no_upgrade`，Stage 8 生理/EEG 仍阻塞。
@@ -60,45 +59,6 @@
 - 下一步准备做什么：Stage 7g 不应继续堆 selector，也不应进入生理/EEG；更合适的是把响应分解原型升级为可训练的 keypoint/segment candidate，并加强幅值、尾段和修正段建模。
 - 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07f_response_factorized_candidates_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/tables/stage07f_factor_prediction_metrics.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07f_response_factorized_candidates_v0_1/figures/stage07f_oracle_gain_predictions_test.png`。
 
-## 最新更新：2026-05-13 07:05
-
-- 当前阶段：Stage 7e 候选生成重设计审计 v0.1 已完成；当前不再继续 selector-only 路线。
-- 当前正在做什么：准备按 response-factorized candidate 思路实现下一版车辆-only 多候选生成，而不是继续在旧 branch 上训练选择器。
-- 已完成什么：新增并运行 `stage07e_candidate_generation_redesign_v0_1.py`；从真实方向盘标签提取方向、幅值、峰值时间、尾段、反向修正/多段修正响应类型；用 Stage 7c 候选轨迹审计每类响应的 RBF/KNN 误差、候选 oracle 误差、oracle gain 和 winner 分布；生成候选生成蓝图、下一实验计划、gate 表、4 张图、用户查看版总结和技术报告；已提交 `98552bf3 Add stage7e candidate generation redesign`。
-- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
-- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
-- 最近一次结果是什么：test RBF/KNN RMSE=0.533667；现有可部署候选池 oracle RMSE=0.410957，delta=-0.122710；test 非 RBF oracle winner 比例=0.700；coverage 中 16 个 test bucket 属于 `selector_gap_candidate_pool_has_signal`，说明候选池有信号但当前 selector-only 路线失败。
-- 当前最大风险是什么：如果继续只堆 selector，会反复得到退回 RBF/KNN 的安全策略；如果直接训练复杂多假设模型但不绑定响应物理类型，仍可能生成平滑相似候选。
-- 下一步准备做什么：Stage 7f 实现 response-factorized vehicle-only candidate v0.1：保留 RBF/KNN anchor，并增加方向/幅值、峰值时间、尾段模式、反向修正/多段修正和可靠性门控候选。
-- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`。
-
-# R2E-Steering 项目总进度看板
-## 最新更新：2026-05-13 06:58
-
-- 当前阶段：Stage 7d 非 oracle selector v0.2 已完成；gate=`no_upgrade`。
-- 当前正在做什么：收口当前多候选选择器路线，准备转向候选生成方式本身，而不是继续堆选择器。
-- 已完成什么：新增并运行 `stage07d_non_oracle_selector_v0_2.py`；只用 Stage 7c 的候选预测特征和道路/事件上下文训练 selector；显式排除 test 标签、oracle 特征、subject/session ID、生理、脑电和连续风格；生成 feature audit、allowed features、policy metrics、decision diagnostics、selected decisions、confusion、gate 表、3 张图、用户查看版总结和技术报告；已提交 `eb785f4a Add stage7d non-oracle selector`。
-- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
-- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
-- 最近一次结果是什么：val gate 选择 `always_rbf_reference`；test RMSE=0.533667，与 RBF/KNN 完全相同；test RBF 选择比例=1.000；broad oracle test RMSE=0.410957 仍只是诊断上限。Stage 7d 不能升级为多假设主线。
-- 当前最大风险是什么：当前候选池有上限，但非 oracle 特征无法稳定选择；继续堆 selector 很可能只得到“安全退回 RBF/KNN”或“test 退化”的结果。
-- 下一步准备做什么：Stage 7e 候选生成重设计协议：把候选显式绑定到方向、幅值、峰值时间、尾段回正/漂移、反向修正和多段修正，而不是先用现有 branch 再补 selector。
-- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png`。
-
-# R2E-Steering 项目总进度看板
-## 最新更新：2026-05-13 06:50
-
-- 当前阶段：Stage 7c 候选轨迹导出与差异审计 v0.1 已完成；当前仍不升级多假设为主线。
-- 当前正在做什么：基于已导出的候选轨迹，准备判断下一步应改非 oracle selector，还是重新设计候选生成方式。
-- 已完成什么：新增并运行 `stage07c_candidate_trajectory_export_v0_1.py`；加载已有 RBF/KNN、keypoint residual 和 top-K checkpoint，导出 270 个 B 轨道严格核心失稳样本的候选轨迹 npz；生成候选指标表、逐样本指标、候选两两差异、候选特征与标签诊断、oracle 摘要、gate 表、5 张图、用户查看版总结和技术报告；已提交 `48b8c438 Add stage7c candidate trajectory export`。
-- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
-- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
-- 最近一次结果是什么：B 轨道 test 上 RBF/KNN RMSE=0.533667；top-K top1 RMSE=0.587865；RBF+topK oracle RMSE=0.415652，delta=-0.118014；broad oracle RMSE=0.410957，delta=-0.122710。oracle 上限明显，但 Stage 7c 没有训练非 oracle selector，不能作为可部署提升。
-- 当前最大风险是什么：候选池存在事后上限，但可部署选择机制仍没有解决；如果直接把 best-of-K/oracle 结果当模型性能，会高估当前车辆-only 能力，也会错误放行生理/EEG。
-- 下一步准备做什么：优先做 Stage 7d 非 oracle selector v0.2，使用 Stage 7c 导出的候选差异特征并严格 train/val/test 隔离；若仍退回 RBF/KNN，则转向重新设计候选生成方式，而不是进入生理/EEG。
-- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_metric_summary_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz`。
-
-# R2E-Steering 项目总进度看板
 
 ## 最新更新：2026-05-13 06:39
 
@@ -152,7 +112,7 @@
 
 - 当前阶段：Stage 6c selector feature revision v0.1 已完成；当前修订不升级主线，生理/EEG 仍不进入。
 - 当前正在做什么：评估加入候选模型预测差异特征后的 RBF/keypoint selector 是否能把 oracle 上限转成可部署增益。
-- 已完成什么：新增并运行 `stage06c_selector_feature_revision_v0_1.py`；比较原始 logistic、工程化 logistic、保守 logistic 和浅层随机森林 selector，生成特征协议、阈值扫描、指标表、gate 表、2 张图、用户总结和技术报告；已提交 `eae76c2f Add stage6c selector feature revision`。
+- 已完成什么：新增并运行 `stage06c_selector_feature_revision_v0_1.py`；比较原始 logistic、工程化 logistic、保守 logistic 和浅层随机森林 selector，生成特征协议、阈值扫描、指标表、gate 表、2 张图、用户总结和技术报告。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：val 选择 `rf_engineered_shallow`；test RMSE=0.544356，比 RBF 差 +0.010689；wrong-side 从 0.225 降到 0.175，large recall 从 0.750 升到 0.875；但 gate=`no_upgrade_current_revision`，stage05 physio/eeg=blocked。
@@ -200,7 +160,7 @@
 
 - 当前阶段：阶段 4 连续风格跨 split 复核 v0.1 已完成；连续风格有效性结论仍阻塞。
 - 当前正在做什么：准备把连续风格路线暂时降级收口，并回到车辆-only 结构化轨迹建模问题。
-- 已完成什么：新增并运行 `stage04_style_cross_split_validation_v0_1.py`；在 B 轨道 270 个严格核心样本上完成 session-level 与 subject-level 两类切分的 RBF+风格残差对照，且每个 split 都重新使用 train-only 风格标准化；已提交 `95f21aae Add style cross split validation`。
+- 已完成什么：新增并运行 `stage04_style_cross_split_validation_v0_1.py`；在 B 轨道 270 个严格核心样本上完成 session-level 与 subject-level 两类切分的 RBF+风格残差对照，且每个 split 都重新使用 train-only 风格标准化。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：session-level RBF RMSE=0.533667、RBF+last60 风格 RMSE=0.534559；subject-level RBF RMSE=0.484847、RBF+last60 风格 RMSE=0.483510；风格有效性 gate 仍为 blocked。
@@ -212,13 +172,15 @@
 
 - 当前阶段：阶段 4 连续驾驶风格探索性增量对照 v0.1 已完成，仍处于探索阶段。
 - 当前正在做什么：已固定 RBF/KNN 类车辆-only 主参照，正在判断事件前连续风格是否值得进入更严格 split 验证。
-- 已完成什么：新增并运行 `stage04_style_increment_exploratory_v0_1.py`；在 B 轨道 270 个严格核心失稳响应样本上完成 RBF 残差 Ridge、驾驶员 ID 对照、道路模块对照和多种置乱控制；生成指标表、逐样本表、固定预测图、坏样本图、置乱汇总、gate 表和中文报告；已提交 `e93ffab6 Add style increment exploratory audit`。
+- 已完成什么：新增并运行 `stage04_style_increment_exploratory_v0_1.py`；在 B 轨道 270 个严格核心失稳响应样本上完成 RBF 残差 Ridge、驾驶员 ID 对照、道路模块对照和多种置乱控制；生成指标表、逐样本表、固定预测图、坏样本图、置乱汇总、gate 表和中文报告。
 - 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
 - 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
 - 最近一次结果是什么：RBF test RMSE=0.533667；RBF+last60 风格 test RMSE=0.534559；风格有效性结论仍为 blocked。
 - 当前最大风险是什么：session-level 探索性收益可能来自驾驶员身份、道路/场景分布或小样本偶然性；如果物理指标和坏样本图不改善，不能升级为主线。
 - 下一步准备做什么：补 subject-level/跨 session 风格验证，继续比较真实风格、驾驶员 ID、同被试置乱、跨被试置乱、道路均衡置乱；生理/EEG 仍阻塞。
 - 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage04_style_increment_exploratory_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_increment_exploratory_v0_1/tables/style_increment_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/04_style/stage04_style_increment_exploratory_v0_1/figures/style_increment_metric_summary_test.png`。
+
+
 
 ## 最新更新：2026-05-13 05:08
 
@@ -459,41 +421,6 @@
 - 当前最大风险：这些响应分解标签来自事件后方向盘轨迹，若误放进推理输入、split 条件或标准化条件会造成严重泄漏；下一步必须只把它们作为监督目标/辅助任务/评价维度。
 - 下一步准备做什么：在 B 轨道优先做车辆-only 响应分解/Transformer 对照，先预测方向、幅值桶、峰值时间桶、启动延迟桶、响应形态和尾段状态，再比较关键点+残差轨迹是否改善坏样本。
 - 用户可以优先查看：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_response_decomposition_labels_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_response_decomposition_labels_v0_1/tables/response_decomposition_sample_labels.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_response_decomposition_labels_v0_1/figures/b_track_mean_gt_trajectories_by_morphology.png`。
-
-## 最新更新：2026-05-13 00:55
-
-- 当前阶段：阶段 3，B 轨道车辆-only 坏样本物理复查完成；仍未进入连续风格、生理或 EEG 有效性验证。
-- 当前正在做什么：把 `B_response3s_strict_core` 上 val 选中的 `rbf_kernel_ridge_context_no_subject` 的 test 坏样本失败类型整理成表、图和中文报告。
-- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`；只分析 B 轨道 test 40 个样本，不训练新模型，不使用生理、脑电、连续风格、驾驶员 ID 或服务器。
-- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
-- 服务器是否在运行：未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
-- 最近一次结果是什么：B 轨道 RBF KRR 的 high-RMSE top20% 阈值为 sample RMSE>=0.657，共 8 个坏样本；全部 40 个 test 样本中错侧 9/40，严重幅值不足 5/40，大幅响应漏召回 2/40，峰值时间大误差 9/40，启动延迟大误差 7/40，反向修正计数不匹配 40/40。最差 8 个样本里 wrong-side 3/8，严重幅值不足 3/8，大幅响应漏召回 2/8，峰值时间大误差 4/8。
-- 当前最大风险是什么：如果只看 B 轨道 RBF KRR 的整体 RMSE，会掩盖反向修正计数全不匹配这一结构性失败；下一步不能直接用生理/风格解释增益，必须先建立结构化车辆-only 响应分解参考。
-- 下一步准备做什么：进入车辆-only 响应分解模型设计：优先预测方向、幅值、峰值时间、反向修正/多段修正类型，再预测轨迹；同时保留 B 轨道坏样本表作为固定复查样本。
-- 用户可以优先查看哪些文件：
-  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_user_summary_cn.md`
-  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_summary.csv`
-  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_top_bad_samples.csv`
-  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_failure_flag_rates.png`
-  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_peak_amp_scatter.png`
-
-## 最新更新：2026-05-13 00:37
-
-- 当前阶段：阶段 3，干净响应任务车辆-only 对照验收完成；仍然没有进入连续风格、生理或 EEG 有效性验证。
-- 当前正在做什么：整理 `A_instant2s_core` 和 `B_response3s_strict_core` 两条干净任务轨道的车辆-only 基线结果，并把结果写入项目看板、任务队列、产物索引和每日日志。
-- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`；在 84 个 2 秒即时响应核心候选和 270 个 3 秒响应覆盖严格核心候选上评估零响应、趋势外推、训练均值、事件均值、ridge、rich ridge、RBF KRR、KNN template、direction-gated KNN 和 peak-scaled template。
-- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
-- 服务器是否在运行：未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
-- 最近一次结果是什么：A 轨道按 val RMSE 选择 `knn_template_context_no_subject`，test RMSE=0.428130，错侧率=0.333333，大幅响应召回=0.600000；但 A 轨道 test 只有 12 个事件，且 KNN train RMSE 近 0，只能作为诊断候选。B 轨道按 val RMSE 选择 `rbf_kernel_ridge_context_no_subject`，test RMSE=0.533667，错侧率=0.225000，大幅响应召回=0.750000，严重幅值不足率=0.125000；但反向修正计数完全匹配率仍为 0.000000，坏样本图显示多段/反向响应仍明显不足。
-- 当前最大风险是什么：如果直接把 KNN 在小样本 A 轨道上的 val/test 表现当作主结论，会把模板记忆风险误判为泛化能力；如果只看 B 轨道 RMSE，又会忽略反向修正、多段修正和长事件仍未解决。
-- 下一步准备做什么：优先复查 B 轨道固定图和坏样本图，决定是否把 B 轨道 RBF KRR 作为下一轮结构化车辆-only 参考；A 轨道暂作为即时响应诊断，不升级为主线结论。继续阻止风格/生理/EEG 有效性结论，直到强车辆基线和物理错误闭环更稳定。
-- 用户可以优先查看哪些文件：
-  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_user_summary_cn.md`
-  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_metrics.csv`
-  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/clean_task_vehicle_metric_summary_test.png`
-  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_bad_samples_test.png`
-
-# R2E-Steering 项目总进度看板
 
 ## 最新更新：2026-05-13 00:18
 
@@ -875,3 +802,188 @@ instability_ay_roll        12
   1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/scene_design_working_map_v0_3_cn.md`
   2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/ego_direction_scene_event_source_map_v0_3.csv`
   3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_scene_trigger_user_summary_cn.md`
+## 追加更新：2026-05-12 20:40
+
+- 当前阶段：阶段 2 补充审计，已完成“被试方向设计点与候选锚点重建 v0.4”。
+- 当前正在做什么：不训练模型，基于用户提供的小论文、道路配置和已有车辆轨迹投影，整理每类场景更合理的候选锚点来源。
+- 已完成什么：提取小论文中的场景设计依据，解析 `_Area2.cfg` 中车道和 `mu` 信息，生成 2401 行候选锚点/上下文点，并输出中文报告和用户查看版总结。
+- 最近一次结果：弯道和低附着两类证据最清楚；`curve1/curve2` 可优先比较道路入口、横滚峰值和横向加速度峰值；`differentmu_road` 可优先比较低 `mu` 进入点和 `mu` 跳变点。`longstraight` 25/26 背景车流不作为被试方向主锚点。`fix_road`、`stop`、`zd` 仍需更具体实验设计说明或可视化复核。
+- 当前最大风险：候选锚点很多，但不能直接全部进入训练；如果不做可视化复核，仍可能把车身响应峰值或方向盘动作误当成事件触发点。
+- 下一步准备做什么：生成候选锚点可视化图，优先检查 `curve1/curve2` 和 `differentmu_road`，并把旧锚点分成“可保留、偏早、偏晚、语义不清”。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_ego_direction_design_anchor_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/ego_direction_design_anchor_rebuild_v0_4_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/small_paper_scene_design_extract_v0_4.md`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_candidates_v0_4.csv`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_module_summary_v0_4.csv`
+
+## 追加更新：2026-05-12 20:55
+
+- 当前阶段：阶段 2 补充审计，已根据用户说明修正 `middle_section` 的事件语义。
+- 当前正在做什么：不训练模型，修正候选锚点规则，把道路连接段从“背景/过渡段”改为“连续超车负荷事件段”。
+- 已完成什么：更新 `build_ego_direction_design_anchors_v0_4.py`，重新生成候选锚点表。候选总数从 2401 行更新为 4209 行；其中 `middle_section` 现在有 2260 行连续超车候选，包括入口、中点、横向偏移变化峰值、横向加速度峰值、横摆角速度峰值各 452 行。
+- 最近一次结果：`middle_section` 已进入优先可视化复核列表，和弯道、低附着一起作为三类最值得先重建锚点的场景。
+- 当前最大风险：连接段是连续负荷，不是单点突发事件；如果把所有连接段入口都当强事件，会引入弱响应/无响应样本。因此必须用横向偏移、横摆和横向加速度筛选。
+- 下一步准备做什么：优先生成 `middle_section` 连续超车锚点可视化图，再画 `curve1/curve2` 和 `differentmu_road`。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/middle_section_continuous_overtaking_correction_20260512_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_ego_direction_design_anchor_user_summary_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_candidates_v0_4.csv`
+
+## 追加更新：2026-05-12 21:20
+
+- 当前阶段：阶段 2 补充审计，已根据用户最新说明修正 `longstraight` 和维修路段的变道触发语义。
+- 当前正在做什么：不训练模型，继续把道路/场景设计触发点与候选锚点清单对齐。
+- 已完成什么：更新 `build_ego_direction_design_anchors_v0_4.py`，将 `longstraight` 的 MAN TGL 25->26 显式变道、Chrysler300 Stop，以及 `fix_road` 的 MAN TGL 25->26、BMW m340 26->25 显式变道纳入候选锚点。
+- 最近一次结果：候选锚点总数从 4209 行更新为 4519 行。`longstraight` 现在有场景上下文入口 85 行、显式变道触发点 85 行、显式停车触发点 85 行；`fix_road` 现在有显式变道触发点 140 行。
+- 当前最大风险：显式触发点仍不能直接等同最终训练锚点，必须检查触发点附近是否有被试车辆横向/纵向响应；否则仍可能把无响应背景事件混入训练样本。
+- 下一步准备做什么：优先生成 `middle_section`、`longstraight`、`fix_road`、`curve1/curve2`、`differentmu_road` 的候选锚点可视化图，比较设计触发点、车身姿态峰值、旧锚点和方向盘响应。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/longstraight_fixroad_lanechange_trigger_correction_20260512_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_ego_direction_design_anchor_user_summary_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/ego_direction_design_anchor_v0_4/tables/ego_direction_design_anchor_module_summary_v0_4.csv`
+
+## 追加更新：2026-05-12 21:45
+
+- 当前阶段：阶段 2 补充审计，已完成事件候选自动筛选 v0.5。
+- 当前正在做什么：没有训练模型；当前把 v0.4 的 4519 个候选锚点按“设计证据 + 车身响应 + 可训练窗口 + 旧锚点接近程度”进行自动评分和分层。
+- 已完成什么：新增 `filter_event_anchor_candidates_v0_5.py`，输出全部候选评分表、去重后复核清单、高置信复核清单、分场景统计、概览图和 56 张代表性复核图。
+- 最近一次结果：4519 个候选中，去重后建议复核 534 个，高置信复核 314 个。高置信复核主要来自 `middle_section` 连续超车段入口 80 个、`curve1/curve2` 道路模块入口 103 个、`fix_road` 显式变道 31 个、`differentmu_road` 低附着/μ 变化候选 80 个、`longstraight` 显式停车 17 个和显式变道 3 个。
+- 当前最大风险：自动筛选只是第一关，不能直接当最终训练样本；特别是车身响应峰值只作确认点，不能直接定因果锚点。
+- 下一步准备做什么：查看代表性复核图，把候选分成“可进入样本清单、偏早、偏晚、无明显响应、语义不清”，再生成 v0.6 样本清单。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_event_filter_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_candidate_filter_v0_5_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidates_high_confidence_v0_5.csv`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/figures/event_candidate_filter_overview_v0_5.png`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/figures/review_panels`
+
+## 追加更新：2026-05-12 21:55
+
+- 当前阶段：阶段 2 补充审计材料整理，已完成给 GPTPro 的事件锚点审查证据包。
+- 当前正在做什么：没有训练模型，没有服务器任务。当前只整理可发送材料。
+- 已完成什么：把事件筛选报告、核心表格、概览图、按场景精选复核图、`longstraight/fix_road` 修正说明和 v0.4/v0.5 用户总结打包。
+- 最近一次结果：压缩包已生成，大小约 3.6 MB，内部 31 个条目，已检查可打开。
+- 当前最大风险：GPTPro 回复只能作为外部审查意见，不能替代本地可视化复核和后续样本清单验证。
+- 用户可以优先查看或发送：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512.zip`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512/00_README_CN.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_review_pack_20260512/01_GPTPRO_PROMPT_CN.md`
+
+## 追加更新：2026-05-12 22:35
+
+- 当前阶段：阶段 2 补充审计，已收到并归档 GPTPro 对 v0.4/v0.5 事件锚点分析的回复。
+- 当前正在做什么：没有训练模型；正在把 GPTPro 的审查意见转成 v0.6 样本筛选规则。
+- 已完成什么：归档 GPTPro 回复摘要、决策记录和行动项；新增 `event_v0_6_screening_rule_from_gptpro_20260512_cn.md`。
+- 最近一次结果：GPTPro 支持当前暂停盲目改模型、优先重审事件锚点和样本清单；建议 v0.6 只先拿小而干净的核心样本，优先 `curve1/curve2`、`differentmu_road raw μ`、人工通过的 `fix_road`，暂缓 `middle_section`、`longstraight`、`stop`、`curve3/zd` 进入第一版训练。
+- 当前最大风险：不能把 GPTPro 建议直接当结论，仍需要本地复核图和 v0.6 表格验证。
+- 下一步准备做什么：基于 56 张代表性复核图生成复核标注表，并按 `pass/early/late/weak_response/continuous/coordinate_issue/unclear/exclude` 标注，随后生成 v0.6 四类事件表。
+- 用户可以优先查看：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_reply_20260512/20260512_event_anchor_v05_response_manualpaste.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_reply_20260512/20260512_event_anchor_v05_decision_filled.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/gptpro_event_anchor_reply_20260512/20260512_event_anchor_v05_action_items_filled.md`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/event_v0_6_screening_rule_from_gptpro_20260512_cn.md`
+## 最新更新：2026-05-13 00:37
+
+- 当前阶段：阶段 3，干净响应任务车辆-only 对照验收完成；仍然没有进入连续风格、生理或 EEG 有效性验证。
+- 当前正在做什么：整理 `A_instant2s_core` 和 `B_response3s_strict_core` 两条干净任务轨道的车辆-only 基线结果，并把结果写入项目看板、任务队列、产物索引和每日日志。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`；在 84 个 2 秒即时响应核心候选和 270 个 3 秒响应覆盖严格核心候选上评估零响应、趋势外推、训练均值、事件均值、ridge、rich ridge、RBF KRR、KNN template、direction-gated KNN 和 peak-scaled template。
+- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
+- 最近一次结果是什么：A 轨道按 val RMSE 选择 `knn_template_context_no_subject`，test RMSE=0.428130，错侧率=0.333333，大幅响应召回=0.600000；但 A 轨道 test 只有 12 个事件，且 KNN train RMSE 近 0，只能作为诊断候选。B 轨道按 val RMSE 选择 `rbf_kernel_ridge_context_no_subject`，test RMSE=0.533667，错侧率=0.225000，大幅响应召回=0.750000，严重幅值不足率=0.125000；但反向修正计数完全匹配率仍为 0.000000，坏样本图显示多段/反向响应仍明显不足。
+- 当前最大风险是什么：如果直接把 KNN 在小样本 A 轨道上的 val/test 表现当作主结论，会把模板记忆风险误判为泛化能力；如果只看 B 轨道 RMSE，又会忽略反向修正、多段修正和长事件仍未解决。
+- 下一步准备做什么：优先复查 B 轨道固定图和坏样本图，决定是否把 B 轨道 RBF KRR 作为下一轮结构化车辆-only 参考；A 轨道暂作为即时响应诊断，不升级为主线结论。继续阻止风格/生理/EEG 有效性结论，直到强车辆基线和物理错误闭环更稳定。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_vehicle_baselines_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/tables/clean_task_vehicle_metrics.csv`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/clean_task_vehicle_metric_summary_test.png`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1/figures/B_response3s_strict_core_bad_samples_test.png`
+## 最新更新：2026-05-13 00:55
+
+- 当前阶段：阶段 3，B 轨道车辆-only 坏样本物理复查完成；仍未进入连续风格、生理或 EEG 有效性验证。
+- 当前正在做什么：把 `B_response3s_strict_core` 上 val 选中的 `rbf_kernel_ridge_context_no_subject` 的 test 坏样本失败类型整理成表、图和中文报告。
+- 已完成什么：新增并运行 `stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`；只分析 B 轨道 test 40 个样本，不训练新模型，不使用生理、脑电、连续风格、驾驶员 ID 或服务器。
+- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
+- 服务器是否在运行：未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
+- 最近一次结果是什么：B 轨道 RBF KRR 的 high-RMSE top20% 阈值为 sample RMSE>=0.657，共 8 个坏样本；全部 40 个 test 样本中错侧 9/40，严重幅值不足 5/40，大幅响应漏召回 2/40，峰值时间大误差 9/40，启动延迟大误差 7/40，反向修正计数不匹配 40/40。最差 8 个样本里 wrong-side 3/8，严重幅值不足 3/8，大幅响应漏召回 2/8，峰值时间大误差 4/8。
+- 当前最大风险是什么：如果只看 B 轨道 RBF KRR 的整体 RMSE，会掩盖反向修正计数全不匹配这一结构性失败；下一步不能直接用生理/风格解释增益，必须先建立结构化车辆-only 响应分解参考。
+- 下一步准备做什么：进入车辆-only 响应分解模型设计：优先预测方向、幅值、峰值时间、反向修正/多段修正类型，再预测轨迹；同时保留 B 轨道坏样本表作为固定复查样本。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_vehicle_instability_clean_task_bad_sample_review_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_failure_summary.csv`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/tables/b_track_rbf_top_bad_samples.csv`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_failure_flag_rates.png`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1/figures/b_track_rbf_peak_amp_scatter.png`
+
+## 最新更新：2026-05-13 01:05
+
+- 当前阶段：阶段 2 回补，按 GPTPro 最新建议重新生成 `episode-first` 事件样本 v0.6；当前先不继续训练。
+- 当前正在做什么：把事件筛选逻辑从“设计触发点是不是事件”改为“是否真实出现车辆动态异常、方向盘响应和回正/纠正 episode”，并把样本分为严格核心、坐标需复核扩展、弱响应/负样本、连续任务复核、场景暂缓复核和不确定复核。
+- 已完成什么：更新并运行 `build_episode_first_events_v0_6.py`；脚本优先用横向加速度、横摆角速度和横滚速率构造非横向偏移动态强度，避免横向偏移坐标跳变污染 episode 判定；同时把横向偏移坐标跳变作为复核标记，而不是简单删除所有样本。
+- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
+- 服务器是否在运行：本轮未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
+- 最近一次结果是什么：从 908 个高置信车辆动态 episode 中，得到 19 个第一版最干净核心训练候选、246 个“车辆动态和方向盘响应成立但横向偏移坐标需复核”的扩展候选、298 个车辆动态明显但方向盘响应不足的弱响应/负样本、306 个连续超车任务复核样本、30 个场景语义暂缓复核样本和 9 个因果顺序不清样本。
+- 当前最大风险是什么：严格核心样本只有 19 个，直接训练完整轨迹模型样本太少；扩展候选数量足够，但必须人工确认坐标跳变是不是道路坐标重置，并在后续车辆-only 训练中考虑不使用横向偏移特征或单独标记这类样本。
+- 下一步准备做什么：先人工查看 36 张分组代表图，确认严格核心、坐标复核扩展和弱响应负样本是否符合直觉；若代表图通过，再用严格核心和“去掉横向偏移特征的扩展候选”分别构建纯车辆/道路预测对照。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage02_episode_first_v0_6_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/episode_first_event_v0_6_cn.md`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_candidates_v0_6.csv`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/primary_training_events_v0_6.csv`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/coordinate_flagged_expansion_events_v0_6.csv`
+  6. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/tables/episode_decision_summary_v0_6.csv`
+  7. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/figures/episode_first_v0_6_summary.png`
+  8. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/episode_first_event_v0_6/figures/episode_review_panels`
+
+## 最新更新：2026-05-13 01:29
+
+- 当前阶段：阶段 3，episode-first v0.6 样本的纯车辆/道路预测对照完成；仍未进入连续风格、生理或 EEG 有效性验证。
+- 当前正在做什么：用 v0.6 的“严格核心 + 坐标需复核扩展候选”正样本检查纯车辆/道路模型是否比旧混合样本更好，并评估横向偏移坐标是否造成虚高。
+- 已完成什么：新增并运行 `stage03_episode_first_vehicle_baselines_v0_1.py`；评估 3 条轨道：2 秒扩展不使用横向偏移、3 秒扩展不使用横向偏移、3 秒扩展保留横向偏移作风险诊断。每条轨道 265 个事件，session-level split 为 train/val/test=183/37/45。
+- 正在运行什么任务：无。当前没有训练、没有后台脚本、没有服务器任务。
+- 服务器是否在运行：本轮未使用服务器，未读取 `服务器指令与密码.txt`，未记录任何凭据。
+- 最近一次结果是什么：旧 B 轨道 RBF KRR 的 test RMSE=0.533667、错侧率=0.225000、大幅响应召回=0.750000；本轮主轨道 `EP3_expanded_no_lateral_3s` 按 val 选择 formal ridge，test RMSE=0.679927、错侧率=0.266667、大幅响应召回=0.250000、严重幅值不足率=0.355556；保留横向偏移的 3 秒轨道 test RMSE=0.680265，未带来改善。
+- 当前最大风险是什么：如果只看“新样本没有提升 RMSE”，可能误判为 v0.6 无效；更合理的解释是 episode-first 样本更集中在真实大幅响应、回正、反打和复杂修正上，车辆-only 线性/模板模型更难处理。当前不能说新样本让预测变好，只能说新样本把目标事件筛得更接近研究目标，同时暴露出车辆-only 模型能力不足。
+- 下一步准备做什么：不建议马上加生理或连续风格补偿；先基于 v0.6 正样本做车辆-only 响应分解模型，把方向、幅值、峰值时间、回正/反打、多段修正先预测清楚，再进入轨迹回归。
+- 用户可以优先查看哪些文件：
+  1. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_episode_first_vehicle_baselines_user_summary_cn.md`
+  2. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_vehicle_metrics.csv`
+  3. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/tables/episode_first_vehicle_val_selected_models.csv`
+  4. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/figures/episode_first_vehicle_metric_summary_test.png`
+  5. `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_episode_first_vehicle_baselines_v0_1/figures/EP3_expanded_no_lateral_3s_bad_samples_test.png`
+# R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 06:50
+
+- 当前阶段：Stage 7c 候选轨迹导出与差异审计 v0.1 已完成；当前仍不升级多假设为主线。
+- 当前正在做什么：基于已导出的候选轨迹，准备判断下一步应改非 oracle selector，还是重新设计候选生成方式。
+- 已完成什么：新增并运行 `stage07c_candidate_trajectory_export_v0_1.py`；加载已有 RBF/KNN、keypoint residual 和 top-K checkpoint，导出 270 个 B 轨道严格核心失稳样本的候选轨迹 npz；生成候选指标表、逐样本指标、候选两两差异、候选特征与标签诊断、oracle 摘要、gate 表、5 张图、用户查看版总结和技术报告；已提交 `48b8c438 Add stage7c candidate trajectory export`。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：B 轨道 test 上 RBF/KNN RMSE=0.533667；top-K top1 RMSE=0.587865；RBF+topK oracle RMSE=0.415652，delta=-0.118014；broad oracle RMSE=0.410957，delta=-0.122710。oracle 上限明显，但 Stage 7c 没有训练非 oracle selector，不能作为可部署提升。
+- 当前最大风险是什么：候选池存在事后上限，但可部署选择机制仍没有解决；如果直接把 best-of-K/oracle 结果当模型性能，会高估当前车辆-only 能力，也会错误放行生理/EEG。
+- 下一步准备做什么：优先做 Stage 7d 非 oracle selector v0.2，使用 Stage 7c 导出的候选差异特征并严格 train/val/test 隔离；若仍退回 RBF/KNN，则转向重新设计候选生成方式，而不是进入生理/EEG。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07c_candidate_trajectory_export_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/tables/candidate_export_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/figures/candidate_metric_summary_test.png`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz`。
+# R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 06:58
+
+- 当前阶段：Stage 7d 非 oracle selector v0.2 已完成；gate=`no_upgrade`。
+- 当前正在做什么：收口当前多候选选择器路线，准备转向候选生成方式本身，而不是继续堆选择器。
+- 已完成什么：新增并运行 `stage07d_non_oracle_selector_v0_2.py`；只用 Stage 7c 的候选预测特征和道路/事件上下文训练 selector；显式排除 test 标签、oracle 特征、subject/session ID、生理、脑电和连续风格；生成 feature audit、allowed features、policy metrics、decision diagnostics、selected decisions、confusion、gate 表、3 张图、用户查看版总结和技术报告；已提交 `eb785f4a Add stage7d non-oracle selector`。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：val gate 选择 `always_rbf_reference`；test RMSE=0.533667，与 RBF/KNN 完全相同；test RBF 选择比例=1.000；broad oracle test RMSE=0.410957 仍只是诊断上限。Stage 7d 不能升级为多假设主线。
+- 当前最大风险是什么：当前候选池有上限，但非 oracle 特征无法稳定选择；继续堆 selector 很可能只得到“安全退回 RBF/KNN”或“test 退化”的结果。
+- 下一步准备做什么：Stage 7e 候选生成重设计协议：把候选显式绑定到方向、幅值、峰值时间、尾段回正/漂移、反向修正和多段修正，而不是先用现有 branch 再补 selector。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07d_non_oracle_selector_v0_2_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/tables/stage07d_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07d_non_oracle_selector_v0_2/figures/stage07d_validation_rmse_delta.png`。
+# R2E-Steering 项目总进度看板
+## 最新更新：2026-05-13 07:05
+
+- 当前阶段：Stage 7e 候选生成重设计审计 v0.1 已完成；当前不再继续 selector-only 路线。
+- 当前正在做什么：准备按 response-factorized candidate 思路实现下一版车辆-only 多候选生成，而不是继续在旧 branch 上训练选择器。
+- 已完成什么：新增并运行 `stage07e_candidate_generation_redesign_v0_1.py`；从真实方向盘标签提取方向、幅值、峰值时间、尾段、反向修正/多段修正响应类型；用 Stage 7c 候选轨迹审计每类响应的 RBF/KNN 误差、候选 oracle 误差、oracle gain 和 winner 分布；生成候选生成蓝图、下一实验计划、gate 表、4 张图、用户查看版总结和技术报告；已提交 `98552bf3 Add stage7e candidate generation redesign`。
+- 正在运行什么任务：没有后台任务；没有服务器任务；没有本地训练任务。
+- 服务器是否在运行：未使用服务器，未读取服务器指令与密码文件，未记录任何凭据。
+- 最近一次结果是什么：test RBF/KNN RMSE=0.533667；现有可部署候选池 oracle RMSE=0.410957，delta=-0.122710；test 非 RBF oracle winner 比例=0.700；coverage 中 16 个 test bucket 属于 `selector_gap_candidate_pool_has_signal`，说明候选池有信号但当前 selector-only 路线失败。
+- 当前最大风险是什么：如果继续只堆 selector，会反复得到退回 RBF/KNN 的安全策略；如果直接训练复杂多假设模型但不绑定响应物理类型，仍可能生成平滑相似候选。
+- 下一步准备做什么：Stage 7f 实现 response-factorized vehicle-only candidate v0.1：保留 RBF/KNN anchor，并增加方向/幅值、峰值时间、尾段模式、反向修正/多段修正和可靠性门控候选。
+- 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`。

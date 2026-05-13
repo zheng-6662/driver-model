@@ -1,4 +1,4 @@
-# R2E-Steering 当前任务队列
+# 当前任务队列
 
 ## 最新更新：2026-05-13 08:09
 
@@ -66,230 +66,6 @@
 
 ### 不需要服务器的任务
 - Stage 7i 归档、commit、Stage 7j split 设计和轻量复核均可本地完成。
-
-## 最新更新：2026-05-13 07:42
-
-## 正在做任务
-
-- Stage 7h val/test 选择不稳定诊断已完成并提交 Git；当前准备 Stage 7i 候选选择校准/验证集重构。
-
-## 已完成任务
-
-- Stage 7h：已生成候选 split 稳定性、类别分布偏移、数值分布偏移、逐样本收益、分 bucket 收益、keypoint target 误差复核、gate 表和 4 张诊断图；已提交 `d990f8e3`。
-- 已确认 test-best non-oracle=`rbf_resid_keypoint_scaled` 不能升级，因为它没有被 val gate 选中。
-- 已确认当前最大偏移信号：类别为 `response_family`，数值为 `prob_entropy`。
-
-## 待做任务
-
-- Stage 7i：候选选择校准或验证集重构。优先方案包括多折 session validation、response bucket 分层 gate、道路模块分层 gate、关键点不确定性/候选一致性评分。
-- 复核 `response_family` 和 `prob_entropy` 偏移是否解释 `rbf_resid_keypoint_scaled` 的 val/test 反转。
-- 在没有稳定非 oracle 选择前，不进入生理/EEG。
-
-## 阻塞任务
-
-- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选选择/校准未稳定。
-- 多假设主线升级：仍阻塞。Stage 7h 只是诊断，未产生新可部署模型。
-- test-only 选择 `rbf_resid_keypoint_scaled`：禁止作为结论，只能作为下一步选择校准的目标。
-
-## 可并行任务
-
-- response_family 分层 gate 设计。
-- road module/risk class 分层 gate 设计。
-- 关键点不确定性评分和候选一致性特征复核。
-
-## 需要服务器的任务
-
-- 当前无。Stage 7h 未使用服务器，Stage 7i 初版可本地完成。
-
-## 不需要服务器的任务
-
-- Stage 7h 归档、Git 提交、Stage 7i 校准诊断原型。
-
-## 最新更新：2026-05-13 07:33
-
-## 正在做任务
-
-- Stage 7g keypoint/segment 候选已完成并提交 Git；当前准备 Stage 7h val/test 选择不稳定诊断。
-
-## 已完成任务
-
-- Stage 7g：已实现 train-only 关键点回归、分段轨迹候选、RBF 关键点校正候选和 keypoint/segment oracle 诊断；已提交 `52de7176`。
-- 已确认 val gate 选择 `segment_abs_rf_blend_25`，但 test RMSE=0.536176，比 RBF/KNN 差 +0.002509，gate=`no_upgrade`。
-- 已确认 `rbf_resid_keypoint_scaled` 在 test 上 RMSE=0.508538，但它不是 val 选中的策略，因此只能作为下一步诊断信号，不能升级主线。
-
-## 待做任务
-
-- Stage 7h：复核 val/test 分布差异、关键点回归误差、候选置信度和校准，解释为什么 test 上存在好候选但 val gate 选不中。
-- 设计不看 test 标签的候选选择置信度：例如关键点不确定性、RBF/候选一致性、道路模块分层和 response bucket 分层。
-- 继续固定 RBF/KNN 为主参照，不进入生理/EEG。
-
-## 阻塞任务
-
-- 生理/EEG 有效性实验：仍阻塞。车辆-only keypoint/segment 候选选择未稳定。
-- 多假设主线升级：仍阻塞。Stage 7g 的可部署选中策略未超过 RBF/KNN。
-- 按 test 事后选择 `rbf_resid_keypoint_scaled`：禁止。该现象只能作为下一步校准/选择器诊断。
-
-## 可并行任务
-
-- val/test 分布差异表。
-- `rbf_resid_keypoint_scaled` 收益样本和 val 失败样本复盘。
-- keypoint target scatter 和错误分层复核。
-
-## 需要服务器的任务
-
-- 当前无。Stage 7g 未使用服务器，下一步校准诊断仍可先本地完成。
-
-## 不需要服务器的任务
-
-- Stage 7g 归档、Git 提交、Stage 7h 诊断表和图。
-
-## 最新更新：2026-05-13 07:19
-
-## 正在做任务
-
-- Stage 7f response-factorized vehicle-only candidate v0.1 已完成并提交 Git；当前准备 Stage 7g keypoint/segment candidate 设计。
-
-## 已完成任务
-
-- Stage 7f：已实现响应分解候选原型，输出 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、固定图、oracle gain 图、用户总结和技术报告；已提交 `12cef06b`。
-- 已确认 validation gate 最终选择 RBF/KNN 主参照，test RMSE=0.533667，delta=+0.000000，gate=`no_upgrade`。
-- 已确认 response-factorized oracle RMSE=0.440217、combo oracle RMSE=0.388119 只说明候选空间潜力，不是可部署提升。
-
-## 待做任务
-
-- Stage 7g：把 response-factorized 原型升级为可训练 keypoint/segment candidate，重点改幅值、尾段回正/漂移、反向修正和多段修正。
-- 复核 Stage 7f 中幅值因子和尾段因子预测不稳的样本，作为下一版候选生成训练标签和失败样本清单。
-- 继续把 RBF/KNN 作为车辆-only 主参照；任何新候选必须用 train 拟合、val 选策略、test 一次报告。
-
-## 阻塞任务
-
-- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选生成和非 oracle 选择仍未形成可部署提升。
-- 多假设主线升级：仍阻塞。当前只有 oracle/组合 oracle 上限，没有 validation gate 批准的可部署收益。
-- selector-only 继续堆模型：阻塞。Stage 7b、7d、7f 都未通过 gate。
-
-## 可并行任务
-
-- 幅值/尾段/修正段失败样本复盘。
-- Stage 7f oracle gain 样本图人工复核。
-- 下一版 keypoint/segment candidate 训练标签和固定图清单设计。
-
-## 需要服务器的任务
-
-- 当前无。Stage 7f 未使用服务器，下一步原型仍可先本地完成。
-
-## 不需要服务器的任务
-
-- Stage 7f 归档、Git 提交、Stage 7g 轻量原型设计和图表复核。
-
-## 最新更新：2026-05-13 07:05
-
-## 正在做任务
-
-- Stage 7f response-factorized vehicle-only candidate v0.1 准备：按 Stage 7e 蓝图实现新的候选生成，而不是继续调旧 selector。
-
-## 已完成任务
-
-- Stage 7e 候选生成重设计审计 v0.1：已生成响应类型表、候选覆盖表、winner 分布、候选生成蓝图、下一实验计划、gate 表和 4 张图；gate 阻塞 selector-only 继续路线；已提交 `98552bf3`。
-- Stage 7d 非 oracle selector v0.2：val gate 选择 RBF/KNN，未升级。
-- Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
-
-## 待做任务
-
-- Stage 7f：实现 response-factorized candidates。候选至少包括 RBF anchor、方向/幅值 quantile、峰值时间/onset、尾段模式、反向/多段修正、可靠性门控。
-- 建立 Stage 7f 固定图和坏样本图：必须覆盖 Stage 7e 的高优先级 response buckets。
-- 如果 Stage 7f 仍不能产生非 oracle 增益，再回到样本定义或响应分解标签，而不是进入生理/EEG。
-
-## 阻塞任务
-
-- selector-only 路线：阻塞。Stage 7b 和 Stage 7d 均退回 RBF/KNN。
-- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选生成和非 oracle 选择仍未稳定。
-- 多假设主线升级：仍阻塞。当前只有 oracle 上限，没有可部署提升。
-
-## 可并行任务
-
-- 复核 Stage 7e 高优先级 bucket；准备 Stage 7f 训练标签；设计固定图样本清单。
-
-## 需要服务器的任务
-
-- 当前无。Stage 7f 初版优先本地小规模实现和验证。
-
-## 不需要服务器的任务
-
-- Stage 7f 脚本实现、协议表、图表和报告。
-
-# R2E-Steering 当前任务队列
-## 最新更新：2026-05-13 06:58
-
-## 正在做任务
-
-- Stage 7e 候选生成重设计协议：基于 Stage 7c/7d 的证据，把下一步从“继续堆 selector”改为“重新设计可解释候选生成”。
-
-## 已完成任务
-
-- Stage 7d 非 oracle selector v0.2：已训练 logistic/RF selector 和置信度 fallback；val gate 选择 `always_rbf_reference`；test delta=0，RBF 选择比例=1.0；gate=`no_upgrade`；已提交 `eb785f4a`。
-- Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
-- Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
-
-## 待做任务
-
-- Stage 7e：定义新的候选生成协议，要求候选覆盖方向、幅值、峰值时间、尾段、反向修正、多段修正和困难样本。
-- 决定是否需要先做一个不训练的候选模板/规则上限审计，再进入可训练多假设模型。
-- 继续保持 Stage 5 生理/EEG blocked，直到车辆-only 候选生成与选择问题有稳定基线。
-
-## 阻塞任务
-
-- 生理/EEG 有效性实验：仍阻塞。原因是车辆-only 多候选非 oracle 选择未解决。
-- 多假设主线升级：仍阻塞。原因是 Stage 7d 选择器无法超过 RBF/KNN。
-
-## 可并行任务
-
-- 复核 Stage 7c oracle gain 样本图；整理候选生成设计维度；准备 Stage 7e 方案表。
-
-## 需要服务器的任务
-
-- 当前无。
-
-## 不需要服务器的任务
-
-- Stage 7e 协议设计、图表复核、报告更新、Git 提交。
-
-# R2E-Steering 当前任务队列
-## 最新更新：2026-05-13 06:50
-
-## 正在做任务
-
-- Stage 7 后续方向判断：基于 Stage 7c 导出的完整候选轨迹，决定继续做非 oracle selector v0.2，还是重新设计候选生成。
-
-## 已完成任务
-
-- Stage 7c 候选轨迹导出与差异审计 v0.1：已复现 RBF/KNN、keypoint residual、top-K branch/top1 预测，导出 `stage07c_candidate_trajectories.npz`，并生成指标表、差异表、oracle 摘要、gate 表、固定图、高差异图和 oracle gain 图；已提交 `48b8c438`。
-- Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
-- Stage 7a 非 oracle 选择协议 v0.1：已固定候选池、允许/禁止输入、评估计划和升级 gate。
-
-## 待做任务
-
-- Stage 7d：非 oracle selector v0.2。只允许使用事件前信息和候选预测自身特征，训练只用 train，调参只用 val，test 只报告。
-- 如果 Stage 7d 仍不能超过 RBF/KNN：重新设计候选生成，使候选覆盖方向、幅值、峰值时间、尾段回正/漂移和多段修正，而不是继续堆 selector。
-- 继续保持 Stage 5 生理/EEG blocked，直到车辆-only 候选选择问题有可复验结果。
-
-## 阻塞任务
-
-- 生理/EEG 有效性实验：当前阻塞。原因是车辆-only 多候选的非 oracle 选择仍未解决，不能把车辆-only 未解决误差归因给生理/EEG。
-- 最终多假设主线升级：当前阻塞。原因是 oracle 上限明显，但还没有非 oracle 可部署策略超过 RBF/KNN。
-
-## 可并行任务
-
-- 候选差异特征审查、坏样本图人工快速复核、Stage 7d selector 协议设计、候选生成新路线草案。
-
-## 需要服务器的任务
-
-- 当前无。Stage 7c 未使用服务器；下一步轻量 selector 也优先本地。
-
-## 不需要服务器的任务
-
-- Stage 7d selector v0.2、候选差异图表复核、报告更新、Git 提交。
-
-# 当前任务队列
 
 ## 最新更新：2026-05-13 06:39
 
@@ -422,7 +198,6 @@
 - 已新增并运行 `stage06c_selector_feature_revision_v0_1.py`。
 - 已确认 val 选择 `rf_engineered_shallow`，test RMSE=0.544356，比 RBF 差 +0.010689。
 - 已确认该 selector 改善错侧率和大幅响应召回，但当前 gate 为 `no_upgrade_current_revision`。
-- 已提交 `eae76c2f Add stage6c selector feature revision`。
 
 ### 待做任务
 - 复盘 RF selector 的 6 个 FN 和 13 个 FP。
@@ -542,8 +317,8 @@
 
 ### 已完成任务
 - 已新增并运行 `stage04_style_cross_split_validation_v0_1.py`。
-- 已完成 session-level 与 subject-level 两类切分的 RBF+连续风格残差对照；已提交 `95f21aae Add style cross split validation`。
-- 已确认当前 last60 连续风格在两类切分下没有稳定超过 RBF：session 0.533667->0.534559，subject 0.484847->0.483510。
+- 已完成 session-level 与 subject-level 两类切分的 RBF+连续风格残差对照。
+- 已确认当前 last60 连续风格在两类切分下都没有稳定超过 RBF：session 0.533667->0.534559，subject 0.484847->0.483510。
 
 ### 待做任务
 - 写阶段 4 收口说明：当前表示/融合下连续风格没有形成强证据。
@@ -570,7 +345,7 @@
 
 ### 已完成任务
 - 已新增并运行 `stage04_style_increment_exploratory_v0_1.py`。
-- 已生成 RBF+连续风格、RBF+驾驶员 ID、RBF+道路模块、RBF+风格+ID 和置乱控制的指标、逐样本表、固定预测图、坏样本图和 gate 表；已提交 `e93ffab6 Add style increment exploratory audit`。
+- 已生成 RBF+连续风格、RBF+驾驶员 ID、RBF+道路模块、RBF+风格+ID 和置乱控制的指标、逐样本表、固定预测图、坏样本图和 gate 表。
 - 当前 RBF test RMSE=0.533667，RBF+last60 风格 test RMSE=0.534559。
 
 ### 待做任务
@@ -592,6 +367,8 @@
 
 ### 不需要服务器的任务
 - 当前阶段 4 风格轻量对照和报告整理均可本地完成。
+
+
 
 ## 最新更新：2026-05-13 04:56
 
@@ -1188,67 +965,6 @@
 
 ### 不需要服务器的任务
 - 响应分解标签归档、报告更新、Git 提交、车辆-only 结构化 baseline 脚本设计。
-
-## 2026-05-13 00:55 阶段 3 B 轨道车辆-only 坏样本复查
-
-### 已完成任务
-- 完成 `B_response3s_strict_core` + `rbf_kernel_ridge_context_no_subject` 的 test 坏样本物理失败类型复查。
-- 输出 B 轨道 RBF KRR 的失败标记汇总、top bad 样本表、分响应形态/分被试/分道路模块汇总、3 张图、用户查看版中文总结和技术报告。
-- 确认本轮没有训练新模型，没有使用生理、脑电、连续风格、驾驶员 ID、服务器或服务器密码文件。
-
-### 正在做任务
-- 整理并提交 B 轨道坏样本复查产物。
-
-### 待做任务
-- 基于 B 轨道坏样本表，设计车辆-only 响应分解模型：方向、幅值、峰值时间、反向修正/多段修正类型、轨迹残差。
-- 把 B 轨道 top bad 样本固定为下一轮结构化车辆-only 模型的必看图集。
-
-### 阻塞任务
-- 连续风格、生理和 EEG 有效性验证继续被强车辆基线结构性失败阻塞。
-
-### 可并行任务
-- 响应分解标签表构建。
-- B 轨道固定图协议整理。
-- A 轨道小样本稳定性复核。
-
-### 需要服务器的任务
-- 暂无。本轮坏样本复查已在本地 CPU 完成。
-
-### 不需要服务器的任务
-- 失败类型统计、响应分解标签设计、中文报告整理。
-
-## 2026-05-13 00:37 阶段 3 干净响应任务车辆-only 对照
-
-### 已完成任务
-- 完成 `A_instant2s_core` 轨道车辆-only 对照：84 个事件，session-level train/val/test=62/10/12。
-- 完成 `B_response3s_strict_core` 轨道车辆-only 对照：270 个事件，session-level train/val/test=188/42/40。
-- 输出 clean-task 指标表、逐样本指标表、模型信息表、val 选择表、固定预测图、坏样本图、用户查看版中文总结和技术报告。
-- 已确认本轮没有使用生理、脑电、连续风格、驾驶员 ID、服务器或服务器密码文件。
-
-### 正在做任务
-- 整理并提交本轮 clean-task 车辆-only 对照产物。
-
-### 待做任务
-- 复查 `B_response3s_strict_core_bad_samples_test.png` 和逐样本表，标出 RBF KRR 仍失败的主要物理类型。
-- 决定下一轮是否在 B 轨道上推进结构化车辆-only 响应分解模型，而不是继续直接堆 KNN/template。
-- 把 A 轨道作为小样本即时响应诊断，不把单次 KNN 排名升级为主线。
-
-### 阻塞任务
-- 连续风格、生理和 EEG 有效性验证仍被强车辆基线稳定性和物理错误闭环阻塞。
-- 长事件/持续控制轨道仍未进入主线训练，需要单独拆分或复核。
-
-### 可并行任务
-- B 轨道坏样本物理归因。
-- A 轨道小样本稳定性复核。
-- 清理固定图协议和固定坏样本索引。
-
-### 需要服务器的任务
-- 暂无。本轮 clean-task 车辆-only 对照已在本地 CPU 完成。
-
-### 不需要服务器的任务
-- 指标表复查、坏样本图复盘、报告整理、下一轮结构化车辆-only 方案设计。
-
-# 当前任务队列
 
 ## 最新更新：2026-05-13 00:18
 
@@ -1851,3 +1567,447 @@
 
 ### 不需要服务器的任务
 - 旧代码全量 `vehicle_direct` 单 seed 车辆-only 对照、逐样本评估、固定图/坏样本图和中文报告。
+## 2026-05-12 20:45 阶段 2 补充任务状态
+
+### 已完成
+
+- 提取小论文中的场景设计和锚点依据。
+- 解析道路配置中的车道、被试方向和 `mu` 附着系数。
+- 生成被试方向候选锚点清单 v0.4。
+- 更新用户查看版总结、完整报告、项目状态和产物索引。
+- 根据用户补充，将 `middle_section` 从背景/过渡段修正为连续超车负荷事件段，并重新生成候选锚点清单。
+
+### 正在做
+
+- 当前没有训练任务在运行。
+- 当前没有服务器任务在运行。
+
+### 待做
+
+- 生成候选锚点可视化图，优先检查 `curve1/curve2` 和 `differentmu_road`。
+- 生成 `middle_section` 连续超车可视化图，优先检查连接段入口、横向偏移变化峰值、横向加速度峰值、横摆角速度峰值和旧锚点关系。
+- 将旧锚点与候选锚点分为“可保留、偏早、偏晚、语义不清”。
+- 继续确认 `fix_road`、`stop`、`zd` 的具体实验设计位置。
+
+### 阻塞或风险
+
+- `curve3` 和 `zd` 当前没有记录级候选，说明现有道路映射或车辆记录覆盖不足，需要继续查原因。
+- 4209 行候选锚点不能直接进入训练，必须先做可视化复核。
+- `middle_section` 是连续负荷段，不是单点突发事件；需要用车身横向动态筛选明显超车/变道样本。
+- 不能把方向盘响应峰值当作事件触发点真值，只能作为旧方案对照或响应标签。
+
+## 2026-05-12 21:20 阶段 2 触发点语义修正
+
+### 已完成
+
+- 根据用户最新说明，修正 `longstraight` 和 `fix_road` 的事件语义。
+- `longstraight` 已加入 MAN TGL 25->26 显式变道触发点和 Chrysler300 Stop 触发点。
+- `fix_road` 已加入 MAN TGL 25->26 和 BMW m340 26->25 两类显式变道触发点。
+- 候选锚点清单已从 4209 行更新为 4519 行。
+- 已更新用户总结、完整报告、场景工作表和修正说明。
+
+### 正在做
+
+- 当前没有训练任务在运行。
+- 当前没有服务器任务在运行。
+
+### 待做
+
+- 生成 `longstraight` 显式变道/停车触发可视化图，比较触发点、旧锚点、横向加速度、横摆角速度、横向偏移、制动和方向盘响应。
+- 生成 `fix_road` 两类显式变道触发可视化图，确认维修/施工变道是否引发被试避让或修正。
+- 继续生成 `middle_section` 连续超车、`curve1/curve2` 弯道和 `differentmu_road` 低附着的候选锚点可视化图。
+- 将旧锚点与候选锚点分为“可保留、偏早、偏晚、语义不清”四类。
+
+### 阻塞或风险
+
+- 显式触发点只是候选，不是最终真值；必须经过车身姿态和方向盘响应图确认。
+- 普通连续车流和显式触发对象要分开处理，不能把整段车流全部当事件，也不能把显式触发全部当背景。
+
+## 2026-05-12 21:45 事件候选筛选 v0.5
+
+### 已完成
+
+- 对 v0.4 的 4519 个候选锚点完成自动评分。
+- 生成去重后建议复核清单 534 个。
+- 生成高置信复核清单 314 个。
+- 生成分场景统计、概览图和 56 张代表性复核图。
+
+### 正在做
+
+- 当前没有训练任务在运行。
+- 当前没有服务器任务在运行。
+
+### 待做
+
+- 人工/半自动查看 56 张代表性复核图，先判断锚点是否明显偏早、偏晚或无响应。
+- 对高置信复核清单按场景抽样扩大绘图，特别是 `fix_road` 显式变道、`longstraight` 显式变道/停车、`middle_section` 连续超车和 `differentmu_road` 低附着。
+- 生成 v0.6 事件样本候选清单，只保留“设计点合理 + 响应合理 + 窗口可训练”的事件。
+
+### 阻塞或风险
+
+- 高置信复核不是最终训练样本。
+- 当前高置信中 `longstraight` 显式变道只有 3 个，说明该触发与被试响应关系需要重点看图确认；不能直接说变道无效，也不能直接大量纳入样本。
+- `middle_section` 高置信多来自段入口，但连续超车是持续任务，不一定是单点触发；需要看是否发生明显横向动作。
+
+## 2026-05-12 22:35 GPTPro 回复后的任务状态
+
+### 已完成
+
+- 归档 GPTPro 对 v0.4/v0.5 事件锚点分析的回复摘要。
+- 生成已填充的决策记录和行动项。
+- 生成 v0.6 事件样本筛选规则草案。
+
+### 正在做
+
+- 当前没有训练任务在运行。
+- 当前没有服务器任务在运行。
+
+### 待做
+
+- 基于 56 张代表性复核图生成复核标注表。
+- 标注字段包括 `pass/early/late/weak_response/continuous/coordinate_issue/unclear/exclude`。
+- 生成 v0.6 四类事件表：
+  - `primary_training_events_v0_6`
+  - `manual_review_events_v0_6`
+  - `response_confirm_only_v0_6`
+  - `holdout_or_excluded_v0_6`
+- 第一版训练候选只考虑 `curve1/curve2`、`differentmu_road raw μ` 和人工通过的 `fix_road`。
+
+### 阻塞或风险
+
+- GPTPro 回复是外部审查意见，不能替代本地复核。
+- v0.6 样本表未生成前，不恢复风格/生理训练。
+## 2026-05-13 00:37 阶段 3 干净响应任务车辆-only 对照
+
+### 已完成任务
+- 完成 `A_instant2s_core` 轨道车辆-only 对照：84 个事件，session-level train/val/test=62/10/12。
+- 完成 `B_response3s_strict_core` 轨道车辆-only 对照：270 个事件，session-level train/val/test=188/42/40。
+- 输出 clean-task 指标表、逐样本指标表、模型信息表、val 选择表、固定预测图、坏样本图、用户查看版中文总结和技术报告。
+- 已确认本轮没有使用生理、脑电、连续风格、驾驶员 ID、服务器或服务器密码文件。
+
+### 正在做任务
+- 整理并提交本轮 clean-task 车辆-only 对照产物。
+
+### 待做任务
+- 复查 `B_response3s_strict_core_bad_samples_test.png` 和逐样本表，标出 RBF KRR 仍失败的主要物理类型。
+- 决定下一轮是否在 B 轨道上推进结构化车辆-only 响应分解模型，而不是继续直接堆 KNN/template。
+- 把 A 轨道作为小样本即时响应诊断，不把单次 KNN 排名升级为主线。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 有效性验证仍被强车辆基线稳定性和物理错误闭环阻塞。
+- 长事件/持续控制轨道仍未进入主线训练，需要单独拆分或复核。
+
+### 可并行任务
+- B 轨道坏样本物理归因。
+- A 轨道小样本稳定性复核。
+- 清理固定图协议和固定坏样本索引。
+
+### 需要服务器的任务
+- 暂无。本轮 clean-task 车辆-only 对照已在本地 CPU 完成。
+
+### 不需要服务器的任务
+- 指标表复查、坏样本图复盘、报告整理、下一轮结构化车辆-only 方案设计。
+## 2026-05-13 00:55 阶段 3 B 轨道车辆-only 坏样本复查
+
+### 已完成任务
+- 完成 `B_response3s_strict_core` + `rbf_kernel_ridge_context_no_subject` 的 test 坏样本物理失败类型复查。
+- 输出 B 轨道 RBF KRR 的失败标记汇总、top bad 样本表、分响应形态/分被试/分道路模块汇总、3 张图、用户查看版中文总结和技术报告。
+- 确认本轮没有训练新模型，没有使用生理、脑电、连续风格、驾驶员 ID、服务器或服务器密码文件。
+
+### 正在做任务
+- 整理并提交 B 轨道坏样本复查产物。
+
+### 待做任务
+- 基于 B 轨道坏样本表，设计车辆-only 响应分解模型：方向、幅值、峰值时间、反向修正/多段修正类型、轨迹残差。
+- 把 B 轨道 top bad 样本固定为下一轮结构化车辆-only 模型的必看图集。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 有效性验证继续被强车辆基线结构性失败阻塞。
+
+### 可并行任务
+- 响应分解标签表构建。
+- B 轨道固定图协议整理。
+- A 轨道小样本稳定性复核。
+
+### 需要服务器的任务
+- 暂无。本轮坏样本复查已在本地 CPU 完成。
+
+### 不需要服务器的任务
+- 失败类型统计、响应分解标签设计、中文报告整理。
+
+## 2026-05-13 01:05 阶段 2 回补：episode-first 事件样本 v0.6
+
+### 已完成任务
+- 根据 GPTPro 最新建议，把样本筛选从“触发点是否正确”改成“是否存在车辆动态异常 + 方向盘响应 + 回正/纠正 episode”。
+- 完成 `build_episode_first_events_v0_6.py` 更新和运行。
+- 输出 v0.6 总表、严格核心表、坐标需复核扩展表、弱响应/负样本表、分桶汇总表、36 张分组代表图、中文技术报告和用户查看版总结。
+
+### 正在做任务
+- 人工抽看 v0.6 代表图，判断严格核心和坐标复核扩展是否适合进入下一步纯车辆/道路预测对照。
+
+### 待做任务
+- 复核 36 张代表图，重点看严格核心是否真的是完整 episode，坐标复核扩展是否只是道路坐标重置。
+- 若通过复核，构建两个纯车辆/道路对照：严格核心小样本对照；扩展候选但不使用横向偏移特征的对照。
+- 把旧阶段 3 clean-task 基线结果标记为诊断参考，不直接替代这次 episode-first v0.6。
+
+### 阻塞任务
+- 连续风格、生理和 EEG 有效性验证继续阻塞，直到 episode-first 样本和强车辆/道路基线确认。
+
+### 可并行任务
+- 代表图人工复核。
+- 准备纯车辆/道路 baseline 输入表。
+- 整理坐标跳变样本的道路模块和被试分布。
+
+### 需要服务器的任务
+- 暂无。本轮 v0.6 样本表和图已在本地完成。
+
+### 不需要服务器的任务
+- 事件表复查、代表图复核、报告整理和下一步 baseline 设计。
+
+## 2026-05-13 01:29 阶段 3 episode-first 纯车辆/道路对照 v0.1
+
+### 已完成任务
+- 完成 v0.6 episode-first 正样本扩展集的纯车辆/道路预测对照。
+- 输出指标表、逐样本指标表、模型信息表、轨道汇总表、val 选择表、固定预测图、坏样本图、用户查看版总结和技术报告。
+- 验证“保留横向偏移特征”没有让 3 秒轨道变好，说明坐标特征没有带来可疑虚高。
+
+### 正在做任务
+- 整理本轮结论，并决定是否进入车辆-only 响应分解模型。
+
+### 待做任务
+- 基于 v0.6 正样本构建响应分解标签：方向、幅值、峰值时间、回正/反打、多段修正、尾段稳定。
+- 训练或评估车辆-only 响应分解模型，再决定是否进入连续风格/生理增量验证。
+
+### 阻塞任务
+- 生理、脑电和连续风格仍不能进入有效性结论，因为纯车辆/道路对 v0.6 复杂 episode 的方向、幅值和大幅响应召回仍不稳定。
+
+### 可并行任务
+- 响应分解标签生成。
+- EP3 扩展轨道坏样本归因。
+- v0.6 坐标复核扩展候选的人工图审。
+
+### 需要服务器的任务
+- 暂无。本轮是 CPU 轻量对照，已本地完成。
+
+### 不需要服务器的任务
+- 指标复查、坏样本图复盘、响应分解方案设计。
+# R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 07:42
+
+## 正在做任务
+
+- Stage 7h val/test 选择不稳定诊断已完成并提交 Git；当前准备 Stage 7i 候选选择校准/验证集重构。
+
+## 已完成任务
+
+- Stage 7h：已生成候选 split 稳定性、类别分布偏移、数值分布偏移、逐样本收益、分 bucket 收益、keypoint target 误差复核、gate 表和 4 张诊断图；已提交 `d990f8e3`。
+- 已确认 test-best non-oracle=`rbf_resid_keypoint_scaled` 不能升级，因为它没有被 val gate 选中。
+- 已确认当前最大偏移信号：类别为 `response_family`，数值为 `prob_entropy`。
+
+## 待做任务
+
+- Stage 7i：候选选择校准或验证集重构。优先方案包括多折 session validation、response bucket 分层 gate、道路模块分层 gate、关键点不确定性/候选一致性评分。
+- 复核 `response_family` 和 `prob_entropy` 偏移是否解释 `rbf_resid_keypoint_scaled` 的 val/test 反转。
+- 在没有稳定非 oracle 选择前，不进入生理/EEG。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选选择/校准未稳定。
+- 多假设主线升级：仍阻塞。Stage 7h 只是诊断，未产生新可部署模型。
+- test-only 选择 `rbf_resid_keypoint_scaled`：禁止作为结论，只能作为下一步选择校准的目标。
+
+## 可并行任务
+
+- response_family 分层 gate 设计。
+- road module/risk class 分层 gate 设计。
+- 关键点不确定性评分和候选一致性特征复核。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7h 未使用服务器，Stage 7i 初版可本地完成。
+
+## 不需要服务器的任务
+
+- Stage 7h 归档、Git 提交、Stage 7i 校准诊断原型。
+
+## 最新更新：2026-05-13 07:33
+
+## 正在做任务
+
+- Stage 7g keypoint/segment 候选已完成并提交 Git；当前准备 Stage 7h val/test 选择不稳定诊断。
+
+## 已完成任务
+
+- Stage 7g：已实现 train-only 关键点回归、分段轨迹候选、RBF 关键点校正候选和 keypoint/segment oracle 诊断；已提交 `52de7176`。
+- 已确认 val gate 选择 `segment_abs_rf_blend_25`，但 test RMSE=0.536176，比 RBF/KNN 差 +0.002509，gate=`no_upgrade`。
+- 已确认 `rbf_resid_keypoint_scaled` 在 test 上 RMSE=0.508538，但它不是 val 选中的策略，因此只能作为下一步诊断信号，不能升级主线。
+
+## 待做任务
+
+- Stage 7h：复核 val/test 分布差异、关键点回归误差、候选置信度和校准，解释为什么 test 上存在好候选但 val gate 选不中。
+- 设计不看 test 标签的候选选择置信度：例如关键点不确定性、RBF/候选一致性、道路模块分层和 response bucket 分层。
+- 继续固定 RBF/KNN 为主参照，不进入生理/EEG。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。车辆-only keypoint/segment 候选选择未稳定。
+- 多假设主线升级：仍阻塞。Stage 7g 的可部署选中策略未超过 RBF/KNN。
+- 按 test 事后选择 `rbf_resid_keypoint_scaled`：禁止。该现象只能作为下一步校准/选择器诊断。
+
+## 可并行任务
+
+- val/test 分布差异表。
+- `rbf_resid_keypoint_scaled` 收益样本和 val 失败样本复盘。
+- keypoint target scatter 和错误分层复核。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7g 未使用服务器，下一步校准诊断仍可先本地完成。
+
+## 不需要服务器的任务
+
+- Stage 7g 归档、Git 提交、Stage 7h 诊断表和图。
+
+## 最新更新：2026-05-13 07:19
+
+## 正在做任务
+
+- Stage 7f response-factorized vehicle-only candidate v0.1 已完成并提交 Git；当前准备 Stage 7g keypoint/segment candidate 设计。
+
+## 已完成任务
+
+- Stage 7f：已实现响应分解候选原型，输出 factor 预测、候选逐样本指标、policy 指标、oracle 诊断、gate 表、固定图、oracle gain 图、用户总结和技术报告；已提交 `12cef06b`。
+- 已确认 validation gate 最终选择 RBF/KNN 主参照，test RMSE=0.533667，delta=+0.000000，gate=`no_upgrade`。
+- 已确认 response-factorized oracle RMSE=0.440217、combo oracle RMSE=0.388119 只说明候选空间潜力，不是可部署提升。
+
+## 待做任务
+
+- Stage 7g：把 response-factorized 原型升级为可训练 keypoint/segment candidate，重点改幅值、尾段回正/漂移、反向修正和多段修正。
+- 复核 Stage 7f 中幅值因子和尾段因子预测不稳的样本，作为下一版候选生成训练标签和失败样本清单。
+- 继续把 RBF/KNN 作为车辆-only 主参照；任何新候选必须用 train 拟合、val 选策略、test 一次报告。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选生成和非 oracle 选择仍未形成可部署提升。
+- 多假设主线升级：仍阻塞。当前只有 oracle/组合 oracle 上限，没有 validation gate 批准的可部署收益。
+- selector-only 继续堆模型：阻塞。Stage 7b、7d、7f 都未通过 gate。
+
+## 可并行任务
+
+- 幅值/尾段/修正段失败样本复盘。
+- Stage 7f oracle gain 样本图人工复核。
+- 下一版 keypoint/segment candidate 训练标签和固定图清单设计。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7f 未使用服务器，下一步原型仍可先本地完成。
+
+## 不需要服务器的任务
+
+- Stage 7f 归档、Git 提交、Stage 7g 轻量原型设计和图表复核。
+
+## 最新更新：2026-05-13 06:50
+
+## 正在做任务
+
+- Stage 7 后续方向判断：基于 Stage 7c 导出的完整候选轨迹，决定继续做非 oracle selector v0.2，还是重新设计候选生成。
+
+## 已完成任务
+
+- Stage 7c 候选轨迹导出与差异审计 v0.1：已复现 RBF/KNN、keypoint residual、top-K branch/top1 预测，导出 `stage07c_candidate_trajectories.npz`，并生成指标表、差异表、oracle 摘要、gate 表、固定图、高差异图和 oracle gain 图；已提交 `48b8c438`。
+- Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
+- Stage 7a 非 oracle 选择协议 v0.1：已固定候选池、允许/禁止输入、评估计划和升级 gate。
+
+## 待做任务
+
+- Stage 7d：非 oracle selector v0.2。只允许使用事件前信息和候选预测自身特征，训练只用 train，调参只用 val，test 只报告。
+- 如果 Stage 7d 仍不能超过 RBF/KNN：重新设计候选生成，使候选覆盖方向、幅值、峰值时间、尾段回正/漂移和多段修正，而不是继续堆 selector。
+- 继续保持 Stage 5 生理/EEG blocked，直到车辆-only 候选选择问题有可复验结果。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：当前阻塞。原因是车辆-only 多候选的非 oracle 选择仍未解决，不能把车辆-only 未解决误差归因给生理/EEG。
+- 最终多假设主线升级：当前阻塞。原因是 oracle 上限明显，但还没有非 oracle 可部署策略超过 RBF/KNN。
+
+## 可并行任务
+
+- 候选差异特征审查、坏样本图人工快速复核、Stage 7d selector 协议设计、候选生成新路线草案。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7c 未使用服务器；下一步轻量 selector 也优先本地。
+
+## 不需要服务器的任务
+
+- Stage 7d selector v0.2、候选差异图表复核、报告更新、Git 提交。
+# R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 06:58
+
+## 正在做任务
+
+- Stage 7e 候选生成重设计协议：基于 Stage 7c/7d 的证据，把下一步从“继续堆 selector”改为“重新设计可解释候选生成”。
+
+## 已完成任务
+
+- Stage 7d 非 oracle selector v0.2：已训练 logistic/RF selector 和置信度 fallback；val gate 选择 `always_rbf_reference`；test delta=0，RBF 选择比例=1.0；gate=`no_upgrade`；已提交 `eb785f4a`。
+- Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
+- Stage 7b 非 oracle top-K selector v0.1：val 选择的策略在 test 上完全退回 RBF/KNN，未形成可部署增益。
+
+## 待做任务
+
+- Stage 7e：定义新的候选生成协议，要求候选覆盖方向、幅值、峰值时间、尾段、反向修正、多段修正和困难样本。
+- 决定是否需要先做一个不训练的候选模板/规则上限审计，再进入可训练多假设模型。
+- 继续保持 Stage 5 生理/EEG blocked，直到车辆-only 候选生成与选择问题有稳定基线。
+
+## 阻塞任务
+
+- 生理/EEG 有效性实验：仍阻塞。原因是车辆-only 多候选非 oracle 选择未解决。
+- 多假设主线升级：仍阻塞。原因是 Stage 7d 选择器无法超过 RBF/KNN。
+
+## 可并行任务
+
+- 复核 Stage 7c oracle gain 样本图；整理候选生成设计维度；准备 Stage 7e 方案表。
+
+## 需要服务器的任务
+
+- 当前无。
+
+## 不需要服务器的任务
+
+- Stage 7e 协议设计、图表复核、报告更新、Git 提交。
+# R2E-Steering 当前任务队列
+## 最新更新：2026-05-13 07:05
+
+## 正在做任务
+
+- Stage 7f response-factorized vehicle-only candidate v0.1 准备：按 Stage 7e 蓝图实现新的候选生成，而不是继续调旧 selector。
+
+## 已完成任务
+
+- Stage 7e 候选生成重设计审计 v0.1：已生成响应类型表、候选覆盖表、winner 分布、候选生成蓝图、下一实验计划、gate 表和 4 张图；gate 阻塞 selector-only 继续路线；已提交 `98552bf3`。
+- Stage 7d 非 oracle selector v0.2：val gate 选择 RBF/KNN，未升级。
+- Stage 7c 候选轨迹导出与差异审计 v0.1：候选池有 oracle 上限，但不是可部署收益。
+
+## 待做任务
+
+- Stage 7f：实现 response-factorized candidates。候选至少包括 RBF anchor、方向/幅值 quantile、峰值时间/onset、尾段模式、反向/多段修正、可靠性门控。
+- 建立 Stage 7f 固定图和坏样本图：必须覆盖 Stage 7e 的高优先级 response buckets。
+- 如果 Stage 7f 仍不能产生非 oracle 增益，再回到样本定义或响应分解标签，而不是进入生理/EEG。
+
+## 阻塞任务
+
+- selector-only 路线：阻塞。Stage 7b 和 Stage 7d 均退回 RBF/KNN。
+- 生理/EEG 有效性实验：仍阻塞。车辆-only 候选生成和非 oracle 选择仍未稳定。
+- 多假设主线升级：仍阻塞。当前只有 oracle 上限，没有可部署提升。
+
+## 可并行任务
+
+- 复核 Stage 7e 高优先级 bucket；准备 Stage 7f 训练标签；设计固定图样本清单。
+
+## 需要服务器的任务
+
+- 当前无。Stage 7f 初版优先本地小规模实现和验证。
+
+## 不需要服务器的任务
+
+- Stage 7f 脚本实现、协议表、图表和报告。

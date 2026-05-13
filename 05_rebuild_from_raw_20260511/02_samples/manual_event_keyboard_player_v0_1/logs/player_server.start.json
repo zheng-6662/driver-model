@@ -1,6 +1,7 @@
 ﻿{
     "port":  8766,
-    "pid":  33060,
+    "pid":  33512,
     "url":  "http://127.0.0.1:8766/",
-    "started_at":  "2026-05-12T13:00:25"
+    "mode":  "vehicle_instability_event_reviewer_v0_1",
+    "started_at":  "2026-05-12T14:49:48"
 }

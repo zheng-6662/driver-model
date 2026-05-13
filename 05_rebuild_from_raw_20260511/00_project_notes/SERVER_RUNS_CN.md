@@ -1,3 +1,5 @@
+# 服务器运行记录
+
 ## 2026-05-13 03:42-03:46 本地 top-K top1/bestK 差距复盘
 
 - 服务器连接命令格式：未连接服务器；无 SSH 命令。
@@ -114,34 +116,6 @@
 - 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_response_decomposition_labels_v0_1`。
 - 是否还有任务在跑：没有。
 - GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。
-
-## 2026-05-13 00:48-00:55 本地 B 轨道坏样本复查
-
-- 服务器连接命令格式：未连接服务器；无 SSH 命令。
-- 启动时间：2026-05-13 00:48，本地 CPU 运行。
-- 关闭时间：2026-05-13 00:55，本地脚本、报告和图表生成完成。
-- 运行任务：`stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`。
-- screen/nohup 名称：无。
-- 远程项目路径：无。
-- 远程日志路径：无。
-- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1`。
-- 是否还有任务在跑：没有。
-- GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。
-
-## 2026-05-13 00:28-00:37 本地 clean-task 车辆-only 基线
-
-- 服务器连接命令格式：未连接服务器；无 SSH 命令。
-- 启动时间：2026-05-13 00:28，本地 CPU 运行。
-- 关闭时间：2026-05-13 00:37，本地脚本、报告和图表生成完成。
-- 运行任务：`stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`。
-- screen/nohup 名称：无。
-- 远程项目路径：无。
-- 远程日志路径：无。
-- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1`。
-- 是否还有任务在跑：没有。
-- GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。
-
-# 服务器运行记录
 
 ## 2026-05-13 00:10-00:18 本地响应任务定义决策
 
@@ -385,3 +359,27 @@
 - 远程任务状态：无。
 - GPU/显存状态：未检查，因为本次不使用远程 GPU。
 - 本地输出预计路径：`F:/data_set_process/data_process/tmp/event_conditioned_runs/OLD_FULL_INSTABILITY_HIGHCONF_VEHICLE_DIRECT_V0_1_*`；补充图表预计写入 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/oldcode_vehicle_direct_full_on_instability_v0_1`。
+## 2026-05-13 00:28-00:37 本地 clean-task 车辆-only 基线
+
+- 服务器连接命令格式：未连接服务器；无 SSH 命令。
+- 启动时间：2026-05-13 00:28，本地 CPU 运行。
+- 关闭时间：2026-05-13 00:37，本地脚本、报告和图表生成完成。
+- 运行任务：`stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_vehicle_baselines_v0_1`。
+- 是否还有任务在跑：没有。
+- GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。
+## 2026-05-13 00:48-00:55 本地 B 轨道坏样本复查
+
+- 服务器连接命令格式：未连接服务器；无 SSH 命令。
+- 启动时间：2026-05-13 00:48，本地 CPU 运行。
+- 关闭时间：2026-05-13 00:55，本地脚本、报告和图表生成完成。
+- 运行任务：`stage03_vehicle_instability_clean_task_bad_sample_review_v0_1.py`。
+- screen/nohup 名称：无。
+- 远程项目路径：无。
+- 远程日志路径：无。
+- 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1`。
+- 是否还有任务在跑：没有。
+- GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。

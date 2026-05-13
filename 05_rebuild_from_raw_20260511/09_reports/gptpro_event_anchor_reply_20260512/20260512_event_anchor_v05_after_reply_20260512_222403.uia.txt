@@ -1,0 +1,49 @@
+﻿[1] ControlType.Pane 48,163,1278,1024 ChatGPT - 3号使用者 - Google Chrome - xin
+[2] ControlType.Pane 180,241,1014,674 打印
+[21] ControlType.StatusBar 251,245,1,1 正在加载 PDF
+[22] ControlType.Text 251,245,1,1 正在加载 PDF
+[7] ControlType.Document 187,246,1000,660 ChatGPT - 3号使用者
+[19] ControlType.Document 251,246,466,8604 包含 16 页内容的 PDF 文档
+[23] ControlType.Group 254,247,463,655 第 1 页
+[38] ControlType.Text 532,253,23,17 mm
+[24] ControlType.Text 273,260,277,8 2026/5/12 22:24 ChatGPT - 3号使用者
+
+[17] ControlType.Text 744,261,8,17 1
+[42] ControlType.Text 827,270,32,25 打印
+[43] ControlType.Text 1120,273,43,18 16 张纸
+[45] ControlType.ComboBox 971,319,192,37 目标打印机
+[44] ControlType.Text 827,328,65,18 目标打印机
+[47] ControlType.ComboBox 971,373,192,37 页面
+[46] ControlType.Text 827,382,26,18 页面
+[49] ControlType.Group 971,426,70,39 份数
+[50] ControlType.Spinner 981,427,50,37 份数
+[48] ControlType.Text 827,436,26,18 份数
+[52] ControlType.ComboBox 971,481,192,37 布局
+[51] ControlType.Text 827,490,26,18 布局
+[54] ControlType.Group 803,535,384,73 更多设置
+[41] ControlType.Text 301,553,23,17 mm
+[55] ControlType.Button 1137,557,28,29 更多设置
+[9] ControlType.Text 446,567,79,17 正在加载预览
+[10] ControlType.Text 529,567,3,18 .
+[11] ControlType.Text 533,567,4,18 .
+[12] ControlType.Text 538,569,4,18 .
+[39] ControlType.Text 686,580,23,17 mm
+[14] ControlType.Button 227,728,32,32 适合窗口宽度
+[15] ControlType.Button 227,784,32,32 放大
+[16] ControlType.Button 227,826,32,32 缩小
+[56] ControlType.Button 1021,846,68,36 打印
+[57] ControlType.Button 1096,846,67,36 取消
+[40] ControlType.Text 455,880,23,17 mm
+[26] ControlType.Text 686,884,12,6  1/16
+[25] ControlType.Hyperlink 273,885,353,7 https://chatgpt.com/g/g-p-69fd49769118819197fdd52929eeb6bb-3hao-shi-yong-zhe/c/6a033217-e8c0-83ea-9ac5-a2536d8f84f7
+[27] ControlType.Group 254,910,463,655 第 2 页
+[28] ControlType.Group 254,1572,463,655 第 3 页
+[29] ControlType.Group 254,2234,463,655 第 4 页
+[30] ControlType.Group 254,2897,463,655 第 5 页
+[31] ControlType.Group 254,3559,463,655 第 6 页
+[32] ControlType.Group 254,4221,463,655 第 7 页
+[33] ControlType.Group 254,4884,463,655 第 8 页
+[34] ControlType.Group 254,5546,463,655 第 9 页
+[35] ControlType.Group 254,6208,463,655 第 10 页
+[36] ControlType.Group 254,6871,463,655 第 11 页
+[37] ControlType.Group 254,7533,463,655 第 12 页
