@@ -1,7 +1,0 @@
-﻿gate,status,evidence,decision_cn
-style_feature_source_defined,pass_protocol,source_protocol_table + leakage_guard_table,已定义事件前车辆历史风格来源，且排除直接输入和标签未来。
-style_candidate_features_extracted,pass,style_feature_candidate_long/wide,已生成候选风格特征表；样本可用性见 split/subject feasibility。
-train_only_standardization_ready,pass_protocol,style_train_only_scaler_session_split.csv,标准化只允许用 session split 的训练集拟合。
-permutation_controls_defined,pass_protocol,style_permutation_plan.csv,已定义被试内、跨被试、跨 session、道路平衡和 ID 对照。
-style_effectiveness_claim_allowed,blocked,no model/permutation result yet,还没有与 RBF 固定参照、置乱和分被试验证比较，不能说风格有效。
-stage05_physio_eeg_allowed,blocked,style baseline not validated yet,生理/脑电继续阻塞，直到车辆+风格参照完成公平验证。

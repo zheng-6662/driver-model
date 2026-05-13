@@ -1,6 +1,0 @@
-﻿gate_item,status,evidence
-candidate_trajectories_exported,pass,F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07c_candidate_trajectory_export_v0_1/arrays/stage07c_candidate_trajectories.npz
-deployable_upgrade,no,Stage 7c only exports/replays candidates; no non-oracle selector is trained.
-rbf_topk_oracle_available,diagnostic_only,"test RMSE 0.415652, delta vs RBF -0.118014"
-broad_oracle_available,diagnostic_only,"test RMSE 0.410957, delta vs RBF -0.122710"
-stage08_physio_eeg_allowed,blocked,vehicle-only candidate selection is not solved; no physio/EEG increment claim is allowed.

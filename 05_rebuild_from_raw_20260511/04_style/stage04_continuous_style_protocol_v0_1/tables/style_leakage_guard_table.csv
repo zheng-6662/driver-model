@@ -1,5 +1,0 @@
-﻿guard_item,rule,observed_bad_count,status,note_cn
-style_window_end,end <= anchor_time_rel_s - 3.0,0,pass,"风格窗口不得接触 [-3, 0] 直接车辆输入窗口。"
-label_future,"style window must not overlap label [0, 3] s",0,pass,风格特征不得使用事件后的方向盘响应结果。
-standardization,fit scaler on session_level_split=train only,0,pass_protocol,本脚本输出 train-only scaler 参数，val/test 只应用训练集统计。
-style_claim,no effectiveness claim before RBF comparison + permutations + subject/session checks,0,blocked_claim,本阶段只完成候选特征处理和协议，不证明连续风格有效。

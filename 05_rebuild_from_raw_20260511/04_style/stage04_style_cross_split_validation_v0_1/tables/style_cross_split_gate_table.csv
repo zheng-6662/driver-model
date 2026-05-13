@@ -1,7 +1,0 @@
-﻿gate_item,status,evidence,decision_cn
-session_level_split_style_last60_beats_rbf,fail,style60 RMSE=0.534559; RBF RMSE=0.533667; driverID RMSE=0.533661,必须同时看物理指标、驾驶员 ID 对照和跨 split 稳定性。
-session_level_split_physical_improvement,fail,wrong_side 0.225000->0.225000; large_recall 0.750000->0.750000; difficult_rmse 0.678907->0.680891,若物理错误没有改善，不能升级为连续风格有效证据。
-subject_level_split_style_last60_beats_rbf,pass_exploratory,style60 RMSE=0.483510; RBF RMSE=0.484847; driverID RMSE=0.484992,必须同时看物理指标、驾驶员 ID 对照和跨 split 稳定性。
-subject_level_split_physical_improvement,fail,wrong_side 0.147059->0.147059; large_recall 0.666667->0.666667; difficult_rmse 0.658887->0.659204,若物理错误没有改善，不能升级为连续风格有效证据。
-style_effectiveness_claim_allowed,blocked,session_pass=False; subject_pass=True; no stable two-split improvement.,不能宣称连续风格有效；当前只完成否定/降级证据的一部分。
-physio_eeg_allowed,blocked,连续风格没有形成强于车辆-only 的稳定公平参照。,生理/EEG 继续阻塞，除非先完成车辆-only 结构化或风格路线收口。

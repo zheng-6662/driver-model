@@ -1,5 +1,0 @@
-﻿gate,status,evidence,decision
-selector_revision_test_gain,no_upgrade_current_revision,"rf_engineered_shallow test RMSE delta vs RBF=+0.010689, wrong-side delta=-0.050, large recall delta=+0.125, difficult RMSE delta=-0.018958.",只有同时稳定改善RMSE和物理指标才可升级；否则只作为下一版诊断。
-test_tuning_leakage_guard,pass,候选模型只在train拟合，模型和阈值只按val RMSE选择；test只做最终评估。,本轮选择规则无test调参。
-feature_leakage_guard,pass_protocol,输入仅包括上下文和候选模型预测特征；gt_peak_abs、sample_rmse、wrong_side、keypoint_better等未来标签不作为输入。,当前特征协议可继续扩展，但不能加入未来真实标签。
-stage05_physio_eeg_allowed,blocked,selector revision尚未形成稳定可部署车辆-only提升。,继续阻塞生理/EEG有效性结论。

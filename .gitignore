@@ -43,3 +43,49 @@ __pycache__/
 !*.md
 !*.txt
 !*.gitignore
+
+# Repository hygiene: keep raw data, generated outputs, and model artifacts out of Git
+01_datasets/
+03_results/
+tmp/
+output/
+outputs/
+artifacts/
+runs/
+wandb/
+mlruns/
+logs/
+checkpoints/
+
+# Generated/processed dataset folders wherever they appear
+**/datasets/
+**/processed_datasets/
+**/03_processed_datasets/
+**/arrays/
+**/tables/*.csv
+**/tables/*.xlsx
+**/tables/*.xls
+
+# ML model artifacts and binary experiment outputs
+*.ckpt
+*.onnx
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.parquet
+*.feather
+*.pt
+*.pth
+*.npy
+*.npz
+
+# Local secrets and machine-specific credentials
+.env
+.env.*
+*.pem
+*.key
+*secret*
+*secrets*
+*密码*.txt
+服务器指令与密码.txt

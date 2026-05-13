@@ -1,5 +1,0 @@
-﻿gate,status,evidence,decision
-val_best_rmse,no_upgrade,"test RMSE delta=+0.010689, wrong-side delta=-0.050, large recall delta=+0.125, difficult RMSE delta=-0.018958.",若RMSE仍退化则不能升级；若仅物理指标改善则保留为诊断候选。
-val_rmse_noninferior_conservative,no_upgrade,"test RMSE delta=+0.000878, wrong-side delta=+0.000, large recall delta=+0.000, difficult RMSE delta=+0.000000.",若RMSE仍退化则不能升级；若仅物理指标改善则保留为诊断候选。
-val_rmse_physical_noninferior_conservative,no_upgrade,"test RMSE delta=+0.000878, wrong-side delta=+0.000, large recall delta=+0.000, difficult RMSE delta=+0.000000.",若RMSE仍退化则不能升级；若仅物理指标改善则保留为诊断候选。
-stage05_physio_eeg_allowed,blocked,reliability gate 尚未形成稳定车辆-only主线升级。,继续阻塞生理/EEG有效性结论。

@@ -1,6 +1,0 @@
-﻿gate_item,status,evidence
-diagnosis_completed,pass,val/test candidate stability and distribution shift tables generated
-deployable_upgrade,no_upgrade,val-selected segment_abs_rf_blend_25 test delta +0.002509; test-best rbf_resid_keypoint_scaled is diagnostic only
-test_best_candidate,diagnostic_only,rbf_resid_keypoint_scaled test delta vs RBF -0.025129; not selected by validation
-stage08_physio_eeg_allowed,blocked,vehicle-only candidate selection is still not stable
-server_used,no,local diagnostic run only; credential file not read

@@ -1,6 +1,0 @@
-﻿recommended_window_policy,n_events,rate
-use_3s_label_or_split_continuing_response,418,0.4613686534216336
-use_3s_or_longer_label_for_late_peak_review,247,0.2726269315673289
-review_continuous_event_or_longer_than_3s,157,0.17328918322295805
-two_second_label_probably_ok,60,0.06622516556291391
-review_2s_tail_or_anchor,24,0.026490066225165563

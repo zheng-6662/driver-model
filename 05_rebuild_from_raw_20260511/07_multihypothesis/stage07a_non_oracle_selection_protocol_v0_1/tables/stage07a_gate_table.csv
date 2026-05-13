@@ -1,5 +1,0 @@
-﻿gate,status,evidence,decision
-stage07_protocol_ready,ready_for_non_oracle_design,候选池、允许特征、禁止信息、评价指标和固定图协议已定义。,可以进入 Stage 7 非 oracle 选择器设计，但不能直接训练生理/EEG。
-oracle_gap_status,large_oracle_gap,RBF RMSE=0.533667; broad oracle RMSE=0.375182; delta=-0.158484.,只说明多候选上限存在，不能作为可部署结果。
-deployable_selector_status,blocked,best deployable selector RMSE=0.533912; delta=+0.000245.,必须先解决选择策略和校准。
-stage05_physio_eeg_allowed,blocked,车辆-only 多候选选择协议刚建立，尚未完成可部署 selector。,继续阻塞生理/EEG有效性结论。

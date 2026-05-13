@@ -1,4 +1,0 @@
-﻿policy_label,policy_name,selection_rule
-val_best_rmse,rf_engineered_shallow__thr_0.35,min val RMSE
-val_rmse_noninferior_conservative,logreg_engineered_balanced__thr_0.95,"val RMSE <= RBF, then lowest keypoint selected rate"
-val_rmse_physical_noninferior_conservative,logreg_engineered_balanced__thr_0.95,"val RMSE/wrong-side/large-recall noninferior to RBF, then lowest keypoint selected rate"

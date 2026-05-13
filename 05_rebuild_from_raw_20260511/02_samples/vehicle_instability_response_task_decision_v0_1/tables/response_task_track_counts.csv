@@ -1,6 +1,0 @@
-﻿response_task_track,n_events,rate
-D_long_event_or_unsettled_review,588,0.6490066225165563
-B_response3s_core_candidate,210,0.23178807947019867
-A_instant2s_core_and_3s_ok,60,0.06622516556291391
-A_instant2s_only_with_long_event_flag,24,0.026490066225165563
-C_manual_2s_anchor_or_tail_review,24,0.026490066225165563

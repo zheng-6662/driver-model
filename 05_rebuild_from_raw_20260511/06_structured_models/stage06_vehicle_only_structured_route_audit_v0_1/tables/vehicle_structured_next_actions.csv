@@ -1,6 +1,0 @@
-﻿priority,action,why,server_needed
-1,固定B轨道RBF为limited primary reference,RBF在当前test RMSE和尾段/困难样本上仍最稳，但错侧和反向修正没解决。,no
-2,复盘selector_logreg_rbf_keypoint样本级选择错误,该路线RMSE几乎持平，同时改善方向、大幅响应和困难样本，最适合继续做可部署选择器。,no
-3,把best-of-K/oracle收益转化为非oracle选择策略,oracle RMSE明显低于RBF，说明候选空间有潜力，但当前top1/selector不能稳定选中。,local_first
-4,做坏样本分桶：错侧、幅值不足、峰时、尾段、反向修正、多段修正,下一版结构模型必须证明改善物理错误，而不是只改善RMSE。,no
-5,暂不进入生理/EEG有效性验证,车辆主参照仍未结构化冻结，直接加新模态会混淆归因。,no

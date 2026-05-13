@@ -1,8 +1,0 @@
-﻿step_id,step_name,requirement_cn,status
-S7A-0,freeze_inputs,固定 Stage 6e 候选池、B_response3s_strict_core split 和 RBF/KNN 主参照。,required_before_training
-S7A-1,candidate_prediction_export,为每个候选保存同一 sample_id 的预测轨迹、候选形态特征和候选间差异。,pending
-S7A-2,train_val_selector,只用 train 拟合选择器，只用 val 选模型/阈值/温度缩放；test 只最终评估一次。,pending
-S7A-3,calibration,报告选择置信度分桶、ECE/Brier、coverage-risk 曲线和 abstain/fallback 到 RBF 的策略。,pending
-S7A-4,top1_vs_fallback,同时报告 top-1 selector、RBF fallback、abstain-on-low-confidence 和 oracle upper bound。,pending
-S7A-5,fixed_plots,固定样本图、bad samples 图、oracle-gap 样本图、selector-regret 样本图必须全部输出。,pending
-S7A-6,promotion_gate,只有 test RMSE 不劣于 RBF，且至少一个物理指标或困难样本改善，才允许升级。,pending

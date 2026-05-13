@@ -1,4 +1,0 @@
-﻿split,n_samples,peak_signed_mae,tail_signed_mae,onset_frac_mae,peak_frac_mae,track_id,model_name
-train,188,0.590767502784729,0.17675995826721191,0.14008450508117676,0.14328204095363617,B_response3s_strict_core,keypoint_residual_vehicle_transformer_no_subject
-val,42,0.6188128590583801,0.20807655155658722,0.17122428119182587,0.16717049479484558,B_response3s_strict_core,keypoint_residual_vehicle_transformer_no_subject
-test,40,0.5161735415458679,0.19460535049438477,0.17012043297290802,0.1344672292470932,B_response3s_strict_core,keypoint_residual_vehicle_transformer_no_subject

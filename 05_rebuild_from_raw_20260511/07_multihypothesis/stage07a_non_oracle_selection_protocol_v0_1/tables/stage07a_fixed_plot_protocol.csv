@@ -1,7 +1,0 @@
-﻿plot_name,requirement_cn
-fixed_predictions,同一批固定 test 样本画 RBF、selector top1、fallback、oracle 和 GT。
-bad_samples,按 selector sample RMSE 排序画最差样本，不能只挑好看的。
-oracle_gap_samples,画 broad oracle gain 最大但 selector 没选中的样本，解释选择失败。
-confidence_bins,按 selector 置信度分桶画 RMSE、错侧、大幅召回和覆盖率。
-winner_counts,画 oracle winner 分布和 selector chosen 分布，检查候选是否坍缩到单分支。
-physical_error_buckets,分错侧、幅值不足、峰时误差、尾段漂移、反向/多段修正画表和图。

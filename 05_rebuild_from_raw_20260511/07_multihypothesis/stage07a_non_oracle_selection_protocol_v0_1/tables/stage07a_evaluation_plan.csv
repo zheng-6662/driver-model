@@ -1,9 +1,0 @@
-﻿metric_group,metric_name,gate_rule,why_cn
-primary_fit,rmse_steer,must_not_regress_vs_rbf,不能为了方向/召回牺牲整体轨迹误差。
-direction,wrong_side_rate,prefer_lower_vs_rbf,错侧率必须单独报告。
-large_response,large_response_recall,prefer_higher_vs_rbf,大幅响应召回改善不能来自 oracle 标签选择。
-difficulty,difficult_top20_rmse,prefer_lower_vs_rbf,优先看 RBF 困难样本是否改善。
-calibration,ece_or_brier,required,若选择器给概率，必须报告可靠性。
-coverage_risk,risk_at_coverage,required,允许低置信度 fallback/abstain，但要报告覆盖率下误差。
-candidate_diversity,oracle_gap_and_winner_entropy,diagnostic,检查候选是否真正多样，而不是多个相似平滑预测。
-leakage,test_label_used_for_selection,must_be_false,任何用 test 标签选候选的结果只能标为 oracle。

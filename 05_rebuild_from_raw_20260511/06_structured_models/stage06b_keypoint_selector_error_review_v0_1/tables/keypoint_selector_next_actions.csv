@@ -1,6 +1,0 @@
-﻿priority,action,why
-1,先复盘FN_missed_keypoint_gain样本,当前 test 中漏选 keypoint 的样本数为 12，这是 selector 没吃到 oracle/keypoint 上限的主要来源。
-2,控制FP_select_keypoint_hurts样本,当前 test 中错选 keypoint 的样本数为 6，这类样本直接拉高 selector RMSE。
-3,加入可靠性/不确定性特征,当前 selector probability 与 keypoint 是否真的更好仍有重叠，需要引入候选间差异、历史稳定性或响应形态风险特征。
-4,把选择目标从纯RMSE改成物理错误多目标,selector 虽然 RMSE 基本持平，但方向、大幅响应和困难样本有信号；下一版应显式惩罚错侧、严重幅值不足和尾段漂移。
-5,继续阻塞生理/EEG,selector 还未形成稳定可部署车辆-only提升，不能把剩余错误归因给新模态。

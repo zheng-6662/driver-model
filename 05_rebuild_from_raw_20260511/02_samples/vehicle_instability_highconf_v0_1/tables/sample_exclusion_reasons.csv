@@ -1,3 +1,0 @@
-﻿event_uid,dataset_version,subject,session_stamp,anchor_time_rel_s,exclude_reason,impact
-vehicle_instability_allraw__gzj__2025_09_27_11_38_49__000002235,vehicle_instability_highconf_v0_1,gzj,2025_09_27_11_38_49,2.235,history_underflow_for_3s_oldcode,excluded from v0.1 formal samples because complete 3 s history and 2 s future coverage is required
-vehicle_instability_allraw__hzh__2025_09_26_20_50_27__000001105,vehicle_instability_highconf_v0_1,hzh,2025_09_26_20_50_27,1.105,history_underflow_for_3s_oldcode,excluded from v0.1 formal samples because complete 3 s history and 2 s future coverage is required

@@ -1,5 +1,0 @@
-﻿gate_item,status,evidence
-selected_policy,always_rbf_reference,selected by validation gate only
-deployable_upgrade,no_upgrade,test delta vs RBF +0.000000
-test_rbf_selected_rate,1.000000,high rate means selector mostly falls back to RBF/KNN
-stage08_physio_eeg_allowed,blocked,physio/EEG remains blocked until vehicle-only candidate selection is stable.

@@ -1,6 +1,0 @@
-﻿gate_item,status,evidence
-selected_calibration_policy,stability_penalty_l05,selected_model=segment_resid_rf_blend_25
-deployable_upgrade,weak_candidate_continue,test RMSE delta -0.005620; difficult RMSE delta -0.029588; needs repeat validation
-mainline_upgrade,not_final,single split evidence only; no repeated validation or held-out confirmation beyond current test
-stage08_physio_eeg_allowed,blocked,vehicle-only selection calibration still needs robustness check
-server_used,no,local diagnostic/selection run only; credential file not read

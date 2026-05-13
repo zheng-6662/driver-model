@@ -1,8 +1,0 @@
-﻿gate_item,status,evidence,decision_cn
-fixed_vehicle_reference,pass_reference,rbf_kernel_ridge_context_no_subject test RMSE=0.533667; n=40,固定 RBF/KRR 车辆-only 作为本轮连续风格增量对照底线。
-style_last60_beats_rbf_rmse,fail,style60 test RMSE=0.534559; RBF test RMSE=0.533667,只作为探索性迹象；不能单独证明连续风格有效。
-style_not_only_driver_id,fail_or_driver_proxy_risk,style60 RMSE=0.534559; driver ID RMSE=0.533661; style+ID RMSE=0.534558,需继续用 subject-level 或留一被试验证；本轮 session-level 不能排除身份代理风险。
-shuffle_control_drop,pass_exploratory,style60 true RMSE=0.534559; within-subject shuffle mean RMSE=0.536534,置乱后若收益下降，说明存在样本-风格对应信号；仍需更多 split 和 seed。
-physical_metric_improvement_required,needs_review,"wrong_side RBF=0.225000, style60=0.225000; large_recall RBF=0.750000, style60=0.750000; difficult RMSE RBF=0.678907, style60=0.680891",若只改善 RMSE 而不改善物理错误，不能升级为主线。
-style_effectiveness_claim_allowed,blocked,当前只完成 session-level 探索性残差对照；subject-level/跨被试验证、更多置乱和固定图复核尚未完成。,不能宣称连续风格有效，只能说形成或未形成下一步验证候选。
-physio_eeg_allowed,blocked,车辆+连续风格公平参照还没有完成多 split 验证。,生理/EEG 仍不进入有效性验证。

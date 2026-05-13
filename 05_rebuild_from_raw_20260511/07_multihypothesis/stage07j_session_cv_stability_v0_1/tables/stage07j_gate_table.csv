@@ -1,6 +1,0 @@
-﻿gate_item,status,evidence
-cv_feature_protocol,strict_retrained_rbf_context_only,RBF was retrained per fold; fixed-split topK/Transformer candidate-prediction features were excluded to avoid leakage.
-stability_policy_cv_result,no_upgrade,mean test delta=+0.000329; improved fold rate=0.600; difficult improved fold rate=0.800
-mainline_upgrade,not_final,Even a positive CV result would still need full upstream candidate retraining and fixed-plot review before freezing a mainline.
-stage08_physio_eeg_allowed,blocked,Vehicle-only candidate stability is still under validation; no physio/EEG evidence is evaluated here.
-server_used,no,Local CPU diagnostic run only; credential file not read.

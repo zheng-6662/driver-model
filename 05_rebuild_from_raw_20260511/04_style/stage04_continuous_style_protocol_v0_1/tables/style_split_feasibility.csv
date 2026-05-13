@@ -1,4 +1,0 @@
-﻿session_level_split,sample_count,subject_count,session_count,any_style_usable,all_style_usable,any_style_usable_rate,all_style_usable_rate
-test,40,8,12,40,38,1.0,0.95
-train,188,18,54,188,187,1.0,0.9946808510638298
-val,42,7,10,42,42,1.0,1.0

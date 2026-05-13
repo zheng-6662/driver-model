@@ -1,8 +1,0 @@
-﻿gate_item,status,evidence,decision_cn
-no_leakage_style_protocol,pass_protocol,stage04_continuous_style_protocol_v0_1 passed direct-input and label-overlap checks.,事件前连续风格候选的来源协议可用。
-style_two_split_rmse_gain,fail,session delta=0.000892; subject delta=-0.001337,必须两类切分都超过 RBF 才能进入有效性候选；当前不满足。
-style_physical_metric_gain,fail,session wrong/large/difficult delta=0.000000/0.000000/0.001984; subject wrong/large/difficult delta=0.000000/0.000000/0.000317,没有稳定改善错侧、大幅响应召回或困难样本，不能升级。
-style_not_driver_id_proxy,weak_pass,driver ID control is near RBF and does not explain a large style gain; however style itself also lacks stable gain.,当前不是强身份代理问题，而是风格增量本身不稳定。
-style_route_continue_as_mainline,no_go_current_form,session-level fails; subject-level only tiny RMSE gain; physical metrics do not stably improve.,当前连续风格直接残差融合路线不升级为主线。
-physio_eeg_role_validation_allowed,blocked,vehicle+style fair reference is not strong/stable enough.,生理/EEG 有效性验证继续阻塞。
-next_route,go_vehicle_structured,"RBF still has wrong-side, reversal, multi-segment and difficult-sample failures.",回到车辆-only 结构化轨迹建模，优先响应分解/关键点/多假设。

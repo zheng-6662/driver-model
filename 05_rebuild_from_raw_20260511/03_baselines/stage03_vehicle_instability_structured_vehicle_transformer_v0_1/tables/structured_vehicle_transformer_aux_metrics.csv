@@ -1,4 +1,0 @@
-﻿split,n_samples,peak_direction_accuracy,amplitude_bucket_accuracy,peak_time_bucket_accuracy,onset_bucket_accuracy,computed_morphology_accuracy,tail_state_accuracy,is_large_response_target_accuracy,track_id,model_name
-train,188,1.0,0.9414893617021277,0.9042553191489362,0.8138297872340425,0.9840425531914894,0.851063829787234,0.9521276595744681,B_response3s_strict_core,structured_vehicle_transformer_aux_no_subject
-val,42,0.8571428571428571,0.5238095238095238,0.5952380952380952,0.5,0.9047619047619048,0.5476190476190477,0.8095238095238095,B_response3s_strict_core,structured_vehicle_transformer_aux_no_subject
-test,40,0.825,0.55,0.475,0.675,0.95,0.525,0.75,B_response3s_strict_core,structured_vehicle_transformer_aux_no_subject

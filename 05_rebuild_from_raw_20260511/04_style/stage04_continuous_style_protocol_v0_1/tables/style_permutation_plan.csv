@@ -1,6 +1,0 @@
-﻿control_name,shuffle_scope,purpose_cn,implementation_rule_cn,expected_if_style_real_cn
-within_subject_shuffle,"same subject, same split",检验风格向量是否只是驾驶员 ID 代理。,在每个 split 内按被试打乱样本的风格向量，车辆输入和标签不动。,收益应明显下降，但不应完全等同于跨被试打乱。
-cross_subject_shuffle,same split across subjects,检验跨驾驶员连续风格是否提供可定位的个体差异信息。,在同一 split 内跨被试随机替换风格向量，保持车辆输入、道路和标签不动。,如果风格有效，性能和物理指标收益应下降。
-cross_session_shuffle,"same subject when multiple sessions exist, otherwise mark unavailable",检验风格是否依赖具体 session/道路段，而不是稳定驾驶习惯。,优先同被试跨 session 交换；无多 session 被试单独标记不可用。,若风格主要是 session/道路代理，跨 session 打乱会造成强下降或不稳定。
-road_balanced_shuffle,same split and same road_design_module_name,控制道路/事件分布耦合，避免把道路难度误当风格。,只在相同道路模块内打乱风格向量，观察收益是否仍存在。,真实风格收益应在道路平衡后仍保留一部分。
-subject_id_baseline,not a shuffle,判断连续风格是否只是驾驶员 ID 的替代品。,用驾驶员 ID 编码替代连续风格，与连续风格模型同评价协议比较。,连续风格应至少在部分物理指标/困难样本上超过或补充 ID。

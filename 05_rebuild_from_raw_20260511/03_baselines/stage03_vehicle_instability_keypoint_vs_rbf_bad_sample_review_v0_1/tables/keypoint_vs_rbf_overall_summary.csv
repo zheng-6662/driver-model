@@ -1,2 +1,0 @@
-﻿n_test_samples,rmse_delta_mean_keypoint_minus_rbf,rmse_delta_median_keypoint_minus_rbf,rmse_improved_n,rmse_degraded_n,wrong_side_fixed_n,new_wrong_side_n,large_recall_fixed_n,large_recall_lost_n,tail_drift_fixed_n,new_tail_drift_n
-40,0.025325045734643954,0.04297649115324019,11,20,5,1,1,0,0,1

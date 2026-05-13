@@ -1,3 +1,0 @@
-﻿track_id,window_config_id,task_sample_role,n_samples,train_n,val_n,test_n,subject_n,description_cn
-A_instant2s_core,pre2_label2_old_main,instant2s_core_candidate,84,62,10,12,16,2秒即时响应核心候选：2秒标签稳定，可先验证事件后即时方向盘响应。
-B_response3s_strict_core,pre3_label3_response_coverage,response3s_strict_core_candidate,270,188,42,40,18,3秒响应覆盖严格核心候选：2秒不足但3秒标签相对稳定。

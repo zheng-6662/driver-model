@@ -1,4 +1,0 @@
-﻿selector_model,val_rmse,test_rmse,test_wrong_side_rate,test_large_response_recall,test_difficult_top20_rmse
-topk_top1_rbf_fallback_logreg_no_subject,0.5714822247805078,0.5420713665739044,0.225,0.75,0.6789069643375906
-topk_rbf_branch_logreg_selector_no_subject,0.603475113159815,0.5766300583645526,0.15,0.625,0.6405334347863101
-topk_branch_logreg_selector_no_subject,0.6722795628460951,0.6107348611897032,0.125,0.625,0.7693739788905152
