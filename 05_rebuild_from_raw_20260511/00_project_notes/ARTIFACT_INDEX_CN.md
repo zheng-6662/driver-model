@@ -1,3 +1,45 @@
+## 2026-05-14 方向盘动作 episode 样本重建 v0.6
+
+- 汇总报告：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
+- 主 episode 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episodes_all_v0_6.csv`
+- P1 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\primary_positive_episodes_P1_v0_6.csv`
+- P2 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\secondary_episodes_P2_v0_6.csv`
+- C 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\context_control_C_v0_6.csv`
+- N 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\trigger_no_effect_N_v0_6.csv`
+- U 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\manual_review_U_v0_6.csv`
+- X 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\excluded_X_v0_6.csv`
+- 复核图目录：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figures`
+- 复核图索引：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figure_index_v0_6.csv`
+- 日志：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\build_event_episodes_v0_6.log`
+
+## 2026-05-14 方向盘动作 episode 样本重建 v0.6
+
+- 汇总报告：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
+- 主 episode 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episodes_all_v0_6.csv`
+- P1 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\primary_positive_episodes_P1_v0_6.csv`
+- P2 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\secondary_episodes_P2_v0_6.csv`
+- C 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\context_control_C_v0_6.csv`
+- N 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\trigger_no_effect_N_v0_6.csv`
+- U 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\manual_review_U_v0_6.csv`
+- X 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\excluded_X_v0_6.csv`
+- 复核图目录：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figures`
+- 复核图索引：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figure_index_v0_6.csv`
+- 日志：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\build_event_episodes_v0_6.log`
+
+## 2026-05-14 方向盘动作 episode 样本重建 v0.6
+
+- 汇总报告：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
+- 主 episode 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episodes_all_v0_6.csv`
+- P1 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\primary_positive_episodes_P1_v0_6.csv`
+- P2 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\secondary_episodes_P2_v0_6.csv`
+- C 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\context_control_C_v0_6.csv`
+- N 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\trigger_no_effect_N_v0_6.csv`
+- U 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\manual_review_U_v0_6.csv`
+- X 表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\excluded_X_v0_6.csv`
+- 复核图目录：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figures`
+- 复核图索引：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figure_index_v0_6.csv`
+- 日志：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\build_event_episodes_v0_6.log`
+
 ## 2026-05-14 方向盘到车辆动态时间差审计
 
 - 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`

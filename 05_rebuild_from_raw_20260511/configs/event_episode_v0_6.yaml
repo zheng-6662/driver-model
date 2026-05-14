@@ -1,0 +1,56 @@
+project_root: F:/data_set_process/data_process
+rebuild_root: F:/data_set_process/data_process/05_rebuild_from_raw_20260511
+raw_vehicle_glob: 01_datasets/数据预处理/原始车辆数据/**/*.csv
+output_dir: outputs/event_episodes_v0_6
+
+context_tables:
+  scene_triggers: 05_rebuild_from_raw_20260511/02_samples/scene_trigger_audit_v0_2/tables/scene_trigger_session_times_v0_2.csv
+  old_anchors: 05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/tables/old_new_anchor_alignment_v0_1.csv
+  v05_candidates: 05_rebuild_from_raw_20260511/02_samples/event_candidate_filter_v0_5/tables/event_candidate_scores_v0_5.csv
+  module_segments: 05_rebuild_from_raw_20260511/02_samples/road_event_anchor_audit_v0_1/tables/session_module_entry_exit_v0_1.csv
+
+pre_window_sec: 2.0
+early_observation_sec: 0.5
+post_response_window_sec: 2.5
+correction_window_sec: 5.0
+min_episode_gap_sec: 1.5
+smoothing_window_sec: 0.05
+pre_stable_window_sec: 0.8
+steer_delta_window_sec: 0.5
+vehicle_response_window_sec: 2.5
+context_match_window_sec: 2.0
+
+steer_rate_threshold_method: robust_mad_or_percentile
+steer_rate_percentile: 90
+steer_rate_mad_k: 4.0
+steer_rate_floor: 0.18
+pre_stable_rate_ratio: 0.70
+steer_delta_mad_k: 3.0
+steer_delta_floor: 0.08
+
+vehicle_dynamic_mad_k: 4.0
+vehicle_dynamic_z_threshold: 2.5
+vehicle_dynamic_score_threshold: 2.0
+vehicle_dynamic_min_support_signals: 2
+coordinate_jump_threshold_m: 1.5
+
+correction_return_ratio: 0.45
+countersteer_ratio: 0.20
+correction_score_threshold: 1.5
+
+classification:
+  p1_min_steering_impulse_score: 2.0
+  p1_min_vehicle_dynamic_score: 2.0
+  p1_min_correction_score: 1.5
+  p2_min_steering_impulse_score: 2.0
+  p2_min_correction_score: 1.0
+  normal_curve_vehicle_score_max: 2.2
+  normal_curve_correction_score_max: 1.2
+
+review_figures:
+  P1_strong_steer_vehicle_response_correction: 30
+  P2_strong_steer_weak_vehicle_response: 30
+  C_normal_curve_or_normal_lane_change: 20
+  N_trigger_no_effect_or_no_response: 20
+  U_unclear: 30
+  X_exclude: 20

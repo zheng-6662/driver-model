@@ -1,3 +1,69 @@
+# 项目状态更新：方向盘动作 episode 样本重建 v0.6
+
+更新时间：2026-05-14
+
+当前阶段：旧流程事件样本重建继续推进。
+
+当前完成：以方向盘角速度启动为主锚点的 episode 自动挖掘，已生成分类样本表、复核图和汇总报告。
+
+最近一次结果：总输出 1574 行；P1=58，P2=13，C=4，N=1415，U=51，X=33。
+
+用户优先查看：
+
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episodes_all_v0_6.csv`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\primary_positive_episodes_P1_v0_6.csv`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figures`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figure_index_v0_6.csv`
+
+下一步建议：先人工复核 P1、U 和 C 类代表图，再决定是否把 P1/P2 作为“早期方向盘动作预测剩余轨迹”的训练样本。
+
+---
+
+# 项目状态更新：方向盘动作 episode 样本重建 v0.6
+
+更新时间：2026-05-14
+
+当前阶段：旧流程事件样本重建继续推进。
+
+当前完成：以方向盘角速度启动为主锚点的 episode 自动挖掘，已生成分类样本表、复核图和汇总报告。
+
+最近一次结果：总输出 1574 行；P1=58，P2=13，C=4，N=1415，U=51，X=33。
+
+用户优先查看：
+
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episodes_all_v0_6.csv`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\primary_positive_episodes_P1_v0_6.csv`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figures`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figure_index_v0_6.csv`
+
+下一步建议：先人工复核 P1、U 和 C 类代表图，再决定是否把 P1/P2 作为“早期方向盘动作预测剩余轨迹”的训练样本。
+
+---
+
+# 项目状态更新：方向盘动作 episode 样本重建 v0.6
+
+更新时间：2026-05-14
+
+当前阶段：旧流程事件样本重建继续推进。
+
+当前完成：以方向盘角速度启动为主锚点的 episode 自动挖掘，已生成分类样本表、复核图和汇总报告。
+
+最近一次结果：总输出 1499 行；P1=10，P2=3，C=3，N=1434，U=38，X=11。
+
+用户优先查看：
+
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episodes_all_v0_6.csv`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\primary_positive_episodes_P1_v0_6.csv`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figures`
+- `F:\data_set_process\data_process\outputs\event_episodes_v0_6\review_figure_index_v0_6.csv`
+
+下一步建议：先人工复核 P1、U 和 C 类代表图，再决定是否把 P1/P2 作为“早期方向盘动作预测剩余轨迹”的训练样本。
+
+---
+
 # 项目状态更新：方向盘到车辆动态时间差审计
 
 更新时间：2026-05-14
