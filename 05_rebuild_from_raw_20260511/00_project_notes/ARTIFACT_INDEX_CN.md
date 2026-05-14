@@ -1,3 +1,51 @@
+## 2026-05-14 方向盘到车辆动态时间差审计
+
+- 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\steer_to_vehicle_dynamics_latency_v0_1_cn.md`
+- 明细表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_events_v0_1.csv`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_summary_v0_1.csv`
+- 分组表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_by_bucket_module_v0_1.csv`
+- 分位数表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_quantiles_v0_1.csv`
+- 代表性复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\latency_review_panel_index_v0_1.csv`
+- 代表性复核图数量：24
+
+图表：
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_histogram_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_by_bucket_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_by_module_box_v0_1.png`
+
+## 2026-05-14 方向盘到车辆动态时间差审计
+
+- 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\steer_to_vehicle_dynamics_latency_v0_1_cn.md`
+- 明细表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_events_v0_1.csv`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_summary_v0_1.csv`
+- 分组表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_by_bucket_module_v0_1.csv`
+- 分位数表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_quantiles_v0_1.csv`
+- 代表性复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\latency_review_panel_index_v0_1.csv`
+- 代表性复核图数量：24
+
+图表：
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_histogram_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_by_bucket_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_by_module_box_v0_1.png`
+
+## 2026-05-14 方向盘到车辆动态时间差审计
+
+- 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\steer_to_vehicle_dynamics_latency_v0_1_cn.md`
+- 明细表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_events_v0_1.csv`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_summary_v0_1.csv`
+- 分组表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_by_bucket_module_v0_1.csv`
+- 分位数表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_quantiles_v0_1.csv`
+- 代表性复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\latency_review_panel_index_v0_1.csv`
+- 代表性复核图数量：24
+
+图表：
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_histogram_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_by_bucket_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_by_module_box_v0_1.png`
+
 # 阶段产物索引
 
 ## 最新更新：2026-05-13 08:09

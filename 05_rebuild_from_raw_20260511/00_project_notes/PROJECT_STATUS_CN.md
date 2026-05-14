@@ -1,3 +1,69 @@
+# 项目状态更新：方向盘到车辆动态时间差审计
+
+更新时间：2026-05-14
+
+当前阶段：旧流程事件样本与锚点继续审计。
+
+当前刚完成：方向盘动作开始到横向/横摆/侧倾响应开始的时间差审计。
+
+最近一次结果：大多数样本没有稳定的 0.2 秒以上提前量，不能直接假设“方向盘先动很久后车辆才侧倾”。
+
+用户优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\steer_to_vehicle_dynamics_latency_v0_1_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_events_v0_1.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_histogram_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\latency_review_panel_index_v0_1.csv`
+
+下一步建议：根据本次比例决定是否把任务拆成“方向盘早期动作预测剩余轨迹”“车辆扰动后纠偏”“几乎同步动作延续”三类，而不是继续混合训练。
+
+---
+
+# 项目状态更新：方向盘到车辆动态时间差审计
+
+更新时间：2026-05-14
+
+当前阶段：旧流程事件样本与锚点继续审计。
+
+当前刚完成：方向盘动作开始到横向/横摆/侧倾响应开始的时间差审计。
+
+最近一次结果：大多数样本没有稳定的 0.2 秒以上提前量，不能直接假设“方向盘先动很久后车辆才侧倾”。
+
+用户优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\steer_to_vehicle_dynamics_latency_v0_1_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_events_v0_1.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_histogram_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\latency_review_panel_index_v0_1.csv`
+
+下一步建议：根据本次比例决定是否把任务拆成“方向盘早期动作预测剩余轨迹”“车辆扰动后纠偏”“几乎同步动作延续”三类，而不是继续混合训练。
+
+---
+
+# 项目状态更新：方向盘到车辆动态时间差审计
+
+更新时间：2026-05-14
+
+当前阶段：旧流程事件样本与锚点继续审计。
+
+当前刚完成：方向盘动作开始到横向/横摆/侧倾响应开始的时间差审计。
+
+最近一次结果：大多数样本没有稳定的 0.2 秒以上提前量，不能直接假设“方向盘先动很久后车辆才侧倾”。
+
+用户优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_steer_to_vehicle_dynamics_latency_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\steer_to_vehicle_dynamics_latency_v0_1_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\steer_to_dynamics_latency_events_v0_1.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\figures\steer_to_dynamics_latency_histogram_v0_1.png`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\steer_to_vehicle_dynamics_latency_v0_1\tables\latency_review_panel_index_v0_1.csv`
+
+下一步建议：根据本次比例决定是否把任务拆成“方向盘早期动作预测剩余轨迹”“车辆扰动后纠偏”“几乎同步动作延续”三类，而不是继续混合训练。
+
+---
+
 # R2E-Steering 项目总进度看板
 
 ## 最新更新：2026-05-13 08:09
