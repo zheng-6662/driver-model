@@ -1,3 +1,11 @@
+## 2026-05-14 方向盘动作候选漏斗审计 v0.1
+
+- 报告：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\funnel_audit_v0_1\steering_episode_funnel_audit_v0_1.md`
+- 逐记录漏斗表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\funnel_audit_v0_1\steering_funnel_by_record_v0_1.csv`
+- 候选明细表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\funnel_audit_v0_1\steering_funnel_candidates_v0_1.csv`
+- 宽松候选池：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\funnel_audit_v0_1\loose_steering_candidates_v0_1.csv`
+- 严格通过表：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\funnel_audit_v0_1\strict_steering_episode_candidates_v0_1.csv`
+
 ## 2026-05-14 方向盘动作 episode 样本重建 v0.6
 
 - 汇总报告：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\event_episode_summary_v0_6.md`
