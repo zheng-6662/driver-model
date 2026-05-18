@@ -1,3 +1,27 @@
+## 2026-05-18 车辆响应锚点前方向盘动作重新筛选 v0.2
+
+- 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_vehicle_response_presteer_rescreen_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\vehicle_response_presteer_rescreen_v0_2_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_candidates_v0_2.csv`
+- P1 最干净核心样本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\primary_roll_presteer_events_P1_v0_2.csv`
+- P2 最干净次级样本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\secondary_lateral_presteer_events_P2_v0_2.csv`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_summary_v0_2.csv`
+- 分场景表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_by_module_v0_2.csv`
+- 时间差表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_latency_quantiles_v0_2.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_review_panel_index_v0_2.csv`
+
+## 2026-05-18 车辆响应锚点前方向盘动作重新筛选 v0.2
+
+- 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_vehicle_response_presteer_rescreen_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\vehicle_response_presteer_rescreen_v0_2_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_candidates_v0_2.csv`
+- P1 核心样本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\primary_roll_presteer_events_P1_v0_2.csv`
+- P2 次级样本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\secondary_lateral_presteer_events_P2_v0_2.csv`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_summary_v0_2.csv`
+- 分场景表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_by_module_v0_2.csv`
+- 时间差表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_latency_quantiles_v0_2.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\vehicle_response_presteer_rescreen_v0_2\tables\vehicle_response_presteer_review_panel_index_v0_2.csv`
+
 ## 2026-05-14 方向盘动作候选漏斗审计 v0.1
 
 - 报告：`F:\data_set_process\data_process\outputs\event_episodes_v0_6\funnel_audit_v0_1\steering_episode_funnel_audit_v0_1.md`
@@ -1404,3 +1428,39 @@
 - 服务器日志：本阶段未使用服务器。
 - 重要 Git commit：`98552bf3 Add stage7e candidate generation redesign`。
 - 适合用户/老师直接查看：优先看用户查看版总结、候选生成蓝图、gate 表、oracle gain 图和 winner 分布图。
+
+
+## v0.3 全量原始数据极限工况 episode 重筛
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_episode_v0_3_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\extreme_condition_episode_v0_3_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_episodes_all_v0_3.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_review_panel_index_v0_3.csv`
+- 分类统计图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\figures\extreme_condition_category_counts_v0_3.png`
+
+
+## v0.3 全量原始数据极限工况 episode 重筛
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_episode_v0_3_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\extreme_condition_episode_v0_3_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_episodes_all_v0_3.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_review_panel_index_v0_3.csv`
+- 分类统计图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\figures\extreme_condition_category_counts_v0_3.png`
+
+
+## v0.3 全量原始数据极限工况 episode 重筛
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_episode_v0_3_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\extreme_condition_episode_v0_3_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_episodes_all_v0_3.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_review_panel_index_v0_3.csv`
+- 分类统计图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\figures\extreme_condition_category_counts_v0_3.png`
+
+
+## v0.3 全量原始数据极限工况 episode 重筛
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_episode_v0_3_user_summary_cn.md`
+- 技术报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\extreme_condition_episode_v0_3_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_episodes_all_v0_3.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_review_panel_index_v0_3.csv`
+- 分类统计图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\figures\extreme_condition_category_counts_v0_3.png`

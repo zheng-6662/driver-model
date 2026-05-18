@@ -1,3 +1,29 @@
+# 项目状态更新：v0.3 全量原始数据极限工况 episode 重筛
+
+更新时间：2026-05-18 19:21
+
+当前阶段：旧流程样本定义重建。当前不再基于旧 v0.2/v0.5/v0.6 候选表继续筛，而是从 `01_datasets/数据预处理/原始车辆数据` 下所有原始车辆 CSV 重新扫描。
+
+当前完成：新增并运行 v0.3 全量原始数据极限/近极限工况 episode 筛选流程。旧候选表只作为上下文贴回，不作为样本入口；`carsim对标.csv` 已作为非被试记录排除，不混入驾驶员 episode。
+
+最近一次结果：扫描 CSV 92 个；其中 89 个被试车辆记录成功读取，2 个记录过短，1 个非被试 CSV 跳过。最终检测 episode 1574 个：强响应型极限工况 49，弱响应/保守响应 208，延迟或无明显转向响应 139，正常驾驶/普通弯道对照 86，待人工复核 311，排除 781。
+
+当前最大风险：v0.3 仍是自动弱标签，不等于最终训练真值。尤其是待人工复核和排除样本占比高，说明全量数据里很多片段存在工况/响应边界不清、窗口或坐标问题。进入模型训练前，应先人工查看代表图，确认强响应、弱响应和延迟/无响应分类是否符合研究目标。
+
+下一步准备做什么：优先复核 v0.3 代表图，确认样本语义后，再构建车辆-only 数据集并跑无学习基线和车辆-only 强基线。只有车辆-only 在新样本上比旧样本更符合物理意义，才继续加入连续驾驶风格和生理数据。
+
+用户可以优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_episode_v0_3_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_episodes_all_v0_3.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\strong_response_episodes_v0_3.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\weak_or_conservative_response_episodes_v0_3.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\delayed_or_no_steer_response_episodes_v0_3.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_review_panel_index_v0_3.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\figures\review_panels`
+
+---
+
 # 项目状态更新：方向盘动作 episode 样本重建 v0.6
 
 更新时间：2026-05-14
