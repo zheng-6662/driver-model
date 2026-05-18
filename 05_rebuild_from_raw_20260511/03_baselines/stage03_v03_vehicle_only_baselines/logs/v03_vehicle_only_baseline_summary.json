@@ -212,8 +212,9 @@
     "primary_rmse_0_2s": 0.6009110229975542,
     "tail_rmse_2_5s": 0.9054288761552151,
     "peak_abs_mae": 0.6491233500112829,
-    "wrong_side_rate_large": 0.09649122807017543,
-    "severe_amp_under_rate_large": 0.22807017543859648,
+    "large_response_n": 35,
+    "wrong_side_rate_large": 0.3142857142857143,
+    "severe_amp_under_rate_large": 0.7428571428571429,
     "large_response_recall": 0.42857142857142855,
     "large_threshold_train_p75": 1.0215403139591217
   },

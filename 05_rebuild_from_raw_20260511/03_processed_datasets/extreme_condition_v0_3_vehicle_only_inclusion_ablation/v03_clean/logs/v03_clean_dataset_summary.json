@@ -1,0 +1,46 @@
+{
+  "variant_id": "v03_clean",
+  "name_cn": "当前干净集",
+  "description_cn": "只使用强响应、弱/保守响应、延迟/无明显转向、正常对照四类。",
+  "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\extreme_condition_episodes_v0_3\\tables\\extreme_condition_episodes_all_v0_3.csv",
+  "included_categories": [
+    "delayed_or_no_steer",
+    "normal_control",
+    "strong_response",
+    "weak_or_conservative"
+  ],
+  "sample_count": 482,
+  "dropped_count": 0,
+  "split_counts": {
+    "train": 280,
+    "test": 114,
+    "val": 88
+  },
+  "category_counts": {
+    "weak_or_conservative": 208,
+    "delayed_or_no_steer": 139,
+    "normal_control": 86,
+    "strong_response": 49
+  },
+  "subject_counts": {
+    "zx": 57,
+    "txj": 49,
+    "zdq": 38,
+    "rjy": 34,
+    "gf": 33,
+    "zxy": 33,
+    "hzh": 31,
+    "yyl": 28,
+    "gzj": 24,
+    "yzy": 23,
+    "lxy": 22,
+    "byx": 20,
+    "lx": 20,
+    "tyy": 16,
+    "cwh": 14,
+    "xst": 14,
+    "zt": 14,
+    "jy": 12
+  },
+  "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+}

@@ -510,6 +510,7 @@ def evaluate_all(
             wrong = large & np.isfinite(gt_p) & np.isfinite(pr_p) & (np.sign(gt_p) != np.sign(pr_p))
             severe_under = large & np.isfinite(gt_p) & np.isfinite(pr_p) & (np.abs(pr_p) < 0.5 * np.abs(gt_p))
             recall = large & np.isfinite(pr_p) & (np.abs(pr_p) >= 0.5 * train_large_thr)
+            large_n = int(large.sum())
             metric_rows.append(
                 {
                     "model_name": model_name,
@@ -519,9 +520,10 @@ def evaluate_all(
                     "primary_rmse_0_2s": rmse(y[idx], pred[idx], primary_m),
                     "tail_rmse_2_5s": rmse(y[idx], pred[idx], tail_m),
                     "peak_abs_mae": float(np.nanmean(np.abs(np.abs(pr_p) - np.abs(gt_p)))),
-                    "wrong_side_rate_large": float(wrong.mean()) if large.any() else float("nan"),
-                    "severe_amp_under_rate_large": float(severe_under.mean()) if large.any() else float("nan"),
-                    "large_response_recall": float(recall.sum() / large.sum()) if large.any() else float("nan"),
+                    "large_response_n": large_n,
+                    "wrong_side_rate_large": float(wrong.sum() / large_n) if large_n else float("nan"),
+                    "severe_amp_under_rate_large": float(severe_under.sum() / large_n) if large_n else float("nan"),
+                    "large_response_recall": float(recall.sum() / large_n) if large_n else float("nan"),
                     "large_threshold_train_p75": train_large_thr,
                 }
             )

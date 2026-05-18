@@ -1,0 +1,72 @@
+{
+  "dataset_summary": {
+    "variant_id": "v03_plus_review",
+    "name_cn": "干净集 + 待复核",
+    "description_cn": "在当前干净集基础上加入 manual_review，验证待复核样本是否能扩大训练覆盖。",
+    "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\extreme_condition_episodes_v0_3\\tables\\extreme_condition_episodes_all_v0_3.csv",
+    "included_categories": [
+      "delayed_or_no_steer",
+      "manual_review",
+      "normal_control",
+      "strong_response",
+      "weak_or_conservative"
+    ],
+    "sample_count": 793,
+    "dropped_count": 0,
+    "split_counts": {
+      "train": 454,
+      "test": 209,
+      "val": 130
+    },
+    "category_counts": {
+      "manual_review": 311,
+      "weak_or_conservative": 208,
+      "delayed_or_no_steer": 139,
+      "normal_control": 86,
+      "strong_response": 49
+    },
+    "subject_counts": {
+      "zx": 88,
+      "gf": 85,
+      "zdq": 76,
+      "txj": 73,
+      "rjy": 52,
+      "hzh": 48,
+      "zxy": 45,
+      "yyl": 39,
+      "yzy": 37,
+      "lx": 37,
+      "gzj": 33,
+      "jy": 31,
+      "lxy": 30,
+      "xst": 28,
+      "byx": 26,
+      "cwh": 24,
+      "zt": 21,
+      "tyy": 20
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "v03_plus_review",
+    "name_cn": "干净集 + 待复核",
+    "description_cn": "在当前干净集基础上加入 manual_review，验证待复核样本是否能扩大训练覆盖。",
+    "sample_count": 793,
+    "split_counts_json": "{\"train\": 454, \"test\": 209, \"val\": 130}",
+    "category_counts_json": "{\"manual_review\": 311, \"weak_or_conservative\": 208, \"delayed_or_no_steer\": 139, \"normal_control\": 86, \"strong_response\": 49}",
+    "test_best_model": "rbf_kernel_vehicle_context_alpha0.1_g1",
+    "test_rmse_steer": 0.5922770550732808,
+    "test_primary_rmse_0_2s": 0.4532427799135831,
+    "test_tail_rmse_2_5s": 0.6696058367532338,
+    "test_wrong_side_rate_large": 0.19642857142857142,
+    "test_severe_amp_under_rate_large": 0.6785714285714286,
+    "test_large_response_recall": 0.6428571428571429,
+    "clean_subset_test_n": 114,
+    "clean_subset_test_sample_rmse_aggregate": 0.7897855178361891,
+    "clean_subset_wrong_side_rate_large": 0.2,
+    "clean_subset_severe_amp_under_rate_large": 0.68,
+    "all_test_sample_rmse_aggregate": 0.5922770723197927,
+    "fixed_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v03_vehicle_only_inclusion_ablation\\v03_plus_review\\figures\\v03_plus_review_fixed_predictions_test.png",
+    "bad_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v03_vehicle_only_inclusion_ablation\\v03_plus_review\\figures\\v03_plus_review_bad_samples_test.png"
+  }
+}
