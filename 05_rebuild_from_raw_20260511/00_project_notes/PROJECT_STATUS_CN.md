@@ -1145,3 +1145,20 @@ instability_ay_roll        12
 - 当前最大风险是什么：如果继续只堆 selector，会反复得到退回 RBF/KNN 的安全策略；如果直接训练复杂多假设模型但不绑定响应物理类型，仍可能生成平滑相似候选。
 - 下一步准备做什么：Stage 7f 实现 response-factorized vehicle-only candidate v0.1：保留 RBF/KNN anchor，并增加方向/幅值、峰值时间、尾段模式、反向修正/多段修正和可靠性门控候选。
 - 用户可以优先查看哪些文件：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage07e_candidate_generation_redesign_user_summary_cn.md`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_candidate_generation_blueprint.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/tables/stage07e_gate_table.csv`，`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/07_multihypothesis/stage07e_candidate_generation_redesign_v0_1/figures/stage07e_candidate_generation_blueprint.png`。
+
+
+## 最新更新：2026-05-18 v0.3 车辆-only 基线
+
+- 当前阶段：v0.3 全量原始数据样本库后的车辆-only 数据集与基线验证。
+- 已完成：构建 `v03_vehicle_only_pre2_label5_20hz`，可用样本 482，split={'train': 280, 'test': 114, 'val': 88}。
+- 最近结果：当前 test 最好模型 `rbf_kernel_vehicle_context_alpha0.1_g2`，RMSE=0.797252，主响应 RMSE=0.600911，尾段 RMSE=0.905429。
+- 下一步：优先查看固定预测图和坏样本图；如果物理意义可接受，再考虑响应类型辅助模型或加入连续风格/生理增量。
+
+
+## 最新更新：2026-05-18 v0.3 车辆-only 数据集与基线（中文修正版）
+
+- 当前阶段：基于全量原始车辆数据重筛 episode 后，构建车辆-only 数据集并运行无学习基线和车辆-only 强基线。
+- 已完成：`v03_vehicle_only_pre2_label5_20hz`，可用样本 482，train/val/test=280/88/114。
+- 最近结果：test 最好模型 `rbf_kernel_vehicle_context_alpha0.1_g2`，RMSE=0.797252，主响应 RMSE=0.600911，尾段 RMSE=0.905429。
+- 当前判断：车辆-only 比零响应有小幅总体提升，并明显降低大响应错侧率，但大响应召回仍不足；这还不是风格或生理有效性的证据。
+- 下一步：优先查看固定预测图、坏样本图、分类型和分被试表，再决定是否调整样本/锚点，或进入响应类型辅助建模。

@@ -1464,3 +1464,28 @@
 - 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_episodes_all_v0_3.csv`
 - 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\tables\extreme_condition_review_panel_index_v0_3.csv`
 - 分类统计图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_3\figures\extreme_condition_category_counts_v0_3.png`
+
+
+## v0.3 车辆-only 数据集与基线
+
+- 数据集数组：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_processed_datasets\extreme_condition_v0_3_vehicle_only\arrays\v03_vehicle_only_pre2_label5_20hz.npz`
+- 数据集 manifest：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_processed_datasets\extreme_condition_v0_3_vehicle_only\tables\v03_vehicle_only_manifest.csv`
+- 指标表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_baseline_metrics.csv`
+- 逐样本指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_per_sample_metrics.csv`
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_vehicle_only_baselines_user_summary_cn.md`
+- 固定预测图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\figures\v03_vehicle_only_fixed_predictions_test.png`
+- 坏样本图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\figures\v03_vehicle_only_bad_samples_test.png`
+
+
+## v0.3 车辆-only 数据集与基线（中文修正版）
+
+- 数据集数组：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_processed_datasets\extreme_condition_v0_3_vehicle_only\arrays\v03_vehicle_only_pre2_label5_20hz.npz`
+- 数据集 manifest：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_processed_datasets\extreme_condition_v0_3_vehicle_only\tables\v03_vehicle_only_manifest.csv`
+- 总指标表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_baseline_metrics.csv`
+- 逐样本指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_per_sample_metrics.csv`
+- 分样本类型表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_best_model_by_category_test.csv`
+- 分被试表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_best_model_by_subject_test.csv`
+- 分工况上下文表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\tables\v03_vehicle_only_best_model_by_context_test.csv`
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_vehicle_only_baselines_user_summary_cn.md`
+- 固定预测图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\figures\v03_vehicle_only_fixed_predictions_test.png`
+- 坏样本图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_vehicle_only_baselines\figures\v03_vehicle_only_bad_samples_test.png`
