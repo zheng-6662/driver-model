@@ -1556,3 +1556,12 @@
 - 图片目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_vehicle_response_split_v0_3`
 - 图片说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_vehicle_response_split_v0_3/00_先看这里_快速转向按车辆响应拆分说明.md`
 - 图片索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_vehicle_response_split_v0_3/fast_steer_vehicle_response_split_image_index_v0_3.csv`
+
+## v0.3 快速转向候选锚点时序审计
+
+- 中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/fast_steer_anchor_timing_audit_v0_3_cn.md`
+- 审计表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/fast_steer_anchor_timing_audit_v0_3.csv`
+- 汇总表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/fast_steer_anchor_timing_audit_summary_v0_3.csv`
+- 图片目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_anchor_timing_split_v0_3`
+- 图片说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_anchor_timing_split_v0_3/00_先看这里_锚点时序复核说明.md`
+- 图片索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_anchor_timing_split_v0_3/fast_steer_anchor_timing_image_index_v0_3.csv`
