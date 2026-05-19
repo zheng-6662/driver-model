@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import sys
 from pathlib import Path
@@ -13,7 +14,8 @@ import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit
 
 
-ROOT = Path(r"F:/data_set_process/data_process/05_rebuild_from_raw_20260511")
+PROJECT_ROOT = Path(os.environ.get("DATA_PROCESS_ROOT", r"F:/data_set_process/data_process"))
+ROOT = Path(os.environ.get("REBUILD_ROOT", str(PROJECT_ROOT / "05_rebuild_from_raw_20260511")))
 SCRIPT_DIR = ROOT / "03_baselines" / "scripts"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -136,6 +138,12 @@ def build_variant_dataset(variant: dict[str, Any], sample_split: dict[str, str],
 
     episodes = pd.read_csv(base.EPISODE_TABLE, encoding="utf-8-sig", low_memory=False)
     episodes = episodes[episodes["v0_3_category"].isin(set(variant["categories"]))].copy()
+    excluded_contexts = variant.get("excluded_contexts")
+    if excluded_contexts:
+        context_set = set(str(x) for x in excluded_contexts)
+        is_excluded = episodes["v0_3_category"].astype(str).eq("excluded")
+        in_context = episodes["condition_context_cn"].astype(str).isin(context_set)
+        episodes = episodes[(~is_excluded) | in_context].copy()
     episodes = episodes.sort_values(["subject", "session_stamp", "t_condition_anchor"]).reset_index(drop=True)
 
     cache: dict[str, pd.DataFrame | None] = {}
@@ -147,7 +155,7 @@ def build_variant_dataset(variant: dict[str, Any], sample_split: dict[str, str],
     dropped: list[dict[str, Any]] = []
 
     for _, ep in episodes.iterrows():
-        path = str(ep["vehicle_raw_absolute_path"])
+        path = str(base.resolve_vehicle_raw_path(ep))
         if path not in cache:
             df, _ = base.v03.load_vehicle_csv(Path(path))
             cache[path] = df
@@ -209,6 +217,8 @@ def build_variant_dataset(variant: dict[str, Any], sample_split: dict[str, str],
         "description_cn": variant["description_cn"],
         "source_episode_table": str(base.EPISODE_TABLE),
         "included_categories": variant["categories"],
+        "included_excluded_contexts": list(variant.get("excluded_contexts") or []),
+        "dropped_features": list(variant.get("drop_features") or []),
         "sample_count": int(len(meta)),
         "dropped_count": int(len(dropped)),
         "split_counts": meta["split"].value_counts().to_dict(),
@@ -266,21 +276,28 @@ def run_variant(variant: dict[str, Any], sample_split: dict[str, str], session_s
     log_dir = out_dir / "logs"
     ensure_dirs(table_dir, fig_dir, log_dir)
 
-    base.TABLE_DIR = table_dir
-    base.FIG_DIR = fig_dir
-    base.LOG_DIR = log_dir
+    feature_backup = list(base.VEHICLE_FEATURES)
+    drop_features = set(str(x) for x in variant.get("drop_features") or [])
+    if drop_features:
+        base.VEHICLE_FEATURES = [x for x in feature_backup if x not in drop_features]
+    try:
+        base.TABLE_DIR = table_dir
+        base.FIG_DIR = fig_dir
+        base.LOG_DIR = log_dir
 
-    x, x_mask, y, y_mask, meta, dataset_summary = build_variant_dataset(variant, sample_split, session_split)
-    train_idx = np.where(meta["split"].astype(str).to_numpy() == "train")[0]
-    val_idx = np.where(meta["split"].astype(str).to_numpy() == "val")[0]
-    test_idx = np.where(meta["split"].astype(str).to_numpy() == "test")[0]
-    if len(train_idx) == 0 or len(val_idx) == 0 or len(test_idx) == 0:
-        raise RuntimeError(f"{variant_id} split invalid: {dataset_summary.get('split_counts')}")
+        x, x_mask, y, y_mask, meta, dataset_summary = build_variant_dataset(variant, sample_split, session_split)
+        train_idx = np.where(meta["split"].astype(str).to_numpy() == "train")[0]
+        val_idx = np.where(meta["split"].astype(str).to_numpy() == "val")[0]
+        test_idx = np.where(meta["split"].astype(str).to_numpy() == "test")[0]
+        if len(train_idx) == 0 or len(val_idx) == 0 or len(test_idx) == 0:
+            raise RuntimeError(f"{variant_id} split invalid: {dataset_summary.get('split_counts')}")
 
-    X, _ = base.flatten_history_features(x, x_mask, meta)
-    preds = base.build_no_learning_predictions(y, y_mask, x, x_mask, meta, train_idx)
-    preds.update(base.train_vehicle_models(X, y, y_mask, train_idx, val_idx))
-    metrics, per_sample = base.evaluate_all(y, y_mask, base.LABEL_TIME, meta, preds, train_idx)
+        X, _ = base.flatten_history_features(x, x_mask, meta)
+        preds = base.build_no_learning_predictions(y, y_mask, x, x_mask, meta, train_idx)
+        preds.update(base.train_vehicle_models(X, y, y_mask, train_idx, val_idx))
+        metrics, per_sample = base.evaluate_all(y, y_mask, base.LABEL_TIME, meta, preds, train_idx)
+    finally:
+        base.VEHICLE_FEATURES = feature_backup
     metrics.to_csv(table_dir / f"{variant_id}_baseline_metrics.csv", index=False, encoding="utf-8-sig")
     per_sample.to_csv(table_dir / f"{variant_id}_per_sample_metrics.csv", index=False, encoding="utf-8-sig")
 

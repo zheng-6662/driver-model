@@ -383,3 +383,13 @@
 - 本地拉回路径：无；所有输出直接生成在本地 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_vehicle_instability_clean_task_bad_sample_review_v0_1`。
 - 是否还有任务在跑：没有。
 - GPU/显存状态摘要：未使用 GPU；未使用服务器；未读取服务器指令与密码文件；未记录任何凭据。
+
+## 2026-05-19 v0.3 excluded 分层加入实验服务器记录
+
+- 服务器连接格式：`ssh -p 55060 root@connect.westc.seetacloud.com`，密码不记录。
+- 远程项目路径：`/root/autodl-tmp/data_process`。
+- 远程车辆数据映射：`/root/autodl-tmp/data_process/01_datasets/多模态数据/被试数据集合/被试/vehicle/*_vehicle_aligned_cleaned.csv`。
+- 本地同步压缩包：`F:/data_set_process/data_process/tmp/v03_excluded_stratified_results_20260519.tar.gz`。
+- 远程日志路径：`/root/autodl-tmp/data_process/04_project_logs/reports/server_logs/v03_excluded_stratified_20260519/run.log`。
+- 本地日志副本：`F:/data_set_process/data_process/04_project_logs/reports/server_logs/v03_excluded_stratified_20260519/run.log`。
+- 运行状态：已完成，结果已拉回本地。

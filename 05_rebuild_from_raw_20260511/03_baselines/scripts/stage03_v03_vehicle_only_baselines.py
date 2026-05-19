@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -27,8 +28,14 @@ matplotlib.rcParams["font.sans-serif"] = [
 matplotlib.rcParams["axes.unicode_minus"] = False
 
 
-ROOT = Path(r"F:/data_set_process/data_process/05_rebuild_from_raw_20260511")
-PROJECT_ROOT = Path(r"F:/data_set_process/data_process")
+PROJECT_ROOT = Path(os.environ.get("DATA_PROCESS_ROOT", r"F:/data_set_process/data_process"))
+ROOT = Path(os.environ.get("REBUILD_ROOT", str(PROJECT_ROOT / "05_rebuild_from_raw_20260511")))
+RAW_VEHICLE_ROOT = Path(
+    os.environ.get(
+        "RAW_VEHICLE_ROOT",
+        str(PROJECT_ROOT / "01_datasets" / "数据预处理" / "原始车辆数据"),
+    )
+)
 SAMPLE_SCRIPT_DIR = ROOT / "02_samples" / "scripts"
 if str(SAMPLE_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SAMPLE_SCRIPT_DIR))
@@ -83,6 +90,37 @@ VEHICLE_FEATURES = [
     "zx1|mu",
     "curvature_selected",
 ]
+
+
+def resolve_vehicle_raw_path(ep: pd.Series | dict[str, Any]) -> Path:
+    abs_value = str(ep.get("vehicle_raw_absolute_path", "")).strip()
+    if abs_value:
+        abs_path = Path(abs_value)
+        if abs_path.exists():
+            return abs_path
+    rel_value = str(ep.get("vehicle_raw_relative_path", "")).strip().replace("\\", "/")
+    if rel_value and rel_value.lower() != "nan":
+        rel_path = Path(*rel_value.split("/"))
+        for root in [RAW_VEHICLE_ROOT, PROJECT_ROOT / "01_datasets" / "数据预处理" / "原始车辆数据"]:
+            candidate = root / rel_path
+            if candidate.exists():
+                return candidate
+        parts = rel_value.split("/")
+        if len(parts) >= 2:
+            subject = parts[0]
+            file_name = parts[-1]
+            if file_name.endswith("_vehicle.csv"):
+                stem = file_name[: -len("_vehicle.csv")]
+                multimodal_roots = [
+                    RAW_VEHICLE_ROOT,
+                    PROJECT_ROOT / "01_datasets" / "多模态数据" / "被试数据集合",
+                ]
+                for root in multimodal_roots:
+                    for suffix in ["_vehicle_aligned_cleaned.csv", "_vehicle_aligned_cleaned_roadtype_labeled.csv"]:
+                        candidate = root / subject / "vehicle" / f"{stem}{suffix}"
+                        if candidate.exists():
+                            return candidate
+    return Path(abs_value)
 
 
 def ensure_dirs() -> None:
@@ -149,7 +187,7 @@ def build_dataset() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, pd.
     dropped: list[dict[str, Any]] = []
 
     for _, ep in episodes.iterrows():
-        path = str(ep["vehicle_raw_absolute_path"])
+        path = str(resolve_vehicle_raw_path(ep))
         if path not in cache:
             df, _ = v03.load_vehicle_csv(Path(path))
             cache[path] = df

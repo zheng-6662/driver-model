@@ -1178,3 +1178,12 @@ instability_ay_roll        12
 - 已完成：3 档纳入范围对照，当前总 test RMSE 最低的是 `v03_plus_review`，RMSE=0.592277。
 - 当前判断：该结果只能回答“加样本是否改善车辆-only 基线”，不能证明连续风格或生理数据有效。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_vehicle_only_inclusion_ablation_user_summary_cn.md`。
+
+## 2026-05-19 v0.3 excluded 分层加入实验
+
+- 当前阶段：车辆-only 基线样本纳入范围审查。
+- 已完成：服务器跑完 7 个 excluded 分层加入版本，并拉回本地结果。
+- 当前结论：`干净集 + 待复核` 仍是整体最稳范围；`excluded` 不能全量加入，但横滚/姿态类有保留价值，适合作为风险池继续复核。
+- 本轮结果目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_excluded_stratified_inclusion`
+- 用户查看版报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_v03_excluded_stratified_inclusion_user_summary_cn.md`
+- 服务器连接格式：`ssh -p 55060 root@connect.westc.seetacloud.com`，密码未写入项目文件。
