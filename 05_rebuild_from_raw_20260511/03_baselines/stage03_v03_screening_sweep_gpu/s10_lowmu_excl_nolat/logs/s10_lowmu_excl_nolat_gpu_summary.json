@@ -1,0 +1,74 @@
+{
+  "dataset_summary": {
+    "variant_id": "s10_lowmu_excl_nolat",
+    "name_cn": "加低附着 excluded，去横向偏移",
+    "description_cn": "v0.3 样本筛选策略连续对比，只改变额外纳入的 episode 范围。",
+    "source_episode_table": "/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/extreme_condition_episodes_all_v0_3.csv",
+    "included_categories": [
+      "delayed_or_no_steer",
+      "manual_review",
+      "normal_control",
+      "strong_response",
+      "weak_or_conservative"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "excluded_low_mu",
+    "extra_episode_count": 420,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 1203,
+    "dropped_count": 10,
+    "split_counts": {
+      "train": 695,
+      "test": 300,
+      "val": 208
+    },
+    "category_counts": {
+      "excluded": 410,
+      "manual_review": 311,
+      "weak_or_conservative": 208,
+      "delayed_or_no_steer": 139,
+      "normal_control": 86,
+      "strong_response": 49
+    },
+    "subject_counts": {
+      "zx": 167,
+      "txj": 107,
+      "gf": 101,
+      "zdq": 99,
+      "hzh": 88,
+      "yyl": 73,
+      "yzy": 72,
+      "zxy": 71,
+      "rjy": 66,
+      "gzj": 53,
+      "lxy": 51,
+      "byx": 47,
+      "cwh": 45,
+      "lx": 41,
+      "jy": 37,
+      "xst": 33,
+      "zt": 29,
+      "tyy": 23
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "s10_lowmu_excl_nolat",
+    "name_cn": "加低附着 excluded，去横向偏移",
+    "sample_count": 1203,
+    "extra_episode_count": 420,
+    "dropped_count": 10,
+    "split_counts_json": "{\"train\": 695, \"test\": 300, \"val\": 208}",
+    "category_counts_json": "{\"excluded\": 410, \"manual_review\": 311, \"weak_or_conservative\": 208, \"delayed_or_no_steer\": 139, \"normal_control\": 86, \"strong_response\": 49}",
+    "val_selected_model": "torch_mlp256_vehicle_context",
+    "val_rmse_for_selected": 0.46808405301092665,
+    "test_rmse_steer": 0.7047346128967383,
+    "test_primary_rmse_0_2s": 0.5395089940248566,
+    "test_tail_rmse_2_5s": 0.7963156139222176,
+    "test_wrong_side_rate_large": 0.16666666666666666,
+    "test_severe_amp_under_rate_large": 0.4111111111111111,
+    "test_large_response_recall": 0.9555555555555556
+  }
+}

@@ -1,3 +1,45 @@
+# 项目状态更新：v0.3 样本筛选策略 GPU 快速对比完成
+
+更新时间：2026-05-19 22:05
+
+当前阶段：车辆-only 样本纳入范围审查。GPU 快速筛选已经完成，本轮仍不涉及连续风格、生理或脑电。
+
+当前完成：服务器 4080 SUPER 跑完 19 个样本筛选策略。完整结果已拉回本地。
+
+最近一次结果：综合排序第一为 `s16_weakpost_lat`，即“干净集 + 待复核 + 少量锚点后响应弱样本，并保留横向偏移特征”。它相对基础版本整体 RMSE 略高，但大响应错侧率和严重幅值不足率明显下降：基础版本 test RMSE=0.6376，错侧率=0.2692，严重幅值不足率=0.4038；`s16` test RMSE=0.6446，错侧率=0.2453，严重幅值不足率=0.3019。
+
+当前判断：本轮不支持“全量加入 excluded”。大量加入车身强响应、低附着/横滚/弯道、精选非轻微或全部 excluded 都会让整体任务明显变乱。但少量加入“锚点后响应弱/保守响应”有继续价值，尤其是在物理指标上更好。
+
+当前最大风险：`s16` 使用了横向偏移特征，而横向偏移曾经存在坐标跳变风险；因此它不能直接成为最终样本定义，还需要对这 16 个新增样本和横向偏移质量做图像复核。
+
+下一步准备做什么：围绕 `s16`、`s04` 和基础版本生成对比预测图/新增样本复核图；确认 `s16` 的改善是否来自真正有用的样本，而不是横向偏移或坐标问题。
+
+用户可以优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_screening_sweep_gpu_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu\tables\v03_screening_sweep_gpu_ranking.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu\tables\v03_screening_sweep_gpu_summary.csv`
+
+---
+
+# 项目状态更新：v0.3 样本筛选策略 GPU 快速对比
+
+更新时间：2026-05-19 21:13
+
+当前阶段：车辆-only 样本纳入范围继续审查。用户指出 CPU 跑筛选太慢是正确的，因此已停止旧的 CPU 版连续筛选任务，改为在服务器 4080 SUPER 上运行 PyTorch GPU 快速筛选。
+
+当前正在做什么：在不加入连续风格、生理、脑电的前提下，对多种 v0.3 样本筛选策略做车辆-only 快速比较，重点看不同样本纳入方式是否改善方向错侧、严重幅值不足、大响应召回和整体误差。
+
+正在运行的任务：服务器 screen `v03gpu` 正在运行 `stage03_v03_screening_sweep_gpu.py`。远程日志路径为 `/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_gpu_20260519_211258.log`。
+
+当前最大风险：GPU 快速筛选模型是为了快速判断样本筛选方向，模型实现从旧的 sklearn CPU 基线改成了 PyTorch 线性/多层感知机，因此结果用于“筛选策略排序和方向判断”，不能直接和之前 sklearn 核回归结果当作同一模型公平对比。
+
+下一步准备做什么：等待 GPU 筛选完成，拉回汇总表和报告；若某些样本策略在物理指标上明显更好，再针对前 2-3 个策略补更完整的车辆-only 基线和预测图。
+
+用户可以优先查看：完成后查看 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_screening_sweep_gpu_user_summary_cn.md` 和 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu\tables\v03_screening_sweep_gpu_summary.csv`。
+
+---
+
 # 项目状态更新：v0.3 全量原始数据极限工况 episode 重筛
 
 更新时间：2026-05-18 19:21
@@ -1203,3 +1245,13 @@ instability_ay_roll        12
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_fast_weakpost_temp_train_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train`。
 - 注意：这是探索性样本合并实验，不能直接证明最终样本定义正确；需要继续看预测图和大响应物理指标。
+## 2026-05-19 v0.3 样本筛选策略连续对比已启动
+
+- 当前阶段：车辆-only 样本筛选策略对比，不涉及连续风格、生理或脑电。
+- 当前正在做什么：已在服务器启动 `stage03_v03_screening_sweep.py`，连续比较锚点后响应弱、快速转向、低附着、横滚/姿态、弯道、自动候选标签等多种额外纳入策略。
+- 服务器是否在运行：是，screen 名称 `v03sweep`。
+- 远程项目路径：`/root/autodl-tmp/data_process`。
+- 远程日志路径：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_20260519_203455.log`。
+- 最近状态：任务已启动，当前从 `s00_base_nolat` 基准版本开始运行。
+- 当前最大风险：这是 CPU/表格基线批量计算，单个版本可能耗时较长；若某一类样本路径或窗口不完整，会在日志中报错并需要修正后续跑。
+- 用户可查看：服务器日志路径如上；本地最终结果待任务完成后拉回。

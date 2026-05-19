@@ -1,5 +1,41 @@
 # 服务器运行记录
 
+## 2026-05-19 21:12-22:02 v0.3 样本筛选策略 GPU 快速对比
+
+- 服务器连接命令格式：`ssh -p 55060 root@connect.westc.seetacloud.com`
+- 启动时间：2026-05-19 21:12
+- 关闭时间：2026-05-19 22:02，任务正常结束，screen 自动退出
+- 运行任务：`stage03_v03_screening_sweep_gpu.py`
+- screen/nohup 名称：`v03gpu`
+- 远程项目路径：`/root/autodl-tmp/data_process`
+- 远程日志路径：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_gpu_20260519_211258.log`
+- 本地拉回路径：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_screening_sweep_gpu`
+- 是否还有任务在跑：否
+- GPU/显存状态摘要：服务器 GPU 为 NVIDIA GeForce RTX 4080 SUPER，PyTorch CUDA 可用；训练阶段确认有 Python 进程占用 GPU 显存。
+- 结果摘要：综合排序第一为 `s16_weakpost_lat`；但该版本使用横向偏移特征，需继续复核横向偏移坐标风险。
+
+---
+
+# 服务器运行记录
+
+## 2026-05-19 21:13 v0.3 样本筛选策略 GPU 快速对比
+
+- 服务器连接命令格式：`ssh -p 55060 root@connect.westc.seetacloud.com`
+- 启动时间：2026-05-19 21:12
+- 关闭时间：运行中
+- 运行任务：`stage03_v03_screening_sweep_gpu.py`
+- screen/nohup 名称：`v03gpu`
+- 远程项目路径：`/root/autodl-tmp/data_process`
+- 远程日志路径：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_gpu_20260519_211258.log`
+- 本地拉回路径：待任务完成后拉回到 `F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_screening_sweep_gpu`
+- 是否还有任务在跑：是
+- GPU/显存状态摘要：服务器 GPU 为 NVIDIA GeForce RTX 4080 SUPER，PyTorch CUDA 可用；该任务用于替代刚才误用 CPU 的 sklearn 筛选循环。
+- 备注：旧 CPU screen `v03sweep` 已停止。GPU 快速筛选结果用于样本筛选方向判断，不直接等同于旧 sklearn 核回归模型的公平结果。
+
+---
+
+# 服务器运行记录
+
 ## 2026-05-13 03:42-03:46 本地 top-K top1/bestK 差距复盘
 
 - 服务器连接命令格式：未连接服务器；无 SSH 命令。
@@ -393,3 +429,14 @@
 - 远程日志路径：`/root/autodl-tmp/data_process/04_project_logs/reports/server_logs/v03_excluded_stratified_20260519/run.log`。
 - 本地日志副本：`F:/data_set_process/data_process/04_project_logs/reports/server_logs/v03_excluded_stratified_20260519/run.log`。
 - 运行状态：已完成，结果已拉回本地。
+## 2026-05-19 v0.3 样本筛选策略连续对比服务器记录
+
+- 服务器连接格式：`ssh -p 55060 root@connect.westc.seetacloud.com`，密码不记录。
+- 启动时间：2026-05-19 20:34:55。
+- 运行任务：`stage03_v03_screening_sweep.py`，连续比较 v0.3 多种样本筛选策略。
+- screen 名称：`v03sweep`。
+- 远程项目路径：`/root/autodl-tmp/data_process`。
+- 远程日志路径：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_20260519_203455.log`。
+- 本地拉回路径：待任务完成后补充。
+- 是否还有任务在跑：是。
+- GPU/显存状态摘要：NVIDIA GeForce RTX 4080 SUPER，启动前显存使用 0 MiB；本任务主要是 CPU/表格基线计算。

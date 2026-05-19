@@ -1,3 +1,27 @@
+## 2026-05-19 v0.3 样本筛选策略 GPU 快速对比完成
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_screening_sweep_gpu_user_summary_cn.md`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu\tables\v03_screening_sweep_gpu_summary.csv`
+- 排序表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu\tables\v03_screening_sweep_gpu_ranking.csv`
+- 额外样本来源统计：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu\tables\v03_screening_sweep_gpu_extra_source_counts.csv`
+- 服务器日志：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\server_logs\stage03_v03_screening_sweep_gpu_20260519_211258.log`
+- 代码入口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v03_screening_sweep_gpu.py`
+- 当前结论：`s16_weakpost_lat` 排名第一，但需继续复核横向偏移坐标风险和 16 个新增样本。
+
+---
+
+## 2026-05-19 v0.3 样本筛选策略 GPU 快速对比
+
+- 脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v03_screening_sweep_gpu.py`
+- CPU 对照脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v03_screening_sweep.py`
+- 服务器任务：screen `v03gpu`
+- 服务器日志：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_gpu_20260519_211258.log`
+- 预计本地结果目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_screening_sweep_gpu`
+- 预计用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_screening_sweep_gpu_user_summary_cn.md`
+- 状态：运行中，完成后拉回结果并更新本索引。
+
+---
+
 ## 2026-05-18 车辆响应锚点前方向盘动作重新筛选 v0.2
 
 - 用户查看版：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_vehicle_response_presteer_rescreen_user_summary_cn.md`
@@ -1572,3 +1596,9 @@
 - 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train\tables\v03_fast_weakpost_temp_train_summary.csv`
 - 临时加入 episode 清单：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train\tables\v03_fast_weakpost_extra_episode_uids.csv`
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train`
+## v0.3 样本筛选策略连续对比
+
+- 脚本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v03_screening_sweep.py`
+- 服务器日志：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_20260519_203455.log`
+- 预期输出目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_screening_sweep`
+- 当前状态：服务器运行中，结果待拉回。

@@ -1,0 +1,74 @@
+{
+  "dataset_summary": {
+    "variant_id": "s03_fast_visible_boundary_nolat",
+    "name_cn": "加快速转向可见/边界车辆响应，去横向偏移",
+    "description_cn": "v0.3 样本筛选策略连续对比，只改变额外纳入的 episode 范围。",
+    "source_episode_table": "/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/extreme_condition_episodes_all_v0_3.csv",
+    "included_categories": [
+      "delayed_or_no_steer",
+      "manual_review",
+      "normal_control",
+      "strong_response",
+      "weak_or_conservative"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "fast_visible_boundary",
+    "extra_episode_count": 11,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 804,
+    "dropped_count": 0,
+    "split_counts": {
+      "train": 459,
+      "test": 210,
+      "val": 135
+    },
+    "category_counts": {
+      "manual_review": 311,
+      "weak_or_conservative": 208,
+      "delayed_or_no_steer": 139,
+      "normal_control": 86,
+      "strong_response": 49,
+      "excluded": 11
+    },
+    "subject_counts": {
+      "zx": 89,
+      "gf": 86,
+      "zdq": 76,
+      "txj": 73,
+      "rjy": 53,
+      "hzh": 51,
+      "zxy": 45,
+      "yyl": 41,
+      "lx": 37,
+      "yzy": 37,
+      "gzj": 33,
+      "jy": 31,
+      "lxy": 31,
+      "xst": 29,
+      "byx": 26,
+      "cwh": 25,
+      "zt": 21,
+      "tyy": 20
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "s03_fast_visible_boundary_nolat",
+    "name_cn": "加快速转向可见/边界车辆响应，去横向偏移",
+    "sample_count": 804,
+    "extra_episode_count": 11,
+    "dropped_count": 0,
+    "split_counts_json": "{\"train\": 459, \"test\": 210, \"val\": 135}",
+    "category_counts_json": "{\"manual_review\": 311, \"weak_or_conservative\": 208, \"delayed_or_no_steer\": 139, \"normal_control\": 86, \"strong_response\": 49, \"excluded\": 11}",
+    "val_selected_model": "torch_mlp256_vehicle_context",
+    "val_rmse_for_selected": 0.42840360083050666,
+    "test_rmse_steer": 0.6523934990649607,
+    "test_primary_rmse_0_2s": 0.5194413243532681,
+    "test_tail_rmse_2_5s": 0.7284960705789277,
+    "test_wrong_side_rate_large": 0.3076923076923077,
+    "test_severe_amp_under_rate_large": 0.34615384615384615,
+    "test_large_response_recall": 0.9807692307692307
+  }
+}

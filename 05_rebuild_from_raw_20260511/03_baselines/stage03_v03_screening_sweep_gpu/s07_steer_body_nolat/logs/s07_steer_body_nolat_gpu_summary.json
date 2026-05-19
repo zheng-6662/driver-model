@@ -1,0 +1,74 @@
+{
+  "dataset_summary": {
+    "variant_id": "s07_steer_body_nolat",
+    "name_cn": "加方向盘中强且车身姿态明显，去横向偏移",
+    "description_cn": "v0.3 样本筛选策略连续对比，只改变额外纳入的 episode 范围。",
+    "source_episode_table": "/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/extreme_condition_episodes_all_v0_3.csv",
+    "included_categories": [
+      "delayed_or_no_steer",
+      "manual_review",
+      "normal_control",
+      "strong_response",
+      "weak_or_conservative"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "steer_and_body",
+    "extra_episode_count": 331,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 1122,
+    "dropped_count": 2,
+    "split_counts": {
+      "train": 638,
+      "test": 288,
+      "val": 196
+    },
+    "category_counts": {
+      "excluded": 329,
+      "manual_review": 311,
+      "weak_or_conservative": 208,
+      "delayed_or_no_steer": 139,
+      "normal_control": 86,
+      "strong_response": 49
+    },
+    "subject_counts": {
+      "zx": 145,
+      "txj": 97,
+      "gf": 90,
+      "zdq": 85,
+      "hzh": 75,
+      "rjy": 75,
+      "byx": 72,
+      "zxy": 69,
+      "yzy": 62,
+      "gzj": 61,
+      "yyl": 61,
+      "lxy": 42,
+      "jy": 40,
+      "lx": 38,
+      "cwh": 30,
+      "xst": 29,
+      "tyy": 28,
+      "zt": 23
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "s07_steer_body_nolat",
+    "name_cn": "加方向盘中强且车身姿态明显，去横向偏移",
+    "sample_count": 1122,
+    "extra_episode_count": 331,
+    "dropped_count": 2,
+    "split_counts_json": "{\"train\": 638, \"test\": 288, \"val\": 196}",
+    "category_counts_json": "{\"excluded\": 329, \"manual_review\": 311, \"weak_or_conservative\": 208, \"delayed_or_no_steer\": 139, \"normal_control\": 86, \"strong_response\": 49}",
+    "val_selected_model": "torch_mlp256_vehicle_context",
+    "val_rmse_for_selected": 0.6032834146416832,
+    "test_rmse_steer": 0.9022437036050946,
+    "test_primary_rmse_0_2s": 0.6443597970125524,
+    "test_tail_rmse_2_5s": 1.0404618098057155,
+    "test_wrong_side_rate_large": 0.25316455696202533,
+    "test_severe_amp_under_rate_large": 0.2911392405063291,
+    "test_large_response_recall": 0.8987341772151899
+  }
+}

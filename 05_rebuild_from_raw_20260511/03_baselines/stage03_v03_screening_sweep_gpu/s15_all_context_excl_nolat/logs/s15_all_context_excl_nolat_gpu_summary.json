@@ -1,0 +1,74 @@
+{
+  "dataset_summary": {
+    "variant_id": "s15_all_context_excl_nolat",
+    "name_cn": "加全部 excluded，去横向偏移",
+    "description_cn": "v0.3 样本筛选策略连续对比，只改变额外纳入的 episode 范围。",
+    "source_episode_table": "/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/extreme_condition_episodes_all_v0_3.csv",
+    "included_categories": [
+      "delayed_or_no_steer",
+      "manual_review",
+      "normal_control",
+      "strong_response",
+      "weak_or_conservative"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "excluded_context_all",
+    "extra_episode_count": 780,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 1561,
+    "dropped_count": 12,
+    "split_counts": {
+      "train": 920,
+      "test": 371,
+      "val": 270
+    },
+    "category_counts": {
+      "excluded": 768,
+      "manual_review": 311,
+      "weak_or_conservative": 208,
+      "delayed_or_no_steer": 139,
+      "normal_control": 86,
+      "strong_response": 49
+    },
+    "subject_counts": {
+      "zx": 194,
+      "hzh": 130,
+      "zdq": 117,
+      "txj": 113,
+      "byx": 112,
+      "gf": 101,
+      "yzy": 98,
+      "zxy": 96,
+      "yyl": 95,
+      "rjy": 94,
+      "gzj": 85,
+      "jy": 67,
+      "cwh": 65,
+      "lxy": 55,
+      "lx": 41,
+      "tyy": 35,
+      "xst": 33,
+      "zt": 30
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "s15_all_context_excl_nolat",
+    "name_cn": "加全部 excluded，去横向偏移",
+    "sample_count": 1561,
+    "extra_episode_count": 780,
+    "dropped_count": 12,
+    "split_counts_json": "{\"train\": 920, \"test\": 371, \"val\": 270}",
+    "category_counts_json": "{\"excluded\": 768, \"manual_review\": 311, \"weak_or_conservative\": 208, \"delayed_or_no_steer\": 139, \"normal_control\": 86, \"strong_response\": 49}",
+    "val_selected_model": "torch_mlp256_vehicle_context",
+    "val_rmse_for_selected": 0.5806157096801178,
+    "test_rmse_steer": 0.7635256341879048,
+    "test_primary_rmse_0_2s": 0.5521196107521473,
+    "test_tail_rmse_2_5s": 0.8775102506620291,
+    "test_wrong_side_rate_large": 0.18181818181818182,
+    "test_severe_amp_under_rate_large": 0.30303030303030304,
+    "test_large_response_recall": 0.9090909090909091
+  }
+}

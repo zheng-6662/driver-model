@@ -1,0 +1,73 @@
+{
+  "dataset_summary": {
+    "variant_id": "s00_base_nolat",
+    "name_cn": "基础：干净集 + 待复核，去横向偏移",
+    "description_cn": "v0.3 样本筛选策略连续对比，只改变额外纳入的 episode 范围。",
+    "source_episode_table": "/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/extreme_condition_episodes_all_v0_3.csv",
+    "included_categories": [
+      "delayed_or_no_steer",
+      "manual_review",
+      "normal_control",
+      "strong_response",
+      "weak_or_conservative"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "",
+    "extra_episode_count": 0,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 793,
+    "dropped_count": 0,
+    "split_counts": {
+      "train": 454,
+      "test": 209,
+      "val": 130
+    },
+    "category_counts": {
+      "manual_review": 311,
+      "weak_or_conservative": 208,
+      "delayed_or_no_steer": 139,
+      "normal_control": 86,
+      "strong_response": 49
+    },
+    "subject_counts": {
+      "zx": 88,
+      "gf": 85,
+      "zdq": 76,
+      "txj": 73,
+      "rjy": 52,
+      "hzh": 48,
+      "zxy": 45,
+      "yyl": 39,
+      "lx": 37,
+      "yzy": 37,
+      "gzj": 33,
+      "jy": 31,
+      "lxy": 30,
+      "xst": 28,
+      "byx": 26,
+      "cwh": 24,
+      "zt": 21,
+      "tyy": 20
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "s00_base_nolat",
+    "name_cn": "基础：干净集 + 待复核，去横向偏移",
+    "sample_count": 793,
+    "extra_episode_count": 0,
+    "dropped_count": 0,
+    "split_counts_json": "{\"train\": 454, \"test\": 209, \"val\": 130}",
+    "category_counts_json": "{\"manual_review\": 311, \"weak_or_conservative\": 208, \"delayed_or_no_steer\": 139, \"normal_control\": 86, \"strong_response\": 49}",
+    "val_selected_model": "torch_mlp256_vehicle_context",
+    "val_rmse_for_selected": 0.42697502910690527,
+    "test_rmse_steer": 0.6375657281463872,
+    "test_primary_rmse_0_2s": 0.5013232007883858,
+    "test_tail_rmse_2_5s": 0.7147164570188399,
+    "test_wrong_side_rate_large": 0.2692307692307692,
+    "test_severe_amp_under_rate_large": 0.40384615384615385,
+    "test_large_response_recall": 0.9230769230769231
+  }
+}

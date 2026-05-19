@@ -1,0 +1,112 @@
+cuda=NVIDIA GeForce RTX 4080 SUPER
+run-gpu s00_base_nolat extra=0
+fit torch baselines device=cuda features=248 train=454 val=130
+  torch_linear_vehicle_context best_val_rmse=0.457271 epoch=70
+  torch_mlp256_vehicle_context best_val_rmse=0.426975 epoch=26
+  torch_mlp512_vehicle_context best_val_rmse=0.431371 epoch=152
+run-gpu s01_weakpost_nolat extra=69
+fit torch baselines device=cuda features=249 train=461 val=136
+  torch_linear_vehicle_context best_val_rmse=0.454947 epoch=57
+  torch_mlp256_vehicle_context best_val_rmse=0.436056 epoch=24
+  torch_mlp512_vehicle_context best_val_rmse=0.440225 epoch=18
+run-gpu s02_fast_visible_nolat extra=22
+fit torch baselines device=cuda features=249 train=455 val=134
+  torch_linear_vehicle_context best_val_rmse=0.462936 epoch=60
+  torch_mlp256_vehicle_context best_val_rmse=0.426407 epoch=30
+  torch_mlp512_vehicle_context best_val_rmse=0.435044 epoch=22
+run-gpu s03_fast_visible_boundary_nolat extra=38
+fit torch baselines device=cuda features=249 train=459 val=135
+  torch_linear_vehicle_context best_val_rmse=0.450951 epoch=53
+  torch_mlp256_vehicle_context best_val_rmse=0.428404 epoch=25
+  torch_mlp512_vehicle_context best_val_rmse=0.439672 epoch=19
+run-gpu s04_fast_all_nonlate_nolat extra=70
+fit torch baselines device=cuda features=249 train=461 val=136
+  torch_linear_vehicle_context best_val_rmse=0.447127 epoch=53
+  torch_mlp256_vehicle_context best_val_rmse=0.422316 epoch=26
+  torch_mlp512_vehicle_context best_val_rmse=0.427625 epoch=20
+run-gpu s05_keep_extreme_nolat extra=104
+fit torch baselines device=cuda features=248 train=454 val=130
+  torch_linear_vehicle_context best_val_rmse=0.458692 epoch=61
+  torch_mlp256_vehicle_context best_val_rmse=0.430528 epoch=25
+  torch_mlp512_vehicle_context best_val_rmse=0.434990 epoch=18
+run-gpu s06_body_strong_nolat extra=614
+fit torch baselines device=cuda features=249 train=835 val=221
+  torch_linear_vehicle_context best_val_rmse=0.758811 epoch=23
+  torch_mlp256_vehicle_context best_val_rmse=0.616906 epoch=24
+  torch_mlp512_vehicle_context best_val_rmse=0.614375 epoch=19
+run-gpu s07_steer_body_nolat extra=444
+fit torch baselines device=cuda features=249 train=638 val=196
+  torch_linear_vehicle_context best_val_rmse=0.762019 epoch=31
+  torch_mlp256_vehicle_context best_val_rmse=0.603283 epoch=33
+  torch_mlp512_vehicle_context best_val_rmse=0.620229 epoch=24
+run-gpu s08_keep_weak_nolat extra=197
+fit torch baselines device=cuda features=248 train=454 val=130
+  torch_linear_vehicle_context best_val_rmse=0.461392 epoch=74
+  torch_mlp256_vehicle_context best_val_rmse=0.445424 epoch=19
+  torch_mlp512_vehicle_context best_val_rmse=0.440673 epoch=22
+run-gpu s09_keep_delay_nolat extra=93
+fit torch baselines device=cuda features=248 train=454 val=130
+  torch_linear_vehicle_context best_val_rmse=0.460595 epoch=63
+  torch_mlp256_vehicle_context best_val_rmse=0.433638 epoch=24
+  torch_mlp512_vehicle_context best_val_rmse=0.394071 epoch=375
+run-gpu s10_lowmu_excl_nolat extra=420
+fit torch baselines device=cuda features=249 train=695 val=208
+  torch_linear_vehicle_context best_val_rmse=0.495230 epoch=84
+  torch_mlp256_vehicle_context best_val_rmse=0.468084 epoch=18
+  torch_mlp512_vehicle_context best_val_rmse=0.478040 epoch=14
+run-gpu s11_roll_excl_nolat extra=300
+fit torch baselines device=cuda features=249 train=640 val=182
+  torch_linear_vehicle_context best_val_rmse=0.579037 epoch=94
+  torch_mlp256_vehicle_context best_val_rmse=0.557613 epoch=43
+  torch_mlp512_vehicle_context best_val_rmse=0.578571 epoch=22
+run-gpu s12_curve_excl_nolat extra=54
+fit torch baselines device=cuda features=249 train=486 val=141
+  torch_linear_vehicle_context best_val_rmse=0.724133 epoch=42
+  torch_mlp256_vehicle_context best_val_rmse=0.486862 epoch=65
+  torch_mlp512_vehicle_context best_val_rmse=0.496010 epoch=17
+run-gpu s13_lowmu_roll_nolat extra=720
+fit torch baselines device=cuda features=249 train=882 val=259
+  torch_linear_vehicle_context best_val_rmse=0.579277 epoch=94
+  torch_mlp256_vehicle_context best_val_rmse=0.560391 epoch=38
+  torch_mlp512_vehicle_context best_val_rmse=0.552285 epoch=106
+run-gpu s14_selected_nonlight_nolat extra=1117
+fit torch baselines device=cuda features=249 train=882 val=251
+  torch_linear_vehicle_context best_val_rmse=0.705665 epoch=20
+  torch_mlp256_vehicle_context best_val_rmse=0.590364 epoch=39
+  torch_mlp512_vehicle_context best_val_rmse=0.593386 epoch=34
+run-gpu s15_all_context_excl_nolat extra=780
+fit torch baselines device=cuda features=249 train=920 val=270
+  torch_linear_vehicle_context best_val_rmse=0.702321 epoch=19
+  torch_mlp256_vehicle_context best_val_rmse=0.580616 epoch=32
+  torch_mlp512_vehicle_context best_val_rmse=0.584358 epoch=27
+run-gpu s16_weakpost_lat extra=69
+fit torch baselines device=cuda features=267 train=461 val=136
+  torch_linear_vehicle_context best_val_rmse=0.452583 epoch=83
+  torch_mlp256_vehicle_context best_val_rmse=0.421017 epoch=31
+  torch_mlp512_vehicle_context best_val_rmse=0.422267 epoch=98
+run-gpu s17_roll_excl_lat extra=300
+fit torch baselines device=cuda features=267 train=640 val=182
+  torch_linear_vehicle_context best_val_rmse=0.579183 epoch=94
+  torch_mlp256_vehicle_context best_val_rmse=0.565531 epoch=19
+  torch_mlp512_vehicle_context best_val_rmse=0.555733 epoch=38
+run-gpu s18_selected_nonlight_lat extra=1117
+fit torch baselines device=cuda features=267 train=882 val=251
+  torch_linear_vehicle_context best_val_rmse=0.727190 epoch=19
+  torch_mlp256_vehicle_context best_val_rmse=0.590484 epoch=38
+  torch_mlp512_vehicle_context best_val_rmse=0.610910 epoch=17
+                     variant_id  sample_count  extra_episode_count           val_selected_model  test_rmse_steer  test_wrong_side_rate_large  test_severe_amp_under_rate_large  test_large_response_recall  screening_score
+               s16_weakpost_lat           809                   16 torch_mlp256_vehicle_context         0.644630                    0.245283                          0.301887                    0.924528         0.027025
+     s04_fast_all_nonlate_nolat           809                   16 torch_mlp256_vehicle_context         0.648713                    0.283019                          0.339623                    0.924528         0.000301
+                 s00_base_nolat           793                    0 torch_mlp256_vehicle_context         0.637566                    0.269231                          0.403846                    0.923077         0.000000
+         s02_fast_visible_nolat           798                    5 torch_mlp256_vehicle_context         0.652846                    0.269231                          0.365385                    0.942308        -0.002781
+s03_fast_visible_boundary_nolat           804                   11 torch_mlp256_vehicle_context         0.652393                    0.307692                          0.346154                    0.980769        -0.005212
+            s08_keep_weak_nolat           793                    0 torch_mlp512_vehicle_context         0.659563                    0.288462                          0.346154                    0.961538        -0.008535
+           s10_lowmu_excl_nolat          1203                  420 torch_mlp256_vehicle_context         0.704735                    0.166667                          0.411111                    0.955556        -0.028216
+           s09_keep_delay_nolat           793                    0 torch_mlp512_vehicle_context         0.673478                    0.269231                          0.423077                    0.961538        -0.034951
+            s11_roll_excl_nolat          1092                  300 torch_mlp256_vehicle_context         0.734063                    0.214286                          0.250000                    0.946429        -0.035303
+             s01_weakpost_nolat           809                   16 torch_mlp256_vehicle_context         0.641936                    0.339623                          0.433962                    0.924528        -0.036319
+         s05_keep_extreme_nolat           793                    0 torch_mlp256_vehicle_context         0.649327                    0.365385                          0.384615                    0.942308        -0.037723
+              s17_roll_excl_lat          1092                  300 torch_mlp512_vehicle_context         0.756482                    0.178571                          0.214286                    0.910714        -0.041650
+           s13_lowmu_roll_nolat          1502                  720 torch_mlp512_vehicle_context         0.765474                    0.152174                          0.250000                    0.967391        -0.041829
+      s18_selected_nonlight_lat          1489                  705 torch_mlp256_vehicle_context         0.780282                    0.153061                          0.255102                    0.908163        -0.067108
+     s15_all_context_excl_nolat          1561                  780 torch_mlp256_vehicle_context         0.763526                    0.181818                          0.303030                    0.909091        -0.072259
