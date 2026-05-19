@@ -1522,3 +1522,9 @@
 - 用户查看版报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_v03_roll_excluded_pair_diagnosis_user_summary_cn.md`
 - paired 明细表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_roll_excluded_pair_diagnosis/tables/roll_vs_ref_common_test_paired_metrics.csv`
 - 输出目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_roll_excluded_pair_diagnosis`
+
+## v0.3 极限工况样本人工复核清单
+
+- 复核指南：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_review_guide_extreme_condition_v0_3_cn.md`
+- 优先复核清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/manual_review_priority_list_v0_3.csv`
+- 复核图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/review_panels`
