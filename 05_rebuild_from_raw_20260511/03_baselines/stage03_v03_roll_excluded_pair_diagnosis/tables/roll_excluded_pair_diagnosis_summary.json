@@ -1,0 +1,13 @@
+{
+  "common_test_n": 205,
+  "improved_n": 102,
+  "worsened_n": 103,
+  "mean_delta_roll_minus_ref": 0.007907764251275266,
+  "large_common_n": 52,
+  "large_mean_delta": -0.018516800220211137,
+  "major_physical_improved_n": 23,
+  "major_physical_worsened_n": 6,
+  "roll_only_excluded_test_n": 65,
+  "roll_only_large_n": 32,
+  "roll_only_mean_rmse": 0.6854460741305093
+}
