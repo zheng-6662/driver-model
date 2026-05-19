@@ -2192,3 +2192,11 @@
 - 监控远程日志：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_20260519_203455.log`。
 - 任务完成后拉回 `stage03_v03_screening_sweep` 输出目录。
 - 生成中文汇总，判断推荐样本集、极限姿态专用样本集和应排除样本集。
+
+## 2026-05-19 v0.4 极限工况样本重新筛选
+
+- 为什么做：用户指出目标不是继续比较 809 样本版本，而是回到 1574 个初始 episode，按方向盘速度、锚点延时性、锚点后车辆/驾驶员是否仍有变化重新筛选。
+- 本轮规则：锚点后车辆有变化即保留，即使驾驶员操作弱；锚点后车和驾驶员都弱则排除；快打方向但车辆变化弱先复核。
+- 当前结果：主训练候选 1128，次级训练候选 101，待复核 193，排除 152。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_refilter_v0_4_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_4`。

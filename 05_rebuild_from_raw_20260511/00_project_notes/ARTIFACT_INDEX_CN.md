@@ -1602,3 +1602,10 @@
 - 服务器日志：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v03_screening_sweep_20260519_203455.log`
 - 预期输出目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_screening_sweep`
 - 当前状态：服务器运行中，结果待拉回。
+
+## 2026-05-19 v0.4 极限工况样本重新筛选
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_refilter_v0_4_user_summary_cn.md`
+- 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_4\tables\extreme_condition_episodes_refiltered_v0_4.csv`
+- 主+次级训练候选：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_4\tables\train_candidate_episodes_v0_4.csv`
+- 复核图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_4\figures\review_panels`

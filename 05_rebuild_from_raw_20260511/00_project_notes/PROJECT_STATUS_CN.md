@@ -1255,3 +1255,11 @@ instability_ay_roll        12
 - 最近状态：任务已启动，当前从 `s00_base_nolat` 基准版本开始运行。
 - 当前最大风险：这是 CPU/表格基线批量计算，单个版本可能耗时较长；若某一类样本路径或窗口不完整，会在日志中报错并需要修正后续跑。
 - 用户可查看：服务器日志路径如上；本地最终结果待任务完成后拉回。
+
+## 2026-05-19 v0.4 极限工况样本重新筛选
+
+- 为什么做：用户指出目标不是继续比较 809 样本版本，而是回到 1574 个初始 episode，按方向盘速度、锚点延时性、锚点后车辆/驾驶员是否仍有变化重新筛选。
+- 本轮规则：锚点后车辆有变化即保留，即使驾驶员操作弱；锚点后车和驾驶员都弱则排除；快打方向但车辆变化弱先复核。
+- 当前结果：主训练候选 1128，次级训练候选 101，待复核 193，排除 152。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_extreme_condition_refilter_v0_4_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_v0_4`。
