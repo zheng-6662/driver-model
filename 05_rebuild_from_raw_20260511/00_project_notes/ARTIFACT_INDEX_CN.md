@@ -1535,3 +1535,6 @@
 - 全量分组表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_auto_candidate_groups_v0_3.csv`
 - 分组数量表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_auto_candidate_group_summary_v0_3.csv`
 - 每组代表样本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_auto_candidate_representatives_v0_3.csv`
+- 分组图片目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/new_rule_review_groups_v0_3`
+- 分组图片说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/new_rule_review_groups_v0_3/00_先看这里_图片说明.md`
+- 分组图片索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/new_rule_review_groups_v0_3/new_rule_review_image_index_v0_3.csv`
