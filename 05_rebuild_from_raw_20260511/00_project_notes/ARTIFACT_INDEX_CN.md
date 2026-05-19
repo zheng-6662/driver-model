@@ -1538,3 +1538,12 @@
 - 分组图片目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/new_rule_review_groups_v0_3`
 - 分组图片说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/new_rule_review_groups_v0_3/00_先看这里_图片说明.md`
 - 分组图片索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/new_rule_review_groups_v0_3/new_rule_review_image_index_v0_3.csv`
+
+## v0.3 方向盘角速度候选复核
+
+- 中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/new_rule_fast_steer_candidates_v0_3_cn.md`
+- 候选表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_fast_steer_candidates_v0_3.csv`
+- 数量表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_fast_steer_candidate_summary_v0_3.csv`
+- 图片目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_review_v0_3`
+- 图片说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_review_v0_3/00_先看这里_方向盘角速度候选说明.md`
+- 图片索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_review_v0_3/fast_steer_review_image_index_v0_3.csv`

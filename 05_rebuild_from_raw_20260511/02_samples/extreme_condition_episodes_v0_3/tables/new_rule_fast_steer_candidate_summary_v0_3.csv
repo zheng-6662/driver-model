@@ -1,0 +1,5 @@
+﻿fast_steer_candidate_label,fast_steer_reason_cn,new_rule_auto_label,count
+FAST_STEER_REVIEW_UNCLEAR,方向盘角速度较高，可能代表紧急操作；但原规则因车身动态弱、坐标风险或普通对照倾向未直接纳入。,NORMAL_CONTROL_OR_EXCLUDE_LIGHT_STEER,38
+FAST_STEER_TRAIN_LIKE,方向盘角速度高，方向盘变化形成 return/countersteer 结构，建议优先人工复核是否可作为训练样本。,NORMAL_CONTROL_OR_EXCLUDE_LIGHT_STEER,23
+FAST_STEER_TRAIN_LIKE,方向盘角速度高，方向盘变化形成 return/countersteer 结构，建议优先人工复核是否可作为训练样本。,EXCLUDE_LIGHT_OR_COORD_RISK,11
+FAST_STEER_REVIEW_UNCLEAR,方向盘角速度较高，可能代表紧急操作；但原规则因车身动态弱、坐标风险或普通对照倾向未直接纳入。,EXCLUDE_LIGHT_OR_COORD_RISK,6
