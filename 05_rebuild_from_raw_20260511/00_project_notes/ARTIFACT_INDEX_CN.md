@@ -1528,3 +1528,10 @@
 - 复核指南：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/manual_review_guide_extreme_condition_v0_3_cn.md`
 - 优先复核清单：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/manual_review_priority_list_v0_3.csv`
 - 复核图目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/review_panels`
+
+## 新人工规则下的 v0.3 自动候选分组
+
+- 中文说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/new_rule_auto_candidate_groups_v0_3_cn.md`
+- 全量分组表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_auto_candidate_groups_v0_3.csv`
+- 分组数量表：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_auto_candidate_group_summary_v0_3.csv`
+- 每组代表样本：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/tables/new_rule_auto_candidate_representatives_v0_3.csv`

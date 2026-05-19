@@ -1,0 +1,10 @@
+﻿new_rule_auto_label,new_rule_reason_cn,count
+RISK_POOL_BODY_STRONG,车身姿态/横向动态强，但窗口或坐标连续性有风险，需要人工复核后决定是否抢救,614
+NORMAL_CONTROL_OR_EXCLUDE_LIGHT_STEER,缺少明显车身姿态/横向动态，更像普通驾驶、正常弯道或直线保持微调,381
+KEEP_WEAK_CONSERVATIVE,车身姿态/横向动态强，但方向盘幅度不大，符合保守/弱响应,165
+MANUAL_REVIEW_BOUNDARY,车身动态、方向盘响应或坐标风险边界不清，需要人工复核,109
+KEEP_EXTREME_MAIN,车身姿态/横向动态强，且方向盘响应明显,104
+EXCLUDE_LIGHT_OR_COORD_RISK,车身动态不强，且存在窗口或坐标风险，优先排除,76
+KEEP_DELAYED,车身姿态/横向动态强，但方向盘响应延迟或不明显,65
+KEEP_WEAK_CONSERVATIVE,中等车身动态，适合保守/弱响应样本,32
+KEEP_DELAYED_WEAK,中等车身动态，响应延迟或不明显，可保留为延迟/弱极限样本,28
