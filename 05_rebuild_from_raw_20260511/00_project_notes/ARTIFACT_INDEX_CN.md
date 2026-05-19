@@ -1565,3 +1565,10 @@
 - 图片目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_anchor_timing_split_v0_3`
 - 图片说明：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_anchor_timing_split_v0_3/00_先看这里_锚点时序复核说明.md`
 - 图片索引：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/02_samples/extreme_condition_episodes_v0_3/figures/fast_steer_anchor_timing_split_v0_3/fast_steer_anchor_timing_image_index_v0_3.csv`
+
+## v0.3 临时加入锚点后响应弱样本训练
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_fast_weakpost_temp_train_user_summary_cn.md`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train\tables\v03_fast_weakpost_temp_train_summary.csv`
+- 临时加入 episode 清单：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train\tables\v03_fast_weakpost_extra_episode_uids.csv`
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train`

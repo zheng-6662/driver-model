@@ -137,7 +137,19 @@ def build_variant_dataset(variant: dict[str, Any], sample_split: dict[str, str],
         )
 
     episodes = pd.read_csv(base.EPISODE_TABLE, encoding="utf-8-sig", low_memory=False)
-    episodes = episodes[episodes["v0_3_category"].isin(set(variant["categories"]))].copy()
+    category_mask = episodes["v0_3_category"].isin(set(variant["categories"]))
+    extra_episode_uids = set(str(x) for x in variant.get("extra_episode_uids") or [])
+    if extra_episode_uids:
+        uid_mask = episodes["episode_uid"].astype(str).isin(extra_episode_uids)
+        episodes = episodes[category_mask | uid_mask].copy()
+        episodes["temporary_inclusion_source"] = np.where(
+            uid_mask.loc[episodes.index] & ~category_mask.loc[episodes.index],
+            str(variant.get("extra_episode_source") or "extra_episode_uids"),
+            "category_rule",
+        )
+    else:
+        episodes = episodes[category_mask].copy()
+        episodes["temporary_inclusion_source"] = "category_rule"
     excluded_contexts = variant.get("excluded_contexts")
     if excluded_contexts:
         context_set = set(str(x) for x in excluded_contexts)
@@ -218,6 +230,12 @@ def build_variant_dataset(variant: dict[str, Any], sample_split: dict[str, str],
         "source_episode_table": str(base.EPISODE_TABLE),
         "included_categories": variant["categories"],
         "included_excluded_contexts": list(variant.get("excluded_contexts") or []),
+        "extra_episode_source": str(variant.get("extra_episode_source") or ""),
+        "extra_episode_count": int(
+            episodes["temporary_inclusion_source"].astype(str).ne("category_rule").sum()
+            if "temporary_inclusion_source" in episodes.columns
+            else 0
+        ),
         "dropped_features": list(variant.get("drop_features") or []),
         "sample_count": int(len(meta)),
         "dropped_count": int(len(dropped)),

@@ -2114,3 +2114,12 @@
 - 已完成：共同测试样本 paired 对比、新增横滚/姿态 excluded 测试样本统计、改善/恶化样本对比图。
 - 用户查看版报告：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/09_reports/stage03_v03_roll_excluded_pair_diagnosis_user_summary_cn.md`。
 - 输出目录：`F:/data_set_process/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v03_roll_excluded_pair_diagnosis`。
+
+## 2026-05-19 v0.3 临时加入锚点后响应弱样本
+
+- 当前阶段：车辆-only 样本范围继续审查，不涉及连续风格、生理或脑电。
+- 本轮动作：在“干净集 + 待复核”基础上，临时加入 `FAST_STEER_WEAK_POST_RESPONSE` 样本，并重跑车辆-only 基线。
+- 当前整体 RMSE 最低版本：`v03_weakpost_with_lateral`，test RMSE=0.5889。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_fast_weakpost_temp_train_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v03_fast_weakpost_temp_train`。
+- 注意：这是探索性样本合并实验，不能直接证明最终样本定义正确；需要继续看预测图和大响应物理指标。

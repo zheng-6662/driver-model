@@ -1,0 +1,8 @@
+﻿variant_id,source,test_n,test_large_n,test_rmse_aggregate,large_wrong_side_rate,large_severe_amp_under_rate
+v03_plus_review_ref_no_lateral,category_rule,209,56,0.6015021815210153,0.21428571428571427,0.6785714285714286
+v03_plus_review_fast_weakpost_no_lateral,FAST_STEER_WEAK_POST_RESPONSE,3,1,0.2730673987370551,0.0,1.0
+v03_plus_review_fast_weakpost_no_lateral,category_rule,209,56,0.6011098205151939,0.21428571428571427,0.6964285714285714
+v03_weakpost_usable_nolat,FAST_STEER_WEAK_POST_RESPONSE_PLUS_ANCHOR_USABLE_FAST_RESPONSE,3,1,0.2730673987370551,0.0,1.0
+v03_weakpost_usable_nolat,category_rule,209,56,0.6011098205151939,0.21428571428571427,0.6964285714285714
+v03_weakpost_with_lateral,FAST_STEER_WEAK_POST_RESPONSE,3,1,0.2815484553947137,0.0,1.0
+v03_weakpost_with_lateral,category_rule,209,56,0.5921076302866988,0.19642857142857142,0.6964285714285714
