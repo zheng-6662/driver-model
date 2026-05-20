@@ -12,6 +12,7 @@
 - 预测总览图：`F:\data_set_process\data_process\tmp\event_conditioned_runs\V05_SERVER_ALIGNED_SUBJECT_FAIR09_vehicle_only_seed2026_20260520_120144\prediction_figures\test\overview.png`
 - 服务器训练日志：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\server_logs\stage03_v05_server_aligned_subject_train_latest.log`
 - 结果摘要：loader 保留 1376 个样本，train/val/test=953/260/163；车辆-only test RMSE=0.3386，primary=0.2184，tail=0.3105，selection=0.8206。
+- Git 提交：`77f5809 stage03: run server-aligned subject fair09 vehicle baseline`
 
 ---
 
