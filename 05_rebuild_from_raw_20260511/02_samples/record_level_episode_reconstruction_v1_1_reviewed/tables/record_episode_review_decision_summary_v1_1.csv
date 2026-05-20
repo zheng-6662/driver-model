@@ -1,0 +1,7 @@
+﻿manual_decision_v1_1,episode_group_id,episode_group_cn,count
+保留为主训练候选,conservative_extreme,保守/弱操作极限样本,406
+保留为主训练候选,core_extreme,核心极限样本,973
+保留为主训练候选,secondary,次级训练样本,4
+保留为对照样本，不进入主训练,normal_or_curve,正常弯道或普通操控,3
+暂不进入训练,review,边界复核样本,45
+暂不进入训练,review,需要复核,335

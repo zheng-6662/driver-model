@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-05-20T22:40:18",
+  "source": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\02_samples\\record_level_episode_reconstruction_v1_0\\tables\\record_level_episodes_all_v1_0.csv",
+  "total": 1766,
+  "train_candidate": 1383,
+  "control": 3,
+  "discarded": 380,
+  "policy": {
+    "train_groups": [
+      "conservative_extreme",
+      "core_extreme",
+      "secondary"
+    ],
+    "control_groups": [
+      "normal_or_curve"
+    ],
+    "discard_groups": [
+      "review"
+    ]
+  }
+}

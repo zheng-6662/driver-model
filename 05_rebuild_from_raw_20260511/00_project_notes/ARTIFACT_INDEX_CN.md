@@ -1736,3 +1736,17 @@
 - 静态 3D 轨迹图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\figures\trajectory_3d_static`
 
 当前结果摘要：91 条原始车辆记录全部成功读取，自动检测到 1766 个 episode。其中核心极限样本 973 个，保守/弱操作极限样本 406 个，需要复核 335 个，边界复核 45 个。道路/场景字段只作为解释上下文，不作为最终事件真值。
+
+## 2026-05-20 完整记录级 episode 人工复核整理 v1.1
+
+用户查看 v1.0 复核图后判断：大部分样本可以保留，“需要复核”和“边界复核”类基本可以舍去。因此 v1.1 不重新检测 episode，只把 v1.0 结果整理成主训练候选、对照样本、舍弃/暂缓三类。
+
+- 用户查看版说明：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_1_user_summary_cn.md`
+- 构建脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\scripts\build_record_episode_reviewed_v1_1.py`
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_1_reviewed`
+- 全量带复核决策表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_1_reviewed\tables\record_level_episodes_all_reviewed_v1_1.csv`
+- 主训练候选表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_1_reviewed\tables\train_candidate_extreme_episodes_v1_1.csv`
+- 舍弃/暂缓表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_1_reviewed\tables\discarded_review_episodes_v1_1.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_1_reviewed\tables\record_episode_figure_index_v1_1.csv`
+
+当前结果摘要：v1.1 总 episode 仍为 1766 个；主训练候选 1383 个，对照样本 3 个，舍弃/暂缓 380 个。主训练候选由核心极限样本、保守/弱操作极限样本、次级训练样本组成；正常弯道或普通操控只作为对照，不进入主训练。
