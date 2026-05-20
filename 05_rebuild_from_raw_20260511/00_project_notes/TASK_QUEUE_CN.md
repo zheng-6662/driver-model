@@ -2246,3 +2246,62 @@
 - 对比上一轮：相对 `v04_primary_secondary_nolat`，整体 RMSE 从 0.8402 降到 0.8067，错侧率从 0.1707 降到 0.1398；但大响应召回从 0.9512 降到 0.9032。
 - 待做：下一步需要看逐样本预测图和大响应样本分布，判断召回下降是否来自待复核样本稀释，还是模型更保守。
 - 服务器状态：本轮 screen 已结束；未记录服务器密码。
+
+
+## 2026-05-20 13:48:32 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 13:58:46 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 15:10:44 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 15:14:24 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+## 2026-05-20 15:16 v0.5 生理机制验证任务队列
+
+### 已完成
+- B1、S1、S2、S3、SF1、SF2、SF3、C1、C2、A1、A2、T2 的 seed2026 训练与汇总。
+- 生理可用性检查：HR、EDA、EMG、HR+EDA+EMG 可用；EEG 和含 EEG 组合在 v0.5 新锚点下暂不安全。
+- 服务器结果拉回本地，表格和中文报告已生成。
+
+### 待做
+- 优先补 T2 和 SF2 的 seed2027/2028，验证是否稳定。
+- 对 T2、SF2、C1、S3 生成代表预测图对比，重点看方向、幅值、大响应和尾段。
+- 重新设计 v0.5 安全脑电窗口后，再讨论 S4、SF4、C3、C4、A3、T1、T3、T4。
+
+### 暂缓
+- 所有含脑电直接输入或脑电教师版本，原因是旧脑电事件特征和 v0.5 新锚点没有安全对齐。
+- 单纯把 A1/A2 当作主线，原因是辅助任务当前没有改善幅值不足。
+
+### 当前后台任务
+- 无。本轮服务器 screen 已结束。

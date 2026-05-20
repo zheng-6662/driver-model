@@ -1,0 +1,181 @@
+sample split: train=953 val=260 test=163 dropped=12 input_dim=12
+training: device=cuda epochs=40 batch_size=64 ctx_dim=13 conditioning=vehicle_direct_coarse_fine
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 001/040 train_loss=2.90936 val_rmse=0.76492 val_tail=0.71479 selection=1.35780 best_epoch=1
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 002/040 train_loss=2.00925 val_rmse=0.74321 val_tail=0.66172 selection=1.30964 best_epoch=2
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 003/040 train_loss=1.86056 val_rmse=0.69382 val_tail=0.69371 selection=1.31343 best_epoch=3
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 004/040 train_loss=1.78616 val_rmse=0.71882 val_tail=0.68964 selection=1.29592 best_epoch=3
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 005/040 train_loss=1.73040 val_rmse=0.70794 val_tail=0.70696 selection=1.28503 best_epoch=3
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 006/040 train_loss=1.71783 val_rmse=0.70190 val_tail=0.67241 selection=1.28263 best_epoch=3
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 007/040 train_loss=1.61649 val_rmse=0.69855 val_tail=0.60540 selection=1.25495 best_epoch=3
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 008/040 train_loss=1.50925 val_rmse=0.68644 val_tail=0.63382 selection=1.25857 best_epoch=8
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 009/040 train_loss=1.47108 val_rmse=0.68421 val_tail=0.63843 selection=1.24178 best_epoch=9
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 010/040 train_loss=1.40864 val_rmse=0.66285 val_tail=0.61730 selection=1.22291 best_epoch=10
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 011/040 train_loss=1.40306 val_rmse=0.68291 val_tail=0.59471 selection=1.23601 best_epoch=10
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 012/040 train_loss=1.31680 val_rmse=0.65384 val_tail=0.59773 selection=1.21553 best_epoch=12
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 013/040 train_loss=1.19221 val_rmse=0.62521 val_tail=0.59375 selection=1.20486 best_epoch=13
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 014/040 train_loss=1.19638 val_rmse=0.62679 val_tail=0.59755 selection=1.16855 best_epoch=13
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 015/040 train_loss=1.11390 val_rmse=0.60958 val_tail=0.59601 selection=1.17231 best_epoch=15
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 016/040 train_loss=1.01407 val_rmse=0.61298 val_tail=0.58415 selection=1.13885 best_epoch=15
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 017/040 train_loss=1.01570 val_rmse=0.61000 val_tail=0.61094 selection=1.17150 best_epoch=15
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 018/040 train_loss=0.89993 val_rmse=0.59606 val_tail=0.55141 selection=1.11856 best_epoch=18
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 019/040 train_loss=0.88764 val_rmse=0.59914 val_tail=0.55560 selection=1.11005 best_epoch=18
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 020/040 train_loss=0.82155 val_rmse=0.59152 val_tail=0.59096 selection=1.12023 best_epoch=20
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 021/040 train_loss=0.80740 val_rmse=0.57607 val_tail=0.56690 selection=1.09892 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 022/040 train_loss=0.76363 val_rmse=0.58890 val_tail=0.58523 selection=1.11625 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 023/040 train_loss=0.74406 val_rmse=0.60970 val_tail=0.56568 selection=1.11170 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 024/040 train_loss=0.69041 val_rmse=0.60273 val_tail=0.58786 selection=1.13103 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 025/040 train_loss=0.75618 val_rmse=0.58954 val_tail=0.55275 selection=1.09151 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 026/040 train_loss=0.70910 val_rmse=0.60211 val_tail=0.61263 selection=1.12222 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 027/040 train_loss=0.62750 val_rmse=0.59842 val_tail=0.59647 selection=1.11557 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 028/040 train_loss=0.65082 val_rmse=0.62766 val_tail=0.62102 selection=1.14331 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 029/040 train_loss=0.64577 val_rmse=0.58391 val_tail=0.57632 selection=1.09096 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 030/040 train_loss=0.62577 val_rmse=0.60274 val_tail=0.60672 selection=1.11800 best_epoch=21
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 031/040 train_loss=0.59268 val_rmse=0.57378 val_tail=0.58066 selection=1.09335 best_epoch=31
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 032/040 train_loss=0.57796 val_rmse=0.56699 val_tail=0.56706 selection=1.08249 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 033/040 train_loss=0.55623 val_rmse=0.58736 val_tail=0.58757 selection=1.10387 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 034/040 train_loss=0.52681 val_rmse=0.59327 val_tail=0.59021 selection=1.10355 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 035/040 train_loss=0.53169 val_rmse=0.61089 val_tail=0.61003 selection=1.12111 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 036/040 train_loss=0.52517 val_rmse=0.58929 val_tail=0.57603 selection=1.09579 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 037/040 train_loss=0.53483 val_rmse=0.61105 val_tail=0.59368 selection=1.11992 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 038/040 train_loss=0.50643 val_rmse=0.59278 val_tail=0.57576 selection=1.10125 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 039/040 train_loss=0.46997 val_rmse=0.59082 val_tail=0.57142 selection=1.11169 best_epoch=32
+/root/miniconda3/lib/python3.12/site-packages/torch/autograd/graph.py:825: UserWarning: upsample_linear1d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at ../aten/src/ATen/Context.cpp:91.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Epoch 040/040 train_loss=0.47126 val_rmse=0.60527 val_tail=0.57420 selection=1.12636 best_epoch=32
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 27178 (\N{CJK UNIFIED IDEOGRAPH-6A2A}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 28378 (\N{CJK UNIFIED IDEOGRAPH-6EDA}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 23039 (\N{CJK UNIFIED IDEOGRAPH-59FF}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 24577 (\N{CJK UNIFIED IDEOGRAPH-6001}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 27178 (\N{CJK UNIFIED IDEOGRAPH-6A2A}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 28378 (\N{CJK UNIFIED IDEOGRAPH-6EDA}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 23039 (\N{CJK UNIFIED IDEOGRAPH-59FF}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 24577 (\N{CJK UNIFIED IDEOGRAPH-6001}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 24367 (\N{CJK UNIFIED IDEOGRAPH-5F2F}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 36947 (\N{CJK UNIFIED IDEOGRAPH-9053}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 26354 (\N{CJK UNIFIED IDEOGRAPH-66F2}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 29575 (\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 24367 (\N{CJK UNIFIED IDEOGRAPH-5F2F}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 36947 (\N{CJK UNIFIED IDEOGRAPH-9053}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 26354 (\N{CJK UNIFIED IDEOGRAPH-66F2}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 29575 (\N{CJK UNIFIED IDEOGRAPH-7387}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 38468 (\N{CJK UNIFIED IDEOGRAPH-9644}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:470: UserWarning: Glyph 30528 (\N{CJK UNIFIED IDEOGRAPH-7740}) missing from font(s) DejaVu Sans.
+  fig.tight_layout()
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 20302 (\N{CJK UNIFIED IDEOGRAPH-4F4E}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 38468 (\N{CJK UNIFIED IDEOGRAPH-9644}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+/root/autodl-tmp/data_process/02_code/final_code/model/training/fair_vehicle_event_comparison_20260427/prediction_plotting.py:472: UserWarning: Glyph 30528 (\N{CJK UNIFIED IDEOGRAPH-7740}) missing from font(s) DejaVu Sans.
+  fig.savefig(out_path, dpi=180)
+{
+  "exp_id": "A2",
+  "seed": 2026,
+  "label_cn": "车辆 + 连续风格 + 非脑电生理 + 响应类型辅助",
+  "group_cn": "响应类型辅助",
+  "status": "completed",
+  "started_at": "2026-05-20 14:58:47",
+  "completed_at": "2026-05-20 15:00:54",
+  "device": "cuda",
+  "run_root": "/root/autodl-tmp/data_process/tmp/event_conditioned_runs/V05P_A2_2026_20260520_145847",
+  "teacher_from": "",
+  "teacher_checkpoint": "",
+  "prediction_overview": "/root/autodl-tmp/data_process/tmp/event_conditioned_runs/V05P_A2_2026_20260520_145847/prediction_figures/test/overview.png",
+  "prediction_figures_dir": "/root/autodl-tmp/data_process/tmp/event_conditioned_runs/V05P_A2_2026_20260520_145847/prediction_figures/test"
+}

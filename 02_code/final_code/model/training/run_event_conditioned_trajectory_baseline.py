@@ -188,12 +188,25 @@ def safe_nanstd(values: np.ndarray, default: float = np.nan) -> float:
     return float(valid.std())
 
 
+def recording_prefix_from_vehicle_file(vehicle_file: str) -> str:
+    name = os.path.basename(str(vehicle_file))
+    for suffix in [
+        "_vehicle_aligned_cleaned_roadtype_labeled.csv",
+        "_vehicle_aligned_cleaned.csv",
+        "_vehicle.csv",
+        ".csv",
+    ]:
+        if name.endswith(suffix):
+            return name[: -len(suffix)]
+    return os.path.splitext(name)[0].replace("_vehicle_aligned_cleaned", "").replace("_vehicle", "")
+
+
 def infer_physio_file(vehicle_file: str) -> str | None:
     subj_dir = os.path.dirname(os.path.dirname(str(vehicle_file)))
     physio_dir = os.path.join(subj_dir, "physio")
     if not os.path.isdir(physio_dir):
         return None
-    prefix = os.path.basename(str(vehicle_file)).replace("_vehicle_aligned_cleaned.csv", "")
+    prefix = recording_prefix_from_vehicle_file(vehicle_file)
     matches = glob(os.path.join(physio_dir, prefix + "*physio*.csv"))
     if matches:
         return matches[0]
@@ -206,7 +219,7 @@ def infer_eeg_event_feature_file(vehicle_file: str) -> str | None:
     eeg_dir = os.path.join(subj_dir, "eeg_clean")
     if not os.path.isdir(eeg_dir):
         return None
-    prefix = os.path.basename(str(vehicle_file)).replace("_vehicle_aligned_cleaned.csv", "")
+    prefix = recording_prefix_from_vehicle_file(vehicle_file)
     suffix = f"_eeg_event_features_rollpeak_hist{int(EEG_HIST_SEC)}s.csv"
     matches = glob(os.path.join(eeg_dir, prefix + "*" + suffix))
     return matches[0] if matches else None
@@ -677,15 +690,21 @@ def build_teacher_base_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, dict[str
     for _, row in meta_df.iterrows():
         subject = _subject_from_row(row)
         vehicle_file = str(resolve_data_file_path(str(row["vehicle_file"]), subject=subject, kind="vehicle"))
+        context_vehicle_text = str(row.get("raw_vehicle_file_before_cleaning", "") or "").strip()
+        context_vehicle_file = (
+            str(resolve_data_file_path(context_vehicle_text, subject=subject, kind="vehicle"))
+            if context_vehicle_text and context_vehicle_text.lower() != "nan"
+            else vehicle_file
+        )
         anchor_idx = int(row["anchor_idx"])
         event_idx = int(row.get("event_idx", -1))
-        if vehicle_file not in physio_cache:
-            physio_file = infer_physio_file(vehicle_file)
-            physio_cache[vehicle_file] = pd.read_csv(physio_file) if physio_file is not None and os.path.exists(physio_file) else None
-        if vehicle_file not in eeg_cache:
-            eeg_cache[vehicle_file] = build_eeg_feat_map(infer_eeg_event_feature_file(vehicle_file))
-        phys4 = extract_physio_window_means(physio_cache[vehicle_file], anchor_idx)
-        eeg8 = eeg_cache[vehicle_file].get(event_idx)
+        if context_vehicle_file not in physio_cache:
+            physio_file = infer_physio_file(context_vehicle_file)
+            physio_cache[context_vehicle_file] = pd.read_csv(physio_file) if physio_file is not None and os.path.exists(physio_file) else None
+        if context_vehicle_file not in eeg_cache:
+            eeg_cache[context_vehicle_file] = build_eeg_feat_map(infer_eeg_event_feature_file(context_vehicle_file))
+        phys4 = extract_physio_window_means(physio_cache[context_vehicle_file], anchor_idx)
+        eeg8 = eeg_cache[context_vehicle_file].get(event_idx)
         if phys4 is None:
             phys4 = np.full((4,), np.nan, dtype=np.float32)
         else:
@@ -719,18 +738,24 @@ def build_teacher_base_and_local_delta_pool(meta_df: pd.DataFrame) -> tuple[np.n
     for _, row in meta_df.iterrows():
         subject = _subject_from_row(row)
         vehicle_file = str(resolve_data_file_path(str(row["vehicle_file"]), subject=subject, kind="vehicle"))
+        context_vehicle_text = str(row.get("raw_vehicle_file_before_cleaning", "") or "").strip()
+        context_vehicle_file = (
+            str(resolve_data_file_path(context_vehicle_text, subject=subject, kind="vehicle"))
+            if context_vehicle_text and context_vehicle_text.lower() != "nan"
+            else vehicle_file
+        )
         anchor_idx = int(row["anchor_idx"])
         event_idx = int(row.get("event_idx", -1))
-        if vehicle_file not in physio_cache:
-            physio_file = infer_physio_file(vehicle_file)
-            physio_cache[vehicle_file] = pd.read_csv(physio_file) if physio_file is not None and os.path.exists(physio_file) else None
-        if vehicle_file not in eeg_cache:
-            eeg_cache[vehicle_file] = build_eeg_feat_map(infer_eeg_event_feature_file(vehicle_file))
+        if context_vehicle_file not in physio_cache:
+            physio_file = infer_physio_file(context_vehicle_file)
+            physio_cache[context_vehicle_file] = pd.read_csv(physio_file) if physio_file is not None and os.path.exists(physio_file) else None
+        if context_vehicle_file not in eeg_cache:
+            eeg_cache[context_vehicle_file] = build_eeg_feat_map(infer_eeg_event_feature_file(context_vehicle_file))
 
-        phys4 = extract_physio_window_means(physio_cache[vehicle_file], anchor_idx)
-        phys_delta4 = extract_physio_local_delta(physio_cache[vehicle_file], anchor_idx)
-        eeg8 = eeg_cache[vehicle_file].get(event_idx)
-        eeg_delta8 = compute_eeg_prior_event_delta(eeg_cache[vehicle_file], event_idx)
+        phys4 = extract_physio_window_means(physio_cache[context_vehicle_file], anchor_idx)
+        phys_delta4 = extract_physio_local_delta(physio_cache[context_vehicle_file], anchor_idx)
+        eeg8 = eeg_cache[context_vehicle_file].get(event_idx)
+        eeg_delta8 = compute_eeg_prior_event_delta(eeg_cache[context_vehicle_file], event_idx)
 
         if phys4 is None:
             phys4 = np.full((4,), np.nan, dtype=np.float32)

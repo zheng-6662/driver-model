@@ -1308,3 +1308,57 @@ instability_ay_roll        12
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v04_review_gpu_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_review_gpu_baseline`。
 - 当前后台任务：服务器 screen 已结束，本地没有继续运行的该任务。
+
+
+## 2026-05-20 13:48:32 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 13:58:46 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 15:10:44 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 15:14:24 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+## 2026-05-20 15:16 v0.5 生理机制验证阶段结论
+
+- 当前阶段：在 v0.5 服务器处理后样本集上，验证连续风格、单生理信号、非脑电组合、响应类型辅助和非脑电教师蒸馏。
+- 已完成版本：B0、B1、S1、S2、S3、SF1、SF2、SF3、C1、C2、A1、A2、T2，均为 seed2026，40 epochs，batch=64，lr=0.001，cuda。
+- 当前最强整体结果：T2（非脑电生理教师 -> 车辆 + 连续风格学生），test RMSE=0.3247，primary RMSE=0.2161，tail RMSE=0.2907，优于 B0 车辆-only 的 0.3386/0.2184/0.3105。
+- 当前最强直接输入候选：SF2（车辆 + 连续风格 + 皮电），test RMSE=0.3329，tail RMSE=0.2701，但严重幅值不足率比 B0 高，不能只按 RMSE 升级为主线。
+- 方向相关结果：C1（车辆 + 心率 + 皮电 + 肌电）整体 RMSE 不好，但大响应错侧率最低 0.0471，说明非脑电组合可能更偏向方向/状态线索，而不是直接改善整条轨迹。
+- 肌电结果：S3 单独肌电整体 RMSE 最差，但严重幅值不足率最低 0.2353、大响应召回最高 0.7647；说明肌电可能对大幅响应幅值有信息，但简单输入会扰乱整体拟合。
+- 响应类型辅助：A1/A2 没有形成整体主线，尤其严重幅值不足率偏高；当前不能说辅助任务已经有效。
+- 脑电直接输入和含脑电教师路线：暂缓。当前旧脑电事件特征在 v0.5 新锚点下出现全缺失/对齐风险，不能在未重建安全脑电窗口前进入主证据。
+- 服务器状态：本轮 screen 已结束，GPU 空闲；没有后台训练继续运行。
+- 当前最大风险：目前都是 seed2026 筛选结果，测试样本只有 163 个；T2 和 SF2 需要补 seed2027/2028，并查看预测图和分被试结果后才能形成强结论。
+- 用户优先查看：`09_reports/stage03_v05_physio_mechanism_comparison_user_summary_cn.md` 和 `03_baselines/stage03_v05_physio_mechanism_comparison/tables/v05_physio_comparison_table.csv`。

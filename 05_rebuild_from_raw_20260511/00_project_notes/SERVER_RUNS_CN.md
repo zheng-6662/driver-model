@@ -460,3 +460,55 @@
 - 本地拉回路径：待任务完成后补充。
 - 是否还有任务在跑：是。
 - GPU/显存状态摘要：NVIDIA GeForce RTX 4080 SUPER，启动前显存使用 0 MiB；本任务主要是 CPU/表格基线计算。
+
+
+## 2026-05-20 13:48:32 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 13:58:46 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 15:10:44 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+
+## 2026-05-20 15:14:24 v0.5 生理机制验证
+
+已更新 v0.5 生理机制验证材料。
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_mechanism_comparison_user_summary_cn.md`
+- 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
+- 对比表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
+- 机制表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_mechanism_table.csv`
+
+## 2026-05-20 14:41-15:07 v0.5 生理机制验证服务器记录
+
+- 服务器连接格式：`ssh -p 55060 root@connect.westc.seetacloud.com`，密码未写入任何项目日志、报告或代码。
+- 远程项目路径：`/root/autodl-tmp/data_process`。
+- 运行设备：2 块 NVIDIA GeForce RTX 4080 SUPER。
+- 运行任务：v0.5 新样本集连续风格、生理信号、非脑电组合、响应类型辅助和非脑电教师蒸馏 seed2026。
+- screen 名称：`v05p_B1_2026`、`v05p_S1_2026`、`v05p_S2_2026`、`v05p_S3_2026`、`v05p_SF1_2026`、`v05p_SF2_2026`、`v05p_SF3_2026`、`v05p_C1_2026`、`v05p_C2_2026`、`v05p_A1_2026`、`v05p_A2_2026`、`v05p_T2_2026`。
+- 远程日志路径：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v05_physio_mechanism_comparison/logs/`。
+- 本地拉回路径：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\`。
+- 是否还有任务在跑：没有；`screen -ls` 显示无任务，`nvidia-smi` 显示两块 GPU 空闲。
+- 当前结论摘要：T2 最强整体结果，SF2 是最强直接输入候选，C1 方向错侧率最低，S3 对大响应幅值有正向迹象但整体误差差。
