@@ -1386,3 +1386,17 @@ instability_ay_roll        12
 - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_eeg_features\tables\v05_eeg_feature_availability_summary.csv`
 
 ---
+## 2026-05-20 v0.5 生理/脑电补齐实验完成
+
+- 当前阶段：v0.5 新样本集上的连续风格、生理信号、脑电和多教师机制验证。
+- 当前完成：已按 v0.5 新锚点重新提取脑电锚点前 2 秒特征，并接入训练脚本；已在服务器补跑 S4、SF4、C3、C4、A3、T1、T3、T4。
+- 服务器状态：本轮 screen 任务已全部结束，GPU 空闲；没有后台训练继续运行。
+- 最近结果：当前 seed2026 最强为 T1（脑电教师 -> 车辆 + 连续风格学生），test RMSE=0.3107；其次为 SF4（车辆 + 连续风格 + 脑电），test RMSE=0.3142；B0 车辆-only 为 0.3386。
+- 当前判断：脑电路线在 v0.5 样本上重新显示出价值，尤其是“训练时用脑电教师、推理时不用脑电”的 T1；全生理简单融合和全生理教师没有优于脑电教师。
+- 当前最大风险：全部仍是 seed2026 筛选结果，测试样本 163 个；必须结合预测图、分被试结果和后续 seed2027/2028 才能形成强结论。
+- 用户优先查看：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_physio_eeg_completion_user_summary_cn.md`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\figures\v05_physio_eeg_result_table_white.png`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\figures\v05_multiversion_overlay_teacher.png`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\figures\v05_multiversion_overlay_eeg_direct.png`
+- 下一步建议：先人工看 T1/SF4/T2 的预测图是否物理上更合理；若可以接受，优先补 T1、SF4、T2 的 seed2027/2028，不优先补 T4/A3。

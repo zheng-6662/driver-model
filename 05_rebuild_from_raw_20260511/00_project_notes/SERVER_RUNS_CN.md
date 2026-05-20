@@ -512,3 +512,16 @@
 - 本地拉回路径：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\`。
 - 是否还有任务在跑：没有；`screen -ls` 显示无任务，`nvidia-smi` 显示两块 GPU 空闲。
 - 当前结论摘要：T2 最强整体结果，SF2 是最强直接输入候选，C1 方向错侧率最低，S3 对大响应幅值有正向迹象但整体误差差。
+## 2026-05-20 v0.5 生理/脑电补齐训练
+
+- 服务器连接格式：`ssh -p 55060 root@connect.westc.seetacloud.com`
+- 密码记录：未写入本文件、报告、代码或 Git。
+- 远程项目路径：`/root/autodl-tmp/data_process`
+- GPU：2 x NVIDIA GeForce RTX 4080 SUPER
+- 任务 1：S4、SF4、C3、C4、A3，screen 名称分别为 `v05p_S4_2026`、`v05p_SF4_2026`、`v05p_C3_2026`、`v05p_C4_2026`、`v05p_A3_2026`
+- 任务 2：T1、T3、T4，screen 名称分别为 `v05p_T1_2026`、`v05p_T3_2026`、`v05p_T4_2026`
+- 远程日志目录：`/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/03_baselines/stage03_v05_physio_mechanism_comparison/logs`
+- 远程结果包：`/root/autodl-tmp/stage03_v05_physio_eeg_results_20260520.tar.gz`
+- 本地拉回位置：`F:\data_set_process\data_process\tmp\stage03_v05_physio_eeg_results_20260520.tar.gz`
+- 本地展开目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison` 和 `F:\data_set_process\data_process\tmp\event_conditioned_runs`
+- 当前状态：训练和画图均已结束，服务器 screen 无剩余训练任务，GPU 空闲。

@@ -50,6 +50,14 @@ PROJECT_ROOT = THIS_DIR.parents[3]
 PROTOCOL_DIR = THIS_DIR / "protocol_allphase_control_v2_context_full2s"
 DEFAULT_MANIFEST = PROTOCOL_DIR / "sample_manifest.csv"
 DEFAULT_DRIVER_STYLE_VECTOR_CSV = PROJECT_ROOT / "04_project_logs" / "reports" / "style_probe_artifacts" / "driver_style_vectors.csv"
+DEFAULT_V05_EEG_FEATURE_TABLE = (
+    PROJECT_ROOT
+    / "05_rebuild_from_raw_20260511"
+    / "03_baselines"
+    / "stage03_v05_eeg_features"
+    / "tables"
+    / "v05_eeg_features_pre_anchor_hist2s.csv"
+)
 RUN_ROOT = RESULT_ROOT.parent / "event_conditioned_runs"
 
 # Tail amplitude penalty
@@ -85,6 +93,7 @@ PHYSIO_BASELINE_GAP_SAMPLES = 600
 PHYSIO_BASELINE_MAX_SAMPLES = 6000
 PHYSIO_BASELINE_MIN_SAMPLES = 600
 PHYSIO_ONLY_DIM = 4
+_V05_EEG_FEATURE_CACHE: dict[str, Any] | None = None
 
 
 def _basename_from_any_path(raw_path: str | Path) -> str:
@@ -242,6 +251,104 @@ def build_eeg_feat_map(eeg_event_csv: str | None) -> dict[int, np.ndarray]:
             feats.append(float(row[name]) if name in row else np.nan)
         out[int(idx)] = np.asarray(feats, dtype=np.float32)
     return out
+
+
+def _eeg_feature_vector_from_row(row: pd.Series, prefix: str = "") -> np.ndarray | None:
+    names = ["Frontal_alpha_asym", *EEG_FEAT_KEYS]
+    values: list[float] = []
+    for name in names:
+        col = f"{prefix}{name}" if prefix else name
+        if col not in row.index:
+            return None
+        try:
+            values.append(float(row[col]))
+        except Exception:
+            values.append(np.nan)
+    arr = np.asarray(values, dtype=np.float32)
+    return arr if np.isfinite(arr).any() else None
+
+
+def build_v05_eeg_feature_cache(feature_csv: str | Path = DEFAULT_V05_EEG_FEATURE_TABLE) -> dict[str, Any]:
+    global _V05_EEG_FEATURE_CACHE
+    csv_path = str(feature_csv)
+    if _V05_EEG_FEATURE_CACHE is not None and _V05_EEG_FEATURE_CACHE.get("source_file") == csv_path:
+        return _V05_EEG_FEATURE_CACHE
+    cache: dict[str, Any] = {
+        "source_file": csv_path,
+        "available": False,
+        "by_sample_key": {},
+        "delta_by_sample_key": {},
+        "by_record_event": {},
+        "delta_by_record_event": {},
+        "row_count": 0,
+        "ok_count": 0,
+    }
+    path = Path(csv_path)
+    if not path.exists():
+        _V05_EEG_FEATURE_CACHE = cache
+        return cache
+    df = pd.read_csv(path)
+    if df.empty:
+        _V05_EEG_FEATURE_CACHE = cache
+        return cache
+    ok_df = df[df.get("eeg_status", "ok").astype(str).eq("ok")].copy() if "eeg_status" in df.columns else df.copy()
+    by_sample: dict[str, np.ndarray] = {}
+    delta_by_sample: dict[str, np.ndarray] = {}
+    by_record_event: dict[tuple[str, str, int], np.ndarray] = {}
+    delta_by_record_event: dict[tuple[str, str, int], np.ndarray] = {}
+    for _, feat_row in ok_df.iterrows():
+        current = _eeg_feature_vector_from_row(feat_row)
+        delta = _eeg_feature_vector_from_row(feat_row, prefix="eeg_pre2s_minus_baseline_")
+        sample_key = str(feat_row.get("sample_key", "") or "").strip()
+        if current is not None and sample_key:
+            by_sample[sample_key] = current
+        if delta is not None and sample_key:
+            delta_by_sample[sample_key] = delta
+        try:
+            record_key = (
+                normalize_subject_id(str(feat_row.get("subj", ""))),
+                str(feat_row.get("recording_id", "")),
+                int(feat_row.get("event_idx", -999999)),
+            )
+        except Exception:
+            record_key = ("", "", -999999)
+        if current is not None and record_key[0] and record_key[1] and record_key[2] != -999999:
+            by_record_event[record_key] = current
+        if delta is not None and record_key[0] and record_key[1] and record_key[2] != -999999:
+            delta_by_record_event[record_key] = delta
+    cache.update(
+        {
+            "available": bool(by_sample or by_record_event),
+            "by_sample_key": by_sample,
+            "delta_by_sample_key": delta_by_sample,
+            "by_record_event": by_record_event,
+            "delta_by_record_event": delta_by_record_event,
+            "row_count": int(len(df)),
+            "ok_count": int(len(ok_df)),
+        }
+    )
+    _V05_EEG_FEATURE_CACHE = cache
+    return cache
+
+
+def get_v05_eeg_features_for_row(row: pd.Series) -> tuple[np.ndarray | None, np.ndarray | None]:
+    cache = build_v05_eeg_feature_cache()
+    if not cache.get("available", False):
+        return None, None
+    sample_key = str(row.get("sample_key", "") or "").strip()
+    current = cache["by_sample_key"].get(sample_key) if sample_key else None
+    delta = cache["delta_by_sample_key"].get(sample_key) if sample_key else None
+    if current is not None or delta is not None:
+        return current, delta
+    try:
+        record_key = (
+            _subject_from_row(row),
+            str(row.get("recording_id", "")),
+            int(row.get("event_idx", -999999)),
+        )
+    except Exception:
+        return None, None
+    return cache["by_record_event"].get(record_key), cache["delta_by_record_event"].get(record_key)
 
 
 def _physio_base_columns(df_p: pd.DataFrame) -> tuple[str, str, str, str] | None:
@@ -684,9 +791,12 @@ def keep_only_teacher_signal(pool: np.ndarray, signal_group: str) -> np.ndarray:
 def build_teacher_base_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, dict[str, Any]]:
     physio_cache: dict[str, pd.DataFrame | None] = {}
     eeg_cache: dict[str, dict[int, np.ndarray]] = {}
+    v05_eeg_cache = build_v05_eeg_feature_cache()
     rows: list[np.ndarray] = []
     physio_available = 0
     eeg_available = 0
+    eeg_v05_available = 0
+    eeg_legacy_available = 0
     for _, row in meta_df.iterrows():
         subject = _subject_from_row(row)
         vehicle_file = str(resolve_data_file_path(str(row["vehicle_file"]), subject=subject, kind="vehicle"))
@@ -704,7 +814,9 @@ def build_teacher_base_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, dict[str
         if context_vehicle_file not in eeg_cache:
             eeg_cache[context_vehicle_file] = build_eeg_feat_map(infer_eeg_event_feature_file(context_vehicle_file))
         phys4 = extract_physio_window_means(physio_cache[context_vehicle_file], anchor_idx)
-        eeg8 = eeg_cache[context_vehicle_file].get(event_idx)
+        v05_eeg8, _ = get_v05_eeg_features_for_row(row)
+        legacy_eeg8 = eeg_cache[context_vehicle_file].get(event_idx)
+        eeg8 = v05_eeg8 if v05_eeg8 is not None else legacy_eeg8
         if phys4 is None:
             phys4 = np.full((4,), np.nan, dtype=np.float32)
         else:
@@ -713,6 +825,10 @@ def build_teacher_base_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, dict[str
             eeg8 = np.full((8,), np.nan, dtype=np.float32)
         else:
             eeg_available += 1
+            if v05_eeg8 is not None:
+                eeg_v05_available += 1
+            elif legacy_eeg8 is not None:
+                eeg_legacy_available += 1
         rows.append(np.concatenate([phys4, eeg8], axis=0).astype(np.float32))
     base_pool = np.stack(rows, axis=0).astype(np.float32)
     meta = {
@@ -720,6 +836,11 @@ def build_teacher_base_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, dict[str
         "sample_count": int(len(meta_df)),
         "physio_available_count": int(physio_available),
         "eeg_available_count": int(eeg_available),
+        "eeg_v05_available_count": int(eeg_v05_available),
+        "eeg_legacy_available_count": int(eeg_legacy_available),
+        "eeg_v05_feature_table": str(v05_eeg_cache.get("source_file", "")),
+        "eeg_v05_feature_table_available": bool(v05_eeg_cache.get("available", False)),
+        "eeg_v05_feature_table_ok_rows": int(v05_eeg_cache.get("ok_count", 0)),
         "physio_file_count": int(sum(1 for value in physio_cache.values() if value is not None)),
         "eeg_file_count": int(sum(1 for value in eeg_cache.values() if value)),
     }
@@ -729,12 +850,17 @@ def build_teacher_base_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, dict[str
 def build_teacher_base_and_local_delta_pool(meta_df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
     physio_cache: dict[str, pd.DataFrame | None] = {}
     eeg_cache: dict[str, dict[int, np.ndarray]] = {}
+    v05_eeg_cache = build_v05_eeg_feature_cache()
     current_rows: list[np.ndarray] = []
     delta_rows: list[np.ndarray] = []
     physio_available = 0
     eeg_available = 0
     physio_delta_available = 0
     eeg_delta_available = 0
+    eeg_v05_available = 0
+    eeg_legacy_available = 0
+    eeg_v05_delta_available = 0
+    eeg_legacy_delta_available = 0
     for _, row in meta_df.iterrows():
         subject = _subject_from_row(row)
         vehicle_file = str(resolve_data_file_path(str(row["vehicle_file"]), subject=subject, kind="vehicle"))
@@ -754,8 +880,11 @@ def build_teacher_base_and_local_delta_pool(meta_df: pd.DataFrame) -> tuple[np.n
 
         phys4 = extract_physio_window_means(physio_cache[context_vehicle_file], anchor_idx)
         phys_delta4 = extract_physio_local_delta(physio_cache[context_vehicle_file], anchor_idx)
-        eeg8 = eeg_cache[context_vehicle_file].get(event_idx)
-        eeg_delta8 = compute_eeg_prior_event_delta(eeg_cache[context_vehicle_file], event_idx)
+        v05_eeg8, v05_eeg_delta8 = get_v05_eeg_features_for_row(row)
+        legacy_eeg8 = eeg_cache[context_vehicle_file].get(event_idx)
+        legacy_eeg_delta8 = compute_eeg_prior_event_delta(eeg_cache[context_vehicle_file], event_idx)
+        eeg8 = v05_eeg8 if v05_eeg8 is not None else legacy_eeg8
+        eeg_delta8 = v05_eeg_delta8 if v05_eeg_delta8 is not None else legacy_eeg_delta8
 
         if phys4 is None:
             phys4 = np.full((4,), np.nan, dtype=np.float32)
@@ -769,10 +898,18 @@ def build_teacher_base_and_local_delta_pool(meta_df: pd.DataFrame) -> tuple[np.n
             eeg8 = np.full((8,), np.nan, dtype=np.float32)
         else:
             eeg_available += 1
+            if v05_eeg8 is not None:
+                eeg_v05_available += 1
+            elif legacy_eeg8 is not None:
+                eeg_legacy_available += 1
         if eeg_delta8 is None:
             eeg_delta8 = np.full((8,), np.nan, dtype=np.float32)
         else:
             eeg_delta_available += 1
+            if v05_eeg_delta8 is not None:
+                eeg_v05_delta_available += 1
+            elif legacy_eeg_delta8 is not None:
+                eeg_legacy_delta_available += 1
         current_rows.append(np.concatenate([phys4, eeg8], axis=0).astype(np.float32))
         delta_rows.append(np.concatenate([phys_delta4, eeg_delta8], axis=0).astype(np.float32))
 
@@ -785,6 +922,13 @@ def build_teacher_base_and_local_delta_pool(meta_df: pd.DataFrame) -> tuple[np.n
         "eeg_available_count": int(eeg_available),
         "physio_delta_available_count": int(physio_delta_available),
         "eeg_delta_available_count": int(eeg_delta_available),
+        "eeg_v05_available_count": int(eeg_v05_available),
+        "eeg_legacy_available_count": int(eeg_legacy_available),
+        "eeg_v05_delta_available_count": int(eeg_v05_delta_available),
+        "eeg_legacy_delta_available_count": int(eeg_legacy_delta_available),
+        "eeg_v05_feature_table": str(v05_eeg_cache.get("source_file", "")),
+        "eeg_v05_feature_table_available": bool(v05_eeg_cache.get("available", False)),
+        "eeg_v05_feature_table_ok_rows": int(v05_eeg_cache.get("ok_count", 0)),
         "physio_file_count": int(sum(1 for value in physio_cache.values() if value is not None)),
         "eeg_file_count": int(sum(1 for value in eeg_cache.values() if value)),
         "physio_current_window_samples": int(PHYSIO_CURRENT_SAMPLES),
