@@ -2208,3 +2208,11 @@
 - 当前综合排序第一：`v04_primary_secondary_nolat`，test RMSE=0.8402，大响应错侧率=0.1707，严重幅值不足率=0.2683，大响应召回=0.9512。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v04_vehicle_only_gpu_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_vehicle_only_gpu_baseline`。
+## 2026-05-20 v0.4 主训练+次级+待复核 GPU 基线
+
+- 已完成：在服务器 GPU 上运行 `v04_primary_secondary_review_nolat`。
+- 样本范围：v0.4 主训练候选 + 次级候选 + 待复核样本，去掉横向偏移。
+- 结果摘要：实际可用窗口样本 1410，test RMSE=0.8067，主阶段 RMSE=0.5786，尾段 RMSE=0.9290，大响应错侧率=0.1398，严重幅值不足率=0.2796，大响应召回=0.9032。
+- 对比上一轮：相对 `v04_primary_secondary_nolat`，整体 RMSE 从 0.8402 降到 0.8067，错侧率从 0.1707 降到 0.1398；但大响应召回从 0.9512 降到 0.9032。
+- 待做：下一步需要看逐样本预测图和大响应样本分布，判断召回下降是否来自待复核样本稀释，还是模型更保守。
+- 服务器状态：本轮 screen 已结束；未记录服务器密码。

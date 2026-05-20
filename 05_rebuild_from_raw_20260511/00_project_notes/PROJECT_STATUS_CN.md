@@ -1271,3 +1271,15 @@ instability_ay_roll        12
 - 当前综合排序第一：`v04_primary_secondary_nolat`，test RMSE=0.8402，大响应错侧率=0.1707，严重幅值不足率=0.2683，大响应召回=0.9512。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v04_vehicle_only_gpu_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_vehicle_only_gpu_baseline`。
+## 2026-05-20 v0.4 主训练+次级+待复核 GPU 基线
+
+- 为什么做：用户要求在服务器 GPU 上继续跑 v0.4 主训练+次级+待复核样本，检查待复核样本是否能纳入训练。
+- 运行位置：服务器，连接格式 `ssh -p 55060 root@connect.westc.seetacloud.com`，密码未写入项目文件。
+- 运行设备：NVIDIA GeForce RTX 4080 SUPER。
+- 运行版本：`v04_primary_secondary_review_nolat`，即主训练候选 + 次级候选 + 待复核样本，去掉横向偏移。
+- 当前结果：原始合并样本 1422，实际可用窗口样本 1410，train/val/test=831/244/335。
+- 测试指标：test RMSE=0.8067，主阶段 RMSE=0.5786，尾段 RMSE=0.9290，大响应错侧率=0.1398，严重幅值不足率=0.2796，大响应召回=0.9032。
+- 当前判断：加入待复核样本后，整体 RMSE 明显优于上一轮 `v04_primary_secondary_nolat` 的 0.8402，错侧率也下降；但大响应召回下降，说明待复核样本有价值，但可能也稀释了一部分大响应覆盖。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v04_review_gpu_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_review_gpu_baseline`。
+- 当前后台任务：服务器 screen 已结束，本地没有继续运行的该任务。

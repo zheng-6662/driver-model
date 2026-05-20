@@ -1616,3 +1616,12 @@
 - 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_vehicle_only_gpu_baseline\tables\v04_vehicle_only_gpu_summary.csv`
 - 排名表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_vehicle_only_gpu_baseline\tables\v04_vehicle_only_gpu_ranking.csv`
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_vehicle_only_gpu_baseline`
+## 2026-05-20 v0.4 主训练+次级+待复核 GPU 基线
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v04_review_gpu_user_summary_cn.md`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_review_gpu_baseline\tables\v04_review_gpu_summary.csv`
+- 排名表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_review_gpu_baseline\tables\v04_review_gpu_ranking.csv`
+- 逐模型指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_review_gpu_baseline\v04_primary_secondary_review_nolat\tables\v04_primary_secondary_review_nolat_gpu_metrics.csv`
+- 逐样本指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v04_review_gpu_baseline\v04_primary_secondary_review_nolat\tables\v04_primary_secondary_review_nolat_gpu_per_sample_metrics.csv`
+- 服务器日志：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\server_logs\stage03_v04_review_gpu_20260520_102550.log`
+- 脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v04_review_gpu_baseline.py`
