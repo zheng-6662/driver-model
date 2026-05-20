@@ -1,5 +1,25 @@
 # 服务器运行记录
 
+## 2026-05-20 12:01-12:08 v0.5 服务器处理后样本重筛 + 被试划分旧流程车辆-only
+
+- 服务器连接命令格式：`ssh -p 55060 root@connect.westc.seetacloud.com`
+- 启动时间：2026-05-20 12:01
+- 关闭时间：2026-05-20 12:08，训练和后处理均已结束，screen 自动退出
+- 运行任务：`stage03_v05_server_aligned_subject_oldflow_fair09.py`
+- screen/nohup 名称：`v05subj`
+- 远程项目路径：`/root/autodl-tmp/data_process`
+- 远程日志路径：
+  - `/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v05_server_aligned_subject_prepare_latest.log`
+  - `/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v05_server_aligned_subject_train_latest.log`
+  - `/root/autodl-tmp/data_process/05_rebuild_from_raw_20260511/00_project_notes/server_logs/stage03_v05_server_aligned_subject_postprocess_latest.log`
+- 本地拉回路径：`F:/data_set_process/data_process/tmp/event_conditioned_runs/V05_SERVER_ALIGNED_SUBJECT_FAIR09_vehicle_only_seed2026_20260520_120144`
+- 是否还有任务在跑：否
+- GPU/显存状态摘要：服务器 GPU 为 NVIDIA GeForce RTX 4080 SUPER；训练阶段确认使用 CUDA，训练后显存回到空闲。
+- 结果摘要：loader 保留 1376 个样本，train/val/test=953/260/163；车辆-only test RMSE=0.3386，primary=0.2184，tail=0.3105，selection=0.8206。
+- 备注：未在日志、报告或代码中记录服务器密码。
+
+---
+
 ## 2026-05-19 21:12-22:02 v0.3 样本筛选策略 GPU 快速对比
 
 - 服务器连接命令格式：`ssh -p 55060 root@connect.westc.seetacloud.com`

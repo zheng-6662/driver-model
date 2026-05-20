@@ -1,3 +1,28 @@
+# 项目状态更新：v0.5 服务器处理后样本重筛 + 被试划分旧流程车辆-only
+
+更新时间：2026-05-20 12:15
+
+当前阶段：旧流程车辆-only 基线复查。按用户要求，本轮使用服务器中已经处理好的车辆 CSV 重新筛选样本，并采用被试划分训练/验证/测试。
+
+当前完成：服务器 4080 SUPER 已完成 v0.5 重筛、manifest 构建、旧流程 loader 检查、FAIR09/E1 车辆-only 粗细双头训练、预测图生成和结果拉回本地。
+
+最近一次结果：旧流程 loader 实际保留 1376 个样本，train/val/test=953/260/163；测试被试为 cwh/gf/tyy，验证被试为 byx/gzj/yyl。车辆-only 测试指标为 test steer RMSE=0.3386，主阶段 RMSE=0.2184，尾段 RMSE=0.3105，selection=0.8206。
+
+当前判断：这次结果看起来明显好于前面一些旧流程车辆-only结果，但不能直接下结论说样本定义已经最终正确，因为本轮测试集样本只有 163 个，并且使用的是固定被试划分。分被试样本级指标显示 tyy 明显更难，尾段误差最高，需要继续看预测图和分样本类型。
+
+当前最大风险：被试划分下 test 样本数量偏少，且 cwh/gf/tyy 的样本类型分布可能和旧测试集不同；因此这个结果更适合作为“服务器处理后样本 + 被试划分”的新检查点，不应和随机划分结果简单横向比较。
+
+下一步准备做什么：先人工查看本轮预测总览图和 12 张固定样本图；如果图像物理意义明显比旧样本更好，再继续在同一 v0.5 样本定义下补车辆+连续风格，之后再考虑生理增量。
+
+用户可以优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_server_aligned_subject_oldflow_fair09_user_summary_cn.md`
+- `F:\data_set_process\data_process\tmp\event_conditioned_runs\V05_SERVER_ALIGNED_SUBJECT_FAIR09_vehicle_only_seed2026_20260520_120144\prediction_figures\test\overview.png`
+- `F:\data_set_process\data_process\tmp\event_conditioned_runs\V05_SERVER_ALIGNED_SUBJECT_FAIR09_vehicle_only_seed2026_20260520_120144\prediction_figures\test`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_server_aligned_subject_oldflow_fair09\tables\test_subject_sample_metrics_v0_5.csv`
+
+---
+
 # 项目状态更新：v0.3 样本筛选策略 GPU 快速对比完成
 
 更新时间：2026-05-19 22:05

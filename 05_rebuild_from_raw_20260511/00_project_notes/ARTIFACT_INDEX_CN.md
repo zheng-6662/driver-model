@@ -1,3 +1,20 @@
+## 2026-05-20 v0.5 服务器处理后样本重筛 + 被试划分旧流程车辆-only
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_server_aligned_subject_oldflow_fair09_user_summary_cn.md`
+- 代码入口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v05_server_aligned_subject_oldflow_fair09.py`
+- v0.5 样本筛选表目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\extreme_condition_episodes_server_aligned_v0_5\tables`
+- 旧流程 manifest：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_processed_datasets\stage03_v05_server_aligned_subject_oldflow_fair09\tables\oldflow_fair09_vehicle_only_server_aligned_v05_subject_split_manifest.csv`
+- 运行记录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_server_aligned_subject_oldflow_fair09\tables\server_aligned_v05_subject_oldflow_fair09_run_record.csv`
+- 分被试样本级指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_server_aligned_subject_oldflow_fair09\tables\test_subject_sample_metrics_v0_5.csv`
+- 分道路类型样本级指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_server_aligned_subject_oldflow_fair09\tables\test_road_type_sample_metrics_v0_5.csv`
+- 分机制标签样本级指标：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_server_aligned_subject_oldflow_fair09\tables\test_mechanism_sample_metrics_v0_5.csv`
+- 本地运行目录：`F:\data_set_process\data_process\tmp\event_conditioned_runs\V05_SERVER_ALIGNED_SUBJECT_FAIR09_vehicle_only_seed2026_20260520_120144`
+- 预测总览图：`F:\data_set_process\data_process\tmp\event_conditioned_runs\V05_SERVER_ALIGNED_SUBJECT_FAIR09_vehicle_only_seed2026_20260520_120144\prediction_figures\test\overview.png`
+- 服务器训练日志：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\server_logs\stage03_v05_server_aligned_subject_train_latest.log`
+- 结果摘要：loader 保留 1376 个样本，train/val/test=953/260/163；车辆-only test RMSE=0.3386，primary=0.2184，tail=0.3105，selection=0.8206。
+
+---
+
 ## 2026-05-19 v0.3 样本筛选策略 GPU 快速对比完成
 
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v03_screening_sweep_gpu_user_summary_cn.md`
