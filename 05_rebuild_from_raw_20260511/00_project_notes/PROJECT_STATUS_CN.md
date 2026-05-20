@@ -1400,3 +1400,11 @@ instability_ay_roll        12
   - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\figures\v05_multiversion_overlay_teacher.png`
   - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\figures\v05_multiversion_overlay_eeg_direct.png`
 - 下一步建议：先人工看 T1/SF4/T2 的预测图是否物理上更合理；若可以接受，优先补 T1、SF4、T2 的 seed2027/2028，不优先补 T4/A3。
+## 2026-05-20 当前样本集暂存与下一步任务定义修正
+
+- 当前决定：v0.5 服务器对齐样本集先暂存，继续保留其样本表、manifest、训练结果、生理/脑电结果和预测图，作为阶段性对照材料，不再把它直接视为最终样本定义。
+- 关键修正：用户指出一次完整实验记录中不应只对应一个 episode。后续应从完整一次实验车辆数据中重建多个驾驶片段，每个片段包含事件开始、驾驶员操作开始、车辆响应开始、峰值、恢复或结束等时间点。
+- 任务定义修正：当前研究目标应从“固定锚点后 2 秒方向盘预测”扩展为“极限/近极限工况下驾驶员响应与车辆状态演化建模”。方向盘仍是重要输出，但不再是唯一输出；车速、制动、横向加速度、横摆、横滚、横向偏移等也应纳入后续建模目标。
+- 对当前 v0.5 的定位：v0.5 可作为临时实验集和生理/脑电机制筛选证据；但其固定 3 秒输入 + 2 秒预测窗口、单锚点切片方式可能误判锚点偏晚或事件较短的样本。
+- 下一步准备：设计完整记录级 episode 重建流程，以一条完整车辆 CSV 为输入，自动识别多个 episode，并为每个 episode 输出变长时间线、驾驶员响应类型、车辆风险等级、锚点质量和后续训练任务建议。
+- 补充输入：后续完整记录级重建应参考已有道路/场景信息，包括道路模块、低附着段、弯道/曲率、维修路段、连续超车段、longstraight/fix_road/middle_section 等设计信息。道路信息作为 episode 解释和工况背景，不直接等同于最终事件锚点。
