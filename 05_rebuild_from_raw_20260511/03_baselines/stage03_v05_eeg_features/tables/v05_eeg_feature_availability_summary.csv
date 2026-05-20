@@ -1,0 +1,10 @@
+﻿split,eeg_status,n
+test,anchor_beyond_eeg_duration,4
+test,not_enough_pre_anchor,2
+test,ok,159
+train,missing_eeg_fif,193
+train,not_enough_pre_anchor,6
+train,ok,761
+val,missing_eeg_fif,17
+val,not_enough_pre_anchor,2
+val,ok,244

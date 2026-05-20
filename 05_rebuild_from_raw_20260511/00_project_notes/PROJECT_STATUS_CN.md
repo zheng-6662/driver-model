@@ -1362,3 +1362,27 @@ instability_ay_roll        12
 - 服务器状态：本轮 screen 已结束，GPU 空闲；没有后台训练继续运行。
 - 当前最大风险：目前都是 seed2026 筛选结果，测试样本只有 163 个；T2 和 SF2 需要补 seed2027/2028，并查看预测图和分被试结果后才能形成强结论。
 - 用户优先查看：`09_reports/stage03_v05_physio_mechanism_comparison_user_summary_cn.md` 和 `03_baselines/stage03_v05_physio_mechanism_comparison/tables/v05_physio_comparison_table.csv`。
+
+# 项目状态更新：v0.5 脑电数据审计与新锚点特征提取
+
+更新时间：2026-05-20
+
+当前阶段：v0.5 连续风格/生理/脑电机制验证的数据接入修正。
+
+当前完成：已完成原始脑电 CSV、清洗后脑电 FIF、旧脑电特征表和 v0.5 manifest 的对齐审计；已新增脚本按 v0.5 `anchor_s` 重提取锚点前 2 秒脑电特征。
+
+最近一次结果：v0.5 manifest 共 1388 个样本，成功提取严格锚点前脑电特征 1164 个；test 159/165 可用，val 244/263 可用，train 761/960 可用。缺失主要来自部分记录没有清洗后脑电 FIF。
+
+当前判断：脑电不是完全不能用；之前没有跑脑电版本的主要原因是旧脑电特征按横滚峰值对齐，不能直接接入 v0.5 新锚点。现在已经有 v0.5 对齐脑电特征表，可以进入接入检查，但还不能直接宣称脑电有效。
+
+当前最大风险：训练集脑电缺失比例高于测试集，后续必须使用缺失掩码或脑电可用子集公平对照，不能让模型把“脑电是否存在”当成被试或记录线索。
+
+下一步准备：把 `v05_eeg_features_pre_anchor_hist2s.csv` 接入 v0.5 机制实验，先做可用性检查，再决定是否跑车辆+脑电、车辆+连续风格+脑电、脑电教师版本。
+
+用户优先查看：
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v05_eeg_feature_extraction_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_eeg_features\tables\v05_eeg_features_pre_anchor_hist2s.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_eeg_features\tables\v05_eeg_recording_inventory.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_eeg_features\tables\v05_eeg_feature_availability_summary.csv`
+
+---
