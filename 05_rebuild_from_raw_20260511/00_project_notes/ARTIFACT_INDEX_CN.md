@@ -1750,3 +1750,10 @@
 - 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_1_reviewed\tables\record_episode_figure_index_v1_1.csv`
 
 当前结果摘要：v1.1 总 episode 仍为 1766 个；主训练候选 1383 个，对照样本 3 个，舍弃/暂缓 380 个。主训练候选由核心极限样本、保守/弱操作极限样本、次级训练样本组成；正常弯道或普通操控只作为对照，不进入主训练。
+
+## 2026-05-20 v1.1 完整记录级样本车辆-only GPU 基线
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v11_vehicle_only_gpu_user_summary_cn.md`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline\tables\v11_vehicle_only_gpu_summary.csv`
+- 排名表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline\tables\v11_vehicle_only_gpu_ranking.csv`
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline`

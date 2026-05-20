@@ -1,0 +1,73 @@
+{
+  "dataset_summary": {
+    "variant_id": "v11_episode_start_nolat",
+    "name_cn": "v1.1 episode 开始锚点，去横向偏移",
+    "description_cn": "v1.1 完整记录级 episode 主训练候选的车辆-only GPU 基线，不加入连续风格、生理或脑电。",
+    "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v11_vehicle_only_gpu_baseline\\tables\\v11_compat_episode_start.csv",
+    "included_categories": [
+      "conservative_extreme",
+      "core_extreme",
+      "secondary"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "",
+    "extra_episode_count": 0,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 1065,
+    "dropped_count": 318,
+    "split_counts": {
+      "train": 717,
+      "test": 184,
+      "val": 164
+    },
+    "category_counts": {
+      "core_extreme": 771,
+      "conservative_extreme": 293,
+      "secondary": 1
+    },
+    "subject_counts": {
+      "zx": 136,
+      "hzh": 91,
+      "txj": 83,
+      "zxy": 71,
+      "gf": 70,
+      "cwh": 69,
+      "gzj": 69,
+      "yzy": 62,
+      "lxy": 60,
+      "yyl": 59,
+      "rjy": 58,
+      "zdq": 47,
+      "tyy": 45,
+      "jy": 41,
+      "byx": 36,
+      "lx": 30,
+      "zt": 21,
+      "xst": 17
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "v11_episode_start_nolat",
+    "name_cn": "v1.1 episode 开始锚点，去横向偏移",
+    "anchor_label": "episode_start",
+    "sample_count": 1065,
+    "extra_episode_count": 0,
+    "dropped_count": 318,
+    "split_counts_json": "{\"train\": 717, \"test\": 184, \"val\": 164}",
+    "category_counts_json": "{\"core_extreme\": 771, \"conservative_extreme\": 293, \"secondary\": 1}",
+    "val_selected_model": "train_context_mean",
+    "val_rmse_for_selected": 0.6475881966428843,
+    "test_rmse_steer": 0.31944563495142325,
+    "test_primary_rmse_0_2s": 0.29512726661138106,
+    "test_tail_rmse_2_5s": 0.3362231481742932,
+    "test_wrong_side_rate_large": 0.45454545454545453,
+    "test_severe_amp_under_rate_large": 1.0,
+    "test_large_response_recall": 0.0,
+    "prediction_npz": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v11_vehicle_only_gpu_baseline\\v11_episode_start_nolat\\tables\\v11_episode_start_nolat_selected_predictions.npz",
+    "large_response_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v11_vehicle_only_gpu_baseline\\v11_episode_start_nolat\\figures\\v11_episode_start_nolat_large_response_overview.png",
+    "badcase_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v11_vehicle_only_gpu_baseline\\v11_episode_start_nolat\\figures\\v11_episode_start_nolat_badcase_overview.png"
+  }
+}

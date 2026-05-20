@@ -2370,3 +2370,13 @@
 - 训练前先确认任务窗口：是预测后续方向盘，还是同时预测方向盘、车速、制动、横向加速度、横摆、横滚等车辆状态。
 - 第一轮建议先跑车辆-only 强基线，暂不加连续风格和生理数据。
 - 如果车辆-only 在 v1.1 上仍出现明显错侧、幅值压缩或预测图不合理，再回到样本规则继续改，而不是直接加生理数据。
+
+## 2026-05-20 v1.1 完整记录级样本车辆-only GPU 基线
+
+- 为什么做：基于 v1.1 主训练候选样本，先训练车辆-only，检查新 episode 样本定义是否适合建模。
+- 运行设备：`cuda`，本地 CUDA。
+- 切分：test=cwh/gf/tyy，val=byx/gzj/yyl，其余 train。
+- 当前综合排序第一：`v11_vehicle_onset_nolat`，test RMSE=0.3532，大响应错侧率=0.0000，严重幅值不足率=0.5000，大响应召回=0.5000。
+- 当前判断：单看 RMSE 最低的是上下文均值模型，不符合极限工况幅值建模目标；车辆响应锚点的方向物理指标更好，但幅值仍明显不足，暂不能升级为最终样本/模型主线。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v11_vehicle_only_gpu_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline`。
