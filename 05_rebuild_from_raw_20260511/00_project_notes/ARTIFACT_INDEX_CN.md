@@ -1719,3 +1719,20 @@
 - 完整指标表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_comparison_table.csv`
 - 运行状态表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v05_physio_mechanism_comparison\tables\v05_physio_run_status.csv`
 - 汇图脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v05_build_multiversion_result_plots.py`
+## 2026-05-20 完整记录级 episode 重建 v1.0
+
+这一版不再把一条实验记录固定当成一个事件，也不继续以旧锚点或 `.aed` 触发点作为主入口。它从完整原始车辆 CSV 中重建车辆状态时间线，并允许一条完整实验记录自动切出多个 episode。
+
+- 用户查看版说明：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_0_user_summary_cn.md`
+- 构建脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\scripts\build_record_level_episode_reconstruction_v1_0.py`
+- 配置文件：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\configs\record_episode_reconstruction_v1_0.json`
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0`
+- 全量 episode 总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\tables\record_level_episodes_all_v1_0.csv`
+- 文件读取清单：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\tables\record_level_file_inventory_v1_0.csv`
+- 分组统计表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\tables\record_episode_group_summary_v1_0.csv`
+- 上下文统计表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\tables\record_episode_context_summary_v1_0.csv`
+- 分被试统计表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\tables\record_episode_by_subject_v1_0.csv`
+- 多信号复核图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\figures\review_panels`
+- 静态 3D 轨迹图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0\figures\trajectory_3d_static`
+
+当前结果摘要：91 条原始车辆记录全部成功读取，自动检测到 1766 个 episode。其中核心极限样本 973 个，保守/弱操作极限样本 406 个，需要复核 335 个，边界复核 45 个。道路/场景字段只作为解释上下文，不作为最终事件真值。

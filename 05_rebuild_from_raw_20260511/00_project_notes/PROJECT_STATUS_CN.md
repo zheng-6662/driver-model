@@ -1408,3 +1408,30 @@ instability_ay_roll        12
 - 对当前 v0.5 的定位：v0.5 可作为临时实验集和生理/脑电机制筛选证据；但其固定 3 秒输入 + 2 秒预测窗口、单锚点切片方式可能误判锚点偏晚或事件较短的样本。
 - 下一步准备：设计完整记录级 episode 重建流程，以一条完整车辆 CSV 为输入，自动识别多个 episode，并为每个 episode 输出变长时间线、驾驶员响应类型、车辆风险等级、锚点质量和后续训练任务建议。
 - 补充输入：后续完整记录级重建应参考已有道路/场景信息，包括道路模块、低附着段、弯道/曲率、维修路段、连续超车段、longstraight/fix_road/middle_section 等设计信息。道路信息作为 episode 解释和工况背景，不直接等同于最终事件锚点。
+
+## 2026-05-20 21:53:08 完整记录级 episode 重建 v1.0
+
+- 已运行完整记录级 episode 重建脚本。
+- 输入：`F:\data_set_process\data_process\01_datasets\数据预处理\原始车辆数据`
+- 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0`
+- 处理记录数：3
+- 检测 episode 数：62
+- 说明：道路/场景信息只作为上下文，不直接作为最终事件锚点；一条完整实验记录允许产生多个 episode。
+
+## 2026-05-20 21:54:17 完整记录级 episode 重建 v1.0
+
+- 已运行完整记录级 episode 重建脚本。
+- 输入：`F:\data_set_process\data_process\01_datasets\数据预处理\原始车辆数据`
+- 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0`
+- 处理记录数：1
+- 检测 episode 数：22
+- 说明：道路/场景信息只作为上下文，不直接作为最终事件锚点；一条完整实验记录允许产生多个 episode。
+
+## 2026-05-20 22:00:45 完整记录级 episode 重建 v1.0
+
+- 已运行完整记录级 episode 重建脚本。
+- 输入：`F:\data_set_process\data_process\01_datasets\数据预处理\原始车辆数据`
+- 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_0`
+- 处理记录数：91
+- 检测 episode 数：1766
+- 说明：道路/场景信息只作为上下文，不直接作为最终事件锚点；一条完整实验记录允许产生多个 episode。

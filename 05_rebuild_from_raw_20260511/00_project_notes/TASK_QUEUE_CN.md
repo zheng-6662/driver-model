@@ -2336,3 +2336,22 @@
 ### 暂不继续
 - 暂不直接在 v0.5 上继续无目标地调筛选阈值。
 - 暂不把 v0.5 固定 2 秒方向盘预测结果作为最终样本定义的证明。
+## 2026-05-20 完整记录级 episode 重建 v1.0
+
+### 已完成
+- 已新增完整记录级 episode 重建脚本，入口为：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\scripts\build_record_level_episode_reconstruction_v1_0.py`。
+- 已新增配置文件：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\configs\record_episode_reconstruction_v1_0.json`。
+- 已从 `F:\data_set_process\data_process\01_datasets\数据预处理\原始车辆数据` 扫描完整车辆 CSV。
+- 已成功处理 91 条车辆记录，自动检测 1766 个 episode。
+- 已生成全量 episode 表、分组表、分被试表、上下文统计表、多信号复核图和静态 3D 轨迹图。
+
+### 当前不做
+- 不训练模型。
+- 不把 v1.0 自动筛选结果直接升级为最终训练集。
+- 不把道路设计点、`.aed` 触发点或旧锚点当作最终事件真值。
+
+### 下一步建议
+- 优先人工查看 `core_extreme_核心极限样本`、`conservative_extreme_保守/弱操作极限样本` 和 `review_需要复核` 三类复核图。
+- 标出明显错误类型：锚点偏晚、正常弯道混入、车辆变化不足、方向盘维持直线微调、坐标跳变、低附着有效事件。
+- 根据人工复核结果，把 v1.0 规则细化成 v1.1，再决定是否构建新的车辆-only 数据集。
+- 如果 3D 静态图能帮助理解，再进一步生成真正的时间动画；如果帮助不大，先把精力放在多信号复核图和规则修正。
