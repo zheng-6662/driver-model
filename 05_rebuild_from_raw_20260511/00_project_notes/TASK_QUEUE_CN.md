@@ -2396,3 +2396,11 @@
 - v1.3 主训练候选：820；暂缓/复核：563；疑似路边恢复或上下马路：393；弯道/坡度复核：128。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_3_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_3_cleaned`。
+
+## 2026-05-21 完整记录级 episode 样本集 v1.4
+
+- 为什么做：用户复核后认为多数高度 z 风险样本确实像上下马路/路边恢复，但高度明显大幅下降的片段应先保留为极限工况样本。
+- 本轮动作：在 v1.3 基础上计算 episode 开始后的 z 下坠幅度，保留 `z_drop >= 2.0m` 的高度大幅下降样本，其它上下马路/路边恢复样本先抛弃；本轮不训练模型。
+- v1.4 主训练候选：842；高度大幅下降保留样本：22；上下马路但无明显大幅下降抛弃样本：371。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_4_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_4_zdrop_reviewed`。

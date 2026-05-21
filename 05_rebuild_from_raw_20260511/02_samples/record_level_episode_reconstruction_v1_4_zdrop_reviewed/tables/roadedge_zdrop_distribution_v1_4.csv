@@ -1,0 +1,13 @@
+﻿z_drop_bin,v1_4_decision,count
+<=0.5,discard_roadedge_without_large_zdrop,347
+<=0.5,train_z_drop_extreme_keep,0
+0.5-1,discard_roadedge_without_large_zdrop,20
+0.5-1,train_z_drop_extreme_keep,0
+1-2,discard_roadedge_without_large_zdrop,4
+1-2,train_z_drop_extreme_keep,0
+2-3,discard_roadedge_without_large_zdrop,0
+2-3,train_z_drop_extreme_keep,2
+3-5,discard_roadedge_without_large_zdrop,0
+3-5,train_z_drop_extreme_keep,6
+>5,discard_roadedge_without_large_zdrop,0
+>5,train_z_drop_extreme_keep,14

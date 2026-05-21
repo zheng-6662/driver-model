@@ -1,0 +1,8 @@
+﻿v1_4_decision,v1_4_decision_cn,count
+train_target_extreme,继承 v1.3：目标极限事件，保留为训练候选,472
+discard_prior_review,继承 v1.3：此前已舍弃/暂缓，不进入当前训练候选,380
+discard_roadedge_without_large_zdrop,用户复核后抛弃：属于疑似上下马路/路边恢复，但没有明显大幅向下 z_drop，不进入当前训练候选,371
+train_conservative_extreme,继承 v1.3：保守/弱操作极限样本，保留为训练候选,348
+defer_prior_review,继承 v1.3：仍需要复核或拆分，暂不进入当前训练候选,170
+train_z_drop_extreme_keep,用户复核后保留：高度 z 相对 episode 开始大幅下降，作为高度大幅下降极限样本,22
+control_normal_or_curve,继承 v1.3：正常弯道或普通操控，仅保留为对照样本,3
