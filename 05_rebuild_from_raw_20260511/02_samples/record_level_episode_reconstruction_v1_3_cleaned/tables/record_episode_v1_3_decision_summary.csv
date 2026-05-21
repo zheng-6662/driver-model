@@ -1,0 +1,13 @@
+﻿v1_3_decision,v1_3_decision_cn,count
+train_target_extreme,目标极限事件，未触发 v1.3 路边/超长风险，保留为训练候选,472
+discard_prior_review,v1.1 已经人工复核为舍弃/暂缓，本轮继续不进入训练,380
+train_conservative_extreme,保守/弱操作极限样本，未触发 v1.3 路边/超长风险，保留为训练候选,348
+defer_roadedge_or_offroad,车速/制动/横向偏移/高度残差组合提示可能是路边恢复或上下马路，暂不进入主训练,318
+review_long_curve_or_grade,20 秒以上弯道/坡度趋势片段，不能仅因 z 范围大判为上下马路，先复核是否可拆成单事件,109
+defer_roadedge_or_offroad_long,20 秒以上且存在路边/上下马路风险，暂不进入主训练,74
+review_duration_15_20s,持续时间 15-20 秒，先进入复核而不直接训练,36
+review_curve_high_dynamics,弯道内高动态样本，不能直接判为上下马路，但也需复核是否为干净极限工况,15
+defer_long_merged,持续时间超过 20 秒，不适合作为单个干净事件直接训练,9
+control_normal_or_curve,正常弯道或普通操控，仅保留为对照样本,3
+defer_roadedge_or_offroad_user_feedback,用户复核指出：该样本更像上下马路/路边恢复，不应作为目标极限工况主训练样本,1
+review_long_curve_or_grade_user_feedback,用户复核指出：该样本是弯道/道路趋势，不应仅因高度范围大判为上下马路,1

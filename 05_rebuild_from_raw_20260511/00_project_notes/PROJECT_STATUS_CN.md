@@ -1461,3 +1461,11 @@ instability_ay_roll        12
 - v1.2 主训练候选：1081；暂缓/复核：302；疑似上下马路/路外恢复：149。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_2_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned`。
+
+## 2026-05-21 完整记录级 episode 样本集 v1.3
+
+- 为什么做：用户指出 v1.2 把一个上下马路/路边恢复样本误判为目标极限事件，又把一个弯道样本误判为上下马路。
+- 本轮动作：加入高度去趋势、平滑坡度识别、横向偏移跳变、车速/制动组合风险和用户反例覆盖规则，生成 v1.3 新样本集；本轮不训练模型。
+- v1.3 主训练候选：820；暂缓/复核：563；疑似路边恢复或上下马路：393；弯道/坡度复核：128。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_3_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_3_cleaned`。

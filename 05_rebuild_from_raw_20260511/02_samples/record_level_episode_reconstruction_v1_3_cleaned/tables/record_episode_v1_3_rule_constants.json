@@ -1,0 +1,30 @@
+{
+  "normal_duration_max_s": 15.0,
+  "review_duration_max_s": 20.0,
+  "extreme_duration_max_s": 30.0,
+  "lat_range_roadedge_floor_m": 3.0,
+  "lat_jump_roadedge_floor_m": 1.0,
+  "speed_drop_roadedge_floor_kmh": 18.0,
+  "brake_active_floor": 0.2,
+  "z_raw_grade_floor_m": 0.5,
+  "z_grade_residual_ratio_max": 0.35,
+  "z_grade_monotonic_fraction_min": 0.68,
+  "z_transient_residual_floor_m": 0.12,
+  "pitch_transient_floor_rad": 0.08,
+  "road_source_audit": {
+    "cfg_dir": "F:\\data_set_process\\data_process\\01_datasets\\多模态数据\\被试数据集合\\道路信息\\道路\\Area2_extracted",
+    "cfg_files": 9,
+    "cfg_height_like_assignment_total": 98,
+    "cfg_z_value_total": 98,
+    "cfg_z_value_min": -7.0,
+    "cfg_z_value_max": 0.0,
+    "cfg_slope_or_bank_assignment_total": 0,
+    "centerline_path": "F:\\data_set_process\\data_process\\01_datasets\\多模态数据\\被试数据集合\\道路信息\\道路\\road_centerline_generated.csv",
+    "centerline_columns": [
+      "s",
+      "kappa",
+      "x",
+      "y"
+    ]
+  }
+}
