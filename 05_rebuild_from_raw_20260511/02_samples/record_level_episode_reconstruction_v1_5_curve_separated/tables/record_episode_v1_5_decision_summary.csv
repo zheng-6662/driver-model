@@ -1,0 +1,7 @@
+﻿v1_5_decision,v1_5_decision_cn,count
+discard_prior_review,继承 v1.4：此前已舍弃或不适合作为当前主训练候选,751
+train_target_extreme,继承 v1.4：目标极限事件，保留为当前主训练候选,472
+train_conservative_extreme,继承 v1.4：保守/弱操作极限样本，保留为当前主训练候选,348
+defer_prior_review,继承 v1.4：仍需复核或拆分，不进入当前主训练候选,170
+review_curve_z_drop_separate,用户复核后调整：高度大幅下降样本属于弯道上下文，需单独判断，不进入当前主训练候选,22
+control_normal_or_curve,继承 v1.4：正常弯道或普通操控，仅保留为对照样本,3

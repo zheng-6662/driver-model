@@ -2404,3 +2404,11 @@
 - v1.4 主训练候选：842；高度大幅下降保留样本：22；上下马路但无明显大幅下降抛弃样本：371。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_4_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_4_zdrop_reviewed`。
+
+## 2026-05-21 完整记录级 episode 样本集 v1.5
+
+- 为什么做：用户复核后指出 v1.4 保留的高度大幅下降样本实际都是弯道路段，应单独判断，不应混入主训练候选。
+- 本轮动作：把 v1.4 的 `train_z_drop_extreme_keep` 且属于弯道上下文的样本改为 `review_curve_z_drop_separate`；本轮不训练模型。
+- v1.5 主训练候选：820；弯道高度下降单独复核：22。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_5_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_5_curve_separated`。
