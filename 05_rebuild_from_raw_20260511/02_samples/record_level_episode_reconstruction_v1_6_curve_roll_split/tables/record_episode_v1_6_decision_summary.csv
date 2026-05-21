@@ -1,0 +1,7 @@
+﻿v1_6_decision,v1_6_decision_cn,count
+train_noncurve_target_extreme,非弯道主训练候选：继承 v1.5，作为当前主训练集,687
+discard_noncurve_prior_review,非弯道已舍弃或不适合作为当前候选：继承 v1.5,630
+review_curve_normal_or_weak_roll,弯道普通或弱侧倾样本：不进入主训练，保留为弯道复核/对照,173
+discard_curve_slope_or_z_abnormal,弯道高度/坡度异常：疑似开上斜坡或道路边缘，不进入主训练和弯道侧倾候选,162
+review_curve_roll_candidate_clean,弯道侧倾候选：侧倾/横滚明显，且未触发高度异常，单独进入弯道候选池,95
+defer_noncurve_prior_review,非弯道仍需复核或拆分：继承 v1.5,19
