@@ -1,0 +1,9 @@
+﻿v1_2_decision,v1_2_decision_cn,count
+train_target_extreme,核心/次级目标极限事件，未触发超长或路外恢复风险，保留为训练候选,695
+train_conservative_extreme,保守/弱操作极限样本，未触发超长或路外恢复风险，保留为训练候选,386
+discard_prior_review,v1.1 已经人工复核为舍弃/暂缓，本轮继续不进入训练,380
+review_duration_15_20s,持续时间 15-20 秒，接近或超过常规事件上限，先进入复核而不直接训练,106
+defer_offroad_recovery_long,持续时间超过 20 秒且存在高度/俯仰/横向偏移异常，疑似上下马路或路外恢复误合并,83
+defer_offroad_recovery,高度/俯仰/横向偏移特征提示可能是上下马路或路外恢复，先不进入主训练,66
+defer_long_merged,持续时间超过 20 秒，不符合单个事件通常只有十几秒的实验逻辑，疑似多个过程误合并,47
+control_normal_or_curve,正常弯道或普通操控，仅保留为对照样本,3

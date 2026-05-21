@@ -2380,3 +2380,11 @@
 - 当前判断：单看 RMSE 最低的是上下文均值模型，不符合极限工况幅值建模目标；车辆响应锚点的方向物理指标更好，但幅值仍明显不足，暂不能升级为最终样本/模型主线。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v11_vehicle_only_gpu_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline`。
+
+## 2026-05-21 完整记录级 episode 样本集 v1.2
+
+- 为什么做：用户指出 v1.1 中 60 秒、80 秒、105 秒 episode 不符合真实单事件逻辑，可能是上下马路/路外恢复或连续过程误合并。
+- 本轮动作：加入 `zx|z` 高度、俯仰、横向偏移和时长约束，生成 v1.2 新样本集，不训练模型。
+- v1.2 主训练候选：1081；暂缓/复核：302；疑似上下马路/路外恢复：149。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_2_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned`。

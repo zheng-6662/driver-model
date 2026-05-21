@@ -1757,3 +1757,12 @@
 - 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline\tables\v11_vehicle_only_gpu_summary.csv`
 - 排名表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline\tables\v11_vehicle_only_gpu_ranking.csv`
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v11_vehicle_only_gpu_baseline`
+
+## 2026-05-21 完整记录级 episode 样本集 v1.2
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_2_user_summary_cn.md`
+- 全量表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned\tables\record_level_episodes_all_v1_2.csv`
+- 主训练候选：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned\tables\train_candidate_target_episodes_v1_2.csv`
+- 疑似上下马路/路外恢复：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned\tables\suspected_offroad_or_road_recovery_episodes_v1_2.csv`
+- 超长误合并：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned\tables\long_merged_episodes_v1_2.csv`
+- 复核图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_2_cleaned\figures\review_panels_v1_2`

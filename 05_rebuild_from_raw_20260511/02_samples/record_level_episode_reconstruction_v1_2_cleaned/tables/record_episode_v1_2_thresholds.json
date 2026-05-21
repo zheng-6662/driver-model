@@ -1,0 +1,10 @@
+{
+  "normal_duration_max_s": 15.0,
+  "review_duration_max_s": 20.0,
+  "z_range_thr": 5.460072299999988,
+  "z_rate_thr": 3.185949999712134,
+  "pitch_range_thr": 0.30223914,
+  "pitch_rate_thr": 1.4324949999999912,
+  "lat_offset_range_thr": 17.921939999999974,
+  "speed_range_thr": 111.12798999999983
+}
