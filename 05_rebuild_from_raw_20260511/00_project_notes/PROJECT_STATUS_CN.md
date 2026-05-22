@@ -1517,3 +1517,10 @@ instability_ay_roll        12
 - 全部 episode `1766` 个，道路坐标弯道上下文 `506` 个，训练候选 `971` 个，其中弯道候选 `383` 个，非弯道候选 `588` 个。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_9_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_9_coord_curve_revised`。
+
+## 2026-05-22 v1.9 非弯道高度微小变化审计
+
+- 为什么做：用户指出直路/非弯道事件中高度 z 也可能有 `0.00x~0.0x m` 的小幅变化，可能来自车身侧倾、姿态、悬架或车辆动态，而不是道路坡度或路外异常。
+- 审计结论：判断基本成立。v1.9 非弯道训练候选 `588` 个中，去趋势后 z 波动中位数为 `0.0041 m`，`87.9%` 小于等于 `0.01 m`，`93.2%` 小于等于 `0.02 m`，`95.2%` 小于等于 `0.05 m`。
+- 解释边界：`zx|z` 不能直接等同于真实车辆质心高度；目前只能说厘米级 z 微动与横滚姿态变化明显相关，应作为车辆动态辅助信号，不能单独作为路外/异常判据。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_v1_9_noncurve_height_micro_motion_audit_cn.md`。

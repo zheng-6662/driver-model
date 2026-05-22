@@ -1832,3 +1832,9 @@
 - 非弯道训练候选：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_9_coord_curve_revised\tables\train_candidate_noncurve_episodes_v1_9.csv`
 - 冲突审计表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_9_coord_curve_revised\tables\metadata_vs_coord_curve_audit_v1_9.csv`
 - 复核图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_9_coord_curve_revised\figures\review_panels_v1_9`
+
+## 2026-05-22 v1.9 非弯道高度微小变化审计
+
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_v1_9_noncurve_height_micro_motion_audit_cn.md`
+- 分组统计表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_9_coord_curve_revised\tables\noncurve_height_micro_motion_by_module_v1_9.csv`
+- 统计图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\figures\v1_9_noncurve_height_micro_motion_audit.png`
