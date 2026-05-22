@@ -1,0 +1,4 @@
+﻿model_name,best_val_rmse,best_epoch,feature_count,feature_names_count
+torch_linear_vehicle_context,0.4389527078378812,49,239,239
+torch_mlp256_vehicle_context,0.4744439484317955,22,239,239
+torch_mlp512_vehicle_context,0.48889734691049036,15,239,239

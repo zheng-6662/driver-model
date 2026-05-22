@@ -1,0 +1,71 @@
+{
+  "dataset_summary": {
+    "variant_id": "v20_noncurve_train_anchor_nolat",
+    "name_cn": "v2.0 非弯道训练候选，推荐锚点，去横向偏移",
+    "description_cn": "非弯道诊断版本：单独看低附着、维修路段、连续超车等非弯道候选是否更容易建模。",
+    "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\tables\\v20_compat_model_anchor.csv",
+    "included_categories": [
+      "train_noncurve_vehicle_dynamic",
+      "train_noncurve_secondary_dynamic"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "",
+    "extra_episode_count": 0,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 581,
+    "dropped_count": 165,
+    "split_counts": {
+      "train": 405,
+      "val": 101,
+      "test": 75
+    },
+    "category_counts": {
+      "train_noncurve_secondary_dynamic": 321,
+      "train_noncurve_vehicle_dynamic": 260
+    },
+    "subject_counts": {
+      "zx": 91,
+      "txj": 62,
+      "hzh": 55,
+      "gzj": 46,
+      "lxy": 40,
+      "yzy": 39,
+      "rjy": 31,
+      "yyl": 31,
+      "cwh": 30,
+      "gf": 29,
+      "byx": 24,
+      "zxy": 24,
+      "jy": 21,
+      "zdq": 19,
+      "tyy": 16,
+      "lx": 11,
+      "zt": 7,
+      "xst": 5
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "v20_noncurve_train_anchor_nolat",
+    "name_cn": "v2.0 非弯道训练候选，推荐锚点，去横向偏移",
+    "anchor_label": "model_anchor_s_v1_8",
+    "sample_count": 581,
+    "extra_episode_count": 0,
+    "dropped_count": 165,
+    "split_counts_json": "{\"train\": 405, \"val\": 101, \"test\": 75}",
+    "category_counts_json": "{\"train_noncurve_secondary_dynamic\": 321, \"train_noncurve_vehicle_dynamic\": 260}",
+    "val_selected_model": "torch_mlp512_vehicle_context",
+    "val_rmse_for_selected": 0.6810080536087451,
+    "test_rmse_steer": 0.39055486049374705,
+    "test_primary_rmse_0_2s": 0.3523328606049883,
+    "test_tail_rmse_2_5s": 0.41523248092492115,
+    "test_wrong_side_rate_large": 0.0,
+    "test_severe_amp_under_rate_large": 0.5,
+    "test_large_response_recall": 0.5,
+    "prediction_npz": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\v20_noncurve_train_anchor_nolat\\tables\\v20_noncurve_train_anchor_nolat_selected_predictions.npz",
+    "large_response_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\v20_noncurve_train_anchor_nolat\\figures\\v20_noncurve_train_anchor_nolat_large_response_overview.png",
+    "badcase_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\v20_noncurve_train_anchor_nolat\\figures\\v20_noncurve_train_anchor_nolat_badcase_overview.png"
+  }
+}

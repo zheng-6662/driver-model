@@ -1,0 +1,75 @@
+{
+  "dataset_summary": {
+    "variant_id": "v20_all_train_anchor_nolat",
+    "name_cn": "v2.0 全量训练候选，推荐锚点，去横向偏移",
+    "description_cn": "主诊断版本：使用 v2.0 全量训练候选，但去掉横向偏移，避免道路坐标跳变直接污染训练。",
+    "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\tables\\v20_compat_model_anchor.csv",
+    "included_categories": [
+      "train_noncurve_vehicle_dynamic",
+      "train_noncurve_secondary_dynamic",
+      "train_curve_roll_dynamic",
+      "train_curve_normal_or_weak"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "",
+    "extra_episode_count": 0,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 750,
+    "dropped_count": 234,
+    "split_counts": {
+      "train": 515,
+      "val": 139,
+      "test": 96
+    },
+    "category_counts": {
+      "train_noncurve_secondary_dynamic": 321,
+      "train_noncurve_vehicle_dynamic": 260,
+      "train_curve_normal_or_weak": 148,
+      "train_curve_roll_dynamic": 21
+    },
+    "subject_counts": {
+      "zx": 111,
+      "txj": 72,
+      "hzh": 68,
+      "gzj": 59,
+      "lxy": 51,
+      "yyl": 48,
+      "rjy": 46,
+      "yzy": 46,
+      "cwh": 42,
+      "zxy": 39,
+      "gf": 33,
+      "byx": 32,
+      "zdq": 29,
+      "jy": 25,
+      "tyy": 21,
+      "lx": 12,
+      "zt": 11,
+      "xst": 5
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "v20_all_train_anchor_nolat",
+    "name_cn": "v2.0 全量训练候选，推荐锚点，去横向偏移",
+    "anchor_label": "model_anchor_s_v1_8",
+    "sample_count": 750,
+    "extra_episode_count": 0,
+    "dropped_count": 234,
+    "split_counts_json": "{\"train\": 515, \"val\": 139, \"test\": 96}",
+    "category_counts_json": "{\"train_noncurve_secondary_dynamic\": 321, \"train_noncurve_vehicle_dynamic\": 260, \"train_curve_normal_or_weak\": 148, \"train_curve_roll_dynamic\": 21}",
+    "val_selected_model": "torch_mlp512_vehicle_context",
+    "val_rmse_for_selected": 0.6296067453479298,
+    "test_rmse_steer": 0.3921057102893253,
+    "test_primary_rmse_0_2s": 0.3459156913051273,
+    "test_tail_rmse_2_5s": 0.42124627205079224,
+    "test_wrong_side_rate_large": 1.0,
+    "test_severe_amp_under_rate_large": 0.6,
+    "test_large_response_recall": 0.4,
+    "prediction_npz": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\v20_all_train_anchor_nolat\\tables\\v20_all_train_anchor_nolat_selected_predictions.npz",
+    "large_response_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\v20_all_train_anchor_nolat\\figures\\v20_all_train_anchor_nolat_large_response_overview.png",
+    "badcase_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_no_history_vehicle_only_gpu_baseline\\v20_all_train_anchor_nolat\\figures\\v20_all_train_anchor_nolat_badcase_overview.png"
+  }
+}
