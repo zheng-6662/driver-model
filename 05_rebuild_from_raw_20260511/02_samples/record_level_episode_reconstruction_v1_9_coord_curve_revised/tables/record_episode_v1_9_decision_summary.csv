@@ -1,0 +1,11 @@
+﻿v1_9_decision,v1_9_decision_cn,count,train_count
+train_noncurve_target_extreme,道路坐标显示非弯道，继承非弯道极限/近极限主训练候选,557,557
+discard_noncurve_prior_review,道路坐标显示非弯道，且不属于当前训练候选,557,0
+train_curve_coord_valid_normal_or_weak,道路坐标确认在弯道，车辆动态较弱或更像正常过弯，作为弯道普通/弱侧倾训练候选,201,201
+train_curve_coord_valid_roll_candidate,道路坐标确认在弯道，且车辆侧倾/横滚/横向动态明显，可作为弯道极限或近极限候选,182,182
+review_road_coordinate_mapping_uncertain,道路坐标最近邻距离过大，先不直接决定弯道/非弯道，需要复核道路映射,79,0
+review_noncurve_recovered_from_height_rule_conflict,原先按弯道高度异常排除，但道路坐标显示非弯道；车辆动态明显，需复核是否为非弯道极限事件,63,0
+discard_curve_coord_height_or_pose_abnormal,道路坐标确认在弯道，但高度/姿态形态异常，疑似上斜坡、下路边或非正常过弯,59,0
+train_noncurve_recovered_from_false_curve_dynamic,原先按弯道纳入，但道路坐标显示非弯道；车辆动态明显，改为非弯道动态候选,31,31
+review_noncurve_false_curve_weak,原先按弯道纳入，但道路坐标显示非弯道且动态较弱，改为复核样本,22,0
+defer_noncurve_prior_review,道路坐标显示非弯道，继承历史待复核样本,15,0
