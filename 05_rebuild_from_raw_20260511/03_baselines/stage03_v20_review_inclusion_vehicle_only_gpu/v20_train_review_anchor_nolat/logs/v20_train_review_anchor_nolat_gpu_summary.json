@@ -1,0 +1,84 @@
+{
+  "dataset_summary": {
+    "variant_id": "v20_train_review_anchor_nolat",
+    "name_cn": "v2.0 训练候选 + 全部待复核，推荐锚点，去横向偏移",
+    "description_cn": "把所有待复核样本都纳入训练，去掉横向偏移，检查数据扩充是否有效。",
+    "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\tables\\v20_compat_model_anchor_review.csv",
+    "included_categories": [
+      "train_noncurve_vehicle_dynamic",
+      "train_noncurve_secondary_dynamic",
+      "train_curve_roll_dynamic",
+      "train_curve_normal_or_weak",
+      "review_curve_height_pose_abnormal",
+      "review_speed_brake_only",
+      "review_mapping_uncertain",
+      "review_fast_steer_weak_vehicle",
+      "review_noncurve_height_abnormal_weak_dynamic"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "",
+    "extra_episode_count": 0,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 1092,
+    "dropped_count": 355,
+    "split_counts": {
+      "train": 753,
+      "val": 170,
+      "test": 169
+    },
+    "category_counts": {
+      "train_noncurve_secondary_dynamic": 321,
+      "train_noncurve_vehicle_dynamic": 260,
+      "review_curve_height_pose_abnormal": 156,
+      "train_curve_normal_or_weak": 148,
+      "review_speed_brake_only": 82,
+      "review_mapping_uncertain": 56,
+      "review_fast_steer_weak_vehicle": 48,
+      "train_curve_roll_dynamic": 21
+    },
+    "subject_counts": {
+      "zx": 154,
+      "txj": 102,
+      "hzh": 87,
+      "zxy": 72,
+      "gzj": 69,
+      "lxy": 63,
+      "yzy": 62,
+      "cwh": 61,
+      "gf": 61,
+      "rjy": 61,
+      "yyl": 59,
+      "zdq": 50,
+      "tyy": 47,
+      "byx": 42,
+      "jy": 37,
+      "lx": 33,
+      "zt": 20,
+      "xst": 12
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "v20_train_review_anchor_nolat",
+    "name_cn": "v2.0 训练候选 + 全部待复核，推荐锚点，去横向偏移",
+    "anchor_label": "model_anchor_s_v1_8",
+    "sample_count": 1092,
+    "extra_episode_count": 0,
+    "dropped_count": 355,
+    "split_counts_json": "{\"train\": 753, \"val\": 170, \"test\": 169}",
+    "category_counts_json": "{\"train_noncurve_secondary_dynamic\": 321, \"train_noncurve_vehicle_dynamic\": 260, \"review_curve_height_pose_abnormal\": 156, \"train_curve_normal_or_weak\": 148, \"review_speed_brake_only\": 82, \"review_mapping_uncertain\": 56, \"review_fast_steer_weak_vehicle\": 48, \"train_curve_roll_dynamic\": 21}",
+    "val_selected_model": "torch_mlp256_vehicle_context",
+    "val_rmse_for_selected": 0.6205238030438209,
+    "test_rmse_steer": 0.38415686380052916,
+    "test_primary_rmse_0_2s": 0.31338437825409654,
+    "test_tail_rmse_2_5s": 0.4266732871981157,
+    "test_wrong_side_rate_large": 0.3333333333333333,
+    "test_severe_amp_under_rate_large": 0.5,
+    "test_large_response_recall": 1.0,
+    "prediction_npz": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\v20_train_review_anchor_nolat\\tables\\v20_train_review_anchor_nolat_selected_predictions.npz",
+    "large_response_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\v20_train_review_anchor_nolat\\figures\\v20_train_review_anchor_nolat_large_response_overview.png",
+    "badcase_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\v20_train_review_anchor_nolat\\figures\\v20_train_review_anchor_nolat_badcase_overview.png"
+  }
+}

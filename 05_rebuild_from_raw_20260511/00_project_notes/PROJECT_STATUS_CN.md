@@ -1543,3 +1543,12 @@ instability_ay_roll        12
 - 当前综合排序第一：`v20_noncurve_train_anchor_nolat`，test RMSE=0.3906，大响应错侧率=0.0000，严重幅值不足率=0.5000，大响应召回=0.5000。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v20_no_history_vehicle_only_gpu_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v20_no_history_vehicle_only_gpu_baseline`。
+
+## 2026-05-22 v2.0 待复核样本纳入训练车辆-only GPU 基线
+
+- 为什么做：检查待复核样本是否可以作为训练样本，而不是直接排除。
+- 运行设备：`cuda`，本地 CUDA。
+- 模型：无学习基线 + 线性头 + 小型多层感知机；不加入连续风格、生理、脑电或教师蒸馏。
+- 当前综合排序第一：`v20_train_review_anchor_nolat`，test RMSE=0.3842，大响应错侧率=0.3333，严重幅值不足率=0.5000，大响应召回=1.0000。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v20_review_inclusion_vehicle_only_gpu_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v20_review_inclusion_vehicle_only_gpu`。

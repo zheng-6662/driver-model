@@ -1,0 +1,78 @@
+{
+  "dataset_summary": {
+    "variant_id": "v20_noncurve_train_review_anchor_nolat",
+    "name_cn": "v2.0 非弯道训练候选 + 非弯道待复核，推荐锚点，去横向偏移",
+    "description_cn": "只看非弯道方向，把非弯道待复核纳入训练。",
+    "source_episode_table": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\tables\\v20_compat_model_anchor_review.csv",
+    "included_categories": [
+      "train_noncurve_vehicle_dynamic",
+      "train_noncurve_secondary_dynamic",
+      "review_speed_brake_only",
+      "review_fast_steer_weak_vehicle",
+      "review_mapping_uncertain",
+      "review_noncurve_height_abnormal_weak_dynamic"
+    ],
+    "included_excluded_contexts": [],
+    "extra_episode_source": "",
+    "extra_episode_count": 0,
+    "dropped_features": [
+      "lateral_distance_selected"
+    ],
+    "sample_count": 767,
+    "dropped_count": 238,
+    "split_counts": {
+      "train": 530,
+      "test": 122,
+      "val": 115
+    },
+    "category_counts": {
+      "train_noncurve_secondary_dynamic": 321,
+      "train_noncurve_vehicle_dynamic": 260,
+      "review_speed_brake_only": 82,
+      "review_mapping_uncertain": 56,
+      "review_fast_steer_weak_vehicle": 48
+    },
+    "subject_counts": {
+      "zx": 107,
+      "txj": 75,
+      "hzh": 64,
+      "gzj": 50,
+      "yzy": 49,
+      "zxy": 49,
+      "gf": 47,
+      "lxy": 42,
+      "cwh": 41,
+      "rjy": 38,
+      "yyl": 36,
+      "tyy": 34,
+      "zdq": 31,
+      "byx": 29,
+      "lx": 27,
+      "jy": 26,
+      "zt": 14,
+      "xst": 8
+    },
+    "split_rule": "reuse clean sample/session split when possible; group split only for unseen sessions"
+  },
+  "result": {
+    "variant_id": "v20_noncurve_train_review_anchor_nolat",
+    "name_cn": "v2.0 非弯道训练候选 + 非弯道待复核，推荐锚点，去横向偏移",
+    "anchor_label": "model_anchor_s_v1_8",
+    "sample_count": 767,
+    "extra_episode_count": 0,
+    "dropped_count": 238,
+    "split_counts_json": "{\"train\": 530, \"test\": 122, \"val\": 115}",
+    "category_counts_json": "{\"train_noncurve_secondary_dynamic\": 321, \"train_noncurve_vehicle_dynamic\": 260, \"review_speed_brake_only\": 82, \"review_mapping_uncertain\": 56, \"review_fast_steer_weak_vehicle\": 48}",
+    "val_selected_model": "torch_mlp512_vehicle_context",
+    "val_rmse_for_selected": 0.6156742763646234,
+    "test_rmse_steer": 0.381016351676844,
+    "test_primary_rmse_0_2s": 0.34366989286058813,
+    "test_tail_rmse_2_5s": 0.40521063260535034,
+    "test_wrong_side_rate_large": 0.8333333333333334,
+    "test_severe_amp_under_rate_large": 0.5,
+    "test_large_response_recall": 1.0,
+    "prediction_npz": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\v20_noncurve_train_review_anchor_nolat\\tables\\v20_noncurve_train_review_anchor_nolat_selected_predictions.npz",
+    "large_response_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\v20_noncurve_train_review_anchor_nolat\\figures\\v20_noncurve_train_review_anchor_nolat_large_response_overview.png",
+    "badcase_plot": "F:\\data_set_process\\data_process\\05_rebuild_from_raw_20260511\\03_baselines\\stage03_v20_review_inclusion_vehicle_only_gpu\\v20_noncurve_train_review_anchor_nolat\\figures\\v20_noncurve_train_review_anchor_nolat_badcase_overview.png"
+  }
+}
