@@ -1524,3 +1524,12 @@ instability_ay_roll        12
 - 审计结论：判断基本成立。v1.9 非弯道训练候选 `588` 个中，去趋势后 z 波动中位数为 `0.0041 m`，`87.9%` 小于等于 `0.01 m`，`93.2%` 小于等于 `0.02 m`，`95.2%` 小于等于 `0.05 m`。
 - 解释边界：`zx|z` 不能直接等同于真实车辆质心高度；目前只能说厘米级 z 微动与横滚姿态变化明显相关，应作为车辆动态辅助信号，不能单独作为路外/异常判据。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_v1_9_noncurve_height_micro_motion_audit_cn.md`。
+
+
+## 2026-05-22 完整记录级 episode 样本集 v2.0 全量无历史继承重审
+
+- 为什么做：用户指出不能再用“历史上不是候选”作为排除依据；此前未判为候选的 episode 也必须按当前道路坐标和车辆动态重新审查。
+- 本轮动作：基于 v1.9 的道路坐标和车辆动态特征，对全部 `1766` 个 episode 重新分类；历史 v1.8/v1.9 标签只作为审计对照，不参与 v2.0 决策。
+- v2.0 训练候选：`984`，其中非弯道 `746`，弯道 `238`；从 v1.9 非训练集合中重新纳入训练：`383`；待复核：`463`。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v2_0_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_0_no_history_reaudit`。

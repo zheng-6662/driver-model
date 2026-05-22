@@ -1,0 +1,11 @@
+﻿v2_0_decision,v2_0_decision_cn,count,train_count,review_count,control_count,recovered_from_v19_nontrain
+train_noncurve_secondary_dynamic,非弯道次级动态训练候选,409,409,0,0,136
+train_noncurve_vehicle_dynamic,非弯道车辆动态训练候选,337,337,0,0,247
+train_curve_normal_or_weak,弯道普通/弱侧倾训练候选,208,208,0,0,0
+train_curve_roll_dynamic,弯道侧倾/动态训练候选,30,30,0,0,0
+control_noncurve_weak_or_normal,非弯道弱响应/正常对照,319,0,0,319,0
+review_curve_height_pose_abnormal,弯道高度/姿态异常复核,204,0,204,0,0
+review_speed_brake_only,速度/制动为主但横向动态弱,107,0,107,0,0
+review_mapping_uncertain,道路坐标映射不确定,79,0,79,0,0
+review_fast_steer_weak_vehicle,快打方向但车辆响应弱,72,0,72,0,0
+review_noncurve_height_abnormal_weak_dynamic,非弯道高度异常但动态弱,1,0,1,0,0
