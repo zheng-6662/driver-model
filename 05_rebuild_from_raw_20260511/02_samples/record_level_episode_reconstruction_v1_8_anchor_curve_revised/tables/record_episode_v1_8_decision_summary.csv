@@ -1,0 +1,9 @@
+﻿v1_8_decision,v1_8_decision_cn,count
+train_noncurve_target_extreme,非弯道主训练候选：继承 v1.5，作为当前主训练集,687
+discard_noncurve_prior_review,非弯道已舍弃或不适合作为当前候选：继承 v1.5,630
+discard_curve_height_or_z_abnormal,弯道高度异常：高度明显变高、突变、非平滑，或不像正常下坡弯道,214
+train_curve_unclear_or_weak,弯道训练候选：高度只存在小波动，侧倾较弱或普通，先纳入候选,103
+train_curve_smooth_downhill_normal_or_weak,弯道训练候选：高度连续平滑下降，侧倾较弱或更像正常过弯,54
+train_curve_smooth_downhill_roll_candidate,弯道训练候选：高度连续平滑下降，允许小波动，且侧倾/横滚明显,48
+defer_noncurve_prior_review,非弯道仍需复核或拆分：继承 v1.5,19
+train_curve_unclear_profile_roll_candidate,弯道训练候选：高度没有明显变高，侧倾/横滚明显，先纳入候选,11

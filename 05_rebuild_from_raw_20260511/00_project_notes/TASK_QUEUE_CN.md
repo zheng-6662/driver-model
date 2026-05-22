@@ -2428,3 +2428,11 @@
 - v1.7 非弯道主训练候选：687；平滑下坡弯道侧倾候选：54；弯道高度轨迹异常排除：202。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_7_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_7_curve_zprofile_revised`。
+
+## 2026-05-22 完整记录级 episode 样本集 v1.8
+
+- 为什么做：用户指出部分 episode 起点过早，前面长时间平稳驾驶；弯道小幅高度波动不应排除，大部分弯道待复核样本可以先纳入训练候选。
+- 本轮动作：新增模型用锚点，裁掉过早平稳前缀；放宽弯道小波动样本，仅排除高度明显变高或 z 形态异常样本；本轮不训练模型。
+- v1.8 全部训练候选：903；弯道训练候选：216；弯道高度异常排除：214；锚点裁掉平稳前缀样本：176。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v1_8_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v1_8_anchor_curve_revised`。
