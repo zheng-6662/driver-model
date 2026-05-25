@@ -1865,3 +1865,11 @@
 - 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v20_review_inclusion_vehicle_only_gpu\tables\v20_review_inclusion_vehicle_only_gpu_summary.csv`
 - 排名表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v20_review_inclusion_vehicle_only_gpu\tables\v20_review_inclusion_vehicle_only_gpu_ranking.csv`
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v20_review_inclusion_vehicle_only_gpu`
+
+## 2026-05-25 goal1 v2.0 训练任务重定义执行
+
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal1_v2_task_redesign_user_summary_cn.md`
+- 最终报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\outputs\final_task_redesign_report.md`
+- manifest：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\manifests`
+- E0-E5 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\outputs`
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\outputs\goal1_experiment_summary.csv`

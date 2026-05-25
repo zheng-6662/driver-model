@@ -1552,3 +1552,12 @@ instability_ay_roll        12
 - 当前综合排序第一：`v20_train_review_anchor_nolat`，test RMSE=0.3842，大响应错侧率=0.3333，严重幅值不足率=0.5000，大响应召回=1.0000。
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_v20_review_inclusion_vehicle_only_gpu_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_v20_review_inclusion_vehicle_only_gpu`。
+
+## 2026-05-25 goal1 v2.0 训练任务重定义执行
+
+- 为什么做：按照 `gptpro_answer/goal1.txt`，把 v2.0 从固定窗口方向盘预测升级为 episode 级车辆-only 联合响应任务。
+- 已完成：新版 manifest、可变窗口/掩码数组、E0-E5 车辆-only 实验、预测图和最终报告。
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\outputs\goal1_experiment_summary.csv`。
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal1_v2_task_redesign_user_summary_cn.md`。
+- 实验输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\outputs`。
+- 当前边界：本轮不加入连续驾驶风格、生理数据、脑电或教师蒸馏。
