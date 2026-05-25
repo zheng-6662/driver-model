@@ -1561,3 +1561,12 @@ instability_ay_roll        12
 - 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal1_v2_task_redesign_user_summary_cn.md`。
 - 实验输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal1_v2_task_redesign\outputs`。
 - 当前边界：本轮不加入连续驾驶风格、生理数据、脑电或教师蒸馏。
+
+## 2026-05-26 Goal2 clean vehicle-only 任务审计
+
+- 为什么做：修正 goal1 的样本排除、输入泄漏、锚点审计和评价口径问题。
+- 已完成：严格 clean manifest、无未来输入特征、anchor audit、common eval、G2_E0-G2_E5 vehicle-only 实验和预测图。
+- 汇总表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\goal2_experiment_summary.csv`。
+- 用户查看报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_clean_task_user_summary_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs`。
+- 当前边界：仍未加入连续驾驶风格、生理、脑电或教师蒸馏。
