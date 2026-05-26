@@ -1,0 +1,10 @@
+﻿split,v2_2_epoch_status,count
+test,boundary_ok,61
+test,boundary_reworked,214
+test,low_activity_unclear,1
+train,boundary_ok,255
+train,boundary_reworked,880
+train,low_activity_unclear,6
+val,boundary_ok,82
+val,boundary_reworked,266
+val,low_activity_unclear,1

@@ -2,6 +2,34 @@
 
 ---
 
+# 项目状态更新：v2.2 epoch 边界精修审计
+
+更新时间：2026-05-26
+
+当前阶段：旧流程样本锚点与 epoch 起止边界精修。本轮不训练模型，重点解决“完整事件段”和“模型 t0”混在一起导致的锚点偏早、偏晚、结束过早或结束过晚问题。
+
+当前完成：已新增并运行 `build_record_episode_dataset_v2_2_epoch_refined.py`。该脚本基于 v2.1 全量样本和原始车辆 CSV，重新估计每个 episode 的完整活动段、驾驶员动作开始、车辆响应开始、风险峰值、模型锚点、输入窗口和标签窗口，并生成代表性复核图。
+
+最近一次结果：全部 episode 1766 个；边界基本一致 398 个；需要重划边界 1360 个；活动弱或边界不清楚 8 个；v2.2 可进入边界训练池 1721 个；代表性复核图索引 114 张。
+
+主要发现：旧开始偏早 846 个，旧模型锚点偏早 614 个，旧结束偏晚 459 个，旧结束偏早 449 个，旧开始偏晚 154 个，旧模型锚点偏晚 136 个。新开始相比旧开始中位数晚约 0.735 s，新锚点相比旧锚点中位数晚约 0.237 s，说明旧 epoch 里确实混入了大量平稳前奏，也有一部分事件被截断或拖得过长。
+
+当前判断：后续训练不要再直接使用旧 `episode_start_s`、`episode_end_s` 或 `model_anchor_s_v1_8`。完整事件段用于人工复核和事件理解；模型输入输出应优先使用 v2.2 的 `v2_2_model_anchor_s`、`v2_2_obs_start_s`、`v2_2_obs_end_s`、`v2_2_label_start_s`、`v2_2_label_end_s`。
+
+当前最大风险：v2.2 是自动边界精修，不是最终人工真值。需要优先查看“旧结束偏早”“旧锚点偏晚”“活动弱或不清楚”等复核图，确认规则没有把短事件截断，也没有把正常平稳段误纳入标签窗口。
+
+下一步准备做什么：先人工复核 v2.2 代表图；如果边界划定明显更合理，再基于 v2.2 窗口重建 vehicle-only 数据集和共同评价集，之后才训练模型。
+
+用户可以优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v2_2_epoch_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\record_level_episodes_all_v2_2_epoch_refined.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\training_pool_epoch_refined_v2_2.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\epoch_boundary_rework_needed_v2_2.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\figures\epoch_boundary_review_v2_2`
+
+---
+
 # 项目状态更新：v2.1 横向偏移参考系与道路高程修正后样本表
 
 更新时间：2026-05-26

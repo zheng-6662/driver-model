@@ -1923,3 +1923,18 @@
 - 横向偏移参考系风险复核表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_lateral_reference_switch_review_v2_1.csv`
 - 角色统计：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\v2_1_role_summary.csv`
 - 关键结论：v2.1 不是最终干净训练集，而是避免误删的恢复候选表；横向偏移突变和小幅高度变化均降级为复核提示，不再直接作为硬排除依据。
+
+## 2026-05-26 v2.2 epoch 边界精修审计
+
+- 生成脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\scripts\build_record_episode_dataset_v2_2_epoch_refined.py`
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v2_2_epoch_user_summary_cn.md`
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined`
+- 全量 v2.2 表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\record_level_episodes_all_v2_2_epoch_refined.csv`
+- v2.2 边界训练池：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\training_pool_epoch_refined_v2_2.csv`
+- 需要重划边界样本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\epoch_boundary_rework_needed_v2_2.csv`
+- 边界状态统计：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\v2_2_epoch_status_summary.csv`
+- 边界问题统计：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\v2_2_epoch_flag_summary.csv`
+- 起止和锚点偏移统计：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\v2_2_shift_summary.csv`
+- 复核图索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\tables\epoch_boundary_review_figure_index_v2_2.csv`
+- 复核图目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_2_epoch_refined\figures\epoch_boundary_review_v2_2`
+- 关键结论：旧 epoch 边界确实不稳定。旧开始偏早、旧锚点偏早、旧结束偏早和旧结束偏晚都大量存在；后续训练应使用 v2.2 的模型锚点和输入/标签窗口，而不是直接沿用旧 `episode_start_s`、`episode_end_s`、`model_anchor_s_v1_8`。

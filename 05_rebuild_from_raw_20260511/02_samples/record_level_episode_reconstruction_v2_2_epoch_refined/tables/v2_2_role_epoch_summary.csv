@@ -1,0 +1,12 @@
+﻿v2_1_role,v2_2_epoch_status,count
+control_or_weak_candidate_v2_1,boundary_ok,74
+control_or_weak_candidate_v2_1,boundary_reworked,243
+control_or_weak_candidate_v2_1,low_activity_unclear,2
+hard_excluded_v2_1,boundary_ok,1
+hard_excluded_v2_1,boundary_reworked,12
+main_train_candidate_v2_1,boundary_ok,234
+main_train_candidate_v2_1,boundary_reworked,733
+main_train_candidate_v2_1,low_activity_unclear,4
+review_recovered_candidate_v2_1,boundary_ok,89
+review_recovered_candidate_v2_1,boundary_reworked,372
+review_recovered_candidate_v2_1,low_activity_unclear,2
