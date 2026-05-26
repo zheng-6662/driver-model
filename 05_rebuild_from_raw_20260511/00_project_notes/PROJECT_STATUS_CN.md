@@ -1587,3 +1587,14 @@ instability_ay_roll        12
 - 入口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority\index.html`。
 - 优先查看：`00_A_优先看_旧结论可能误伤` 和 `01_B_较可能可恢复_看图确认`。
 - 缺图清单：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority\manual_review_images_missing.csv`。
+
+## 2026-05-26 重要规则更新：SILAB 横向偏移不能作为硬排除依据
+
+- 当前确认：SILAB 的横向偏移很可能是相对当前道路/车道参考线计算的量，而不是严格连续的世界坐标横向位移。车辆跨入另一条道路或车道后，当前道路/车道参考系可能切换，横向偏移会出现突兀跳变。
+- 后续样本筛选必须记住：
+  1. 横向偏移跳变不能单独判定为“坐标异常、下马路、路边恢复、驶出道路”。
+  2. 横向偏移跳变只能作为“道路/车道参考系切换风险”的提示字段。
+  3. 是否排除样本，需要结合道路坐标、道路设计、车辆高度 z、姿态、速度、制动、横向加速度、横摆、横滚和方向盘变化综合判断。
+  4. 旧版本里由横向偏移跳变触发的路边/下马路/高度异常结论，只能作为人工复核提示，不能继续作为硬排除规则。
+  5. 后续训练 manifest 重建时，应把相关字段命名为类似“道路/车道参考系切换风险”，而不是直接写成“坐标错误”。
+- 对 Goal2 的影响：Goal2 的严格排除很可能误伤了一部分样本。下一步如果继续旧流程，应优先做“道路参考系修正后的样本恢复规则”，再训练 vehicle-only 对照。

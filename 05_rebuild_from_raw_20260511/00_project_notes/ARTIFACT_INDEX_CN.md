@@ -1894,3 +1894,9 @@
 - 图片目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority`
 - 图片索引：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority\manual_review_images_index.csv`
 - 缺图清单：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority\manual_review_images_missing.csv`
+
+## 2026-05-26 SILAB 横向偏移规则修正记录
+
+- 规则说明日志：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\daily_logs\2026-05-26.md`
+- 项目状态入口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\PROJECT_STATUS_CN.md`
+- 关键结论：横向偏移跳变可能来自 SILAB 道路/车道参考系切换，后续不能再作为“坐标异常/下马路/路边恢复”的硬排除依据，只能作为复核提示。
