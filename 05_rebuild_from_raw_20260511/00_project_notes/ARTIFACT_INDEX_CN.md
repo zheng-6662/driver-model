@@ -1900,3 +1900,11 @@
 - 规则说明日志：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\daily_logs\2026-05-26.md`
 - 项目状态入口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\00_project_notes\PROJECT_STATUS_CN.md`
 - 关键结论：横向偏移跳变可能来自 SILAB 道路/车道参考系切换，后续不能再作为“坐标异常/下马路/路边恢复”的硬排除依据，只能作为复核提示。
+
+## 2026-05-26 道路设计高程与高度异常规则核查
+
+- 中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_height_rule_design_audit_cn.md`
+- 道路中心线总表：`F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\full_centerline_layout.csv`
+- 关键设计文件：`F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\道路\curve1_Area2.cfg`
+- 关键设计文件：`F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\道路\curve2_Area2.cfg`
+- 关键结论：真实道路高程变化在 `curve1/curve2` 中是 6 到 7 m 量级；十几厘米到二十厘米的高度变化不能直接作为下马路/上斜坡/驶出道路的硬排除依据。
