@@ -1579,3 +1579,11 @@ instability_ay_roll        12
 - 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_exclusion_recovery_audit_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit`。
 - 当前结论：旧版本文字和旧标记以后只能作为复核提示，不能继续作为硬排除规则。
+
+## 2026-05-26 Goal2 人工审核图片整理
+
+- 为什么做：方便用户直接查看被 Goal2 排除但可能可恢复的样本图。
+- 已完成：按恢复优先级整理图片目录，已复制 487 张现有复核图；920 条样本当前缺少可用图片路径，已单独列出。
+- 入口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority\index.html`。
+- 优先查看：`00_A_优先看_旧结论可能误伤` 和 `01_B_较可能可恢复_看图确认`。
+- 缺图清单：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\manual_review_images_by_priority\manual_review_images_missing.csv`。
