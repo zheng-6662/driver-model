@@ -1570,3 +1570,12 @@ instability_ay_roll        12
 - 用户查看报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_clean_task_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs`。
 - 当前边界：仍未加入连续驾驶风格、生理、脑电或教师蒸馏。
+
+## 2026-05-26 Goal2 被排除样本原因拆解
+
+- 为什么做：用户指出 Goal2 的高度异常、旧结论继承和 0.50 高度阈值过严，需要确认被排除样本是否被误伤。
+- 已完成：对 1407 个 `excluded_slope_or_offroad` 样本生成逐样本排除原因、恢复优先级和抽查清单。
+- 关键发现：`A_优先人工恢复复核` 792 个，`B_较可能可恢复` 265 个，说明 Goal2 严格排除确实大量依赖旧版本文字/标记，不适合作为最终硬规则。
+- 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_exclusion_recovery_audit_cn.md`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit`。
+- 当前结论：旧版本文字和旧标记以后只能作为复核提示，不能继续作为硬排除规则。

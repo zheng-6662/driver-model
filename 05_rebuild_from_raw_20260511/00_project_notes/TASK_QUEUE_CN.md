@@ -2481,3 +2481,9 @@
 - 用户查看报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_clean_task_user_summary_cn.md`。
 - 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs`。
 - 当前边界：仍未加入连续驾驶风格、生理、脑电或教师蒸馏。
+
+## 2026-05-26 Goal2 被排除样本原因拆解
+
+- 已完成：逐样本拆解 1407 个被排除样本的触发原因，并按恢复优先级输出 A/B/C/D/U 五档。
+- 待做：用户人工优先查看 `A_优先人工恢复复核` 和 `B_较可能可恢复` 中的样本图；下一版规则应取消旧版本文字硬继承。
+- 不做：本步骤不训练模型，不改变现有 Goal2 训练结果。

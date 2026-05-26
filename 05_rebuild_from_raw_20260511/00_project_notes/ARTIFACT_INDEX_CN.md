@@ -1879,3 +1879,11 @@
 - 报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_clean_task_user_summary_cn.md`
 - 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs`
 - manifest：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\manifests`
+
+## 2026-05-26 Goal2 被排除样本原因拆解
+
+- 中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage03_goal2_exclusion_recovery_audit_cn.md`
+- 逐样本原因表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\goal2_exclusion_reason_breakdown.csv`
+- 排除原因汇总：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\goal2_exclusion_reason_summary.csv`
+- 恢复优先级汇总：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\goal2_recovery_priority_summary.csv`
+- 每档抽查样本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\stage03_goal2_clean_task_audit\outputs\exclusion_recovery_audit\goal2_manual_review_sample_30_each_priority.csv`
