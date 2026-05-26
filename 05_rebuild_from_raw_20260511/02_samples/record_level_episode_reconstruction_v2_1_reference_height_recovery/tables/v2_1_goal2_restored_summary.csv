@@ -1,0 +1,8 @@
+﻿v2_1_restored_from_goal2_exclusion,v2_1_role,count
+True,main_train_candidate_v2_1,842
+True,review_recovered_candidate_v2_1,365
+True,control_or_weak_candidate_v2_1,187
+False,control_or_weak_candidate_v2_1,132
+False,main_train_candidate_v2_1,129
+False,review_recovered_candidate_v2_1,98
+False,hard_excluded_v2_1,13

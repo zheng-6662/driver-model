@@ -1908,3 +1908,18 @@
 - 关键设计文件：`F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\道路\curve1_Area2.cfg`
 - 关键设计文件：`F:\data_set_process\data_process\01_datasets\多模态数据\被试数据集合\道路信息\道路\curve2_Area2.cfg`
 - 关键结论：真实道路高程变化在 `curve1/curve2` 中是 6 到 7 m 量级；十几厘米到二十厘米的高度变化不能直接作为下马路/上斜坡/驶出道路的硬排除依据。
+
+## 2026-05-26 v2.1 横向偏移参考系与道路高程修正后样本表
+
+- 生成脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_goal2_v21_reference_height_recovery.py`
+- 用户查看版报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v2_1_user_summary_cn.md`
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery`
+- 全量 v2.1 表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_all_v2_1_reference_height_recovery.csv`
+- v2.1 训练池/复核训练池：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_training_pool_v2_1.csv`
+- 主训练候选：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_main_train_v2_1.csv`
+- 恢复复核候选：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_review_recovered_v2_1.csv`
+- 弱响应/对照候选：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_control_or_weak_v2_1.csv`
+- 高度重点复核表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_height_review_v2_1.csv`
+- 横向偏移参考系风险复核表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_lateral_reference_switch_review_v2_1.csv`
+- 角色统计：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\v2_1_role_summary.csv`
+- 关键结论：v2.1 不是最终干净训练集，而是避免误删的恢复候选表；横向偏移突变和小幅高度变化均降级为复核提示，不再直接作为硬排除依据。

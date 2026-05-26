@@ -1,0 +1,10 @@
+﻿v2_1_height_level,v2_1_role,count
+中等高度变化_需要复核,review_recovered_candidate_v2_1,46
+中等高度变化_需要复核,main_train_candidate_v2_1,25
+大幅高度变化_强复核,review_recovered_candidate_v2_1,91
+大幅高度变化_强复核,hard_excluded_v2_1,13
+小幅高度变化_不作为排除依据,main_train_candidate_v2_1,874
+小幅高度变化_不作为排除依据,control_or_weak_candidate_v2_1,319
+小幅高度变化_不作为排除依据,review_recovered_candidate_v2_1,266
+较大高度变化_重点复核,main_train_candidate_v2_1,72
+较大高度变化_重点复核,review_recovered_candidate_v2_1,60

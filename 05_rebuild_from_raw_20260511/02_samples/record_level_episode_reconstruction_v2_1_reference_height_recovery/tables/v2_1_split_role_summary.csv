@@ -1,0 +1,13 @@
+﻿split,v2_1_role,count
+test,main_train_candidate_v2_1,117
+test,review_recovered_candidate_v2_1,91
+test,control_or_weak_candidate_v2_1,67
+test,hard_excluded_v2_1,1
+train,main_train_candidate_v2_1,629
+train,review_recovered_candidate_v2_1,300
+train,control_or_weak_candidate_v2_1,203
+train,hard_excluded_v2_1,9
+val,main_train_candidate_v2_1,225
+val,review_recovered_candidate_v2_1,72
+val,control_or_weak_candidate_v2_1,49
+val,hard_excluded_v2_1,3

@@ -1,0 +1,7 @@
+﻿v2_1_curve_context,v2_1_role,count
+True,review_recovered_candidate_v2_1,268
+True,main_train_candidate_v2_1,238
+False,main_train_candidate_v2_1,733
+False,control_or_weak_candidate_v2_1,319
+False,review_recovered_candidate_v2_1,195
+False,hard_excluded_v2_1,13

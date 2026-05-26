@@ -1,5 +1,33 @@
 # 项目状态更新：v0.5 服务器处理后样本重筛 + 被试划分旧流程车辆-only
 
+---
+
+# 项目状态更新：v2.1 横向偏移参考系与道路高程修正后样本表
+
+更新时间：2026-05-26
+
+当前阶段：旧流程样本规则修正。本轮不训练模型，先修正 Goal2 中横向偏移和高度异常过严导致的误排除问题。
+
+当前完成：已新增并运行 `stage03_goal2_v21_reference_height_recovery.py`，生成 v2.1 样本恢复表、分角色统计、分高度规则统计和中文用户报告。
+
+最近一次结果：全部 episode 1766 个；Goal2 严格排除样本 1407 个；v2.1 可进入训练池或复核训练池 1753 个；从 Goal2 严格排除集中恢复 1394 个；v2.1 硬排除 13 个。角色分布为：主训练候选 971，恢复复核候选 463，弱响应/对照候选 319。
+
+当前判断：v2.1 是“恢复候选表”，不是最终干净训练集。它把横向偏移突变降级为 SILAB 道路/车道参考系切换风险提示，把小幅高度变化降级为复核提示，避免把可能可用样本过早删除。
+
+当前最大风险：v2.1 训练池很宽，不能直接整体用于最终训练。下一步需要按主训练、恢复复核、弱响应/对照、高度重点复核和横向偏移参考系风险分层看图，再决定实际训练组合。
+
+下一步准备做什么：先基于 v2.1 表抽样复核；如果恢复样本多数合理，再构建新的 vehicle-only 数据集和共同评价集，之后再训练模型。
+
+用户可以优先查看：
+
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\stage02_record_episode_reconstruction_v2_1_user_summary_cn.md`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_training_pool_v2_1.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\v2_1_role_summary.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_height_review_v2_1.csv`
+- `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\02_samples\record_level_episode_reconstruction_v2_1_reference_height_recovery\tables\manifest_lateral_reference_switch_review_v2_1.csv`
+
+---
+
 更新时间：2026-05-20 12:15
 
 当前阶段：旧流程车辆-only 基线复查。按用户要求，本轮使用服务器中已经处理好的车辆 CSV 重新筛选样本，并采用被试划分训练/验证/测试。
