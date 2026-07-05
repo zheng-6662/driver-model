@@ -1,0 +1,845 @@
+﻿[1] ControlType.Pane 346,233,1278,1024 第319版修正建议 - Google Chrome - xin
+[934] ControlType.TabItem 374,233,238,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[936] ControlType.TabItem 594,233,238,41 凡人修仙传-哔哩哔哩_bilibili
+[938] ControlType.TabItem 814,233,238,41 ChatGPT
+[940] ControlType.TabItem 1034,233,237,41 第319版修正建议 - 内存用量 - 295 MB
+[943] ControlType.Button 1265,233,28,41 新标签页
+[946] ControlType.Button 1347,233,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1487,234,45,39 最小化
+[6] ControlType.Button 1532,234,46,39 最大化
+[7] ControlType.Button 1578,234,46,39 关闭
+[931] ControlType.Button 352,239,28,28 标签页搜索
+[935] ControlType.Button 570,239,28,28 关闭
+[937] ControlType.Button 790,239,28,28 关闭
+[939] ControlType.Button 1010,239,28,28 关闭
+[941] ControlType.Button 1229,239,28,28 关闭
+[11] ControlType.Button 352,279,34,34 返回
+[12] ControlType.Button 388,279,34,34 前进
+[13] ControlType.Button 424,279,34,34 重新加载
+[20] ControlType.Button 1548,279,34,34 xin
+[21] ControlType.Button 1584,279,34,34 Chrome
+[15] ControlType.Button 472,284,24,24 查看网站信息
+[16] ControlType.Edit 504,284,991,24 地址和搜索栏
+[19] ControlType.Button 1503,284,24,24 为此标签页添加书签
+[140] ControlType.Text 1003,316,416,620 # 给本地高级模型的提问词：第318版保守门控失败后，第319版怎么修正
+
+你现在作为外部方法评审，只基于下面的本地实验事实给建议。请不要要求看测试集结果，因为第318版验证集没有通过，测试集被压制未报告。
+
+## 项目目标
+
+我们在做方向盘快速转动触发的车辆未来 0 到 2 秒方向盘变化曲线预测。用户强调样本一定要由方向盘快速转动引起，当前主线围绕严重方向/意图错误样本做修正。
+
+## 已有基线
+
+- 第316版是当前默认基线预测。
+- 第317版复用第316版原预测，构造 20 个候选，包括原预测不改、幅值缩放、时间平移、幅值加时间组合、残差原型。
+- 第317版候选最优上限在验证集明显好于第316版，但实际门控强制选候选导致普通样本被大面积改坏。
+- 因此第318版按你的上一轮建议做了保守两段式门控。
+
+## 第318版实现
+
+第318版脚本：
+
+[22] ControlType.ToolBar 346,319,1278,34 书签
+[23] ControlType.ToolBar 352,319,36,28 已保存的标签页分组
+[24] ControlType.Button 352,319,28,28 标签页分组
+[25] ControlType.Button 1530,319,86,28 所有书签
+[26] ControlType.Separator 1512,325,18,16 分隔符
+[31] ControlType.Hyperlink 297,353,97,16 跳至内容
+[32] ControlType.Text 345,353,1,1 历史聊天记录
+[30] ControlType.Document 346,354,1278,903 第319版修正建议
+[33] ControlType.Group 346,354,260,837 历史聊天记录
+[35] ControlType.Hyperlink 354,362,129,36 主页
+[36] ControlType.Button 547,362,36,36 关闭边栏
+[135] ControlType.Button 1487,362,78,36 分享
+[138] ControlType.Button 1565,362,36,36 打开对话选项
+[38] ControlType.ListItem 346,414,245,36 新聊天
+[39] ControlType.Hyperlink 352,414,233,36 新聊天
+[41] ControlType.ListItem 346,450,245,36 搜索聊天
+[42] ControlType.Button 352,450,233,36 搜索聊天
+[43] ControlType.Hyperlink 352,486,233,36 文件库
+[45] ControlType.Button 347,519,35,36 新项目
+[44] ControlType.Hyperlink 352,522,233,36 项目 新项目
+[46] ControlType.Hyperlink 352,558,233,36 已安排
+[145] ControlType.Button 1003,586,48,24 展开
+[47] ControlType.Hyperlink 352,594,233,36 应用
+[146] ControlType.Group 1367,620,72,40 你的消息操作
+[147] ControlType.Button 1371,624,32,32 复制消息
+[148] ControlType.Button 1403,624,32,32 编辑消息
+[48] ControlType.Hyperlink 352,630,233,36 Codex
+[149] ControlType.Text 795,663,640,72 我会把第319版定位为先修阈值搜索而非重训模型，核心是禁止零修改方案被选中，并拆分普通保护、强方向盘激活和困难样本激活三类门控。将在折外搜索里加入最低覆盖率、收益风险预算、分组硬约束，同时给出可直接改脚本的目标函数、输出表和失败分流。
+[50] ControlType.Text 388,674,28,19 更多
+[53] ControlType.Hyperlink 527,712,34,36 新聊天
+[54] ControlType.Button 551,712,34,36 整理聊天
+[51] ControlType.Button 346,714,185,32 最近
+[52] ControlType.Text 362,720,28,20 最近
+[58] ControlType.Button 335,733,35,37 置顶 第319版修正建议
+[59] ControlType.Button 359,733,35,37 打开“第319版修正建议”的对话选项
+[56] ControlType.ListItem 346,746,245,36 第319版修正建议
+[57] ControlType.Hyperlink 352,746,233,36 第319版修正建议
+[150] ControlType.Button 795,758,113,24 已思考 7m 2s
+[62] ControlType.Button 549,769,35,37 置顶 第319版修正建议
+[63] ControlType.Button 573,769,35,37 打开“第319版修正建议”的对话选项
+[60] ControlType.ListItem 346,782,245,36 第319版修正建议
+[61] ControlType.Hyperlink 352,782,233,36 第319版修正建议（未读）
+[152] ControlType.Text 795,798,640,28 总体判断
+[67] ControlType.Button 335,805,35,37 置顶 第319版修正建议
+[68] ControlType.Button 359,805,35,37 打开“第319版修正建议”的对话选项
+[65] ControlType.ListItem 346,818,245,36 第319版修正建议
+[66] ControlType.Hyperlink 352,818,233,36 第319版修正建议
+[153] ControlType.Text 795,837,413,20 第318版不是候选库失效，也不是残差融合本身失效，而是
+[154] ControlType.Text 795,837,636,46 阈值搜索目标把“安全无伤”看得过重，把“必须激活修正”看得过轻
+[71] ControlType.Button 335,841,35,37 置顶 科研流程图设计
+[72] ControlType.Button 359,841,35,37 打开“科研流程图设计”的对话选项
+[69] ControlType.ListItem 346,854,245,36 科研流程图设计lu-文档
+[70] ControlType.Hyperlink 352,854,233,36 科研流程图设计 — 项目 lu-文档 中的聊天
+[155] ControlType.Text 795,863,624,46 。训练内搜索选出了一个在验证集完全不触发的门控组合，导致第318甲/乙/丙全部退化为第316原预测。
+[75] ControlType.Button 335,877,35,37 置顶 第318版门控优化方案
+[76] ControlType.Button 359,877,35,37 打开“第318版门控优化方案”的对话选项
+[73] ControlType.ListItem 346,890,245,36 第318版门控优化方案
+[74] ControlType.Hyperlink 352,890,233,36 第318版门控优化方案
+[79] ControlType.Button 335,913,35,37 置顶 保护结构优化设计
+[80] ControlType.Button 359,913,35,37 打开“保护结构优化设计”的对话选项
+[77] ControlType.ListItem 346,926,245,36 保护结构优化设计Liu-文档
+[78] ControlType.Hyperlink 352,926,233,36 保护结构优化设计 — 项目 Liu-文档 中的聊天
+[156] ControlType.Text 795,931,109,20 第319版应先改
+[158] ControlType.Text 795,931,637,46 ，不要先重训主模型，也不要急着扩候选库。候选最优上限仍然明显好于第316，说明可修正空间还在；当前问题是选择器和门控不敢用。
+[157] ControlType.Text 903,931,145,20 搜索目标与门控结构
+[141] ControlType.Text 1003,943,416,65 F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v318_conservative_two_stage_gate_20260705.py
+[83] ControlType.Button 335,949,35,37 置顶 方向盘预测修正方案
+[84] ControlType.Button 359,949,35,37 打开“方向盘预测修正方案”的对话选项
+[81] ControlType.ListItem 346,962,245,36 方向盘预测修正方案
+[82] ControlType.Hyperlink 352,962,233,36 方向盘预测修正方案
+[87] ControlType.Button 335,985,35,37 置顶 项目操作与研究
+[88] ControlType.Button 359,985,35,37 打开“项目操作与研究”的对话选项
+[85] ControlType.ListItem 346,998,245,36 项目操作与研究Liu-文档
+[86] ControlType.Hyperlink 352,998,233,36 项目操作与研究 — 项目 Liu-文档 中的聊天
+[91] ControlType.Button 335,1021,35,37 置顶 报告撰写需求补充
+[92] ControlType.Button 359,1021,35,37 打开“报告撰写需求补充”的对话选项
+[89] ControlType.ListItem 346,1034,245,36 报告撰写需求补充
+[90] ControlType.Hyperlink 352,1034,233,36 报告撰写需求补充
+[142] ControlType.Text 1003,1036,80,20 
+
+输出目录：
+
+[160] ControlType.Text 795,1037,640,32 1. 第319版阈值搜索目标怎么改
+[95] ControlType.Button 335,1057,35,37 置顶 每日简报定制
+[96] ControlType.Button 359,1057,35,37 打开“每日简报定制”的对话选项
+[143] ControlType.Text 1003,1063,416,65 F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v318_conservative_two_stage_gate_20260705
+[93] ControlType.ListItem 346,1070,245,36 每日简报定制
+[94] ControlType.Hyperlink 352,1070,233,36 每日简报定制
+[161] ControlType.Text 795,1080,141,20 第318版的问题是：
+[99] ControlType.Button 335,1093,35,37 置顶 人民币估算结果
+[100] ControlType.Button 359,1093,35,37 打开“人民币估算结果”的对话选项
+[97] ControlType.ListItem 346,1106,245,36 人民币估算结果
+[98] ControlType.Hyperlink 352,1106,233,36 人民币估算结果
+[163] ControlType.Text 795,1106,384,20 只要普通样本不被改坏，全不改也能拿到较多通过项。
+[103] ControlType.Button 335,1129,35,37 置顶 403 Forbidden 错误分析
+[104] ControlType.Button 359,1129,35,37 打开“403 Forbidden 错误分析”的对话选项
+[101] ControlType.ListItem 346,1142,245,36 403 Forbidden 错误分析
+[102] ControlType.Hyperlink 352,1142,233,36 403 Forbidden 错误分析
+[164] ControlType.Text 795,1148,217,20 第319版必须把“全不改”定义为
+[165] ControlType.Text 1011,1148,49,20 非法解
+[166] ControlType.Text 1059,1148,129,20 ，而不是低分解。
+[144] ControlType.Text 1003,1156,417,2468 
+
+关键做法：
+
+1. 继续复用第316版原预测和第317版候选库，不重训主模型，不扩候选库。
+2. 第一段训练“是否值得校正”的二分类器和收益回归器。
+3. 第二段训练候选收益回归器和候选大退化风险分类器。
+4. 训练集内部 5 折交叉验证生成折外预测，只用折外预测搜索阈值和融合幅度。
+5. 验证集只做通过/失败判定。
+6. 测试集没有参与任何阈值、候选、融合幅度选择。
+
+## 第318版验证结果
+
+固定方案：第318丙-候选收益安全残差融合。
+
+验证门槛是否全部通过：False。
+是否报告测试集：False。
+
+验证集主结果：
+
+| 方法 | 分组 | 平均误差 | 相对第316变化 | 大退化比例 | 原预测保持率 |
+| --- | --- | --- | --- | --- | --- |
+| 第316版原预测 | 全部样本 | 0.531658 | 0 | 0 | 空 |
+| 第316版原预测 | 普通样本 | 0.405874 | 0 | 0 | 空 |
+| 第316版原预测 | 强方向盘样本 | 0.624528 | 0 | 0 | 空 |
+| 第316版原预测 | 困难前20 | 0.810938 | 0 | 0 | 空 |
+| 第316版原预测 | 困难前10 | 1.002263 | 0 | 0 | 空 |
+| 候选最优上限 | 全部样本 | 0.375720 | -0.155938 | 0 | 0.033175 |
+| 候选最优上限 | 普通样本 | 0.277041 | -0.128833 | 0 | 0.044944 |
+| 候选最优上限 | 强方向盘样本 | 0.445976 | -0.178552 | 0 | 0.026786 |
+| 候选最优上限 | 困难前20 | 0.625704 | -0.185234 | 0 | 0 |
+| 候选最优上限 | 困难前10 | 0.766732 | -0.235531 | 0 | 0 |
+| 第318丙 | 全部样本 | 0.531658 | 0 | 0 | 1 |
+| 第318丙 | 普通样本 | 0.405874 | 0 | 0 | 1 |
+| 第318丙 | 强方向盘样本 | 0.624528 | 0 | 0 | 1 |
+| 第318丙 | 困难前20 | 0.810938 | 0 | 0 | 1 |
+| 第318丙 | 困难前10 | 1.002263 | 0 | 0 | 1 |
+
+三条方案的验证门槛：
+
+| 方法 | 是否全通过 | 通过项数 | 全部样本改善 | 强方向盘改善 | 困难前20改善 | 困难前10改善 | 全部样本大退化 | 普通样本大退化 | 全部校正率 | 普通校正率 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 第318甲 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 第318乙 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 第318丙 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+第318版训练集内部搜索选出的阈值：
+
+| 方法 | p_min | gain_min | p_normal_min | gain_normal_min | candidate_gain_min | bad_prob_max | margin_min | alpha |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 第318甲 | 0.90 | 0.02 | 0.98 | 0.04 | -9 | 1.0 | -9 | 0.50 |
+| 第318乙 | 0.90 | 0.08 | 0.98 | 0.10 | 0.10 | 0.50 | 0.03 | 1.00 |
+| 第318丙 | 0.90 | 0.08 | 0.98 | 0.10 | 0.10 | 0.50 | 0.03 | 0.75 |
+
+第318版失败形态：
+
+- 守卫通过，压缩包通过。
+- 普通样本没有被改坏。
+- 但是三条方案都退回到完全不校正，验证集原预测保持率为 1。
+- 困难样本、强方向盘样本、幅值低估比例都没有任何改善。
+- 这说明第318版从第317版的“过度修改”走到了另一个极端：“过度保守，全不改”。
+
+## 我希望你给出第319版的具体修正建议
+
+请重点回答：
+
+1. 第319版应该怎么改训练集内部阈值搜索目标，避免“通过无伤项但全不改”被选中？
+2. 是否应该设置最低校正覆盖率，尤其是强方向盘样本和困难前20样本的最低校正率？合理范围是多少？
+3. 是否应该把“普通样本保护”和“困难样本激活”拆成双通道策略？例如普通样本严门槛，强方向盘/困难样本较松门槛。
+4. 第318版的第一段可校正性模型和第二段候选收益模型，下一版应该先修哪个？还是先改阈值搜索目标？
+5. 候选最优上限仍明显存在，但选择器不敢用，是否建议引入验证集前固定的候选风险预算、收益预算或分组配额？
+6. 第319版应该保留残差融合，还是先做只对困难样本开放的候选单选？
+7. 请给出一个可以直接落地到当前脚本的第319版方案，包括：
+   - 固定实验名；
+   - 阈值搜索目标；
+   - 分组硬约束；
+   - 输出表；
+   - 验证通过标准；
+   - 如果第319版仍不通过，下一步应该怎么分流。
+
+要求：请给具体数值范围和伪代码级别的规则，不要只给原则。
+[107] ControlType.Button 335,1165,35,37 置顶 问候交流
+[108] ControlType.Button 359,1165,35,37 打开“问候交流”的对话选项
+[917] ControlType.Button 803,1176,36,37 添加文件等
+[920] ControlType.Button 1236,1176,107,37 Pro 扩展
+[921] ControlType.Button 1347,1176,36,37 开始听写
+[924] ControlType.Button 1391,1176,36,37 启动语音功能
+[105] ControlType.ListItem 346,1178,245,36 问候交流
+[106] ControlType.Hyperlink 352,1178,233,36 问候交流
+[918] ControlType.Edit 846,1181,381,43 与 ChatGPT 聊天
+[919] ControlType.Text 847,1184,112,21 有问题，尽管问
+[167] ControlType.Text 795,1190,192,20 建议把训练集内部搜索从：
+[129] ControlType.Button 354,1198,246,53 xin zheng Pro，打开“个人资料”菜单
+[111] ControlType.Button 335,1201,35,37 置顶 研究建议讨论
+[112] ControlType.Button 359,1201,35,37 打开“研究建议讨论”的对话选项
+[131] ControlType.Text 394,1205,65,19 xin zheng
+[133] ControlType.Button 556,1206,36,37 下载应用
+[130] ControlType.Image 362,1212,24,25 个人资料图片
+[109] ControlType.ListItem 346,1214,245,36 研究建议讨论
+[110] ControlType.Hyperlink 352,1214,233,36 研究建议讨论
+[132] ControlType.Text 394,1225,20,16 Pro
+[925] ControlType.Text 998,1229,234,15 ChatGPT 也可能会犯错。请核查重要信息。
+[168] ControlType.Button 1391,1233,36,36 复制
+[115] ControlType.Button 335,1237,35,37 置顶 Claude 更新失败解决
+[116] ControlType.Button 359,1237,35,37 打开“Claude 更新失败解决”的对话选项
+[113] ControlType.ListItem 346,1250,245,36 Claude 更新失败解决
+[114] ControlType.Hyperlink 352,1250,233,36 Claude 更新失败解决
+[119] ControlType.Button 335,1273,35,37 置顶 模型任务分析
+[120] ControlType.Button 359,1273,35,37 打开“模型任务分析”的对话选项
+[117] ControlType.ListItem 346,1286,245,36 模型任务分析
+[118] ControlType.Hyperlink 352,1286,233,36 模型任务分析
+[169] ControlType.Text 795,1286,48,20 改成：
+[123] ControlType.Button 335,1309,35,37 置顶 instoment拼写错误解析
+[124] ControlType.Button 359,1309,35,37 打开“instoment拼写错误解析”的对话选项
+[121] ControlType.ListItem 346,1322,245,36 instoment拼写错误解析
+[122] ControlType.Hyperlink 352,1322,233,36 instoment拼写错误解析
+[170] ControlType.Button 1391,1329,36,36 复制
+[127] ControlType.Button 335,1345,35,37 置顶 问候交流
+[128] ControlType.Button 359,1345,35,37 打开“问候交流”的对话选项
+[125] ControlType.ListItem 346,1358,245,36 问候交流
+[126] ControlType.Hyperlink 352,1358,233,36 问候交流
+[171] ControlType.Text 795,1402,224,20 也就是说，搜索目标要分两层。
+[173] ControlType.Text 795,1482,640,28 1.1 第一级：硬约束，直接拒绝全不改
+[174] ControlType.Text 795,1521,509,20 在训练集 OOF 上，任何阈值组合只要满足下面任意情况，就直接丢弃：
+[176] ControlType.Button 1304,1567,36,36 复制
+[177] ControlType.Button 1350,1567,78,36 运行代码
+[175] ControlType.Text 842,1576,48,18 Python
+[179] ControlType.Text 795,1973,48,20 其中：
+[181] ControlType.Button 1304,2019,36,36 复制
+[182] ControlType.Button 1350,2019,78,36 运行代码
+[180] ControlType.Text 842,2028,48,18 Python
+[184] ControlType.Text 795,2105,69,20 注意这里 
+[186] ControlType.Text 904,2105,133,20  为正才表示改善。
+[185] ControlType.Text 868,2108,32,17 gain
+[187] ControlType.Text 795,2149,141,20 第318版全不改时：
+[188] ControlType.Button 1391,2192,36,36 复制
+[189] ControlType.Text 795,2305,441,20 因此第319版中它会直接被判为非法，而不是“安全但无收益”。
+[191] ControlType.Text 795,2385,640,28 1.2 第二级：通过硬约束后，再最大化加权目标
+[192] ControlType.Text 795,2424,221,20 推荐第319版训练内搜索目标：
+[194] ControlType.Button 1304,2470,36,36 复制
+[195] ControlType.Button 1350,2470,78,36 运行代码
+[193] ControlType.Text 842,2479,48,18 Python
+[197] ControlType.Text 795,2736,48,20 含义：
+[199] ControlType.Button 1304,2782,36,36 复制
+[200] ControlType.Button 1350,2782,78,36 运行代码
+[198] ControlType.Text 842,2791,48,18 Python
+[202] ControlType.Text 795,2968,64,20 关键点：
+[204] ControlType.ListItem 821,2995,614,26 全部样本改善要有权重；
+[205] ControlType.Text 827,2998,176,20 全部样本改善要有权重；
+[206] ControlType.ListItem 821,3021,614,26 强方向盘样本权重要更高；
+[207] ControlType.Text 827,3024,192,20 强方向盘样本权重要更高；
+[208] ControlType.ListItem 821,3047,614,26 困难前20、困难前10权重要更高；
+[209] ControlType.Text 827,3050,246,20 困难前20、困难前10权重要更高；
+[210] ControlType.ListItem 821,3073,614,26 普通样本退化惩罚要强；
+[211] ControlType.Text 827,3076,176,20 普通样本退化惩罚要强；
+[212] ControlType.ListItem 821,3099,614,26 普通样本校正率过高要惩罚，但不能通过“全不改”拿高分。
+[213] ControlType.Text 827,3102,413,20 普通样本校正率过高要惩罚，但不能通过“全不改”拿高分。
+[215] ControlType.Text 795,3182,640,28 1.3 不再使用“通过项数”作为主目标
+[216] ControlType.Text 795,3221,625,20 第318版三条方案“通过项数 7”，但改善全为 0。这说明“通过项数”目标会偏向无动作解。
+[217] ControlType.Text 795,3263,381,20 第319版可以继续输出通过项数，但不能用它选阈值。
+[218] ControlType.Text 795,3305,112,20 推荐排序规则：
+[220] ControlType.Button 1304,3351,36,36 复制
+[221] ControlType.Button 1350,3351,78,36 运行代码
+[219] ControlType.Text 842,3360,48,18 Python
+[223] ControlType.Text 795,3557,80,20 也就是说：
+[224] ControlType.Button 1391,3600,36,36 复制
+[226] ControlType.Text 795,3719,640,32 2. 是否设置最低校正覆盖率
+[227] ControlType.Text 795,3762,224,20 应该设置，而且必须分组设置。
+[228] ControlType.Text 795,3804,141,20 第318版已经证明：
+[230] ControlType.Text 795,3830,288,20 不设置最低覆盖率，搜索会选择全不改。
+[231] ControlType.Text 795,3872,505,20 但覆盖率不能太高，否则会回到第317版“大面积改坏普通样本”的问题。
+[233] ControlType.Text 795,3952,640,28 2.1 推荐第319版覆盖率范围
+[237] ControlType.DataItem 795,3984,137,33 分组
+[238] ControlType.DataItem 931,3984,166,33 推荐最低校正率
+[239] ControlType.DataItem 1096,3984,137,33 推荐上限
+[240] ControlType.DataItem 1232,3984,203,33 说明
+[267] ControlType.Button 1407,3985,28,28 复制表格
+[242] ControlType.DataItem 795,4017,137,45 全部样本
+[243] ControlType.DataItem 931,4017,166,45 4%–10%
+[244] ControlType.DataItem 1096,4017,137,45 15%
+[245] ControlType.DataItem 1232,4017,203,45 防止全不改
+[247] ControlType.DataItem 795,4062,137,45 普通样本
+[248] ControlType.DataItem 931,4062,166,45 不设最低
+[249] ControlType.DataItem 1096,4062,137,45 5%–8%
+[250] ControlType.DataItem 1232,4062,203,45 普通样本只保护，不强行修
+[252] ControlType.DataItem 795,4107,137,45 强方向盘样本
+[253] ControlType.DataItem 931,4107,166,45 8%–20%
+[254] ControlType.DataItem 1096,4107,137,45 30%
+[255] ControlType.DataItem 1232,4107,203,45 当前主任务，应强制激活
+[257] ControlType.DataItem 795,4152,137,69 困难前20
+[258] ControlType.DataItem 931,4152,166,69 12%–30%
+[259] ControlType.DataItem 1096,4152,137,69 40%
+[260] ControlType.DataItem 1232,4152,203,69 训练内可用标签评估，部署时用代理分数
+[262] ControlType.DataItem 795,4221,137,58 困难前10
+[263] ControlType.DataItem 931,4221,166,58 15%–40%
+[264] ControlType.DataItem 1096,4221,137,58 50%
+[265] ControlType.DataItem 1232,4221,203,58 允许更积极，但要受风险约束
+[268] ControlType.Text 795,4290,253,20 第319版我建议先用这一组固定值：
+[270] ControlType.Button 1304,4336,36,36 复制
+[271] ControlType.Button 1350,4336,78,36 运行代码
+[269] ControlType.Text 842,4345,48,18 Python
+[273] ControlType.Text 795,4682,128,20 这组值的逻辑是：
+[275] ControlType.ListItem 821,4709,614,26 全部样本至少修 5%，避免第318版全不改；
+[276] ControlType.Text 827,4712,313,20 全部样本至少修 5%，避免第318版全不改；
+[277] ControlType.ListItem 821,4735,614,26 普通样本最多修 6%，避免第317版普通样本被大面积改坏；
+[278] ControlType.Text 827,4738,425,20 普通样本最多修 6%，避免第317版普通样本被大面积改坏；
+[279] ControlType.ListItem 821,4761,614,26 强方向盘样本至少修 10%，符合任务主线；
+[280] ControlType.Text 827,4764,310,20 强方向盘样本至少修 10%，符合任务主线；
+[281] ControlType.ListItem 821,4787,614,26 困难前20至少修 15%，否则困难样本根本不会改善；
+[282] ControlType.Text 827,4790,377,20 困难前20至少修 15%，否则困难样本根本不会改善；
+[283] ControlType.ListItem 821,4813,614,26 困难前10至少修 20%，因为这一组候选上限改善最大。
+[284] ControlType.Text 827,4816,393,20 困难前10至少修 20%，因为这一组候选上限改善最大。
+[286] ControlType.Text 795,4896,640,28 2.2 注意：困难前20不能作为部署输入
+[287] ControlType.Text 795,4935,208,20 训练内可以用真实误差定义：
+[289] ControlType.Button 1304,4981,36,36 复制
+[290] ControlType.Button 1350,4981,78,36 运行代码
+[288] ControlType.Text 842,4990,48,18 Python
+[292] ControlType.Text 795,5087,407,20 但验证集/部署时不能用真实误差提前知道谁是困难样本。
+[293] ControlType.Text 795,5129,157,20 因此第319版需要一个
+[294] ControlType.Text 951,5129,97,20 困难代理通道
+[295] ControlType.Text 1047,5129,17,20 ：
+[297] ControlType.Button 1304,5175,36,36 复制
+[298] ControlType.Button 1350,5175,78,36 运行代码
+[296] ControlType.Text 842,5184,48,18 Python
+[300] ControlType.Text 795,5276,381,20 训练时用 OOF 方式训练这个代理模型，目标可以是：
+[302] ControlType.Button 1304,5322,36,36 复制
+[303] ControlType.Button 1350,5322,78,36 运行代码
+[301] ControlType.Text 842,5331,48,18 Python
+[305] ControlType.Text 795,5408,151,20 部署/验证时只使用：
+[307] ControlType.Button 1304,5454,36,36 复制
+[308] ControlType.Button 1350,5454,78,36 运行代码
+[306] ControlType.Text 842,5463,48,18 Python
+[310] ControlType.Text 795,5620,240,20 不能使用验证集真实误差做门控。
+[312] ControlType.Text 795,5700,640,32 3. 是否拆成“普通保护”和“困难激活”双通道
+[313] ControlType.Text 795,5743,285,20 应该拆，而且这是第319版的核心修正。
+[314] ControlType.Text 795,5785,173,20 第318版的问题之一是：
+[316] ControlType.Text 795,5811,560,20 一个统一门槛同时服务普通样本保护和困难样本修正，最后只能选极保守阈值。
+[317] ControlType.Text 795,5853,189,20 第319版建议改成双通道：
+[318] ControlType.Button 1391,5896,36,36 复制
+[320] ControlType.Text 795,6015,640,28 3.1 通道划分
+[321] ControlType.Text 795,6054,80,20 推荐定义：
+[323] ControlType.Button 1304,6100,36,36 复制
+[324] ControlType.Button 1350,6100,78,36 运行代码
+[322] ControlType.Text 842,6109,48,18 Python
+[326] ControlType.Text 795,6346,37,20 其中 
+[328] ControlType.Text 795,6346,636,48  建议用 rank 化后的分数，避免概率未校准导致验证集一个样本都过不了阈值：
+[327] ControlType.Text 836,6349,78,17 need_score
+[330] ControlType.Button 1304,6420,36,36 复制
+[331] ControlType.Button 1350,6420,78,36 运行代码
+[329] ControlType.Text 842,6429,48,18 Python
+[334] ControlType.Text 927,6626,134,20  可以简单定义为：
+[333] ControlType.Text 799,6629,124,17 candidate_spread
+[336] ControlType.Button 1304,6674,36,36 复制
+[337] ControlType.Button 1350,6674,78,36 运行代码
+[335] ControlType.Text 842,6683,48,18 Python
+[339] ControlType.Text 795,6760,48,20 或者：
+[341] ControlType.Button 1304,6806,36,36 复制
+[342] ControlType.Button 1350,6806,78,36 运行代码
+[340] ControlType.Text 842,6815,48,18 Python
+[345] ControlType.Text 795,6938,640,28 3.2 普通保护通道门槛
+[346] ControlType.Text 795,6977,336,20 普通样本只允许极少数高置信收益样本被修正。
+[347] ControlType.Text 795,7019,112,20 推荐搜索范围：
+[349] ControlType.Button 1304,7065,36,36 复制
+[350] ControlType.Button 1350,7065,78,36 运行代码
+[348] ControlType.Text 842,7074,48,18 Python
+[352] ControlType.Text 795,7251,64,20 硬约束：
+[354] ControlType.Button 1304,7297,36,36 复制
+[355] ControlType.Button 1350,7297,78,36 运行代码
+[353] ControlType.Text 842,7306,48,18 Python
+[357] ControlType.Text 795,7423,192,20 普通样本不设最低修正率：
+[359] ControlType.Button 1304,7469,36,36 复制
+[360] ControlType.Button 1350,7469,78,36 运行代码
+[358] ControlType.Text 842,7478,48,18 Python
+[363] ControlType.Text 795,7601,640,28 3.3 强方向盘/困难激活通道门槛
+[364] ControlType.Text 795,7640,225,20 这一通道不能再用第318版那种 
+[368] ControlType.Text 795,7640,634,48  的统一高门槛，否则会继续全不改。
+[366] ControlType.Text 1106,7640,17,20 、
+[365] ControlType.Text 1024,7643,78,17 p_min=0.90
+[367] ControlType.Text 1127,7643,101,17 gain_min=0.08
+[369] ControlType.Text 795,7710,112,20 推荐搜索范围：
+[371] ControlType.Button 1304,7756,36,36 复制
+[372] ControlType.Button 1350,7756,78,36 运行代码
+[370] ControlType.Text 842,7765,48,18 Python
+[374] ControlType.Text 795,7942,64,20 硬约束：
+[376] ControlType.Button 1304,7988,36,36 复制
+[377] ControlType.Button 1350,7988,78,36 运行代码
+[375] ControlType.Text 842,7997,48,18 Python
+[380] ControlType.Text 795,8240,640,32 4. 先修第一段模型、第二段模型，还是先改阈值搜索目标
+[381] ControlType.Text 795,8283,125,20 第319版应先改：
+[382] ControlType.Button 1391,8326,36,36 复制
+[383] ControlType.Text 795,8379,288,20 不要先重训主模型，也不要先扩候选库。
+[384] ControlType.Text 795,8421,96,20 理由很直接：
+[386] ControlType.ListItem 821,8460,614,26 候选最优上限仍然明显优于第316；
+[387] ControlType.Text 827,8463,253,20 候选最优上限仍然明显优于第316；
+[388] ControlType.ListItem 821,8486,614,26 第318版验证集不是“修错”，而是“完全没修”；
+[389] ControlType.Text 827,8489,325,20 第318版验证集不是“修错”，而是“完全没修”；
+[390] ControlType.ListItem 821,8512,614,52 第318版的二阶段模型有没有价值，目前没有被真正检验，因为阈值把所有样本挡掉了；
+[391] ControlType.Text 827,8515,589,46 第318版的二阶段模型有没有价值，目前没有被真正检验，因为阈值把所有样本挡掉了；
+[392] ControlType.ListItem 821,8564,614,26 先改搜索目标后，才能判断是“模型分数不行”还是“阈值策略不行”。
+[393] ControlType.Text 827,8567,473,20 先改搜索目标后，才能判断是“模型分数不行”还是“阈值策略不行”。
+[394] ControlType.Text 795,8601,80,20 推荐顺序：
+[395] ControlType.Button 1391,8644,36,36 复制
+[396] ControlType.Text 795,8757,96,20 当前优先级：
+[397] ControlType.Button 1391,8800,36,36 复制
+[399] ControlType.Text 795,8979,640,32 5. 是否引入风险预算、收益预算、分组配额
+[400] ControlType.Text 795,9022,381,20 应该引入，而且第319版最好不要只靠固定概率阈值。
+[401] ControlType.Text 795,9064,221,20 第318版暴露了一个明显风险：
+[403] ControlType.Text 795,9090,368,20 概率阈值未必校准，验证集可能没有样本超过阈值。
+[404] ControlType.Text 795,9132,173,20 所以第319版建议采用：
+[405] ControlType.Button 1391,9175,36,36 复制
+[406] ControlType.Text 795,9228,64,20 而不是：
+[407] ControlType.Button 1391,9271,36,36 复制
+[409] ControlType.Text 795,9370,640,28 5.1 候选风险预算
+[410] ControlType.Text 795,9409,240,20 推荐在训练内固定如下风险预算：
+[412] ControlType.Button 1304,9455,36,36 复制
+[413] ControlType.Button 1350,9455,78,36 运行代码
+[411] ControlType.Text 842,9464,48,18 Python
+[415] ControlType.Text 795,9621,620,46 如果当前“大退化比例”的定义已经在第317/318脚本里存在，继续沿用原定义，不要换定义。第319只改约束值和选择逻辑。
+[417] ControlType.Text 795,9727,640,28 5.2 分组修正配额
+[418] ControlType.Text 795,9766,144,20 建议固定如下配额：
+[420] ControlType.Button 1304,9812,36,36 复制
+[421] ControlType.Button 1350,9812,78,36 运行代码
+[419] ControlType.Text 842,9821,48,18 Python
+[423] ControlType.Text 795,10078,208,20 训练内同时检查真实困难组：
+[425] ControlType.Button 1304,10124,36,36 复制
+[426] ControlType.Button 1350,10124,78,36 运行代码
+[424] ControlType.Text 842,10133,48,18 Python
+[428] ControlType.Text 795,10230,192,20 验证集只把真实困难组作为
+[429] ControlType.Text 987,10230,64,20 评估指标
+[430] ControlType.Text 1051,10230,160,20 ，不能作为选择输入。
+[432] ControlType.Text 795,10310,640,28 5.3 收益预算
+[433] ControlType.Text 795,10349,288,20 除了风险预算，还要设置最低收益预算。
+[434] ControlType.Text 795,10391,48,20 推荐：
+[436] ControlType.Button 1304,10437,36,36 复制
+[437] ControlType.Button 1350,10437,78,36 运行代码
+[435] ControlType.Text 842,10446,48,18 Python
+[439] ControlType.Text 795,10583,288,20 这几个值不高，但足够把全不改排除掉。
+[440] ControlType.Text 795,10625,285,20 如果第319希望更激进，可以用第二档：
+[442] ControlType.Button 1304,10671,36,36 复制
+[443] ControlType.Button 1350,10671,78,36 运行代码
+[441] ControlType.Text 842,10680,48,18 Python
+[445] ControlType.Text 795,10817,621,20 我建议第319第一次先用第一档，避免从第318的“全不改”直接跳回第317的“过度修改”。
+[447] ControlType.Text 795,10897,640,32 6. 残差融合还是困难样本候选单选
+[448] ControlType.Text 795,10940,157,20 第319版主方案建议：
+[449] ControlType.Button 1391,10983,36,36 复制
+[450] ControlType.Text 795,11056,176,20 不要全局只用残差融合。
+[451] ControlType.Text 795,11098,48,20 原因：
+[453] ControlType.ListItem 821,11137,614,26 当前主线是严重方向/意图错误；
+[454] ControlType.Text 827,11140,231,20 当前主线是严重方向/意图错误；
+[455] ControlType.ListItem 821,11163,614,26 这类错误通常不是小残差修补能解决的；
+[456] ControlType.Text 827,11166,288,20 这类错误通常不是小残差修补能解决的；
+[457] ControlType.ListItem 821,11189,614,26 残差融合会把候选修正幅度稀释；
+[458] ControlType.Text 827,11192,240,20 残差融合会把候选修正幅度稀释；
+[459] ControlType.ListItem 821,11215,614,26 困难样本需要允许完整切换到候选曲线；
+[460] ControlType.Text 827,11218,288,20 困难样本需要允许完整切换到候选曲线；
+[461] ControlType.ListItem 821,11241,614,26 普通样本才需要小步融合保护。
+[462] ControlType.Text 827,11244,224,20 普通样本才需要小步融合保护。
+[463] ControlType.Text 795,11278,157,20 推荐第319固定规则：
+[465] ControlType.Button 1304,11324,36,36 复制
+[466] ControlType.Button 1350,11324,78,36 运行代码
+[464] ControlType.Text 842,11333,48,18 Python
+[468] ControlType.Text 795,11470,256,20 如果必须只选一个主方案，我建议：
+[470] ControlType.Button 1304,11516,36,36 复制
+[471] ControlType.Button 1350,11516,78,36 运行代码
+[469] ControlType.Text 842,11525,48,18 Python
+[473] ControlType.Text 795,11622,64,20 也就是：
+[474] ControlType.Button 1391,11665,36,36 复制
+[476] ControlType.Text 795,11784,640,32 7. 第319版可直接落地方案
+[477] ControlType.Text 795,11832,640,28 7.1 固定实验名
+[478] ControlType.Text 795,11871,96,20 建议固定为：
+[479] ControlType.Button 1391,11914,36,36 复制
+[480] ControlType.Text 795,11967,64,20 脚本名：
+[481] ControlType.Button 1391,12010,36,36 复制
+[482] ControlType.Text 795,12063,80,20 输出目录：
+[483] ControlType.Button 1391,12106,36,36 复制
+[485] ControlType.Text 795,12220,640,28 7.2 第319版核心流程
+[487] ControlType.Button 1304,12271,36,36 复制
+[488] ControlType.Button 1350,12271,78,36 运行代码
+[486] ControlType.Text 842,12280,48,18 Python
+[491] ControlType.Text 795,13223,640,28 7.3 候选选择规则
+[492] ControlType.Text 795,13262,176,20 每个样本先选一个候选：
+[494] ControlType.Button 1304,13308,36,36 复制
+[495] ControlType.Button 1350,13308,78,36 运行代码
+[493] ControlType.Text 842,13317,48,18 Python
+[498] ControlType.Text 795,13640,640,28 7.4 双通道候选资格
+[499] ControlType.Text 795,13684,640,28 普通保护通道
+[501] ControlType.Button 1304,13735,36,36 复制
+[502] ControlType.Button 1350,13735,78,36 运行代码
+[500] ControlType.Text 842,13744,48,18 Python
+[504] ControlType.Text 795,13961,112,20 推荐搜索范围：
+[506] ControlType.Button 1304,14007,36,36 复制
+[507] ControlType.Button 1350,14007,78,36 运行代码
+[505] ControlType.Text 842,14016,48,18 Python
+[509] ControlType.Text 795,14178,640,28 困难/强方向盘激活通道
+[511] ControlType.Button 1304,14229,36,36 复制
+[512] ControlType.Button 1350,14229,78,36 运行代码
+[510] ControlType.Text 842,14238,48,18 Python
+[514] ControlType.Text 795,14455,112,20 推荐搜索范围：
+[516] ControlType.Button 1304,14501,36,36 复制
+[517] ControlType.Button 1350,14501,78,36 运行代码
+[515] ControlType.Text 842,14510,48,18 Python
+[520] ControlType.Text 795,14713,640,28 7.5 分组预算排序选择
+[521] ControlType.Text 795,14752,628,20 不要让阈值单独决定最终修正样本。阈值只负责过滤极差样本，最终用预算选 top 样本。
+[523] ControlType.Button 1304,14798,36,36 复制
+[524] ControlType.Button 1350,14798,78,36 运行代码
+[522] ControlType.Text 842,14807,48,18 Python
+[526] ControlType.Text 795,15024,80,20 选择逻辑：
+[528] ControlType.Button 1304,15070,36,36 复制
+[529] ControlType.Button 1350,15070,78,36 运行代码
+[527] ControlType.Text 842,15079,48,18 Python
+[531] ControlType.Text 795,15996,48,20 注意：
+[533] ControlType.Text 795,16022,614,46 这里的 top-by-score 只使用模型分数、当前窗口特征、第316预测形状、第317候选形状，不使用验证真实曲线。
+[535] ControlType.Text 795,16128,640,28 7.6 输出预测
+[537] ControlType.Button 1304,16179,36,36 复制
+[538] ControlType.Button 1350,16179,78,36 运行代码
+[536] ControlType.Text 842,16188,48,18 Python
+[540] ControlType.Text 795,16525,173,20 第319主方案建议固定：
+[542] ControlType.Button 1304,16571,36,36 复制
+[543] ControlType.Button 1350,16571,78,36 运行代码
+[541] ControlType.Text 842,16580,48,18 Python
+[545] ControlType.Text 795,16677,192,20 如果只保留一个最终组合：
+[547] ControlType.Button 1304,16723,36,36 复制
+[548] ControlType.Button 1350,16723,78,36 运行代码
+[546] ControlType.Text 842,16732,48,18 Python
+[551] ControlType.Text 795,16875,640,32 8. 第319版训练内阈值搜索伪代码
+[553] ControlType.Button 1304,16930,36,36 复制
+[554] ControlType.Button 1350,16930,78,36 运行代码
+[552] ControlType.Text 842,16939,48,18 Python
+[556] ControlType.Text 795,18616,48,20 最后：
+[558] ControlType.Button 1304,18662,36,36 复制
+[559] ControlType.Button 1350,18662,78,36 运行代码
+[557] ControlType.Text 842,18671,48,18 Python
+[562] ControlType.Text 795,18874,640,32 9. 第319版必须输出的表
+[563] ControlType.Text 795,18917,623,46 第318版只输出最终误差表还不够。第319版必须输出门控诊断表，否则无法判断是“没激活”“激活错了”还是“候选选错”。
+[565] ControlType.Text 795,19023,640,28 9.1 主结果表
+[566] ControlType.Text 795,19062,80,20 继续保留：
+[570] ControlType.DataItem 795,19089,107,33 方法
+[571] ControlType.DataItem 901,19089,108,33 分组
+[572] ControlType.DataItem 1008,19089,107,33 平均误差
+[573] ControlType.DataItem 1114,19089,129,33 相对第316变化
+[574] ControlType.DataItem 1242,19089,108,33 大退化比例
+[575] ControlType.DataItem 1349,19089,133,33 原预测保持率
+[577] ControlType.Button 1453,19090,29,28 复制表格
+[578] ControlType.Text 795,19133,80,20 必须新增：
+[579] ControlType.Button 1391,19176,36,36 复制
+[580] ControlType.Text 795,19269,112,20 分组继续包括：
+[581] ControlType.Button 1391,19312,36,36 复制
+[583] ControlType.Text 795,19491,640,28 9.2 校正覆盖率表
+[584] ControlType.Text 795,19530,48,20 新增：
+[588] ControlType.DataItem 795,19557,107,33 分组
+[589] ControlType.DataItem 901,19557,108,33 样本数
+[590] ControlType.DataItem 1008,19557,107,33 校正数
+[591] ControlType.DataItem 1114,19557,108,33 校正率
+[592] ControlType.DataItem 1221,19557,108,33 目标下限
+[593] ControlType.DataItem 1328,19557,107,33 目标上限
+[594] ControlType.DataItem 1434,19557,108,33 是否满足
+[596] ControlType.Button 1513,19558,29,28 复制表格
+[597] ControlType.Text 795,19601,80,20 必须包含：
+[598] ControlType.Button 1391,19644,36,36 复制
+[599] ControlType.Text 795,19797,48,20 其中：
+[601] ControlType.ListItem 821,19824,614,26 困难代理样本：门控实际可用；
+[602] ControlType.Text 827,19827,224,20 困难代理样本：门控实际可用；
+[603] ControlType.ListItem 821,19850,614,26 困难前20/前10：只作为验证后评估，不作为输入。
+[604] ControlType.Text 827,19853,365,20 困难前20/前10：只作为验证后评估，不作为输入。
+[606] ControlType.Text 795,19933,640,28 9.3 通道表
+[607] ControlType.Text 795,19972,48,20 新增：
+[611] ControlType.DataItem 795,19999,107,49 通道
+[612] ControlType.DataItem 901,19999,108,49 样本数
+[613] ControlType.DataItem 1008,19999,122,49 候选资格通过率
+[614] ControlType.DataItem 1129,19999,108,49 最终校正率
+[615] ControlType.DataItem 1236,19999,122,49 平均预测收益分
+[616] ControlType.DataItem 1357,19999,122,49 平均 bad_prob
+[617] ControlType.DataItem 1478,19999,122,49 平均 margin
+[619] ControlType.Button 1572,20016,28,28 复制表格
+[620] ControlType.Text 795,20059,80,20 通道包括：
+[621] ControlType.Button 1391,20102,36,36 复制
+[623] ControlType.Text 795,20261,640,28 9.4 候选类型分布表
+[624] ControlType.Text 795,20300,565,20 第317候选库有幅值缩放、时间平移、幅值+时间、残差原型等。第319要输出：
+[628] ControlType.DataItem 795,20327,119,33 候选类型
+[629] ControlType.DataItem 913,20327,119,33 被选次数
+[630] ControlType.DataItem 1031,20327,145,33 占校正样本比例
+[631] ControlType.DataItem 1175,20327,130,33 平均真实收益
+[632] ControlType.DataItem 1304,20327,131,33 大退化比例
+[634] ControlType.Button 1407,20328,28,28 复制表格
+[635] ControlType.Text 795,20371,112,20 这个表能判断：
+[637] ControlType.ListItem 821,20398,614,26 是不是总选错某类候选；
+[638] ControlType.Text 827,20401,176,20 是不是总选错某类候选；
+[639] ControlType.ListItem 821,20424,614,26 时间平移候选是不是风险过高；
+[640] ControlType.Text 827,20427,224,20 时间平移候选是不是风险过高；
+[641] ControlType.ListItem 821,20450,614,26 残差原型是不是只在少数样本有效；
+[642] ControlType.Text 827,20453,256,20 残差原型是不是只在少数样本有效；
+[643] ControlType.ListItem 821,20476,614,26 幅值缩放是否真正解决幅值低估。
+[644] ControlType.Text 827,20479,240,20 幅值缩放是否真正解决幅值低估。
+[646] ControlType.Text 795,20559,640,28 9.5 Oracle 捕获率表
+[647] ControlType.Text 795,20598,48,20 新增：
+[649] ControlType.Button 1304,20644,36,36 复制
+[650] ControlType.Button 1350,20644,78,36 运行代码
+[648] ControlType.Text 842,20653,48,18 Python
+[652] ControlType.Text 795,20770,48,20 输出：
+[656] ControlType.DataItem 795,20797,133,33 分组
+[657] ControlType.DataItem 927,20797,181,33 候选最优上限改善
+[658] ControlType.DataItem 1107,20797,160,33 第319实际改善
+[659] ControlType.DataItem 1266,20797,169,33 Oracle捕获率
+[661] ControlType.Button 1407,20798,28,28 复制表格
+[662] ControlType.Text 795,20841,48,20 预期：
+[663] ControlType.Button 1391,20884,36,36 复制
+[664] ControlType.Text 795,20977,379,20 第319不需要一口气捕获很多候选上限，但不能为 0。
+[666] ControlType.Text 795,21057,640,28 9.6 分数分布漂移表
+[667] ControlType.Text 795,21096,581,20 第318版最大问题可能是训练 OOF 阈值在验证集上无样本通过。第319必须输出：
+[671] ControlType.DataItem 795,21123,107,33 分数
+[672] ControlType.DataItem 901,21123,108,33 OOF p10
+[673] ControlType.DataItem 1008,21123,107,33 OOF p50
+[674] ControlType.DataItem 1114,21123,108,33 OOF p90
+[675] ControlType.DataItem 1221,21123,108,33 VAL p10
+[676] ControlType.DataItem 1328,21123,107,33 VAL p50
+[677] ControlType.DataItem 1434,21123,108,33 VAL p90
+[679] ControlType.Button 1513,21124,29,28 复制表格
+[680] ControlType.Text 795,21167,48,20 包括：
+[681] ControlType.Button 1391,21210,36,36 复制
+[682] ControlType.Text 795,21403,597,46 如果 OOF 的 p90 在验证集变成 p99 以上，说明概率阈值不稳，应该进一步改 rank-budget 选择。
+[684] ControlType.Text 795,21509,640,32 10. 第319版验证通过标准
+[685] ControlType.Text 795,21552,387,20 第319版验证集只做通过/失败判定，测试集继续压制。
+[686] ControlType.Text 795,21594,441,20 基于你给出的第316验证结果，建议第319固定通过标准如下。
+[688] ControlType.Text 795,21674,640,28 10.1 平均误差标准
+[689] ControlType.Text 795,21713,93,20 第316基线：
+[690] ControlType.Button 1391,21756,36,36 复制
+[691] ControlType.Text 795,21889,125,20 第319通过门槛：
+[695] ControlType.DataItem 795,21916,210,33 分组
+[696] ControlType.DataItem 1004,21916,207,33 第316误差
+[697] ControlType.DataItem 1210,21916,225,33 第319要求
+[719] ControlType.Button 1407,21917,28,28 复制表格
+[699] ControlType.DataItem 795,21949,210,45 全部样本
+[700] ControlType.DataItem 1004,21949,207,45 0.531658
+[701] ControlType.DataItem 1210,21949,225,45 ≤ 0.526658
+[703] ControlType.DataItem 795,21994,210,45 普通样本
+[704] ControlType.DataItem 1004,21994,207,45 0.405874
+[705] ControlType.DataItem 1210,21994,225,45 ≤ 0.408874
+[707] ControlType.DataItem 795,22039,210,45 强方向盘样本
+[708] ControlType.DataItem 1004,22039,207,45 0.624528
+[709] ControlType.DataItem 1210,22039,225,45 ≤ 0.614528
+[711] ControlType.DataItem 795,22084,210,45 困难前20
+[712] ControlType.DataItem 1004,22084,207,45 0.810938
+[713] ControlType.DataItem 1210,22084,225,45 ≤ 0.795938
+[715] ControlType.DataItem 795,22129,210,58 困难前10
+[716] ControlType.DataItem 1004,22129,207,58 1.002263
+[717] ControlType.DataItem 1210,22129,225,58 ≤ 0.987263
+[720] ControlType.Text 795,22198,112,20 对应绝对变化：
+[722] ControlType.Button 1304,22244,36,36 复制
+[723] ControlType.Button 1350,22244,78,36 运行代码
+[721] ControlType.Text 842,22253,48,18 Python
+[725] ControlType.Text 795,22410,573,20 这比训练内搜索门槛略严格，但仍远低于候选最优上限，属于合理的第319目标。
+[727] ControlType.Text 795,22490,640,28 10.2 大退化标准
+[728] ControlType.Text 795,22529,48,20 建议：
+[730] ControlType.Button 1304,22575,36,36 复制
+[731] ControlType.Button 1350,22575,78,36 运行代码
+[729] ControlType.Text 842,22584,48,18 Python
+[733] ControlType.Text 795,22681,512,20 如果当前脚本的大退化比例定义较严格，导致历史值很低，可以放宽到：
+[735] ControlType.Button 1304,22727,36,36 复制
+[736] ControlType.Button 1350,22727,78,36 运行代码
+[734] ControlType.Text 842,22736,48,18 Python
+[738] ControlType.Text 795,22833,381,20 但不建议超过这个范围，否则容易回到第317版问题。
+[740] ControlType.Text 795,22913,640,28 10.3 校正覆盖率标准
+[741] ControlType.Text 795,22952,160,20 验证集通过标准建议：
+[743] ControlType.Button 1304,22998,36,36 复制
+[744] ControlType.Button 1350,22998,78,36 运行代码
+[742] ControlType.Text 842,23007,48,18 Python
+[746] ControlType.Text 795,23224,48,20 注意：
+[748] ControlType.Text 795,23250,69,20 验证集的 
+[750] ControlType.Text 958,23250,26,20  和 
+[752] ControlType.Text 1077,23250,214,20  是验证后统计，不参与选择。
+[749] ControlType.Text 868,23253,86,17 corr_hard20
+[751] ControlType.Text 988,23253,85,17 corr_hard10
+[754] ControlType.Text 795,23332,640,28 10.4 幅值低估比例标准
+[755] ControlType.Text 795,23371,425,20 你提到第318版幅值低估比例也没有改善。第319建议加入：
+[757] ControlType.Button 1304,23417,36,36 复制
+[758] ControlType.Button 1350,23417,78,36 运行代码
+[756] ControlType.Text 842,23426,48,18 Python
+[760] ControlType.Text 795,23543,64,20 也就是：
+[762] ControlType.ListItem 821,23570,614,26 强方向盘样本幅值低估比例至少下降 1 个百分点；
+[763] ControlType.Text 827,23573,355,20 强方向盘样本幅值低估比例至少下降 1 个百分点；
+[764] ControlType.ListItem 821,23596,614,26 困难前20至少下降 1 个百分点；
+[765] ControlType.Text 827,23599,230,20 困难前20至少下降 1 个百分点；
+[766] ControlType.ListItem 821,23622,614,26 普通样本不能明显变差。
+[767] ControlType.Text 827,23625,176,20 普通样本不能明显变差。
+[768] ControlType.Text 795,23659,352,20 如果幅值低估比例样本很少，可以改成绝对数量：
+[770] ControlType.Button 1304,23705,36,36 复制
+[771] ControlType.Button 1350,23705,78,36 运行代码
+[769] ControlType.Text 842,23714,48,18 Python
+[774] ControlType.Text 795,23857,640,32 11. 如果第319版仍不通过，下一步怎么分流
+[775] ControlType.Text 795,23900,409,20 第319失败后不要笼统说“模型不好”。要按失败形态分流。
+[777] ControlType.Text 795,23980,640,28 分流 A：训练 OOF 可行，验证集又全不改
+[778] ControlType.Text 795,24019,80,20 判定条件：
+[780] ControlType.Button 1304,24065,36,36 复制
+[781] ControlType.Button 1350,24065,78,36 运行代码
+[779] ControlType.Text 842,24074,48,18 Python
+[783] ControlType.Text 795,24171,48,20 说明：
+[784] ControlType.Button 1391,24214,36,36 复制
+[785] ControlType.Text 795,24267,64,20 下一步：
+[786] ControlType.Button 1391,24310,36,36 复制
+[787] ControlType.Text 795,24363,80,20 具体做法：
+[789] ControlType.Button 1304,24409,36,36 复制
+[790] ControlType.Button 1350,24409,78,36 运行代码
+[788] ControlType.Text 842,24418,48,18 Python
+[793] ControlType.Text 795,24581,640,28 分流 B：验证集有激活，但普通样本被改坏
+[794] ControlType.Text 795,24620,80,20 判定条件：
+[796] ControlType.Button 1304,24666,36,36 复制
+[797] ControlType.Button 1350,24666,78,36 运行代码
+[795] ControlType.Text 842,24675,48,18 Python
+[799] ControlType.Text 795,24812,48,20 说明：
+[800] ControlType.Button 1391,24855,36,36 复制
+[801] ControlType.Text 795,24908,64,20 下一步：
+[803] ControlType.Button 1304,24954,36,36 复制
+[804] ControlType.Button 1350,24954,78,36 运行代码
+[802] ControlType.Text 842,24963,48,18 Python
+[806] ControlType.Text 795,25080,112,20 甚至可以直接：
+[808] ControlType.Button 1304,25126,36,36 复制
+[809] ControlType.Button 1350,25126,78,36 运行代码
+[807] ControlType.Text 842,25135,48,18 Python
+[811] ControlType.Text 795,25212,64,20 只保留：
+[813] ControlType.Button 1304,25258,36,36 复制
+[814] ControlType.Button 1350,25258,78,36 运行代码
+[812] ControlType.Text 842,25267,48,18 Python
+[817] ControlType.Text 795,25390,640,28 分流 C：强方向盘/困难样本被激活，但没有改善
+[818] ControlType.Text 795,25429,80,20 判定条件：
+[820] ControlType.Button 1304,25475,36,36 复制
+[821] ControlType.Button 1350,25475,78,36 运行代码
+[819] ControlType.Text 842,25484,48,18 Python
+[823] ControlType.Text 795,25641,48,20 说明：
+[824] ControlType.Button 1391,25684,36,36 复制
+[825] ControlType.Text 795,25737,256,20 下一步优先修第二段候选收益模型：
+[826] ControlType.Button 1391,25780,36,36 复制
+[827] ControlType.Text 795,25833,80,20 建议目标：
+[829] ControlType.Button 1304,25879,36,36 复制
+[830] ControlType.Button 1350,25879,78,36 运行代码
+[828] ControlType.Text 842,25888,48,18 Python
+[832] ControlType.Text 795,25965,112,20 或者直接训练：
+[834] ControlType.Button 1304,26011,36,36 复制
+[835] ControlType.Button 1350,26011,78,36 运行代码
+[833] ControlType.Text 842,26020,48,18 Python
+[837] ControlType.Text 795,26097,160,20 并分候选族输出表现：
+[838] ControlType.Button 1391,26140,36,36 复制
+[840] ControlType.Text 795,26319,640,28 分流 D：训练 OOF 下没有任何可行解
+[841] ControlType.Text 795,26358,80,20 判定条件：
+[843] ControlType.Button 1304,26404,36,36 复制
+[844] ControlType.Button 1350,26404,78,36 运行代码
+[842] ControlType.Text 842,26413,48,18 Python
+[846] ControlType.Text 795,26490,48,20 说明：
+[847] ControlType.Button 1391,26533,36,36 复制
+[848] ControlType.Text 795,26586,336,20 下一步不是验证集调参，而是在训练内修模型：
+[849] ControlType.Text 795,26628,80,20 优先顺序：
+[850] ControlType.Button 1391,26671,36,36 复制
+[851] ControlType.Text 795,26784,144,20 第一段目标建议从：
+[853] ControlType.Button 1304,26830,36,36 复制
+[854] ControlType.Button 1350,26830,78,36 运行代码
+[852] ControlType.Text 842,26839,48,18 Python
+[856] ControlType.Text 795,26916,48,20 改成：
+[858] ControlType.Button 1304,26962,36,36 复制
+[859] ControlType.Button 1350,26962,78,36 运行代码
+[857] ControlType.Text 842,26971,48,18 Python
+[861] ControlType.Text 795,27128,128,20 并使用类别权重：
+[863] ControlType.Button 1304,27174,36,36 复制
+[864] ControlType.Button 1350,27174,78,36 运行代码
+[862] ControlType.Text 842,27183,48,18 Python
+[866] ControlType.Text 795,27320,215,20 对强方向盘/困难样本再加权：
+[868] ControlType.Button 1304,27366,36,36 复制
+[869] ControlType.Button 1350,27366,78,36 运行代码
+[867] ControlType.Text 842,27375,48,18 Python
+[872] ControlType.Text 795,27538,640,28 分流 E：第319有改善，但改善太小
+[873] ControlType.Text 795,27577,80,20 判定条件：
+[875] ControlType.Button 1304,27623,36,36 复制
+[876] ControlType.Button 1350,27623,78,36 运行代码
+[874] ControlType.Text 842,27632,48,18 Python
+[878] ControlType.Text 795,27769,48,20 说明：
+[879] ControlType.Button 1391,27812,36,36 复制
+[880] ControlType.Text 795,27865,64,20 下一步：
+[882] ControlType.Button 1304,27911,36,36 复制
+[883] ControlType.Button 1350,27911,78,36 运行代码
+[881] ControlType.Text 842,27920,48,18 Python
+[886] ControlType.Text 795,28143,640,32 12. 第319版最终建议一句话
+[887] ControlType.Text 795,28186,249,20 第319版不要再做“更保守的门控”。
+[889] ControlType.Text 795,28212,80,20 应该改成：
+[890] ControlType.Button 1391,28255,36,36 复制
+[891] ControlType.Text 795,28388,173,20 最推荐的第319主线是：
+[892] ControlType.Button 1391,28431,36,36 复制
+[893] ControlType.Text 795,28484,112,20 核心固定参数：
+[895] ControlType.Button 1304,28530,36,36 复制
+[896] ControlType.Button 1350,28530,78,36 运行代码
+[894] ControlType.Text 842,28539,48,18 Python
+[898] ControlType.Text 795,28996,144,20 验证通过标准建议：
+[900] ControlType.Button 1304,29042,36,36 复制
+[901] ControlType.Button 1350,29042,78,36 运行代码
+[899] ControlType.Text 842,29051,48,18 Python
+[903] ControlType.Text 795,29388,384,20 这版的目标不是一次吃掉候选最优上限，而是先证明：
+[905] ControlType.Text 795,29414,624,20 在普通样本不明显变坏的前提下，选择器能够稳定激活并真实改善强方向盘和困难样本。
+[906] ControlType.Group 785,29437,650,50 回复操作
+[907] ControlType.Button 789,29446,32,32 复制回复
+[908] ControlType.Button 821,29446,32,32 喜欢
+[909] ControlType.Button 853,29446,32,32 不喜欢
+[910] ControlType.Button 885,29446,32,32 Pro 反馈
+[911] ControlType.Button 917,29446,32,32 分享
+[913] ControlType.Button 949,29446,32,31 切换模型
+[914] ControlType.Button 981,29446,32,32 更多操作

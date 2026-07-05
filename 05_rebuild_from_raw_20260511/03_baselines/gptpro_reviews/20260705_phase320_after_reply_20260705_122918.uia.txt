@@ -1,0 +1,165 @@
+﻿[1] ControlType.Pane 346,233,1278,1024 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili - Google Chrome - xin
+[424] ControlType.TabItem 374,233,116,41 ChatGPT - 闲置标签页 - 已释放 175 MB
+[427] ControlType.TabItem 472,233,116,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[429] ControlType.TabItem 570,233,116,41 凡人修仙传-哔哩哔哩_bilibili
+[431] ControlType.TabItem 659,233,115,41 ChatGPT
+[433] ControlType.TabItem 751,233,115,41 第319版修正建议 - 内存用量 - 295 MB
+[436] ControlType.Button 849,233,28,41 新标签页
+[439] ControlType.Button 1347,233,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1487,234,45,39 最小化
+[6] ControlType.Button 1532,234,46,39 最大化
+[7] ControlType.Button 1578,234,46,39 关闭
+[421] ControlType.Button 352,239,28,28 标签页搜索
+[425] ControlType.Button 448,239,28,28 关闭
+[428] ControlType.Button 546,239,28,28 关闭
+[430] ControlType.Button 635,239,28,28 关闭
+[432] ControlType.Button 727,239,28,28 关闭
+[434] ControlType.Button 818,239,28,28 关闭
+[11] ControlType.Button 352,279,34,34 返回
+[12] ControlType.Button 388,279,34,34 前进
+[13] ControlType.Button 424,279,34,34 重新加载
+[20] ControlType.Button 1548,279,34,34 xin
+[21] ControlType.Button 1584,279,34,34 Chrome
+[15] ControlType.Button 472,284,24,24 查看网站信息
+[16] ControlType.Edit 504,284,991,24 地址和搜索栏
+[19] ControlType.Button 1503,284,24,24 为此标签页添加书签
+[22] ControlType.ToolBar 346,319,1278,34 书签
+[23] ControlType.ToolBar 352,319,36,28 已保存的标签页分组
+[24] ControlType.Button 352,319,28,28 标签页分组
+[25] ControlType.Button 1530,319,86,28 所有书签
+[26] ControlType.Separator 1512,325,18,16 分隔符
+[30] ControlType.Document 346,354,1278,903 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[33] ControlType.ListItem 370,354,62,64 首页
+[34] ControlType.Hyperlink 370,354,52,64 首页
+[36] ControlType.ListItem 432,354,38,64 番剧
+[37] ControlType.Hyperlink 432,354,28,64 番剧
+[38] ControlType.ListItem 470,354,38,64 直播
+[39] ControlType.Hyperlink 470,354,28,64 直播
+[40] ControlType.ListItem 508,354,66,64 游戏中心
+[41] ControlType.Hyperlink 508,354,56,64 游戏中心
+[42] ControlType.ListItem 574,354,52,64 会员购
+[43] ControlType.Hyperlink 574,354,42,64 会员购
+[44] ControlType.ListItem 626,354,38,64 漫画
+[45] ControlType.Hyperlink 626,354,28,64 漫画
+[46] ControlType.ListItem 664,354,38,64 赛事
+[47] ControlType.Hyperlink 664,354,28,64 赛事
+[48] ControlType.ListItem 702,354,64,64 MSIMSI
+[49] ControlType.Hyperlink 702,354,54,64 MSI 图片 MSI
+[51] ControlType.ListItem 766,354,91,64 下载客户端
+[52] ControlType.Hyperlink 766,354,91,64 下载客户端
+[50] ControlType.Image 702,363,54,21 图片. 要获取缺失的图片说明，请打开上下文菜单。
+[69] ControlType.Text 1415,368,14,15 38
+[65] ControlType.Text 1374,369,14,14 29
+[68] ControlType.ListItem 1391,374,35,24 38
+[64] ControlType.ListItem 1351,375,35,22 29
+[55] ControlType.Edit 882,377,284,20 凡人修仙传
+[117] ControlType.Hyperlink 402,421,180,78 B站 b站
+[118] ControlType.Image 402,421,162,79 B站 b站
+[122] ControlType.Hyperlink 522,526,80,28 番剧
+[124] ControlType.Hyperlink 609,526,80,28 国创
+[126] ControlType.Hyperlink 696,526,80,28 综艺
+[128] ControlType.Hyperlink 784,526,80,28 动画
+[130] ControlType.Hyperlink 871,526,80,28 鬼畜
+[132] ControlType.Hyperlink 958,526,80,28 舞蹈
+[134] ControlType.Hyperlink 1046,526,80,28 娱乐
+[136] ControlType.Hyperlink 1133,526,80,28 科技数码
+[138] ControlType.Hyperlink 1220,526,80,28 美食
+[152] ControlType.Hyperlink 1319,526,70,28 专栏
+[156] ControlType.Hyperlink 1388,526,70,28 活动
+[160] ControlType.Hyperlink 1457,526,92,28 社区中心
+[119] ControlType.Hyperlink 406,527,40,64 动态
+[120] ControlType.Hyperlink 462,527,40,64 热门
+[123] ControlType.Hyperlink 522,564,80,28 电影
+[125] ControlType.Hyperlink 609,564,80,28 电视剧
+[127] ControlType.Hyperlink 696,564,80,28 纪录片
+[129] ControlType.Hyperlink 784,564,80,28 游戏
+[131] ControlType.Hyperlink 871,564,80,28 音乐
+[133] ControlType.Hyperlink 958,564,80,28 影视
+[135] ControlType.Hyperlink 1046,564,80,28 知识
+[137] ControlType.Hyperlink 1133,564,80,28 资讯
+[154] ControlType.Hyperlink 1319,564,70,28 直播
+[158] ControlType.Hyperlink 1388,564,70,28 课堂
+[162] ControlType.Hyperlink 1457,564,92,28 新歌热榜
+[150] ControlType.Text 1239,570,27,15 更多
+[166] ControlType.Hyperlink -1840,609,562,316 手搓者联盟集结完毕！EP01正式上线
+[167] ControlType.Image -1840,609,562,316 手搓者联盟集结完毕！EP01正式上线
+[169] ControlType.Hyperlink -1279,609,562,316 韩立南宫婉联手战师姐
+[170] ControlType.Image -1279,609,562,316 韩立南宫婉联手战师姐
+[172] ControlType.Hyperlink -717,609,562,316 墨子为什么这么“博爱”?
+[173] ControlType.Image -717,609,562,316 墨子为什么这么“博爱”?
+[175] ControlType.Hyperlink -156,609,562,316 皮克斯新作，毛茸茸守护家园！
+[176] ControlType.Image -156,609,562,316 皮克斯新作，毛茸茸守护家园！
+[178] ControlType.Hyperlink 406,609,562,316 种草优质动画，解锁现金奖励！
+[179] ControlType.Image 406,609,562,316 种草优质动画，解锁现金奖励！
+[181] ControlType.Hyperlink 967,609,562,316 奥术飞弹，你也来试试吧！
+[182] ControlType.Image 967,609,562,316 奥术飞弹，你也来试试吧！
+[213] ControlType.Hyperlink 987,609,272,153 15000日元一位!?最高级A5和牛烤肉自助，到底好吃吗？？ 103.0万 1918 13:02
+[214] ControlType.Image 987,609,272,153 15000日元一位!?最高级A5和牛烤肉自助，到底好吃吗？？
+[221] ControlType.Hyperlink 1278,609,271,153 在机密连开1000个放射性储物箱，真实爆率究竟有多离谱？ 29.3万 1810 11:17
+[222] ControlType.Image 1278,609,271,153 在机密连开1000个放射性储物箱，真实爆率究竟有多离谱？
+[184] ControlType.Hyperlink 1529,609,562,316 @哔哩哔哩直播 同步开播！还有抽奖福利！
+[185] ControlType.Image 1529,609,562,316 @哔哩哔哩直播 同步开播！还有抽奖福利！
+[414] ControlType.Button 1559,609,40,90 换一换
+[187] ControlType.Hyperlink 2090,609,562,316 合约大舞台，有种你就来
+[188] ControlType.Image 2090,609,562,316 合约大舞台，有种你就来
+[190] ControlType.Hyperlink 2652,609,562,316 书科考丁末？不耽误我射科第一啊！
+[191] ControlType.Image 2652,609,562,316 书科考丁末？不耽误我射科第一啊！
+[193] ControlType.Hyperlink 3213,609,562,316 手搓者联盟集结完毕！EP01正式上线
+[194] ControlType.Image 3213,609,562,316 手搓者联盟集结完毕！EP01正式上线
+[196] ControlType.Hyperlink 3775,609,562,316 韩立南宫婉联手战师姐
+[197] ControlType.Image 3775,609,562,316 韩立南宫婉联手战师姐
+[217] ControlType.Text 987,769,272,45 15000日元一位!?最高级A5和牛烤肉自助，到底好吃吗？？
+[225] ControlType.Text 1278,769,271,45 在机密连开1000个放射性储物箱，真实爆率究竟有多离谱？
+[218] ControlType.Hyperlink 987,771,239,40 15000日元一位!?最高级A5和牛烤肉自助，到底好吃吗？？
+[226] ControlType.Hyperlink 1278,771,229,40 在机密连开1000个放射性储物箱，真实爆率究竟有多离谱？
+[220] ControlType.Hyperlink 1042,817,98,18 平平出击 · 05-08
+[227] ControlType.Hyperlink 1278,817,143,18 阿豪爆率测试 · 07-03
+[219] ControlType.Text 991,818,44,15 4万点赞
+[229] ControlType.Hyperlink 987,854,272,153 【独家】《凡人修仙传之慕兰之战》第5集【总第181集】 589.8万 16.2万 19:51
+[230] ControlType.Image 987,854,272,153 【独家】《凡人修仙传之慕兰之战》第5集【总第181集】
+[237] ControlType.Hyperlink 1278,854,271,153 618人体工学椅深度评测！300元到4000元，值得关注的椅子都在这了！ 90.3万 268
+[238] ControlType.Image 1278,854,271,153 618人体工学椅深度评测！300元到4000元，值得关注的椅子都在这了！
+[198] ControlType.Hyperlink 421,939,462,26 @哔哩哔哩直播 同步开播！还有抽奖福利！
+[233] ControlType.Text 987,1014,272,45 【独家】《凡人修仙传之慕兰之战》第5集【总第181集】
+[242] ControlType.Text 1278,1014,271,45 618人体工学椅深度评测！300元到4000元，值得关注的椅子都在这了！
+[234] ControlType.Hyperlink 978,1016,241,40 【独家】《凡人修仙传之慕兰之战》第5集【总第181集】
+[243] ControlType.Hyperlink 1278,1016,247,40 618人体工学椅深度评测！300元到4000元，值得关注的椅子都在这了！
+[235] ControlType.Hyperlink 987,1062,136,18 哔哩哔哩国创 · 昨天
+[245] ControlType.Hyperlink 1332,1062,86,18 威评测 · 05-22
+[244] ControlType.Text 1282,1063,43,15 1万点赞
+[246] ControlType.Hyperlink 406,1139,271,153 qcq171，唯一能把人玩笑的枪 31.9万 199 05:46
+[247] ControlType.Image 406,1139,271,153 qcq171，唯一能把人玩笑的枪
+[254] ControlType.Hyperlink 696,1139,272,153 用红弹RM277泼水打天才少年！ 103.2万 1215 07:11
+[255] ControlType.Image 696,1139,272,153 用红弹RM277泼水打天才少年！
+[262] ControlType.Hyperlink 987,1139,272,153 中国最贵洗浴豪华自助餐！1500一位！吃24小时能回本吗？ 52.6万 1963 20:10
+[263] ControlType.Image 987,1139,272,153 中国最贵洗浴豪华自助餐！1500一位！吃24小时能回本吗？
+[293] ControlType.Hyperlink 1279,1140,269,152 直播 547 英雄联盟
+[250] ControlType.Text 406,1299,271,45 qcq171，唯一能把人玩笑的枪
+[258] ControlType.Text 696,1299,272,45 用红弹RM277泼水打天才少年！
+[266] ControlType.Text 987,1299,272,45 中国最贵洗浴豪华自助餐！1500一位！吃24小时能回本吗？
+[251] ControlType.Hyperlink 406,1301,200,18 qcq171，唯一能把人玩笑的枪
+[259] ControlType.Hyperlink 696,1301,215,18 用红弹RM277泼水打天才少年！
+[267] ControlType.Hyperlink 987,1301,229,40 中国最贵洗浴豪华自助餐！1500一位！吃24小时能回本吗？
+[297] ControlType.Hyperlink 1291,1301,204,19 直播中 B一剑！我疯狂了！
+[298] ControlType.Hyperlink 1291,1346,109,20 王氏上单-王子0
+[252] ControlType.Hyperlink 406,1347,130,18 天霸旺崽崽 · 07-02
+[260] ControlType.Hyperlink 696,1347,130,18 战术级子轩 · 07-02
+[269] ControlType.Hyperlink 1042,1347,111,18 子文又饿了 · 07-01
+[268] ControlType.Text 991,1348,44,15 1万点赞
+[300] ControlType.Hyperlink 406,1424,271,154 SVCH神王专武！ 策划开山之作！三角洲行动 16.5万 142 09:22
+[301] ControlType.Image 406,1424,271,154 SVCH神王专武！ 策划开山之作！三角洲行动
+[308] ControlType.Hyperlink 696,1424,272,154 性价比爆赞！天津人均75元涮羊肉自助，手切鲜羊肉不限量畅吃！ 37.3万 813 10:30
+[309] ControlType.Image 696,1424,272,154 性价比爆赞！天津人均75元涮羊肉自助，手切鲜羊肉不限量畅吃！
+[316] ControlType.Hyperlink 987,1424,272,154 【2026年枕头推荐】58款热门枕头横评 ！ 83.9万 330
+[317] ControlType.Image 987,1424,272,154 【2026年枕头推荐】58款热门枕头横评 ！
+[304] ControlType.Text 406,1585,271,45 SVCH神王专武！ 策划开山之作！三角洲行动
+[312] ControlType.Text 696,1585,272,45 性价比爆赞！天津人均75元涮羊肉自助，手切鲜羊肉不限量畅吃！
+[321] ControlType.Text 987,1585,272,45 【2026年枕头推荐】58款热门枕头横评 ！
+[305] ControlType.Hyperlink 406,1587,226,40 SVCH神王专武！ 策划开山之作！三角洲行动
+[313] ControlType.Hyperlink 696,1587,228,40 性价比爆赞！天津人均75元涮羊肉自助，手切鲜羊肉不限量畅吃！
+[322] ControlType.Hyperlink 978,1587,261,40 【2026年枕头推荐】58款热门枕头横评 ！
+[306] ControlType.Hyperlink 406,1633,116,18 米尔Miru · 07-03
+[315] ControlType.Hyperlink 751,1633,98,18 橙飞一下 · 07-02
+[324] ControlType.Hyperlink 1042,1633,111,18 好梦事务所 · 03-20
+[314] ControlType.Text 700,1634,44,15 1万点赞
+[323] ControlType.Text 991,1634,44,15 7千点赞

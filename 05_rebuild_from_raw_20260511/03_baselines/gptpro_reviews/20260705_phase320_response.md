@@ -1,0 +1,2376 @@
+﻿我会把第319版定位为先修阈值搜索而非重训模型，核心是禁止零修改方案被选中，并拆分普通保护、强方向盘激活和困难样本激活三类门控。将在折外搜索里加入最低覆盖率、收益风险预算、分组硬约束，同时给出可直接改脚本的目标函数、输出表和失败分流。
+总体判断
+阈值搜索目标把“安全无伤”看得过重，把“必须激活修正”看得过轻
+第318版不是候选库失效，也不是残差融合本身失效，而是
+。训练内搜索选出了一个在验证集完全不触发的门控组合，导致第318甲/乙/丙全部退化为第316原预测。
+，不要先重训主模型，也不要急着扩候选库。候选最优上限仍然明显好于第316，说明可修正空间还在；当前问题是选择器和门控不敢用。
+第319版应先改
+搜索目标与门控结构
+F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v318_conservative_two_stage_gate_20260705.py
+
+
+输出目录：
+
+1. 第319版阈值搜索目标怎么改
+F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v318_conservative_two_stage_gate_20260705
+第318版的问题是：
+只要普通样本不被改坏，全不改也能拿到较多通过项。
+第319版必须把“全不改”定义为
+非法解
+，而不是低分解。
+
+
+关键做法：
+
+1. 继续复用第316版原预测和第317版候选库，不重训主模型，不扩候选库。
+2. 第一段训练“是否值得校正”的二分类器和收益回归器。
+3. 第二段训练候选收益回归器和候选大退化风险分类器。
+4. 训练集内部 5 折交叉验证生成折外预测，只用折外预测搜索阈值和融合幅度。
+5. 验证集只做通过/失败判定。
+6. 测试集没有参与任何阈值、候选、融合幅度选择。
+
+## 第318版验证结果
+
+固定方案：第318丙-候选收益安全残差融合。
+
+验证门槛是否全部通过：False。
+是否报告测试集：False。
+
+验证集主结果：
+
+| 方法 | 分组 | 平均误差 | 相对第316变化 | 大退化比例 | 原预测保持率 |
+| --- | --- | --- | --- | --- | --- |
+| 第316版原预测 | 全部样本 | 0.531658 | 0 | 0 | 空 |
+| 第316版原预测 | 普通样本 | 0.405874 | 0 | 0 | 空 |
+| 第316版原预测 | 强方向盘样本 | 0.624528 | 0 | 0 | 空 |
+| 第316版原预测 | 困难前20 | 0.810938 | 0 | 0 | 空 |
+| 第316版原预测 | 困难前10 | 1.002263 | 0 | 0 | 空 |
+| 候选最优上限 | 全部样本 | 0.375720 | -0.155938 | 0 | 0.033175 |
+| 候选最优上限 | 普通样本 | 0.277041 | -0.128833 | 0 | 0.044944 |
+| 候选最优上限 | 强方向盘样本 | 0.445976 | -0.178552 | 0 | 0.026786 |
+| 候选最优上限 | 困难前20 | 0.625704 | -0.185234 | 0 | 0 |
+| 候选最优上限 | 困难前10 | 0.766732 | -0.235531 | 0 | 0 |
+| 第318丙 | 全部样本 | 0.531658 | 0 | 0 | 1 |
+| 第318丙 | 普通样本 | 0.405874 | 0 | 0 | 1 |
+| 第318丙 | 强方向盘样本 | 0.624528 | 0 | 0 | 1 |
+| 第318丙 | 困难前20 | 0.810938 | 0 | 0 | 1 |
+| 第318丙 | 困难前10 | 1.002263 | 0 | 0 | 1 |
+
+三条方案的验证门槛：
+
+| 方法 | 是否全通过 | 通过项数 | 全部样本改善 | 强方向盘改善 | 困难前20改善 | 困难前10改善 | 全部样本大退化 | 普通样本大退化 | 全部校正率 | 普通校正率 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 第318甲 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 第318乙 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 第318丙 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+第318版训练集内部搜索选出的阈值：
+
+| 方法 | p_min | gain_min | p_normal_min | gain_normal_min | candidate_gain_min | bad_prob_max | margin_min | alpha |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 第318甲 | 0.90 | 0.02 | 0.98 | 0.04 | -9 | 1.0 | -9 | 0.50 |
+| 第318乙 | 0.90 | 0.08 | 0.98 | 0.10 | 0.10 | 0.50 | 0.03 | 1.00 |
+| 第318丙 | 0.90 | 0.08 | 0.98 | 0.10 | 0.10 | 0.50 | 0.03 | 0.75 |
+
+第318版失败形态：
+
+- 守卫通过，压缩包通过。
+- 普通样本没有被改坏。
+- 但是三条方案都退回到完全不校正，验证集原预测保持率为 1。
+- 困难样本、强方向盘样本、幅值低估比例都没有任何改善。
+- 这说明第318版从第317版的“过度修改”走到了另一个极端：“过度保守，全不改”。
+
+## 我希望你给出第319版的具体修正建议
+
+请重点回答：
+
+1. 第319版应该怎么改训练集内部阈值搜索目标，避免“通过无伤项但全不改”被选中？
+2. 是否应该设置最低校正覆盖率，尤其是强方向盘样本和困难前20样本的最低校正率？合理范围是多少？
+3. 是否应该把“普通样本保护”和“困难样本激活”拆成双通道策略？例如普通样本严门槛，强方向盘/困难样本较松门槛。
+4. 第318版的第一段可校正性模型和第二段候选收益模型，下一版应该先修哪个？还是先改阈值搜索目标？
+5. 候选最优上限仍明显存在，但选择器不敢用，是否建议引入验证集前固定的候选风险预算、收益预算或分组配额？
+6. 第319版应该保留残差融合，还是先做只对困难样本开放的候选单选？
+7. 请给出一个可以直接落地到当前脚本的第319版方案，包括：
+   - 固定实验名；
+   - 阈值搜索目标；
+   - 分组硬约束；
+   - 输出表；
+   - 验证通过标准；
+   - 如果第319版仍不通过，下一步应该怎么分流。
+
+要求：请给具体数值范围和伪代码级别的规则，不要只给原则。
+有问题，尽管问
+建议把训练集内部搜索从：
+最大化通过项数 / 满足安全约束
+改成：
+先满足最低激活覆盖率 + 最低有效收益 + 安全约束，
+再最大化加权收益。
+也就是说，搜索目标要分两层。
+1.1 第一级：硬约束，直接拒绝全不改
+在训练集 OOF 上，任何阈值组合只要满足下面任意情况，就直接丢弃：
+Python
+if
+corr_rate_all
+<
+0.04
+:
+reject
+()
+if
+corr_rate_strong
+<
+0.08
+:
+reject
+()
+if
+corr_rate_hard20
+<
+0.12
+:
+reject
+()
+if
+gain_all
+<
+0.003
+:
+reject
+()
+if
+gain_strong
+<
+0.008
+:
+reject
+()
+if
+gain_hard20
+<
+0.010
+:
+reject
+()
+其中：
+Python
+gain_group
+=
+mean
+(
+err_v316
+[
+group
+] 
+-
+err_new
+[
+group
+])
+注意这里 
+ 为正才表示改善。
+gain
+第318版全不改时：
+corr_rate_all = 0
+gain_all = 0
+gain_strong = 0
+gain_hard20 = 0
+因此第319版中它会直接被判为非法，而不是“安全但无收益”。
+1.2 第二级：通过硬约束后，再最大化加权目标
+推荐第319版训练内搜索目标：
+Python
+score
+=
+ (
+1.0
+*
+gain_all
++
+1.5
+*
+gain_strong
++
+2.0
+*
+gain_hard20
++
+2.5
+*
+gain_hard10
+-
+3.0
+*
+bigdeg_all
+-
+5.0
+*
+bigdeg_normal
+-
+1.0
+*
+max
+(
+0
+, 
+normal_mean_delta
+)
+-
+0.3
+*
+max
+(
+0
+, 
+corr_rate_normal
+-
+normal_corr_cap
+)
+)
+含义：
+Python
+gain_all
+=
+err316_all
+-
+err319_all
+gain_strong
+=
+err316_strong
+-
+err319_strong
+gain_hard20
+=
+err316_hard20
+-
+err319_hard20
+gain_hard10
+=
+err316_hard10
+-
+err319_hard10
+normal_mean_delta
+=
+err319_normal
+-
+err316_normal
+关键点：
+全部样本改善要有权重；
+强方向盘样本权重要更高；
+困难前20、困难前10权重要更高；
+普通样本退化惩罚要强；
+普通样本校正率过高要惩罚，但不能通过“全不改”拿高分。
+1.3 不再使用“通过项数”作为主目标
+第318版三条方案“通过项数 7”，但改善全为 0。这说明“通过项数”目标会偏向无动作解。
+第319版可以继续输出通过项数，但不能用它选阈值。
+推荐排序规则：
+Python
+valid_solutions
+=
+ [
+s
+for
+s
+in
+search_results
+if
+s
+.
+pass_hard_constraints]
+if
+len
+(
+valid_solutions
+) 
+==
+0
+:
+report_train_infeasible
+()
+do_not_choose_noop
+()
+else
+:
+best
+=
+max
+(
+valid_solutions
+, 
+key
+=lambda
+s
+: 
+s
+.
+score)
+也就是说：
+没有满足最低激活 + 最低收益的解，就报告第319训练内不可行；
+不能自动退回第316。
+2. 是否设置最低校正覆盖率
+应该设置，而且必须分组设置。
+第318版已经证明：
+不设置最低覆盖率，搜索会选择全不改。
+但覆盖率不能太高，否则会回到第317版“大面积改坏普通样本”的问题。
+2.1 推荐第319版覆盖率范围
+第319版我建议先用这一组固定值：
+Python
+corr_all_min
+=
+0.05
+corr_all_max
+=
+0.15
+corr_normal_max
+=
+0.06
+corr_normal_min
+=
+0.00
+corr_strong_min
+=
+0.10
+corr_strong_max
+=
+0.30
+corr_hard20_min
+=
+0.15
+corr_hard20_max
+=
+0.40
+corr_hard10_min
+=
+0.20
+corr_hard10_max
+=
+0.50
+这组值的逻辑是：
+全部样本至少修 5%，避免第318版全不改；
+普通样本最多修 6%，避免第317版普通样本被大面积改坏；
+强方向盘样本至少修 10%，符合任务主线；
+困难前20至少修 15%，否则困难样本根本不会改善；
+困难前10至少修 20%，因为这一组候选上限改善最大。
+2.2 注意：困难前20不能作为部署输入
+训练内可以用真实误差定义：
+Python
+hard20_train
+=
+err316_train
+>=
+quantile
+(
+err316_train
+, 
+0.80
+)
+hard10_train
+=
+err316_train
+>=
+quantile
+(
+err316_train
+, 
+0.90
+)
+但验证集/部署时不能用真实误差提前知道谁是困难样本。
+因此第319版需要一个
+困难代理通道
+：
+Python
+hard_proxy_score
+=
+model_predict_hard_or_need_score
+(
+x_past
+, 
+pred316_features
+, 
+candidate_features
+)
+训练时用 OOF 方式训练这个代理模型，目标可以是：
+Python
+target_hard20
+=
+err316
+>=
+train_fold_80_percentile
+部署/验证时只使用：
+Python
+p_hard20_pred
+p_fixable
+predicted_gain
+candidate_disagreement
+strong_steer_flag
+不能使用验证集真实误差做门控。
+3. 是否拆成“普通保护”和“困难激活”双通道
+应该拆，而且这是第319版的核心修正。
+第318版的问题之一是：
+一个统一门槛同时服务普通样本保护和困难样本修正，最后只能选极保守阈值。
+第319版建议改成双通道：
+A. 普通保护通道：严门槛、低覆盖、低 alpha 或不修。
+B. 强方向盘/困难激活通道：松门槛、有最低覆盖、允许候选单选。
+3.1 通道划分
+推荐定义：
+Python
+strong_channel
+=
+strong_steer_mask
+hard_proxy_channel
+=
+ (
+    (
+p_hard20_pred
+>=
+q70_p_hard20_train
+)
+|
+ (
+need_score
+>=
+q75_need_train
+)
+)
+repair_channel
+=
+strong_channel
+|
+hard_proxy_channel
+normal_channel
+=
+~
+repair_channel
+ 建议用 rank 化后的分数，避免概率未校准导致验证集一个样本都过不了阈值：
+其中 
+need_score
+Python
+need_score
+=
+ (
+0.35
+*
+rank01
+(
+p_fixable
+)
++
+0.30
+*
+rank01
+(
+pred_gain_stage1
+)
++
+0.25
+*
+rank01
+(
+p_hard20_pred
+)
++
+0.10
+*
+rank01
+(
+candidate_spread
+)
++
+0.10
+*
+strong_steer_mask
+.
+astype(
+float
+)
+)
+ 可以简单定义为：
+candidate_spread
+Python
+candidate_spread
+=
+mean_abs
+(
+candidates
+-
+pred316
+)
+或者：
+Python
+candidate_spread
+=
+max_candidate_peak_abs
+-
+pred316_peak_abs
+3.2 普通保护通道门槛
+普通样本只允许极少数高置信收益样本被修正。
+推荐搜索范围：
+Python
+normal_p_min_grid
+=
+ [
+0.85
+, 
+0.90
+, 
+0.95
+]
+normal_gain_min_grid
+=
+ [
+0.06
+, 
+0.08
+, 
+0.10
+, 
+0.12
+]
+normal_candidate_gain_min_grid
+=
+ [
+0.08
+, 
+0.10
+, 
+0.12
+, 
+0.15
+]
+normal_bad_prob_max_grid
+=
+ [
+0.25
+, 
+0.35
+, 
+0.45
+]
+normal_margin_min_grid
+=
+ [
+0.03
+, 
+0.05
+, 
+0.08
+]
+normal_alpha_grid
+=
+ [
+0.25
+, 
+0.50
+]
+硬约束：
+Python
+corr_rate_normal
+<=
+0.06
+normal_mean_delta
+<=
+0.003
+bigdeg_normal
+<=
+0.008
+普通样本不设最低修正率：
+Python
+corr_rate_normal_min
+=
+0.0
+3.3 强方向盘/困难激活通道门槛
+ 的统一高门槛，否则会继续全不改。
+这一通道不能再用第318版那种 
+、
+p_min=0.90
+gain_min=0.08
+推荐搜索范围：
+Python
+repair_p_min_grid
+=
+ [
+0.50
+, 
+0.60
+, 
+0.70
+, 
+0.80
+]
+repair_gain_min_grid
+=
+ [
+-
+0.02
+, 
+0.00
+, 
+0.02
+, 
+0.04
+]
+repair_candidate_gain_min_grid
+=
+ [
+0.00
+, 
+0.02
+, 
+0.04
+, 
+0.06
+]
+repair_bad_prob_max_grid
+=
+ [
+0.55
+, 
+0.65
+, 
+0.75
+]
+repair_margin_min_grid
+=
+ [
+-
+0.03
+, 
+0.00
+, 
+0.02
+]
+repair_alpha_grid
+=
+ [
+0.75
+, 
+1.00
+]
+硬约束：
+Python
+corr_rate_strong
+>=
+0.10
+corr_rate_hard20
+>=
+0.15
+corr_rate_hard10
+>=
+0.20
+gain_strong
+>=
+0.008
+gain_hard20
+>=
+0.010
+gain_hard10
+>=
+0.010
+4. 先修第一段模型、第二段模型，还是先改阈值搜索目标
+第319版应先改：
+阈值搜索目标 + 双通道预算选择器
+不要先重训主模型，也不要先扩候选库。
+理由很直接：
+候选最优上限仍然明显优于第316；
+第318版验证集不是“修错”，而是“完全没修”；
+第318版的二阶段模型有没有价值，目前没有被真正检验，因为阈值把所有样本挡掉了；
+先改搜索目标后，才能判断是“模型分数不行”还是“阈值策略不行”。
+推荐顺序：
+第319.0：不重训主模型，不扩候选库，只改搜索目标、覆盖率约束、双通道选择。
+第319.1：如果激活后候选选错，再修第二段候选收益模型。
+第319.2：如果连可校正样本都找不到，再修第一段可校正性/困难代理模型。
+第319.3：如果候选库上限对特定失败子集不够，再扩候选库。
+当前优先级：
+第一优先级：阈值搜索目标。
+第二优先级：双通道激活策略。
+第三优先级：候选收益排序模型。
+第四优先级：第一段可校正性模型。
+第五优先级：扩候选库或重训主模型。
+5. 是否引入风险预算、收益预算、分组配额
+应该引入，而且第319版最好不要只靠固定概率阈值。
+第318版暴露了一个明显风险：
+概率阈值未必校准，验证集可能没有样本超过阈值。
+所以第319版建议采用：
+阈值过滤 + 分组预算排序选择
+而不是：
+只用 p_min/gain_min/bad_prob_max 硬切。
+5.1 候选风险预算
+推荐在训练内固定如下风险预算：
+Python
+bigdeg_all_max
+=
+0.015
+# 全部样本大退化不超过 1.5%
+bigdeg_normal_max
+=
+0.008
+# 普通样本大退化不超过 0.8%
+normal_mean_delta_max
+=
+0.003
+all_mean_gain_min
+=
+0.003
+如果当前“大退化比例”的定义已经在第317/318脚本里存在，继续沿用原定义，不要换定义。第319只改约束值和选择逻辑。
+5.2 分组修正配额
+建议固定如下配额：
+Python
+quota_all_min
+=
+0.05
+quota_all_max
+=
+0.15
+quota_normal_max
+=
+0.06
+quota_strong_min
+=
+0.10
+quota_strong_max
+=
+0.30
+quota_hard_proxy_min
+=
+0.12
+quota_hard_proxy_max
+=
+0.35
+训练内同时检查真实困难组：
+Python
+corr_hard20_min
+=
+0.15
+corr_hard10_min
+=
+0.20
+验证集只把真实困难组作为
+评估指标
+，不能作为选择输入。
+5.3 收益预算
+除了风险预算，还要设置最低收益预算。
+推荐：
+Python
+gain_all_min
+=
+0.003
+gain_strong_min
+=
+0.008
+gain_hard20_min
+=
+0.010
+gain_hard10_min
+=
+0.010
+这几个值不高，但足够把全不改排除掉。
+如果第319希望更激进，可以用第二档：
+Python
+gain_all_min
+=
+0.005
+gain_strong_min
+=
+0.012
+gain_hard20_min
+=
+0.015
+gain_hard10_min
+=
+0.015
+我建议第319第一次先用第一档，避免从第318的“全不改”直接跳回第317的“过度修改”。
+6. 残差融合还是困难样本候选单选
+第319版主方案建议：
+强方向盘/困难激活通道：候选单选为主，alpha = 1.0 或 0.75。
+普通保护通道：残差融合为主，alpha = 0.25 或 0.50。
+不要全局只用残差融合。
+原因：
+当前主线是严重方向/意图错误；
+这类错误通常不是小残差修补能解决的；
+残差融合会把候选修正幅度稀释；
+困难样本需要允许完整切换到候选曲线；
+普通样本才需要小步融合保护。
+推荐第319固定规则：
+Python
+if
+sample
+in
+repair_channel
+:
+alpha
+=
+search_from
+([
+0.75
+, 
+1.00
+])
+else
+:
+alpha
+=
+search_from
+([
+0.25
+, 
+0.50
+])
+如果必须只选一个主方案，我建议：
+Python
+repair_channel_alpha
+=
+1.00
+normal_channel_alpha
+=
+0.50
+也就是：
+困难/强方向盘样本：候选单选。
+普通样本：最多半幅融合。
+7. 第319版可直接落地方案
+7.1 固定实验名
+建议固定为：
+v319_difficulty_activated_budget_gate_20260705
+脚本名：
+stage03_v319_difficulty_activated_budget_gate_20260705.py
+输出目录：
+F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v319_difficulty_activated_budget_gate_20260705
+7.2 第319版核心流程
+Python
+# 1. 读取第316原预测、第317候选库
+pred_base
+=
+load_v316_pred
+()
+pred_candidates
+=
+load_v317_candidates
+()
+# 2. 复用第318已有的 OOF 第一段/第二段预测分数
+p_fixable
+=
+load_oof_p_fixable
+()
+pred_gain_stage1
+=
+load_oof_gain_stage1
+()
+candidate_gain_pred
+=
+load_oof_candidate_gain
+()
+candidate_bad_prob
+=
+load_oof_candidate_bad_prob
+()
+# 3. 训练/加载困难代理模型
+# target 只在训练 OOF 内构造，部署/验证不使用未来真实值
+err_base_train
+=
+curve_error
+(
+y_train
+, 
+pred_base_train
+)
+hard20_target
+=
+err_base_train
+>=
+quantile
+(
+err_base_train
+, 
+0.80
+)
+p_hard20_pred
+=
+train_oof_hard20_proxy
+(
+features
+=
+[
+past_vehicle_features
+,
+pred316_shape_features
+,
+candidate_disagreement_features
+,
+strong_steer_features
+,
+    ],
+target
+=
+hard20_target
+,
+)
+# 4. 构造 need_score，使用 rank 避免概率未校准
+need_score
+=
+ (
+0.35
+*
+rank01
+(
+p_fixable
+)
++
+0.30
+*
+rank01
+(
+pred_gain_stage1
+)
++
+0.25
+*
+rank01
+(
+p_hard20_pred
+)
++
+0.10
+*
+rank01
+(
+candidate_spread
+)
++
+0.10
+*
+strong_steer_mask
+.
+astype(
+float
+)
+)
+# 5. 通道划分
+repair_channel
+=
+ (
+strong_steer_mask
+|
+ (
+p_hard20_pred
+>=
+train_quantile
+(
+p_hard20_pred
+, 
+0.70
+))
+|
+ (
+need_score
+>=
+train_quantile
+(
+need_score
+, 
+0.75
+))
+)
+normal_channel
+=
+~
+repair_channel
+7.3 候选选择规则
+每个样本先选一个候选：
+Python
+candidate_utility
+=
+ (
+candidate_gain_pred
+-
+0.08
+*
+candidate_bad_prob
+)
+best_candidate_id
+=
+argmax
+(
+candidate_utility
+, 
+axis
+=
+1
+)
+best_candidate_gain
+=
+candidate_gain_pred
+[
+np
+.
+arange(
+n
+), 
+best_candidate_id
+]
+best_candidate_bad
+=
+candidate_bad_prob
+[
+np
+.
+arange(
+n
+), 
+best_candidate_id
+]
+second_best_utility
+=
+second_largest
+(
+candidate_utility
+, 
+axis
+=
+1
+)
+margin
+=
+candidate_utility
+[
+np
+.
+arange(
+n
+), 
+best_candidate_id
+] 
+-
+second_best_utility
+7.4 双通道候选资格
+普通保护通道
+Python
+eligible_normal
+=
+ (
+normal_channel
+&
+ (
+p_fixable
+>=
+normal_p_min
+)
+&
+ (
+pred_gain_stage1
+>=
+normal_gain_min
+)
+&
+ (
+best_candidate_gain
+>=
+normal_candidate_gain_min
+)
+&
+ (
+best_candidate_bad
+<=
+normal_bad_prob_max
+)
+&
+ (
+margin
+>=
+normal_margin_min
+)
+)
+推荐搜索范围：
+Python
+normal_p_min_grid
+=
+ [
+0.85
+, 
+0.90
+, 
+0.95
+]
+normal_gain_min_grid
+=
+ [
+0.06
+, 
+0.08
+, 
+0.10
+, 
+0.12
+]
+normal_candidate_gain_min_grid
+=
+ [
+0.08
+, 
+0.10
+, 
+0.12
+, 
+0.15
+]
+normal_bad_prob_max_grid
+=
+ [
+0.25
+, 
+0.35
+, 
+0.45
+]
+normal_margin_min_grid
+=
+ [
+0.03
+, 
+0.05
+, 
+0.08
+]
+困难/强方向盘激活通道
+Python
+eligible_repair
+=
+ (
+repair_channel
+&
+ (
+p_fixable
+>=
+repair_p_min
+)
+&
+ (
+pred_gain_stage1
+>=
+repair_gain_min
+)
+&
+ (
+best_candidate_gain
+>=
+repair_candidate_gain_min
+)
+&
+ (
+best_candidate_bad
+<=
+repair_bad_prob_max
+)
+&
+ (
+margin
+>=
+repair_margin_min
+)
+)
+推荐搜索范围：
+Python
+repair_p_min_grid
+=
+ [
+0.50
+, 
+0.60
+, 
+0.70
+, 
+0.80
+]
+repair_gain_min_grid
+=
+ [
+-
+0.02
+, 
+0.00
+, 
+0.02
+, 
+0.04
+]
+repair_candidate_gain_min_grid
+=
+ [
+0.00
+, 
+0.02
+, 
+0.04
+, 
+0.06
+]
+repair_bad_prob_max_grid
+=
+ [
+0.55
+, 
+0.65
+, 
+0.75
+]
+repair_margin_min_grid
+=
+ [
+-
+0.03
+, 
+0.00
+, 
+0.02
+]
+7.5 分组预算排序选择
+不要让阈值单独决定最终修正样本。阈值只负责过滤极差样本，最终用预算选 top 样本。
+Python
+select_score
+=
+ (
+best_candidate_gain
+-
+0.10
+*
+best_candidate_bad
++
+0.20
+*
+pred_gain_stage1
++
+0.10
+*
+p_fixable
++
+0.15
+*
+p_hard20_pred
++
+0.10
+*
+strong_steer_mask
+.
+astype(
+float
+)
+)
+选择逻辑：
+Python
+selected
+=
+np
+.
+zeros(
+n
+, 
+dtype
+=
+bool
+)
+# A. 强方向盘样本：必须有最低覆盖
+idx_strong
+=
+where
+(
+eligible_repair
+&
+strong_steer_mask
+)
+selected_strong
+=
+top_by_score
+(
+idx_strong
+,
+select_score
+,
+min_rate
+=
+0.10
+,
+max_rate
+=
+0.30
+,
+)
+selected
+[
+selected_strong
+] 
+=
+True
+# B. 困难代理样本：必须有最低覆盖
+idx_hard_proxy
+=
+where
+(
+eligible_repair
+&
+ (
+p_hard20_pred
+>=
+train_quantile
+(
+p_hard20_pred
+, 
+0.70
+))
+)
+selected_hard_proxy
+=
+top_by_score
+(
+idx_hard_proxy
+,
+select_score
+,
+min_rate
+=
+0.12
+,
+max_rate
+=
+0.35
+,
+)
+selected
+[
+selected_hard_proxy
+] 
+=
+True
+# C. 普通样本：只允许少量高置信修正
+idx_normal
+=
+where
+(
+eligible_normal
+)
+selected_normal
+=
+top_by_score
+(
+idx_normal
+,
+select_score
+,
+min_rate
+=
+0.00
+,
+max_rate
+=
+0.06
+,
+)
+selected
+[
+selected_normal
+] 
+=
+True
+# D. 全局覆盖率上限
+if
+selected
+.
+mean() 
+>
+0.15
+:
+selected
+=
+keep_top_by_score
+(
+selected
+, 
+select_score
+, 
+max_rate
+=
+0.15
+)
+注意：
+这里的 top-by-score 只使用模型分数、当前窗口特征、第316预测形状、第317候选形状，不使用验证真实曲线。
+7.6 输出预测
+Python
+pred_new
+=
+pred_base
+.
+copy()
+for
+i
+in
+range
+(
+n
+):
+if
+not
+selected
+[
+i
+]:
+continue
+j
+=
+best_candidate_id
+[
+i
+]
+if
+repair_channel
+[
+i
+]:
+alpha
+=
+repair_alpha
+# 推荐搜索 [0.75, 1.00]
+else
+:
+alpha
+=
+normal_alpha
+# 推荐搜索 [0.25, 0.50]
+pred_new
+[
+i
+] 
+=
+ (
+1
+-
+alpha
+) 
+*
+pred_base
+[
+i
+] 
++
+alpha
+*
+pred_candidates
+[
+i
+, 
+j
+]
+第319主方案建议固定：
+Python
+repair_alpha_grid
+=
+ [
+0.75
+, 
+1.00
+]
+normal_alpha_grid
+=
+ [
+0.25
+, 
+0.50
+]
+如果只保留一个最终组合：
+Python
+repair_alpha
+=
+1.00
+normal_alpha
+=
+0.50
+8. 第319版训练内阈值搜索伪代码
+Python
+best_solution
+=
+None
+best_score
+=
+-
+np
+.
+inf
+for
+normal_p_min
+in
+ [
+0.85
+, 
+0.90
+, 
+0.95
+]:
+for
+normal_gain_min
+in
+ [
+0.06
+, 
+0.08
+, 
+0.10
+, 
+0.12
+]:
+for
+normal_cgain_min
+in
+ [
+0.08
+, 
+0.10
+, 
+0.12
+, 
+0.15
+]:
+for
+normal_bad_max
+in
+ [
+0.25
+, 
+0.35
+, 
+0.45
+]:
+for
+normal_margin_min
+in
+ [
+0.03
+, 
+0.05
+, 
+0.08
+]:
+for
+repair_p_min
+in
+ [
+0.50
+, 
+0.60
+, 
+0.70
+, 
+0.80
+]:
+for
+repair_gain_min
+in
+ [
+-
+0.02
+, 
+0.00
+, 
+0.02
+, 
+0.04
+]:
+for
+repair_cgain_min
+in
+ [
+0.00
+, 
+0.02
+, 
+0.04
+, 
+0.06
+]:
+for
+repair_bad_max
+in
+ [
+0.55
+, 
+0.65
+, 
+0.75
+]:
+for
+repair_margin_min
+in
+ [
+-
+0.03
+, 
+0.00
+, 
+0.02
+]:
+for
+repair_alpha
+in
+ [
+0.75
+, 
+1.00
+]:
+for
+normal_alpha
+in
+ [
+0.25
+, 
+0.50
+]:
+selected
+, 
+pred_new
+=
+run_gate_and_budget_selector
+(
+normal_thresholds
+,
+repair_thresholds
+,
+repair_alpha
+,
+normal_alpha
+,
+                        )
+metrics
+=
+evaluate_oof
+(
+pred_new
+, 
+pred_base
+, 
+y_true
+)
+# ---------- 硬约束 ----------
+if
+metrics
+.
+corr_all 
+<
+0.05
+:
+continue
+if
+metrics
+.
+corr_all 
+>
+0.15
+:
+continue
+if
+metrics
+.
+corr_normal 
+>
+0.06
+:
+continue
+if
+metrics
+.
+corr_strong 
+<
+0.10
+:
+continue
+if
+metrics
+.
+corr_hard20 
+<
+0.15
+:
+continue
+if
+metrics
+.
+corr_hard10 
+<
+0.20
+:
+continue
+if
+metrics
+.
+gain_all 
+<
+0.003
+:
+continue
+if
+metrics
+.
+gain_strong 
+<
+0.008
+:
+continue
+if
+metrics
+.
+gain_hard20 
+<
+0.010
+:
+continue
+if
+metrics
+.
+gain_hard10 
+<
+0.010
+:
+continue
+if
+metrics
+.
+normal_mean_delta 
+>
+0.003
+:
+continue
+if
+metrics
+.
+bigdeg_all 
+>
+0.015
+:
+continue
+if
+metrics
+.
+bigdeg_normal 
+>
+0.008
+:
+continue
+# 至少 3/5 折有正收益，防止某一折偶然拉高
+if
+metrics
+.
+fold_gain_all_positive_count 
+<
+3
+:
+continue
+if
+metrics
+.
+fold_gain_hard20_positive_count 
+<
+3
+:
+continue
+# ---------- 加权目标 ----------
+score
+=
+ (
+1.0
+*
+metrics
+.
+gain_all
++
+1.5
+*
+metrics
+.
+gain_strong
++
+2.0
+*
+metrics
+.
+gain_hard20
++
+2.5
+*
+metrics
+.
+gain_hard10
+-
+3.0
+*
+metrics
+.
+bigdeg_all
+-
+5.0
+*
+metrics
+.
+bigdeg_normal
+-
+1.0
+*
+max
+(
+0.0
+, 
+metrics
+.
+normal_mean_delta)
+-
+0.3
+*
+max
+(
+0.0
+, 
+metrics
+.
+corr_normal 
+-
+0.05
+)
+                        )
+if
+score
+>
+best_score
+:
+best_score
+=
+score
+best_solution
+=
+current_solution
+最后：
+Python
+if
+best_solution
+is
+None
+:
+report
+(
+"v319_train_infeasible"
+)
+# 不允许退回全不改作为第319正式方案
+else
+:
+apply_to_validation
+(
+best_solution
+)
+9. 第319版必须输出的表
+第318版只输出最终误差表还不够。第319版必须输出门控诊断表，否则无法判断是“没激活”“激活错了”还是“候选选错”。
+9.1 主结果表
+继续保留：
+必须新增：
+第319版
+第316版
+候选最优上限
+分组继续包括：
+全部样本
+普通样本
+强方向盘样本
+困难前20
+困难前10
+9.2 校正覆盖率表
+新增：
+必须包含：
+全部样本
+普通样本
+强方向盘样本
+困难代理样本
+困难前20
+困难前10
+其中：
+困难代理样本：门控实际可用；
+困难前20/前10：只作为验证后评估，不作为输入。
+9.3 通道表
+新增：
+通道包括：
+normal_channel
+strong_channel
+hard_proxy_channel
+repair_channel
+9.4 候选类型分布表
+第317候选库有幅值缩放、时间平移、幅值+时间、残差原型等。第319要输出：
+这个表能判断：
+是不是总选错某类候选；
+时间平移候选是不是风险过高；
+残差原型是不是只在少数样本有效；
+幅值缩放是否真正解决幅值低估。
+9.5 Oracle 捕获率表
+新增：
+Python
+oracle_gain_group
+=
+err316_group
+-
+err_oracle_group
+actual_gain_group
+=
+err316_group
+-
+err319_group
+capture_ratio
+=
+actual_gain_group
+/
+max
+(
+oracle_gain_group
+, 
+1e-6
+)
+输出：
+预期：
+全部样本 Oracle 捕获率 ≥ 3%
+强方向盘样本 Oracle 捕获率 ≥ 5%
+困难前20 Oracle 捕获率 ≥ 5%
+第319不需要一口气捕获很多候选上限，但不能为 0。
+9.6 分数分布漂移表
+第318版最大问题可能是训练 OOF 阈值在验证集上无样本通过。第319必须输出：
+包括：
+p_fixable
+pred_gain_stage1
+best_candidate_gain
+best_candidate_bad
+margin
+p_hard20_pred
+need_score
+candidate_spread
+如果 OOF 的 p90 在验证集变成 p99 以上，说明概率阈值不稳，应该进一步改 rank-budget 选择。
+10. 第319版验证通过标准
+第319版验证集只做通过/失败判定，测试集继续压制。
+基于你给出的第316验证结果，建议第319固定通过标准如下。
+10.1 平均误差标准
+第316基线：
+全部样本：0.531658
+普通样本：0.405874
+强方向盘样本：0.624528
+困难前20：0.810938
+困难前10：1.002263
+第319通过门槛：
+对应绝对变化：
+Python
+gain_all
+>=
+0.005
+normal_delta
+<=
+0.003
+gain_strong
+>=
+0.010
+gain_hard20
+>=
+0.015
+gain_hard10
+>=
+0.015
+这比训练内搜索门槛略严格，但仍远低于候选最优上限，属于合理的第319目标。
+10.2 大退化标准
+建议：
+Python
+bigdeg_all
+<=
+0.015
+bigdeg_normal
+<=
+0.008
+如果当前脚本的大退化比例定义较严格，导致历史值很低，可以放宽到：
+Python
+bigdeg_all
+<=
+0.020
+bigdeg_normal
+<=
+0.010
+但不建议超过这个范围，否则容易回到第317版问题。
+10.3 校正覆盖率标准
+验证集通过标准建议：
+Python
+corr_all
+>=
+0.04
+corr_all
+<=
+0.15
+corr_normal
+<=
+0.06
+corr_strong
+>=
+0.08
+corr_hard20
+>=
+0.10
+corr_hard10
+>=
+0.15
+注意：
+验证集的 
+ 和 
+ 是验证后统计，不参与选择。
+corr_hard20
+corr_hard10
+10.4 幅值低估比例标准
+你提到第318版幅值低估比例也没有改善。第319建议加入：
+Python
+amp_under_rate_strong_319
+<=
+amp_under_rate_strong_316
+-
+0.01
+amp_under_rate_hard20_319
+<=
+amp_under_rate_hard20_316
+-
+0.01
+amp_under_rate_normal_319
+<=
+amp_under_rate_normal_316
++
+0.005
+也就是：
+强方向盘样本幅值低估比例至少下降 1 个百分点；
+困难前20至少下降 1 个百分点；
+普通样本不能明显变差。
+如果幅值低估比例样本很少，可以改成绝对数量：
+Python
+amp_under_count_strong_319
+<=
+amp_under_count_strong_316
+-
+1
+amp_under_count_hard20_319
+<=
+amp_under_count_hard20_316
+-
+1
+11. 如果第319版仍不通过，下一步怎么分流
+第319失败后不要笼统说“模型不好”。要按失败形态分流。
+分流 A：训练 OOF 可行，验证集又全不改
+判定条件：
+Python
+oof_corr_all
+>=
+0.05
+val_corr_all
+<
+0.02
+说明：
+阈值在验证集失效，分数分布漂移或概率未校准。
+下一步：
+第320改成纯 rank-budget 选择，减少绝对概率阈值依赖。
+具体做法：
+Python
+# 不再要求 p_fixable >= 某个绝对值
+# 只要求 bad_prob 不超过极端风险阈值
+# 然后按 select_score 在各组取固定比例 top 样本
+分流 B：验证集有激活，但普通样本被改坏
+判定条件：
+Python
+corr_all
+>=
+0.04
+normal_mean_delta
+>
+0.003
+# 或
+bigdeg_normal
+>
+0.008
+说明：
+普通保护通道仍然不够严。
+下一步：
+Python
+corr_normal_max
+=
+0.02
+normal_alpha
+=
+0.25
+normal_bad_prob_max
+=
+0.25
+甚至可以直接：
+Python
+normal_channel
+全部不改
+只保留：
+Python
+repair_channel
+=
+strong_channel
+|
+hard_proxy_channel
+分流 C：强方向盘/困难样本被激活，但没有改善
+判定条件：
+Python
+corr_strong
+>=
+0.08
+gain_strong
+<=
+0
+corr_hard20
+>=
+0.10
+gain_hard20
+<=
+0
+说明：
+不是不敢修，而是候选选错。
+下一步优先修第二段候选收益模型：
+把候选选择从 pointwise 回归改成 pairwise/listwise 排序。
+建议目标：
+Python
+target_pairwise
+=
+err_candidate_a
+<
+err_candidate_b
+或者直接训练：
+Python
+candidate_rank_label
+=
+argsort
+(
+candidate_true_error
+)
+并分候选族输出表现：
+幅值缩放候选
+时间平移候选
+幅值+时间候选
+残差原型候选
+原预测不改
+分流 D：训练 OOF 下没有任何可行解
+判定条件：
+Python
+best_solution
+is
+None
+说明：
+现有第一段/第二段分数无法在安全约束下找到有效修正样本。
+下一步不是验证集调参，而是在训练内修模型：
+优先顺序：
+1. 重训第一段可校正性模型，改成高召回目标。
+2. 新增 hard20_proxy 模型。
+3. 重训第二段候选收益排序模型。
+4. 最后才扩候选库。
+第一段目标建议从：
+Python
+fixable
+=
+oracle_gain
+>
+0
+改成：
+Python
+fixable
+=
+ (
+    (
+oracle_gain
+>
+0.03
+)
+|
+ ((
+strong_steer_mask
+==
+1
+) 
+&
+ (
+oracle_gain
+>
+0.015
+))
+|
+ ((
+hard20_target
+==
+1
+) 
+&
+ (
+oracle_gain
+>
+0.015
+))
+)
+并使用类别权重：
+Python
+class_weight
+=
+ {
+0
+: 
+1.0
+,
+1
+: 
+3.0
+,
+}
+对强方向盘/困难样本再加权：
+Python
+sample_weight
+=
+1.0
+sample_weight
++=
+1.0
+*
+strong_steer_mask
+sample_weight
++=
+1.5
+*
+hard20_target
+分流 E：第319有改善，但改善太小
+判定条件：
+Python
+gain_all
+>
+0
+gain_strong
+>
+0
+gain_hard20
+>
+0
+# 但未达到通过线
+说明：
+方向正确，激活过于保守。
+下一步：
+Python
+corr_all_min
+从
+0.05
+提到
+0.08
+corr_strong_min
+从
+0.10
+提到
+0.15
+corr_hard20_min
+从
+0.15
+提到
+0.20
+repair_bad_prob_max
+允许到
+0.75
+repair_alpha
+固定
+1.00
+normal_channel
+继续限制
+<=
+0.04
+12. 第319版最终建议一句话
+第319版不要再做“更保守的门控”。
+应该改成：
+普通样本严格保护；
+强方向盘/困难代理样本强制激活；
+训练内搜索必须满足最低覆盖率和最低收益；
+候选选择采用风险预算 + 分组配额；
+困难通道优先候选单选，普通通道才用残差融合。
+最推荐的第319主线是：
+v319_difficulty_activated_budget_gate_20260705
+核心固定参数：
+Python
+corr_all_min
+=
+0.05
+corr_all_max
+=
+0.15
+corr_normal_max
+=
+0.06
+corr_strong_min
+=
+0.10
+corr_hard20_min
+=
+0.15
+corr_hard10_min
+=
+0.20
+gain_all_min
+=
+0.003
+gain_strong_min
+=
+0.008
+gain_hard20_min
+=
+0.010
+gain_hard10_min
+=
+0.010
+bigdeg_all_max
+=
+0.015
+bigdeg_normal_max
+=
+0.008
+normal_mean_delta_max
+=
+0.003
+repair_alpha_grid
+=
+ [
+0.75
+, 
+1.00
+]
+normal_alpha_grid
+=
+ [
+0.25
+, 
+0.50
+]
+验证通过标准建议：
+Python
+err319_all
+<=
+0.526658
+err319_normal
+<=
+0.408874
+err319_strong
+<=
+0.614528
+err319_hard20
+<=
+0.795938
+err319_hard10
+<=
+0.987263
+corr_all
+>=
+0.04
+corr_strong
+>=
+0.08
+corr_hard20
+>=
+0.10
+corr_hard10
+>=
+0.15
+corr_normal
+<=
+0.06
+bigdeg_all
+<=
+0.015
+bigdeg_normal
+<=
+0.008
+这版的目标不是一次吃掉候选最优上限，而是先证明：
+在普通样本不明显变坏的前提下，选择器能够稳定激活并真实改善强方向盘和困难样本。

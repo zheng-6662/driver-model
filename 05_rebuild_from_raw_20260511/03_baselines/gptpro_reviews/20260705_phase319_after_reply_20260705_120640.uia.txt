@@ -1,0 +1,105 @@
+﻿[1] ControlType.Pane 2441,390,1278,1024 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili - 正在播放音频 - Google Chrome - xin
+[140] ControlType.TabItem 2469,390,256,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili - 正在播放音频
+[144] ControlType.Button 2719,390,28,41 新标签页
+[147] ControlType.Button 3442,390,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 3582,391,45,39 最小化
+[6] ControlType.Button 3627,391,46,39 最大化
+[7] ControlType.Button 3673,391,46,39 关闭
+[137] ControlType.Button 2447,396,28,28 标签页搜索
+[142] ControlType.Button 2683,396,28,28 关闭
+[141] ControlType.Button 2665,402,16,16 将此标签页静音
+[11] ControlType.Button 2447,436,34,34 返回
+[12] ControlType.Button 2483,436,34,34 前进
+[13] ControlType.Button 2519,436,34,34 重新加载
+[20] ControlType.Button 3643,436,34,34 xin
+[21] ControlType.Button 3679,436,34,34 Chrome
+[15] ControlType.Button 2567,441,24,24 查看网站信息
+[16] ControlType.Edit 2599,441,991,24 地址和搜索栏
+[19] ControlType.Button 3598,441,24,24 为此标签页添加书签
+[22] ControlType.ToolBar 2441,476,1278,34 书签
+[23] ControlType.ToolBar 2447,476,36,28 已保存的标签页分组
+[24] ControlType.Button 2447,476,28,28 标签页分组
+[25] ControlType.Button 3625,476,86,28 所有书签
+[26] ControlType.Separator 3607,482,18,16 分隔符
+[30] ControlType.Document 2441,511,1278,903 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[32] ControlType.ListItem 2465,511,62,64 首页
+[33] ControlType.Hyperlink 2465,511,52,64 首页
+[35] ControlType.ListItem 2527,511,38,64 番剧
+[36] ControlType.Hyperlink 2527,511,28,64 番剧
+[37] ControlType.ListItem 2565,511,38,64 直播
+[38] ControlType.Hyperlink 2565,511,28,64 直播
+[39] ControlType.ListItem 2603,511,66,64 游戏中心
+[40] ControlType.Hyperlink 2603,511,56,64 游戏中心
+[41] ControlType.ListItem 2669,511,52,64 会员购
+[42] ControlType.Hyperlink 2669,511,42,64 会员购
+[43] ControlType.ListItem 2721,511,38,64 漫画
+[44] ControlType.Hyperlink 2721,511,28,64 漫画
+[45] ControlType.ListItem 2759,511,38,64 赛事
+[46] ControlType.Hyperlink 2759,511,28,64 赛事
+[47] ControlType.ListItem 2797,511,91,64 下载客户端
+[48] ControlType.Hyperlink 2797,511,91,64 下载客户端
+[57] ControlType.Hyperlink 2617,683,80,28 番剧
+[59] ControlType.Hyperlink 2704,683,80,28 国创
+[61] ControlType.Hyperlink 2791,683,80,28 综艺
+[63] ControlType.Hyperlink 2879,683,80,28 动画
+[65] ControlType.Hyperlink 2966,683,80,28 鬼畜
+[67] ControlType.Hyperlink 3053,683,80,28 舞蹈
+[69] ControlType.Hyperlink 3141,683,80,28 娱乐
+[71] ControlType.Hyperlink 3228,683,80,28 科技数码
+[73] ControlType.Hyperlink 3315,683,80,28 美食
+[76] ControlType.Hyperlink 3414,683,70,28 专栏
+[78] ControlType.Hyperlink 3483,683,70,28 活动
+[80] ControlType.Hyperlink 3552,683,92,28 社区中心
+[53] ControlType.Hyperlink 2501,684,40,64 动态
+[55] ControlType.Hyperlink 2557,684,40,64 热门
+[58] ControlType.Hyperlink 2617,721,80,28 电影
+[60] ControlType.Hyperlink 2704,721,80,28 电视剧
+[62] ControlType.Hyperlink 2791,721,80,28 纪录片
+[64] ControlType.Hyperlink 2879,721,80,28 游戏
+[66] ControlType.Hyperlink 2966,721,80,28 音乐
+[68] ControlType.Hyperlink 3053,721,80,28 影视
+[70] ControlType.Hyperlink 3141,721,80,28 知识
+[72] ControlType.Hyperlink 3228,721,80,28 资讯
+[77] ControlType.Hyperlink 3414,721,70,28 直播
+[79] ControlType.Hyperlink 3483,721,70,28 课堂
+[81] ControlType.Hyperlink 3552,721,92,28 新歌热榜
+[74] ControlType.Text 3334,727,27,15 更多
+[98] ControlType.Hyperlink 3082,766,272,153 容器搜出的八格会是新大红吗？核电站跑刀变夺舍流了~ 5.2万 201 19:02
+[99] ControlType.Image 3082,766,272,153 容器搜出的八格会是新大红吗？核电站跑刀变夺舍流了~
+[103] ControlType.Hyperlink 3373,766,271,153 连打5把绝密航天能赚多少钱？三个6kd固排告诉你，一起来看 97.0万 296 12:04
+[104] ControlType.Image 3373,766,271,153 连打5把绝密航天能赚多少钱？三个6kd固排告诉你，一起来看
+[100] ControlType.Text 3082,926,272,45 容器搜出的八格会是新大红吗？核电站跑刀变夺舍流了~
+[105] ControlType.Text 3373,926,271,45 连打5把绝密航天能赚多少钱？三个6kd固排告诉你，一起来看
+[101] ControlType.Hyperlink 3082,928,241,40 容器搜出的八格会是新大红吗？核电站跑刀变夺舍流了~
+[106] ControlType.Hyperlink 3373,928,234,40 连打5把绝密航天能赚多少钱？三个6kd固排告诉你，一起来看
+[102] ControlType.Hyperlink 3082,974,156,18 心叶三角洲行动 · 07-03
+[108] ControlType.Hyperlink 3427,974,145,18 年年_三角洲行动 · 06-12
+[107] ControlType.Text 3377,975,43,15 1万点赞
+[109] ControlType.Hyperlink 3082,1011,272,153 主修毒功 却正得发邪的天南第一大修士-魏无涯！带你了解人界少有的正义之士！《凡人修仙传》魏无涯人物志 36.1万 807 14:26
+[110] ControlType.Image 3082,1011,272,153 主修毒功 却正得发邪的天南第一大修士-魏无涯！带你了解人界少有的正义之士！《凡人修仙传》魏无涯人物志
+[114] ControlType.Hyperlink 3373,1011,271,153 数据整理 3 小时？Agent 3 分钟 1.7万 109
+[115] ControlType.Image 3373,1011,271,153 数据整理 3 小时？Agent 3 分钟
+[85] ControlType.Hyperlink 2516,1096,462,26 正在直播MSI：TSW vs TES！
+[111] ControlType.Text 3082,1171,272,45 主修毒功 却正得发邪的天南第一大修士-魏无涯！带你了解人界少有的正义之士！《凡人修仙传》魏无涯人物志
+[116] ControlType.Text 3373,1171,271,45 数据整理 3 小时？Agent 3 分钟
+[112] ControlType.Hyperlink 3082,1173,241,84 主修毒功 却正得发邪的天南第一大修士-魏无涯！带你了解人界少有的正义之士！《凡人修仙传》魏无涯人物志
+[117] ControlType.Hyperlink 3373,1173,208,18 数据整理 3 小时？Agent 3 分钟
+[113] ControlType.Hyperlink 3082,1219,117,18 白马侯子 · 07-03
+[118] ControlType.Hyperlink 3373,1219,121,18 LobsterAI · 06-29
+[119] ControlType.Hyperlink 2501,1296,271,153 【上海蟹宴】999元 帝王蟹自助，急头白脸吃一顿 31.5万 763 21:07
+[120] ControlType.Image 2501,1296,271,153 【上海蟹宴】999元 帝王蟹自助，急头白脸吃一顿
+[124] ControlType.Hyperlink 2791,1296,272,153 日入三千万！核电站跑刀教学！全路线全点位！ 12.0万 1417 01:59:04
+[125] ControlType.Image 2791,1296,272,153 日入三千万！核电站跑刀教学！全路线全点位！
+[129] ControlType.Hyperlink 3082,1296,272,153 百万英镑，浓浓的汁牛排套餐 337.2万 2874 08:48
+[130] ControlType.Image 3082,1296,272,153 百万英镑，浓浓的汁牛排套餐
+[121] ControlType.Text 2501,1456,271,45 【上海蟹宴】999元 帝王蟹自助，急头白脸吃一顿
+[126] ControlType.Text 2791,1456,272,45 日入三千万！核电站跑刀教学！全路线全点位！
+[131] ControlType.Text 3082,1456,272,45 百万英镑，浓浓的汁牛排套餐
+[122] ControlType.Hyperlink 2492,1458,240,40 【上海蟹宴】999元 帝王蟹自助，急头白脸吃一顿
+[127] ControlType.Hyperlink 2791,1458,241,40 日入三千万！核电站跑刀教学！全路线全点位！
+[132] ControlType.Hyperlink 3082,1458,196,18 百万英镑，浓浓的汁牛排套餐
+[123] ControlType.Hyperlink 2501,1504,125,18 陈随便778 · 05-06
+[128] ControlType.Hyperlink 2791,1504,169,18 三角洲经济学教父 · 07-03
+[133] ControlType.Hyperlink 3082,1504,117,18 下班威龙 · 06-13
+[83] ControlType.Image Infinity,Infinity,-Infinity,-Infinity 正在直播MSI：TSW vs TES！
+[84] ControlType.Image Infinity,Infinity,-Infinity,-Infinity 正在直播MSI：TSW vs TES！

@@ -1,0 +1,1392 @@
+Window: "ChatGPT - 3号使用者", App: ChatGPT.exe.
+	0 窗口 ChatGPT - 3号使用者 Secondary Actions: Raise
+		1 窗格 (disabled)
+		2 区域 ChatGPT - 3号使用者
+			3 区域
+				4 区域
+					5 区域
+						6 区域
+							7 区域
+								8 区域
+									9 文档 ChatGPT - 3号使用者 ID: RootWebArea
+										10 组
+											11 链接 跳至内容
+											12 标题 历史聊天记录
+											13 导航 历史聊天记录
+												14 组 ID: sidebar-header
+													15 链接 主页
+													16 按钮 关闭边栏
+												17 列表
+													18 列表项目 新聊天
+														19 链接 新聊天
+													20 列表项目 搜索聊天
+														21 按钮 搜索聊天
+												22 链接 文件库
+												23 链接 已安排
+												24 链接 应用
+												25 组 ID: radix-_r_sg_
+													26 文本 更多
+												27 按钮 已置顶
+													28 标题 已置顶
+												29 列表
+													30 列表项目 Shawn
+														31 按钮 默认颜色，浅色模式下为黑色，深色模式下为白色 地球 Shawn
+															32 图形 默认颜色，浅色模式下为黑色，深色模式下为白色 地球
+														33 按钮 打开项目首页
+														34 按钮 打开 Shawn 的项目选项 ID: radix-_r_sj_
+													35 列表项目 3号使用者File upload optionsInspect ZIP file赛题3建模评判问候交流Greeting exchange显示更多
+														36 按钮 3号使用者
+															37 图形
+														38 按钮 打开项目首页
+														39 按钮 打开 3号使用者 的项目选项 ID: radix-_r_sm_
+														40 列表
+															41 列表项目 File upload options
+																42 链接 File upload options — 项目 3号使用者 中的聊天
+																	43 按钮 打开“File upload options”的对话选项 ID: radix-_r_sq_
+															44 列表项目 Inspect ZIP file
+																45 链接 Inspect ZIP file — 项目 3号使用者 中的聊天
+																	46 按钮 打开“Inspect ZIP file”的对话选项 ID: radix-_r_ss_
+															47 列表项目 赛题3建模评判
+																48 链接 赛题3建模评判 — 项目 3号使用者 中的聊天
+																	49 按钮 打开“赛题3建模评判”的对话选项 ID: radix-_r_su_
+															50 列表项目 问候交流
+																51 链接 问候交流 — 项目 3号使用者 中的聊天
+																	52 按钮 打开“问候交流”的对话选项 ID: radix-_r_t0_
+															53 列表项目 Greeting exchange
+																54 链接 Greeting exchange — 项目 3号使用者 中的聊天
+																	55 按钮 打开“Greeting exchange”的对话选项 ID: radix-_r_t2_
+															56 列表项目 显示更多
+																57 按钮 显示更多
+													58 列表项目 流体
+														59 按钮 流体
+															60 图形
+														61 按钮 打开项目首页
+														62 按钮 打开 流体 的项目选项 ID: radix-_r_t5_
+												63 按钮 项目
+													64 标题 项目
+												65 按钮 新项目
+												66 按钮 整理聊天 ID: radix-_r_t7_
+												67 列表
+													68 列表项目 Eric
+														69 按钮 自定义颜色 写作 Eric
+															70 图形 自定义颜色 写作
+														71 按钮 打开项目首页
+														72 按钮 打开 Eric 的项目选项 ID: radix-_r_ta_
+													73 列表项目 栖心谷
+														74 按钮 默认颜色，浅色模式下为黑色，深色模式下为白色 调色盘 栖心谷
+															75 图形 默认颜色，浅色模式下为黑色，深色模式下为白色 调色盘
+														76 按钮 打开项目首页
+														77 按钮 打开 栖心谷 的项目选项 ID: radix-_r_td_
+													78 列表项目 ss
+														79 按钮 ss
+															80 图形
+														81 按钮 打开项目首页
+														82 按钮 打开 ss 的项目选项 ID: radix-_r_tg_
+													83 列表项目 三角洲
+														84 按钮 三角洲
+															85 图形
+														86 按钮 打开项目首页
+														87 按钮 打开 三角洲 的项目选项 ID: radix-_r_tj_
+												88 按钮 聊天
+													89 标题 聊天
+												90 链接 新聊天
+												91 按钮 整理聊天 ID: radix-_r_tl_
+												92 列表
+													93 列表项目 Mac mini M4 沙盒设置
+														94 链接 Mac mini M4 沙盒设置（未读）
+															95 按钮 置顶 Mac mini M4 沙盒设置
+															96 按钮 打开“Mac mini M4 沙盒设置”的对话选项 ID: radix-_r_tn_
+															97 组
+													98 列表项目 虚拟机内存需求
+														99 链接 虚拟机内存需求
+															100 按钮 置顶 虚拟机内存需求
+															101 按钮 打开“虚拟机内存需求”的对话选项 ID: radix-_r_tp_
+													102 列表项目 包装展开图提取
+														103 链接 包装展开图提取
+															104 按钮 置顶 包装展开图提取
+															105 按钮 打开“包装展开图提取”的对话选项 ID: radix-_r_tr_
+													106 列表项目 低维参数转曲线方法
+														107 链接 低维参数转曲线方法
+															108 按钮 置顶 低维参数转曲线方法
+															109 按钮 打开“低维参数转曲线方法”的对话选项 ID: radix-_r_tt_
+													110 列表项目 HDR模式耗电分析
+														111 链接 HDR模式耗电分析
+															112 按钮 置顶 HDR模式耗电分析
+															113 按钮 打开“HDR模式耗电分析”的对话选项 ID: radix-_r_tv_
+													114 列表项目 短视频生产需求分析
+														115 链接 短视频生产需求分析
+															116 按钮 置顶 短视频生产需求分析
+															117 按钮 打开“短视频生产需求分析”的对话选项 ID: radix-_r_u1_
+													118 列表项目 客户需求分析与架构建议
+														119 链接 客户需求分析与架构建议
+															120 按钮 置顶 客户需求分析与架构建议
+															121 按钮 打开“客户需求分析与架构建议”的对话选项 ID: radix-_r_u3_
+													122 列表项目 Codex 登录失败排查
+														123 链接 Codex 登录失败排查
+															124 按钮 置顶 Codex 登录失败排查
+															125 按钮 打开“Codex 登录失败排查”的对话选项 ID: radix-_r_u5_
+													126 列表项目 Codex 登录问题解析
+														127 链接 Codex 登录问题解析
+															128 按钮 置顶 Codex 登录问题解析
+															129 按钮 打开“Codex 登录问题解析”的对话选项 ID: radix-_r_u7_
+													130 列表项目 Greeting exchange
+														131 链接 Greeting exchange
+															132 按钮 置顶 Greeting exchange
+															133 按钮 打开“Greeting exchange”的对话选项 ID: radix-_r_u9_
+													134 列表项目 方向盘预测模型改进
+														135 链接 方向盘预测模型改进
+															136 按钮 置顶 方向盘预测模型改进
+															137 按钮 打开“方向盘预测模型改进”的对话选项 ID: radix-_r_ub_
+													138 列表项目 Dify vs Coze选择分析
+														139 链接 Dify vs Coze选择分析
+															140 按钮 置顶 Dify vs Coze选择分析
+															141 按钮 打开“Dify vs Coze选择分析”的对话选项 ID: radix-_r_ud_
+													142 列表项目 AI智能体交易平台
+														143 链接 AI智能体交易平台
+															144 按钮 置顶 AI智能体交易平台
+															145 按钮 打开“AI智能体交易平台”的对话选项 ID: radix-_r_uf_
+													146 列表项目 模型选择对比
+														147 链接 模型选择对比
+															148 按钮 置顶 模型选择对比
+															149 按钮 打开“模型选择对比”的对话选项 ID: radix-_r_uh_
+													150 列表项目 电商详情页设计
+														151 链接 电商详情页设计
+															152 按钮 置顶 电商详情页设计
+															153 按钮 打开“电商详情页设计”的对话选项 ID: radix-_r_uj_
+													154 列表项目 企业微信协同系统分析
+														155 链接 企业微信协同系统分析
+															156 按钮 置顶 企业微信协同系统分析
+															157 按钮 打开“企业微信协同系统分析”的对话选项 ID: radix-_r_ul_
+													158 列表项目 Sora 退出市场原因
+														159 链接 Sora 退出市场原因
+															160 按钮 置顶 Sora 退出市场原因
+															161 按钮 打开“Sora 退出市场原因”的对话选项 ID: radix-_r_un_
+													162 列表项目 黑巧法芙脆饼干卖点
+														163 链接 黑巧法芙脆饼干卖点
+															164 按钮 置顶 黑巧法芙脆饼干卖点
+															165 按钮 打开“黑巧法芙脆饼干卖点”的对话选项 ID: radix-_r_up_
+													166 列表项目 电商海报设计要求
+														167 链接 电商海报设计要求
+															168 按钮 置顶 电商海报设计要求
+															169 按钮 打开“电商海报设计要求”的对话选项 ID: radix-_r_ur_
+													170 列表项目 电商详情图文案生成
+														171 链接 电商详情图文案生成
+															172 按钮 置顶 电商详情图文案生成
+															173 按钮 打开“电商详情图文案生成”的对话选项 ID: radix-_r_ut_
+													174 列表项目 macOS 中间的点
+														175 链接 macOS 中间的点
+															176 按钮 置顶 macOS 中间的点
+															177 按钮 打开“macOS 中间的点”的对话选项 ID: radix-_r_uv_
+													178 列表项目 横幅设计请求
+														179 链接 横幅设计请求
+															180 按钮 置顶 横幅设计请求
+															181 按钮 打开“横幅设计请求”的对话选项 ID: radix-_r_v1_
+													182 列表项目 横幅设计请求
+														183 链接 横幅设计请求
+															184 按钮 置顶 横幅设计请求
+															185 按钮 打开“横幅设计请求”的对话选项 ID: radix-_r_v3_
+													186 列表项目 海报设计需求
+														187 链接 海报设计需求
+															188 按钮 置顶 海报设计需求
+															189 按钮 打开“海报设计需求”的对话选项 ID: radix-_r_v5_
+													190 列表项目 手势交互软件开发
+														191 链接 手势交互软件开发
+															192 按钮 置顶 手势交互软件开发
+															193 按钮 打开“手势交互软件开发”的对话选项 ID: radix-_r_v7_
+													194 列表项目 智能体Web UI设计
+														195 链接 智能体Web UI设计
+															196 按钮 置顶 智能体Web UI设计
+															197 按钮 打开“智能体Web UI设计”的对话选项 ID: radix-_r_v9_
+													198 列表项目 Macmini n8n 局域网访问
+														199 链接 Macmini n8n 局域网访问
+															200 按钮 置顶 Macmini n8n 局域网访问
+															201 按钮 打开“Macmini n8n 局域网访问”的对话选项 ID: radix-_r_vb_
+													202 列表项目 腾讯云 VPS 安全性
+														203 链接 腾讯云 VPS 安全性
+															204 按钮 置顶 腾讯云 VPS 安全性
+															205 按钮 打开“腾讯云 VPS 安全性”的对话选项 ID: radix-_r_vd_
+											206 按钮 煜伟 苏 Pro，打开“个人资料”菜单 ID: radix-_r_vf_
+												207 文本 煜苏
+												208 文本 煜伟 苏
+												209 文本 Pro
+												210 按钮 下载应用
+											211 组
+												212 标题 ID: page-header
+													213 链接 打开“3号使用者”项目
+														214 图形 默认颜色，浅色模式下为黑色，深色模式下为白色 文件夹
+													215 按钮 分享
+														216 图形
+													217 组 ID: radix-_r_vj_
+														218 按钮 打开对话选项
+												219 主要 ID: main (truncated: child_limit, omitted 1040 children)
+											220 警报 ID: aria-notify-live-region-assertive
+											221 状态 ID: aria-notify-live-region-polite
+								222 区域
+
+Document text: ```
+跳至内容
+历史聊天记录
+ChatGPT
+关闭边栏
+￼
+￼
+新聊天
+￼
+￼
+搜索聊天
+￼
+￼
+文件库
+￼
+已安排
+￼
+应用
+￼
+更多
+已置顶
+￼
+Shawn
+打开项目首页
+打开 Shawn 的项目选项
+￼
+3号使用者
+打开项目首页
+打开 3号使用者 的项目选项
+File upload options
+打开“File upload options”的对话选项
+Inspect ZIP file
+打开“Inspect ZIP file”的对话选项
+赛题3建模评判
+打开“赛题3建模评判”的对话选项
+问候交流
+打开“问候交流”的对话选项
+Greeting exchange
+打开“Greeting exchange”的对话选项
+显示更多
+￼
+流体
+打开项目首页
+打开 流体 的项目选项
+项目
+新项目
+整理聊天
+￼
+Eric
+打开项目首页
+打开 Eric 的项目选项
+￼
+栖心谷
+打开项目首页
+打开 栖心谷 的项目选项
+￼
+ss
+打开项目首页
+打开 ss 的项目选项
+￼
+三角洲
+打开项目首页
+打开 三角洲 的项目选项
+聊天
+新聊天
+整理聊天
+Mac mini M4 沙盒设置
+置顶 Mac mini M4 沙盒设置
+打开“Mac mini M4 沙盒设置”的对话选项
+￼
+虚拟机内存需求
+置顶 虚拟机内存需求
+打开“虚拟机内存需求”的对话选项
+包装展开图提取
+置顶 包装展开图提取
+打开“包装展开图提取”的对话选项
+低维参数转曲线方法
+置顶 低维参数转曲线方法
+打开“低维参数转曲线方法”的对话选项
+HDR模式耗电分析
+置顶 HDR模式耗电分析
+打开“HDR模式耗电分析”的对话选项
+短视频生产需求分析
+置顶 短视频生产需求分析
+打开“短视频生产需求分析”的对话选项
+客户需求分析与架构建议
+置顶 客户需求分析与架构建议
+打开“客户需求分析与架构建议”的对话选项
+Codex 登录失败排查
+置顶 Codex 登录失败排查
+打开“Codex 登录失败排查”的对话选项
+Codex 登录问题解析
+置顶 Codex 登录问题解析
+打开“Codex 登录问题解析”的对话选项
+Greeting exchange
+置顶 Greeting exchange
+打开“Greeting exchange”的对话选项
+方向盘预测模型改进
+置顶 方向盘预测模型改进
+打开“方向盘预测模型改进”的对话选项
+Dify vs Coze选择分析
+置顶 Dify vs Coze选择分析
+打开“Dify vs Coze选择分析”的对话选项
+AI智能体交易平台
+置顶 AI智能体交易平台
+打开“AI智能体交易平台”的对话选项
+模型选择对比
+置顶 模型选择对比
+打开“模型选择对比”的对话选项
+电商详情页设计
+置顶 电商详情页设计
+打开“电商详情页设计”的对话选项
+企业微信协同系统分析
+置顶 企业微信协同系统分析
+打开“企业微信协同系统分析”的对话选项
+Sora 退出市场原因
+置顶 Sora 退出市场原因
+打开“Sora 退出市场原因”的对话选项
+黑巧法芙脆饼干卖点
+置顶 黑巧法芙脆饼干卖点
+打开“黑巧法芙脆饼干卖点”的对话选项
+电商海报设计要求
+置顶 电商海报设计要求
+打开“电商海报设计要求”的对话选项
+电商详情图文案生成
+置顶 电商详情图文案生成
+打开“电商详情图文案生成”的对话选项
+macOS 中间的点
+置顶 macOS 中间的点
+打开“macOS 中间的点”的对话选项
+横幅设计请求
+置顶 横幅设计请求
+打开“横幅设计请求”的对话选项
+横幅设计请求
+置顶 横幅设计请求
+打开“横幅设计请求”的对话选项
+海报设计需求
+置顶 海报设计需求
+打开“海报设计需求”的对话选项
+手势交互软件开发
+置顶 手势交互软件开发
+打开“手势交互软件开发”的对话选项
+智能体Web UI设计
+置顶 智能体Web UI设计
+打开“智能体Web UI设计”的对话选项
+Macmini n8n 局域网访问
+置顶 Macmini n8n 局域网访问
+打开“Macmini n8n 局域网访问”的对话选项
+腾讯云 VPS 安全性
+置顶 腾讯云 VPS 安全性
+打开“腾讯云 VPS 安全性”的对话选项
+煜苏
+煜伟 苏
+Pro
+下载应用
+￼
+￼
+3号使用者
+￼
+分享
+打开对话选项
+￼
+v220_two_month_route_reconstruction_pack.zip
+￼
+v220_two_month_route_reconstruction_pack.zipv220_two_month_route_reconstr…
+压缩归档
+复制消息
+编辑消息
+￼
+已思考 35s
+I received the uploaded ZIP file: v220_two_month_route_reconstruction_pack.zip.
+What would you like me to do with it—inspect the contents, summarize files, extract data, run analysis, reconstruct the route, or create a report?
+复制回复
+喜欢
+不喜欢
+Pro 反馈
+添加至项目源
+切换模型
+更多操作
+￼
+我想让你分析一下帮我思考一下  下一步 该怎么做
+复制消息
+编辑消息
+￼
+我会先快速盘点 ZIP 的目录结构、关键文件和数据类型，判断它处于数据整理、路线重建、证据校验或报告输出哪个阶段，再给你按优先级排序的下一步方案。
+我已经看完摘要、阶段表、时间线和任务状态：这是 385 次尝试的两个月路线复盘。当前主线应收敛到 v216-v219 的可解释组合框架，并专门处理强反应低估瓶颈。
+已思考 5m 11s
+我看完这个包后的判断是：下一步应该收敛，而不是继续发散。
+你现在已经不缺“又一个模型实验”，缺的是把已有 385 次尝试整理成一条可以继续推进、也可以写论文的主线。
+我会把下一步定成：
+以 Gold-V2 为正式数据底座，做“驾驶员纠正行为 + 未来车辆状态”的联合滚动预测；模型采用“Transformer 编码器 + 机制辅助头 + 候选曲线软融合 + 峰值保护 + 轻量残差修正”的组合框架；实验重点从总体 RMSE 转向强事件、反打、多段纠正和车辆响应指标。
+￼
+1. 先给你一个明确决策
+不要再做：单一大 Transformer 直接吐完整方向盘曲线。
+原因很明确：前面很多实验已经反复证明，端到端完整曲线预测容易把强反应压平。v218 把峰值保护和强反应权重内化进训练后，反而明显退化，这说明“继续加 loss、加大模型、加权强事件”不是稳定路线。
+应该做：组合式模型。
+也就是：
+1. Transformer 只负责做时序编码，不要指望它独自解决全部问题。
+2. 主输出不要只预测方向盘，还要同时预测未来车辆状态。
+3. 机制标签不要单独变成论文主任务，而是作为辅助约束和解释模块。
+4. 候选曲线不能硬切换，要软融合。
+5. 峰值保护先做成保守、可控的模块，不要再强行塞进完整曲线训练损失。
+6. 残差修正只做小修正，不要让它重新生成整条曲线。
+一句话：v216/v217/v219 这条线应该继续，v218 这种“重训大模型 + 强峰值损失”暂时停止。
+￼
+2. 下一版模型我建议这样拆模块
+我建议你把下一版叫成类似：
+v221/v222：机制感知的人车联合滚动预测模型
+结构可以拆成 5 个部分。
+A. 输入模块
+保留现在最靠谱的输入：
+• 锚点前 3 秒历史序列，0.1s 采样，约 31 × 11；
+• 锚点后 2 秒道路曲率和高度预瞄，约 21 × 2；
+• 滚动更新时间：0ms / 20ms / 40ms 分别建模或作为条件输入；
+• 不要把真实未来峰值、真实未来误差、真实标签后验信息放进去。
+生理和脑电先不要进主模型。它们可以作为后续解释章节，但不是现在救主模型的核心。
+B. Transformer 编码器
+Transformer 的定位是：编码人车历史状态和道路预瞄。
+它不直接承担所有预测责任。输出一个共享状态向量，用给后面的多个头：
+• 驾驶员行为预测头；
+• 车辆状态预测头；
+• 机制分类头；
+• 候选曲线权重头；
+• 残差修正头。
+模型不要太大。这个数据量下，大模型很容易学成平均化或过拟合。
+C. 联合预测头
+主任务不再是“只预测方向盘”，而是：
+未来驾驶员行为：
+• 方向盘角；
+• 方向盘角速度；
+• 可选：制动、油门参与。
+未来车辆状态：
+• roll / vroll；
+• ay；
+• yaw 或 vyaw；
+• vy / lateral dynamics；
+• 也可以保留速度、横向速度等辅助状态。
+v216 已经证明，联合预测比 steering-only 更有希望。你后面要沿着这个逻辑讲：驾驶员纠正不是孤立方向盘曲线，而是车辆状态变化下的人车耦合响应。
+D. 机制辅助头
+机制头不要当论文唯一主任务，但必须保留。建议至少预测这些事件级目标：
+• 是否强方向盘反应；
+• 是否反打 / 反转；
+• 是否过零反转；
+• 峰值幅度等级；
+• 峰值出现时间；
+• 后段是否继续变化；
+• 是否多段纠正；
+• 车辆响应强弱；
+• 驾驶员响应到车辆响应的延迟。
+这些头的作用有三类：
+1. 帮助模型区分普通小幅样本和真正强事件；
+2. 给候选融合提供权重；
+3. 给论文提供解释性结果。
+这里不要执着于纯 Transformer。v212-v214 已经说明，小样本下 RF / logistic / 表格强特征有时比小 Transformer 更稳。论文里完全可以说：深度编码器负责序列表示，机制判别采用轻量校准头，目的是提高小样本稳定性。
+E. 候选曲线 + 软融合 + 峰值保护 + 残差修正
+这是下一步最关键的模块。
+候选可以包括：
+1. 保守基线候选：类似 v183 或 v216 joint_equal；
+2. 联合模型平均候选：类似 v217 的 avg_joint_focus；
+3. 峰值保护候选：类似 peak_floor_090，但必须受机制概率约束；
+4. v183-relative 残差候选：控制点/模板都尽量变成相对保守基线的小修正；
+5. 轻量 Ridge / ElasticNet / 小 MLP 残差候选：类似 v219，但限制输出幅度；
+6. 反转候选：只在反转概率较高时软参与，不能硬切换。
+融合规则要保守：
+没有足够证据时，退回保守基线；只有机制概率、候选收益预测和验证集表现都支持时，才允许使用激进候选。
+这点很重要。前面很多失败不是候选没有好答案，而是选错候选会伤害普通样本。
+￼
+3. 眼前第一步：不要马上训练新模型，先做 v221 评估框架
+我建议下一步先做一个不训练新模型的 v221。
+目标是把现在已有结果统一到一个正式评价表里：
+• v183；
+• v216 steering_only；
+• v216 joint_equal；
+• v217 avg_joint_focus；
+• v217 peak_floor；
+• v219 ridge residual / global blend；
+• oracle 上限只作为诊断，不进正式主结果。
+v221 要输出：
+1. 总体指标；
+2. 强反应样本指标；
+3. 反打 / 过零反转样本指标；
+4. 多段纠正样本指标；
+5. 车辆响应强样本指标；
+6. 每个模型相对保守基线改善了多少、伤害了多少；
+7. 最差样本 Top-N 图；
+8. 改善最多样本 Top-N 图；
+9. 极强反应低估样本清单。
+为什么先做这个？
+因为你现在最大风险不是“缺一个模型”，而是指标体系还没有完全把研究价值表达出来。如果继续训练，很可能又陷入“总体 RMSE 降了一点，但图上还是不像”的循环。
+￼
+4. 指标表应该这样设计
+以后不要只放一个 overall RMSE。建议正式实验表至少分成 5 类。
+表 1：总体序列预测指标
+用于给读者一个基础印象：
+模型
+Steer RMSE
+Steer MAE
+Tail RMSE
+Peak RMSE
+Roll RMSE
+ay RMSE
+yaw/vyaw RMSE
+复制表格
+这里 Tail RMSE 建议重点看后 1 秒，因为你的问题经常出在后段继续变化、反打、回正。
+表 2：强事件专项指标
+这张表最重要。
+模型
+强反应 Tail RMSE
+峰值幅度比
+严重低估率
+错侧率
+峰值时间误差
+late peak recall
+复制表格
+建议定义：
+• 峰值幅度比：abs(pred_peak) / abs(true_peak)；
+• 严重低估率：真实峰值大于阈值时，预测峰值小于真实峰值 50% 或 60% 的比例；
+• 错侧率：真实强峰值方向和预测方向相反；
+• 峰值时间误差：预测峰值时间和真实峰值时间的差；
+• late peak recall：后段强峰值有没有被预测出来。
+这张表能直接回应你最关心的问题：模型是不是还在把强反应预测成保守平线。
+表 3：反打 / 反转 / 多段纠正指标
+模型
+反转 Recall
+反转 Precision
+过零 Recall
+误报反转率
+多段纠正识别 F1
+反转组 Tail RMSE
+复制表格
+这张表用来防止模型在普通样本上乱反转，也防止它完全不敢反转。
+表 4：车辆响应指标
+因为你的论文不应只讲方向盘：
+模型
+roll peak MAE
+ay peak MAE
+yaw/vyaw peak MAE
+车辆峰值时间误差
+人车响应延迟误差
+复制表格
+这一张表可以支撑“人车联合预测”的论文主线。
+表 5：do-no-harm / 逐样本改善表
+模型
+平均改善
+改善样本比例
+伤害样本比例
+强事件改善
+强事件伤害
+worst-decile RMSE
+复制表格
+这张表非常适合解释 v216b 暴露的问题：总体 RMSE 改善，不代表强事件也改善。
+￼
+5. 哪些实验必须保留，哪些应该停止
+必须保留
+1. Gold-V2 数据重建与锚点规则
+这是论文基础贡献之一。没有这个，后面模型都站不住。
+2. v183 / v216 / v217 / v219 作为主比较线
+这几条已经代表了当前最稳的方向：
+• v183：保守基线；
+• v216：人车联合预测；
+• v217：软组合和峰值保护；
+• v219：轻量残差堆叠。
+3. v190 / v202 作为 oracle 上限诊断
+它们不能当正式部署结果，但可以说明：
+• 关键点 / 控制点表示本身是有上限的；
+• 问题在于预测和选择，而不是曲线空间完全无效。
+4. v207-v211 的滚动预测和机制分析
+这个很适合写论文。尤其是 20ms / 40ms 早期观测能提升反打、过零反转判断，这个结果有解释价值。
+5. v216b / v210 这种错误分析
+论文不能只写成功，也要说明模型在哪些强事件上失败。这反而会让论文更可信。
+应该停止或降级
+1. 停止继续单纯加大 Transformer
+小样本 + 强事件稀疏 + 场景复杂，继续加模型容量大概率不稳。
+2. 停止继续硬切换 router / selector
+oracle 好不等于 selector 好。前面已经验证很多次。
+3. 停止把关键点预测结果硬生成完整曲线
+v189/v191 已经说明有信号，但不够硬切换。
+4. 停止 v218 这类强峰值 loss 直接内化训练
+这条已经明显退化。后面可以研究更温和的 loss，但当前不要作为主线。
+5. 暂停生理 / EEG 作为主输入
+不是说没价值，而是现在主问题还没有完全收敛。它们更适合后续作为驾驶员状态解释，而不是主模型救命特征。
+6. 停止只讲二分类
+机制分类有价值，但如果论文最后变成“是否反打/是否强反应”的二分类，会显得任务太浅。必须保留未来曲线和车辆状态预测。
+￼
+6. 论文主线我建议这样组织
+你的论文不要写成“我试了很多模型，最后某个 RMSE 低一点”。应该写成：
+面向车辆侧倾/横向失稳事件，研究驾驶员纠正行为与车辆响应的早期联合预测。由于强纠正、反打和多段恢复样本在整体 RMSE 中容易被平均化，本文构建 Gold-V2 事件锚点与机制标签，并提出机制感知的人车联合滚动预测框架。
+方法章节可以这样分
+第 1 节：任务定义
+• 输入：锚点前人车历史 + 道路预瞄；
+• 输出：未来驾驶员行为 + 未来车辆状态；
+• 滚动预测：0ms / 20ms / 40ms；
+• 机制标签：强反应、反打、过零、多段纠正等。
+第 2 节：Gold-V2 数据构建
+• 原始数据；
+• 事件筛选；
+• 锚点定义；
+• 正例 / 非事件 / 干扰 / 弱标签区分；
+• 训练、验证、测试按被试划分；
+• 道路预瞄构建。
+第 3 节：基线模型
+• steering-only；
+• joint driver-vehicle；
+• conservative baseline；
+• candidate / oracle 作为诊断。
+第 4 节：机制感知组合模型
+• Transformer 编码器；
+• 联合预测头；
+• 机制辅助头；
+• 候选曲线软融合；
+• 峰值保护；
+• 轻量残差修正；
+• do-no-harm 选择策略。
+第 5 节：评价指标
+重点说明为什么不用单一 RMSE，而要分强事件、反打、多段纠正、车辆响应。
+实验章节可以这样分
+实验 1：总体预测性能
+比较 steering-only、joint、fusion、residual。
+实验 2：强事件专项
+证明你的方法不是只降低小幅样本 RMSE，而是关注强反应低估。
+实验 3：反打 / 多段纠正专项
+展示反转 recall、误报反转率、多段纠正失败样本。
+实验 4：滚动预测
+0ms / 20ms / 40ms 对比，说明早期车辆状态更新对机制判断有帮助。
+实验 5：消融实验
+去掉道路预瞄、去掉车辆状态联合输出、去掉机制头、去掉峰值保护、去掉残差修正。
+实验 6：失败案例分析
+展示最难的极强反应、多段反打、普通弯道误判等样本。
+￼
+7. 我建议你接下来按这个顺序做
+第一步：冻结正式数据和评价协议
+不要再边训练边改样本。先定义一个正式版本，比如：
+Gold-V2-formal-v1
+里面必须固定：
+• 独立事件 ID；
+• D0 / D1 / D2 或 0ms / 20ms / 40ms 定义；
+• 训练 / 验证 / 测试被试划分；
+• 正事件、非事件、干扰排除；
+• 强反应、反打、过零、多段纠正、车辆响应强弱标签；
+• 道路预瞄可用性标记。
+第二步：做 v221 统一评估报告
+先不训练，只把 v183/v216/v217/v219 放到同一套指标里。
+这个报告要回答：
+• 哪个模型总体最好；
+• 哪个模型强事件最好；
+• 哪个模型最不伤害普通样本；
+• 强事件低估还剩多少；
+• 反打误报和漏报分别在哪里；
+• 车辆状态预测有没有同步改善。
+第三步：再做 v222 组合模型
+在 v221 指标稳定后，再训练下一版模型：
+• base joint Transformer；
+• mechanism heads；
+• candidate fusion head；
+• bounded residual head；
+• peak protection head。
+训练策略建议两阶段：
+1. 先训练 joint base model；
+2. 冻结或半冻结 base，再训练融合/残差/机制校准头。
+这样比一次性端到端训练更稳，也更容易解释。
+第四步：做消融和论文图表
+不要等最后才整理。每次实验都直接输出：
+• 主表；
+• 分组表；
+• 失败样本图；
+• 改善样本图；
+• per-event CSV。
+这样论文后面会轻松很多。
+￼
+8. 最关键的一句话
+你现在的下一步不是“再找一个模型把 RMSE 压低一点”，而是：
+把项目从模型试错阶段，转成正式研究阶段：固定 Gold-V2 数据协议，建立强事件/反打/车辆响应评价体系，然后在这个体系下验证一个机制感知的人车联合预测组合模型。
+我会把下一步优先级排成：
+1. v221：统一评估框架和指标表，不训练；
+2. v222：人车联合 Transformer + 机制头 + 软融合 + 峰值保护 + 小残差；
+3. v223：消融实验；
+4. v224：论文图表和失败案例包。
+这条线最稳，也最容易写成研究生论文。
+复制回复
+喜欢
+不喜欢
+Pro 反馈
+添加至项目源
+切换模型
+更多操作
+￼
+那接下来具体应该怎么去做推进模型呢
+复制消息
+编辑消息
+￼
+我会先快速确认包里的现有代码、结果和指标落点，再把模型推进拆成 v221–v224 的可执行路线：实验队列、训练顺序、产物和验收标准。
+我已确认主线应从 v216 联合预测延伸到 v217/v219 的可控软融合和小残差；v218 式强峰值 loss 重训先停止。
+已思考 5m 35s
+具体推进模型，我建议你不要再从“新建一个更强模型”开始，而是按 “先稳住候选 → 再做受控融合 → 再训练新联合模型 → 最后消融” 的顺序推进。
+你现在的模型路线应该这样落地：
+￼
+总路线
+接下来分 4 个版本做：
+版本
+目的
+是否重新训练大模型
+结果用途
+v221
+统一评估 v183/v216/v217/v219
+否
+确认当前真正强基线
+v222
+候选曲线软融合 + 机制风险门控 + 小残差
+轻量训练
+下一版主模型候选
+v223
+重新训练机制感知的人车联合 Transformer
+是，但小模型
+如果 v222 证明融合有效，再升级底座
+v224
+消融实验、失败样本、论文表格
+否/少量
+写论文和组会汇报
+复制表格
+最重要的是：v222 才是下一步真正推进模型的核心。
+v221 是为了避免继续盲目训练，v223 是等 v222 路线稳定后再做。
+￼
+第一步：先做 v221，统一评估，不训练
+这一步的目标不是提升模型，而是把当前已有模型放到同一张表里，确认谁是真正基线。
+你需要把这些候选统一到同一个测试样本表里：
+1. steering_only
+2. joint_equal
+3. joint_steer_focus
+4. avg_joint_focus
+5. peak_floor_090
+6. global_blend
+7. ridge_residual_joint
+8. 如果能对齐样本，再加入 v183 / v186
+v221 输出一个 per_sample_eval.csv，每一行是一条样本，每个模型都要有这些指标：
+复制
+sample_id
+subject_id
+recording_id
+scenario_type
+pool_type
+split
+true_peak_abs
+true_peak_time
+true_tail_peak_abs
+has_strong_steer
+has_reverse
+has_zero_cross
+has_multi_correction
+vehicle_response_level
+
+model_name
+rmse_all
+rmse_tail
+mae_all
+peak_abs_pred
+peak_abs_true
+peak_ratio
+peak_time_error
+severe_under
+wrong_side
+zero_cross_pred
+reverse_pred
+这一步完成后，你要先回答 5 个问题：
+1. 哪个模型总体 RMSE 最低？
+2. 哪个模型强反应低估率最低？
+3. 哪个模型对普通弯道伤害最小？
+4. 哪个模型在极强峰值 >=3 rad 上表现最差？
+5. 哪些样本每个模型都预测不好？
+当前根据 v216-v219 结果，暂时可以预期：
+• 可用主池：avg_joint_focus 可能还是整体最强；
+• 严格主池：peak_floor_090 可能还是最强；
+• ridge_residual_joint 不一定 RMSE 最低，但对严重低估率有价值；
+• v218_peak_tail_mild/strong 不应该继续作为主线。
+所以 v221 的判断标准是：
+不要急着发明新模型，先确定“最终融合模型到底应该融合谁”。
+￼
+第二步：做 v222，真正推进模型
+v222 应该是下一版主模型。
+它的核心不是重新预测整条曲线，而是：
+在已有候选曲线中做软融合，并且只允许一个小残差头做有限修正。
+最终形式可以写成：
+复制
+最终预测曲线 =
+    候选曲线加权平均
+  + 受限残差修正
+也就是：
+复制
+ŷ(t) = Σ wk · Ck(t) + r(t)
+其中：
+• Ck(t) 是已有候选曲线；
+• wk 是模型预测的软权重；
+• r(t) 是小残差；
+• r(t) 必须被限制幅度，不能重新生成整条曲线。
+￼
+v222 的候选池怎么设
+建议先用 6 个候选：
+复制
+C1 = steering_only
+C2 = joint_equal
+C3 = joint_steer_focus
+C4 = avg_joint_focus
+C5 = peak_floor_090
+C6 = ridge_residual_joint 或 global_blend
+如果 v183/v186 和 v216-v219 的样本完全能对齐，也可以加入：
+复制
+C7 = v183 conservative baseline
+C8 = v186 tail/reversal baseline
+但如果样本对不齐，先不要强行加。
+下一步应该优先保证流程干净，而不是候选越多越好。
+￼
+v222 的输入特征
+v222 不应该只看原始历史序列，也不应该只看候选曲线。
+它应该看三类输入。
+第一类：历史和道路输入
+沿用 v216：
+复制
+X_hist: 31 × 11
+X_road: 21 × 2
+也就是：
+• 锚点前 3 秒人车历史；
+• 0.1s 采样；
+• 锚点后 2 秒道路曲率和高度预瞄。
+第二类：候选曲线自身特征
+对每条候选曲线提取：
+复制
+pred_peak_abs
+pred_peak_time
+pred_tail_peak_abs
+pred_end_value
+pred_tail_slope
+pred_zero_cross_count
+pred_reverse_flag
+pred_area
+pred_tail_energy
+这些特征很重要，因为 v191 已经说明：
+加入已有预测曲线形状后，反转判断明显比只看锚点前输入更好。
+所以 v222 的融合模型必须知道每条候选“自己画出了什么形状”。
+第三类：机制风险特征
+给 v222 加几个机制概率：
+复制
+p_strong_steer
+p_reverse
+p_zero_cross
+p_multi_correction
+p_vehicle_strong
+p_normal_curve
+p_severe_under_risk
+这些机制概率可以先不用深度模型。
+建议先用更稳的传统模型做：
+复制
+Logistic Regression
+Random Forest
+HistGradientBoosting
+Ridge / ElasticNet
+不要一开始就用复杂 Transformer 分类头。
+你前面的记录已经证明，小样本下机制分类有时传统模型更稳。
+￼
+v222 的关键：软融合，不硬切换
+不要做这种东西：
+复制
+如果 p_strong > 0.6，就切到 peak_floor_090
+如果 p_reverse > 0.5，就切到 reversal candidate
+这种硬规则前面已经反复失败。
+应该做软融合：
+复制
+w = softmax(f(features) / temperature)
+ŷ_base = Σ wk · Ck
+然后加约束：
+复制
+如果强反应概率不高：
+    保守候选权重不能太低
+    peak_floor 候选权重不能太高
+    residual 修正幅度接近 0
+
+如果强反应概率高：
+    允许 peak_floor / joint / residual 多参与
+    但仍然不能一刀切
+更具体一点，可以这样设：
+复制
+w_conservative >= 0.25 when p_strong < 0.45
+w_peakfloor <= 0.20 when p_strong < 0.45
+w_reversal_candidate <= 0.15 when p_reverse < 0.40
+如果没有 v183，那保守候选可以用 steering_only 或 joint_equal 替代。
+￼
+v222 的残差头怎么做
+残差头只做“小修正”，不能重新画曲线。
+建议形式：
+复制
+r_raw(t) = MLP(features)
+r(t) = bound(t) · tanh(r_raw(t))
+其中 bound(t) 控制残差最大幅度。
+建议先设：
+复制
+前 0.5 秒：最大残差 0.05 rad
+0.5s - 1.2s：最大残差 0.10 rad
+1.2s - 2.0s：最大残差 0.15 rad
+强事件时可以稍微放大：
+复制
+if p_strong > 0.6:
+    tail_bound = 0.20 rad
+但不要超过太多。
+v218 的失败已经说明，强行拉峰值会破坏整体曲线形状。
+￼
+v222 的训练目标
+v222 的 loss 不要只用整体 RMSE。
+建议这样写：
+复制
+L = L_curve
+  + λ_tail · L_tail
+  + λ_under · L_under
+  + λ_resid · L_resid
+  + λ_smooth · L_smooth
+  + λ_noharm · L_noharm
+每一项含义如下。
+1. 整体曲线误差
+复制
+L_curve = Huber(ŷ, y)
+用 Huber 比 MSE 稳，因为强事件里容易有异常大峰值。
+2. 后段误差
+复制
+L_tail = Huber(ŷ[t >= 1.0s], y[t >= 1.0s])
+你项目里的很多问题都出在后 1 秒，所以后段必须单独加权。
+3. 严重低估惩罚
+只在真实强反应样本上启用：
+复制
+if true_peak_abs > strong_threshold:
+    L_under = max(0, 0.65 * true_peak_abs - pred_peak_abs)^2
+else:
+    L_under = 0
+注意这里用 0.65 或 0.70，不要一上来用 0.90。
+v218 的教训是：峰值损失太强会毁曲线。
+4. 残差幅度惩罚
+复制
+L_resid = mean(r(t)^2)
+防止残差头过度发挥。
+5. 平滑惩罚
+复制
+L_smooth = mean((r(t) - r(t-1))^2)
+防止残差头制造不合理振荡。
+6. Do-no-harm 惩罚
+对普通样本和低风险样本启用：
+复制
+L_noharm = max(0, error_final - error_conservative - margin)
+意思是：
+如果模型没有足够证据，就不要比保守基线更差。
+这项非常重要，因为 v216b 已经显示：
+• 联合预测改善直道和下坡弯道；
+• 但会伤害普通弯道；
+• 极强峰值也仍然会压平。
+所以 v222 必须显式约束“不伤害普通样本”。
+￼
+v222 先做两个版本
+不要一口气做复杂版。
+建议 v222 拆成两个小版本。
+￼
+v222a：表格机制 + 固定候选 + Ridge/ElasticNet 残差
+这是最稳版本。
+输入：
+复制
+历史摘要特征
+道路摘要特征
+候选曲线摘要特征
+机制概率
+模型：
+复制
+候选权重：Logistic / Ridge / HistGradientBoosting
+残差修正：Ridge / ElasticNet
+输出：
+复制
+soft blend curve
+bounded residual curve
+v222a 的目的不是追求最高上限，而是确认：
+机制特征 + 候选曲线形状 + 小残差，是否能稳定超过 v217/v219？
+如果 v222a 都不稳，就不要急着做神经版。
+￼
+v222b：小 MLP / 小 Transformer 融合头
+等 v222a 证明方向有效，再做 v222b。
+结构：
+复制
+历史 Transformer encoder
+道路 encoder
+候选曲线 encoder
+机制 head
+soft fusion head
+bounded residual head
+但模型要小：
+复制
+d_model = 64 或 96
+num_layers = 2
+num_heads = 4
+dropout = 0.15 - 0.25
+MLP hidden = 64 或 128
+不要用大模型。
+当前样本量不支持大模型稳定泛化。
+￼
+第三步：v223，再训练机制感知联合 Transformer
+只有在 v222 证明融合路线有效后，才做 v223。
+v223 的目标是把 v216 的联合预测底座升级成：
+人车联合预测 + 机制辅助头 + 候选融合接口。
+输出不只是方向盘，而是 9 个未来通道：
+复制
+驾驶员行为：
+1. steering_rel
+2. steering_rate
+3. brake_delta
+4. throttle_delta
+
+车辆状态：
+5. roll_rel
+6. roll_rate
+7. ay
+8. yaw_rate
+9. speed_delta
+同时加机制头：
+复制
+strong_steer
+reverse
+zero_cross
+multi_correction
+vehicle_strong
+normal_curve
+severe_under_risk
+再加低维标量头：
+复制
+steer_peak_abs
+steer_peak_time
+tail_peak_abs
+end_value
+roll_peak_abs
+ay_peak_abs
+driver_vehicle_delay
+v223 的训练不要端到端一把梭。
+要分三阶段：
+￼
+v223 训练阶段 A：先训练联合预测底座
+只训练 9 通道未来预测：
+复制
+X_hist + X_road -> Y_future_9ch
+loss：
+复制
+L_joint = L_driver + L_vehicle
+这里方向盘不要权重过高。
+v216 里 joint_equal 比 joint_steer_focus 更稳，说明过度强调 steering 可能反而伤害整体耦合表示。
+￼
+v223 训练阶段 B：冻结 encoder，训练机制头
+冻结主 encoder，只训练机制标签：
+复制
+encoder_embedding -> mechanism labels
+目标是让模型学会：
+• 哪些样本是强反应；
+• 哪些样本会反打；
+• 哪些样本有过零；
+• 哪些样本是普通弯道；
+• 哪些样本车辆响应强。
+这一步能防止机制头反过来破坏主预测。
+￼
+v223 训练阶段 C：接入 v222 的融合/残差头
+最后接入候选融合：
+复制
+v223 base prediction
++ v217/v219 candidates
++ mechanism probabilities
+-> soft fusion + bounded residual
+也就是说，v223 不直接替代 v222，而是给 v222 提供更好的候选和更好的机制概率。
+￼
+第四步：v224 做消融，不然论文讲不清
+v224 不一定需要新模型。
+它主要用来回答：每个模块到底有没有用？
+至少做这些消融：
+消融
+目的
+去掉道路预瞄
+看道路曲率/高度是否真的有贡献
+去掉车辆状态联合预测
+验证 joint driver-vehicle 是否必要
+去掉机制头
+看机制标签是否只是装饰
+去掉峰值保护候选
+看强反应低估是否反弹
+去掉残差头
+看小修正是否真的贡献
+去掉 do-no-harm
+看普通弯道是否被伤害
+硬切换 vs 软融合
+证明为什么不用 router hard switch
+强事件加权 vs 受限峰值保护
+解释 v218 为什么失败
+复制表格
+最后论文里真正能讲清楚的是：
+单纯端到端曲线预测会平均化；
+单纯峰值损失会破坏形状；
+单纯 router 选择不稳；
+机制感知的软融合 + 受限残差，是当前小样本条件下更稳的折中。
+￼
+具体执行顺序
+我建议你接下来按这个顺序做。
+￼
+任务 1：整理 formal cache
+先生成一个统一数据缓存：
+复制
+formal_cache_v1/
+    meta.csv
+    split.csv
+    X_hist.npy
+    X_road.npy
+    Y_future_9ch.npy
+    Y_steer.npy
+    mechanism_labels.csv
+    candidate_predictions.npz
+meta.csv 至少包含：
+复制
+sample_id
+subject_id
+recording_id
+anchor_time
+scenario_type
+pool_type
+split
+mechanism_labels.csv 至少包含：
+复制
+sample_id
+strong_steer
+reverse
+zero_cross
+multi_correction
+vehicle_strong
+normal_curve
+steer_peak_abs
+steer_peak_time
+tail_peak_abs
+roll_peak_abs
+ay_peak_abs
+candidate_predictions.npz 包含：
+复制
+steering_only
+joint_equal
+joint_steer_focus
+avg_joint_focus
+peak_floor_090
+global_blend
+ridge_residual_joint
+所有候选必须满足：
+复制
+shape = N × 21
+sample_id 顺序完全一致
+horizon 完全一致
+split 完全一致
+这一步是底座。
+如果 sample 对不齐，后面所有融合都是假的。
+￼
+任务 2：跑 v221 leaderboard
+脚本可以叫：
+复制
+stage03_v221_formal_model_leaderboard.py
+输出：
+复制
+v221_formal_leaderboard/
+    reports/v221_report_cn.md
+    tables/model_overall_metrics.csv
+    tables/model_bucket_metrics.csv
+    tables/per_sample_model_errors.csv
+    figures/worst_cases/
+    figures/best_improvement_cases/
+重点表格：
+复制
+overall
+strong_event
+extreme_peak
+reverse
+zero_cross
+multi_correction
+normal_curve
+vehicle_strong
+v221 的结论应该决定：
+复制
+base_conservative = ?
+base_best_overall = ?
+base_best_strong = ?
+base_best_noharm = ?
+没有这一步，不要做 v222。
+￼
+任务 3：训练 v222a
+脚本可以叫：
+复制
+stage03_v222a_mech_gated_bounded_residual.py
+v222a 先用轻量模型：
+复制
+机制分类：
+    LogisticRegression
+    RandomForest
+    HistGradientBoosting
+
+候选融合：
+    Ridge / ElasticNet / small MLP
+
+残差修正：
+    Ridge residual with bound
+先不要重训 Transformer。
+v222a 输出 4 个版本：
+复制
+v222a_blend_only
+v222a_blend_plus_residual
+v222a_blend_plus_under_control
+v222a_full_noharm
+这样你能看到每个模块是否真的有用。
+￼
+任务 4：检查 v222a 是否过关
+v222a 不要只看 RMSE。
+它必须同时满足下面条件，才值得推进 v222b / v223。
+对可用主池
+参考当前最好：
+复制
+avg_joint_focus RMSE ≈ 0.544879
+v222a 至少要做到：
+复制
+整体 RMSE 不明显差于 0.544879
+强事件 tail RMSE 改善
+严重低估率下降
+普通弯道不明显变差
+如果 RMSE 小幅差一点，但强事件低估明显改善，也可以保留为“低估风险控制分支”。
+对严格主池
+参考当前最好：
+复制
+peak_floor_090 RMSE ≈ 0.571775
+v222a 至少要做到：
+复制
+整体 RMSE 接近或低于 0.571775
+严重低估率低于 peak_floor_090 或 ridge_residual_joint
+反转误报不能上升
+如果 v222a 只在验证集好、测试集差，就说明融合头过拟合，不能继续加复杂度。
+￼
+任务 5：再做 v222b
+只有 v222a 过关，才做 v222b。
+脚本：
+复制
+stage03_v222b_neural_soft_fusion_residual.py
+结构：
+复制
+history_encoder = small Transformer
+road_encoder = small MLP/Transformer
+candidate_encoder = curve summary MLP
+mechanism_head = BCE/CE heads
+fusion_head = softmax weights
+residual_head = bounded residual
+最终输出：
+复制
+final_curve
+candidate_weights
+mechanism_probs
+residual_curve
+每个样本都要保存权重，方便检查：
+复制
+sample_id
+w_steering_only
+w_joint_equal
+w_joint_focus
+w_avg_joint_focus
+w_peak_floor
+w_ridge_residual
+residual_norm
+p_strong
+p_reverse
+p_under
+这很重要。
+如果模型变好了，但你不知道它为什么变好，论文也不好写。
+￼
+什么时候该停止某条模型线
+你后面一定要设停止规则，不然又会陷入反复训练。
+停止继续加大 Transformer 的条件
+只要出现下面任意情况，就停止：
+复制
+验证集提升，测试集不提升
+整体 RMSE 提升，但强事件变差
+强事件提升，但普通弯道严重变差
+峰值幅度变大，但错侧率上升
+残差曲线出现振荡
+停止继续调融合规则的条件
+如果连续两版出现：
+复制
+val selected 好
+test selected 差
+说明不是规则没调好，而是选择信号不稳。
+这时应该退回：
+复制
+固定权重融合
+保守峰值保护
+小残差
+分层报告
+不要继续调阈值。
+￼
+我建议你当前最具体的一版模型名字
+我会把下一版正式模型命名为：
+复制
+v222 Mech-Gated Soft Fusion with Bounded Residual
+中文名：
+机制风险门控的候选曲线软融合与受限残差修正模型
+它的核心公式：
+复制
+ŷ = Σ softmax(g(z))k · Ck + b(z) · tanh(h(z))
+其中：
+复制
+z = [
+    历史人车状态编码,
+    道路预瞄编码,
+    候选曲线形态特征,
+    机制概率,
+    低估风险概率
+]
+这版模型的论文表述会很好讲：
+先由联合预测模型生成若干候选未来驾驶员-车辆响应曲线，再根据历史状态、道路预瞄和机制风险估计进行软融合；为避免强反应被平均化，引入受限残差头和严重低估风险控制；为避免普通弯道误伤，引入 do-no-harm 约束。
+￼
+最后给你一个明确的推进判断
+接下来不要做：
+复制
+v221_new_big_transformer
+v221_more_peak_loss
+v221_hard_router
+v221_EEG_fusion
+v221_reversal_hard_switch
+应该做：
+复制
+v221_formal_leaderboard
+v222a_mech_gated_bounded_residual
+v222b_neural_soft_fusion
+v223_joint_multitask_transformer
+v224_ablation_and_paper_tables
+最优先的是：
+先把 v221 统一评估表跑出来，再做 v222a：机制风险门控 + 候选软融合 + 受限小残差。
+这一步最符合你前面两个月实验沉淀下来的事实：
+候选里有好答案，但不能硬选；强反应需要保护，但不能强损失重训；残差有用，但只能小修正；联合预测有价值，但不能单独承担完整曲线生成。
+复制回复
+喜欢
+不喜欢
+Pro 反馈
+添加至项目源
+切换模型
+更多操作
+￼
+我们已经按你之前建议完成 v221 和 v222a 第一轮。
+
+已完成：
+1. v221 formal model leaderboard：
+   - 统一评估 v216/v217/v218/v219 已有候选。
+   - 未训练新大模型。
+   - formal leaderboard 排除 W3_B4_original_soft、oracle、fallback、true-label row。
+   - loose_main_pool test 最好 RMSE：avg_joint_focus = 0.544879。
+   - strict_main_pool test 最好 RMSE/tail：peak_floor_090 = 0.571775 / 0.658308。
+   - strict_main_pool 最低低估率：ridge_residual_peakfloor = 0.091954。
+   - 结论：不要直接重训大模型，先做轻量候选融合/受限残差。
+
+2. v222a candidate curve cache：
+   - 已导出 fixed candidate predictions 和 manifest。
+   - loose_main_pool: predictions (1167,14,21), feature_matrix (1167,229)。
+   - strict_main_pool: predictions (963,14,21), feature_matrix (963,229)。
+   - feature schema audit 458 rows, fail=0。
+   - v219 crosscheck 72 rows pass，最大差异 0.0019267822736031，在阈值 0.002 内。
+   - formal candidates 不含 W3_B4_original_soft/oracle/fallback/true_label。
+
+3. v222a light fusion / bounded residual：
+   - train-only fitting。
+   - validation-only selection。
+   - test 只在最终 selected config 固定后报告。
+   - validation selection 表只含 val rows，共 108 rows。
+   - leakage guard 全 pass。
+
+v222a selected test 结果
+```

@@ -49,6 +49,238 @@
 - Status:
   - `active`
 
+## 2026-06-23 v228 Final Paper Artifact Freeze
+
+- Decision:
+  - The local ChatGPT Desktop GPTPro response is accepted as valid after switching to a clean ASCII handoff/retry.
+  - v227 is accepted as a valid reporting-only closeout.
+  - v228 is restricted to final paper artifact freeze: reporting, packaging, and manuscript-readiness only.
+  - No model training, new prediction generation, threshold search, gate/router/selector work, formal headline change, or test-based retuning is authorized.
+- Plain-language meaning:
+  - The earlier "GPTPro channel blocked" state was caused in part by the prompt being unreadable in GPTPro. After fixing the encoding path, GPTPro gave a bounded instruction and Codex completed it.
+  - v228 turns the already locked v225/v226/v227 evidence into final paper-facing tables, reports, figures, logs, and ZIP.
+- Trigger:
+  - User observed mojibake in the local GPTPro prompt and instructed Codex to use the local software.
+  - GPTPro replied with a six-item v228 instruction.
+- Impact scope:
+  - Formal headline remains `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - v228 is the current latest completed step; older heartbeat/blocked records remain process history but are superseded as current-state diagnosis.
+  - Next loop step, if requested, is to report v228 results back to GPTPro and ask for exactly one bounded next action.
+- Evidence:
+  - `gptpro_reviews/20260623_v228_local_gptpro_response.md`
+  - `gptpro_reviews/20260623_v228_local_gptpro_decision.md`
+  - `gptpro_reviews/20260623_v228_local_gptpro_action_items.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v228_final_paper_artifact_freeze_20260623.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/v228_final_paper_artifact_freeze_pack.zip`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/logs/guardrail_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/logs/consistency_check.json`
+- Status:
+  - `active`
+
+## 2026-06-23 v230 Failure Case Manual Review Casebook
+
+- Decision:
+  - GPTPro accepted v229 and kept model work stopped.
+  - v230 is restricted to audit-only failure-case manual review / paper-case evidence packaging.
+  - No model training, new prediction generation, tau/threshold tuning, gate/router/selector creation, v222b/v223 run, formal headline change, or test-based retuning is authorized.
+- Plain-language meaning:
+  - The next useful work is no longer model search. The project now needs human review of representative failure cases and paper-ready limitation evidence.
+  - Codex may package cases and copy existing figures, but human judgement fields must stay blank until manually reviewed.
+- Trigger:
+  - GPTPro reviewed `v229_two_month_lessons_failure_taxonomy_pack.zip` and accepted the diagnosis that the main bottleneck is hard local failure cases and unstable current-window deployable selection, not a broad lack of candidate curves.
+- Impact scope:
+  - Formal headline remains `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - v230 selected 46 formal cases, 23 per pool, spanning strong underestimation, extreme peak failure, tail-amplitude failure, reverse / multi-correction, zero-cross boundary, and normal-curve controls.
+  - The next step after v230 is manual casebook reading and filling `v230_manual_review_template.csv`, then revising the paper failure-case section.
+- Evidence:
+  - `gptpro_reviews/20260623_v230_casebook_gptpro_response.md`
+  - `gptpro_reviews/20260623_v230_casebook_gptpro_decision.md`
+  - `gptpro_reviews/20260623_v230_casebook_gptpro_action_items.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v230_failure_case_manual_review_casebook_20260623.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/v230_failure_case_manual_review_casebook_pack.zip`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/logs/guardrail_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/logs/consistency_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/logs/figure_copy_check.json`
+- Status:
+  - `active`
+
+## 2026-06-22 v227 Reporting-Only Paper / Claim Readiness Fallback
+
+- Decision:
+  - v227 is accepted only as a reporting / writing-readiness package built from locked v225 and v226 evidence.
+  - v227 is not a new model branch, not a new formal leaderboard, and not permission to start v222b/v223, a new tau, a gate/router, selector, or test-based retuning.
+  - The next action remains GPTPro handoff once the channel is reachable: report v226+v227 and ask for one bounded writing/claim/reporting instruction.
+- Plain-language meaning:
+  - GPTPro could not provide a usable next instruction in the current loop because Desktop returned empty stopped-thinking outputs and Chrome required login.
+  - To avoid idle looping while preserving guardrails, Codex packaged the already-verified evidence into paper-facing tables, claim support, limitation notes, figure index, and a next GPTPro prompt.
+- Trigger:
+  - v226 passed robustness/CI audit and was ready for external review.
+  - The GPTPro bridge failed to return a valid new response, so local work was restricted to reporting-only synthesis.
+- Impact scope:
+  - Formal locked models stay `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - No new training, threshold search, test retuning, or candidate-pool changes are authorized by v227.
+  - v227 artifacts may be used for manuscript/result narrative preparation and for the next GPTPro review prompt.
+- Evidence:
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v227_paper_claim_readiness_pack_20260622.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/reports/v227_paper_claim_readiness_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/reports/v227_next_gptpro_prompt_ascii.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/logs/no_model_change_guard.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/logs/source_artifact_checks.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/v227_paper_claim_readiness_pack.zip`
+  - `gptpro_reviews/20260622_v227_result_gptpro_response_blocked.md`
+  - `gptpro_reviews/20260622_v227_result_gptpro_decision_blocked.md`
+  - `gptpro_reviews/20260622_v227_result_gptpro_action_items_blocked.md`
+- Status:
+  - `active`
+
+## 2026-06-23 v227 Heartbeat GPTPro Handoff Still Blocked
+
+- Decision:
+  - The heartbeat retry did not obtain a valid GPTPro reply.
+  - The project remains at the v226/v227 handoff boundary and must not start a new experiment locally.
+  - v227 remains reporting-only, not a new model or formal leaderboard direction.
+- Plain-language meaning:
+  - The Desktop ChatGPT window still shows the handoff prompt and `已停止思考`, without a bounded six-item reply.
+  - The Chrome bridge again refused to send because it could not verify Pro/进阶 mode.
+- Trigger:
+  - The goal-mode heartbeat attempted to continue the Codex-GPTPro loop on 2026-06-23.
+- Impact scope:
+  - Keep formal models locked as `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - Continue to forbid v222b/v223, new tau/threshold search, gate/router/selector expansion, new training, formal headline change, and test-based retuning.
+  - The only allowed next action is to retry the GPTPro handoff once the Pro/进阶 channel is reachable, then triage a valid GPTPro reply against local guardrails.
+- Evidence:
+  - `gptpro_reviews/20260623_v227_heartbeat_gptpro_response_blocked.md`
+  - `gptpro_reviews/20260623_v227_heartbeat_gptpro_decision_blocked.md`
+  - `gptpro_reviews/20260623_v227_heartbeat_gptpro_action_items_blocked.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/v227_paper_claim_readiness_pack.zip`
+- Status:
+  - `active`
+
+## 2026-06-23 GPTPro Prompt Encoding Correction
+
+- Decision:
+  - The earlier Desktop GPTPro handoff must be treated as invalid / superseded because the user observed the prompt rendered as mojibake in GPTPro.
+  - The next GPTPro handoff must use the self-contained ASCII-only prompt `gptpro_reviews/20260623_v227_clean_ascii_handoff_prompt.md`.
+  - The v226 and v227 local artifacts remain valid; only the external handoff attempt is invalidated.
+- Plain-language meaning:
+  - GPTPro likely did not answer because the question it received was unreadable.
+  - This changes the diagnosis from "GPTPro failed to answer" to "the sent prompt was not validly readable."
+- Evidence:
+  - User screenshot of garbled GPTPro prompt.
+  - `gptpro_reviews/20260623_prompt_encoding_correction.md`
+  - `gptpro_reviews/20260623_v227_clean_ascii_handoff_prompt.md`
+- Status:
+  - `active`
+
+## 2026-06-23 Goal-Level GPTPro Channel Blocked
+
+- Decision:
+  - The active Codex-GPTPro execution-loop goal is blocked at the external GPTPro handoff step.
+  - The same blocker repeated across consecutive goal turns: Desktop ChatGPT has no valid bounded reply, and Chrome bridge cannot verify Pro/进阶 mode before sending.
+  - No further automatic local experiment is allowed from this state.
+- Plain-language meaning:
+  - Codex has already done the safe local work: v226 audit, v227 reporting package, ZIP checks, and note synchronization.
+  - The next required input is external: restore GPTPro / ChatGPT Pro access or manually provide GPTPro's next bounded instruction.
+- Trigger:
+  - Third consecutive blocked audit of the same GPTPro channel condition.
+- Impact scope:
+  - Formal headline remains `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - Continue to forbid v222b/v223, new tau/threshold search, gate/router/selector expansion, new training, formal headline change, and test-based retuning.
+- Evidence:
+  - `gptpro_reviews/20260623_goal_blocked_gptpro_channel_response.md`
+  - `gptpro_reviews/20260623_goal_blocked_gptpro_channel_decision.md`
+  - `gptpro_reviews/20260623_goal_blocked_gptpro_channel_action_items.md`
+- Status:
+  - `blocked`
+
+## 2026-06-22 v222a No-Harm Gate Closure Boundary
+
+- Decision:
+  - `v222a_bounded_residual` and its learned no-harm gate are not promoted as a formal headline.
+  - The result must be reported back to GPTPro before any next branch is started.
+  - Do not enter v222b/v223, a larger selector, or a multi-candidate router from this state without a new bounded GPTPro instruction and explicit stop condition.
+- Plain-language meaning:
+  - v222a proved residual correction can reduce underestimation locally.
+  - It also proved the learned deployable gate is not stable enough yet: validation passes, but locked test does not preserve both RMSE/tail safety and under-reduction.
+- Trigger:
+  - GPTPro requested `v222a_gain_harm_decomposition -> oracle safe gate upper bound -> binary validation-only no-harm gate`.
+  - Locked test `loose_main_pool`: under reduction stays positive (`0.043478`), but RMSE delta is `+0.010559` and tail delta is `+0.027764`.
+  - Locked test `strict_main_pool`: RMSE/tail deltas are safe (`-0.008975`, `-0.005264`), but under reduction is negative (`-0.017241`) and strong-under reduction is negative (`-0.023438`).
+  - Oracle safe gate remains much stronger than the learned gate, so the residual has local value but the safe enablement rule is not deployable yet.
+- Impact scope:
+  - Keep v222a as diagnostic / case-study evidence.
+  - Preserve validation-only selection, leakage guards, and the fixed formal candidate pool.
+  - Next execution step is GPTPro review of this result, not local escalation.
+- Evidence:
+  - [current-state](../../references/current-state.md)
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_noharm_gate_diagnostic_20260622/reports/v222a_noharm_gate_diagnostic_report_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_noharm_gate_diagnostic_20260622/tables/test_locked_gate_report.csv`
+- Status:
+  - `active`
+
+## 2026-06-22 v222a Closeout Candidate Gap Audit Boundary
+
+- Decision:
+  - `v222a_bounded_residual` and `v222a_noharm_gate` remain diagnostic-only and are formally stopped as headline candidates.
+  - Formal headline is locked as `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - `v222b_allowed=False` and `v223_allowed=False` in the current `future_route_decision.csv`.
+  - The next action is GPTPro review of the closeout pack, not local threshold tuning or a larger selector.
+- Plain-language meaning:
+  - The closeout audit says the current failure is mostly not "we have no candidate curve at all."
+  - The fixed candidate pool often has a better oracle option, especially in high-tail cases, but the learned gate does not reliably choose it.
+  - That makes v222b risky right now, because a larger learned gate is likely to overfit the same unstable selector signal.
+  - v223 is also not unlocked, because high-tail `candidate_missing_rate` is only about `0.126582` combined, far below the >50% unlock condition.
+- Trigger:
+  - GPTPro explicitly instructed closeout-only candidate gap audit after the no-harm gate failed locked test.
+  - Locked test combined `selector_failed_rate=0.410615`.
+  - Locked test combined `candidate_missing_rate=0.027933`.
+  - High-tail locked test combined `candidate_missing_rate=0.126582`.
+  - High-tail locked test oracle clear gain rate is about `0.911392`, so the allowed candidate pool often still contains a better diagnostic option.
+- Impact scope:
+  - Do not start `v222a_gate_v2`, new tau selection, multi-router, neural gate, v222b, or v223 from this state.
+  - Keep `oracle_safe_gate` and best-candidate oracle as diagnostic-only upper bounds.
+  - Use the closeout pack as the evidence package for the next GPTPro question.
+- Evidence:
+  - [current-state](../../references/current-state.md)
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_closeout_candidate_gap_audit_20260622/reports/v222a_closeout_candidate_gap_audit_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_closeout_candidate_gap_audit_20260622/tables/formal_headline_decision.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_closeout_candidate_gap_audit_20260622/tables/oracle_vs_learned_gap.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_closeout_candidate_gap_audit_20260622/tables/future_route_decision.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v222a_closeout_candidate_gap_audit_20260622/v222a_closeout_candidate_gap_audit_pack.zip`
+- Status:
+  - `active`
+
+## 2026-06-22 v225 Formal Route Reconstruction Evidence Pack Boundary
+
+- Decision:
+  - v225 is a formal evidence-pack closure, not a new model branch.
+  - Formal headline stays locked as `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`.
+  - Diagnostic-only variants, including `v222a_bounded_residual`, `v222a_noharm_gate`, `oracle_safe_gate`, and residual/oracle variants, remain excluded from formal tables and usage.
+  - The next action is GPTPro review of the v225 pack, not local v222b/v223 escalation.
+- Plain-language meaning:
+  - The project now has a packaged, reproducible evidence surface for the locked formal route.
+  - v225 does not claim a new performance breakthrough; it makes the current formal baseline, failure cases, bucket/route-event evidence, and exclusion rules auditable.
+  - This helps avoid getting stuck in local selector tuning while preserving the evidence needed for the next bounded decision.
+- Trigger:
+  - GPTPro accepted the v222a closeout diagnosis and instructed a one-shot formal route reconstruction evidence pack.
+  - Locked test reproduction passes within `1e-5`: loose `avg_joint_focus` RMSE/tail `0.544884/0.629752`; strict `peak_floor_090` RMSE/tail `0.571770/0.658306`.
+  - ZIP `bad_file=None`; required files are present; metric reproduction, leakage guard, forbidden scan, and table alignment all pass.
+- Impact scope:
+  - Treat v225 as the current handoff pack for GPTPro.
+  - Do not start `v222b`, `v223`, a new tau/threshold search, a gate/router, or test-based retuning unless GPTPro gives a new bounded instruction with a valid stop condition.
+  - Keep v222a closeout and diagnostic-only rows as appendix evidence, not as formal headline or deployable output.
+- Evidence:
+  - [current-state](../../references/current-state.md)
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/reports/v225_formal_route_reconstruction_evidence_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/tables/formal_model_lock.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/tables/formal_reconstruction_metrics_by_pool.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/tables/formal_failure_case_index.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/logs/metric_reproduction_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/logs/leakage_guard_report.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/v225_formal_route_reconstruction_evidence_pack.zip`
+- Status:
+  - `active`
+
 ## 2026-04-22 E Interim Update
 
 - Decision:
@@ -298,3 +530,33 @@
   - [current-state](../../references/current-state.md)
 - Status:
   - `active`
+# 2026-06-22 v226 Formal Robustness CI Audit Boundary
+
+- Decision:
+  - v226 formal robustness / confidence-interval audit is complete and accepted as an audit/reporting pack, not as a model-search branch.
+  - Formal headline remains locked: `loose_main_pool=avg_joint_focus`, `strict_main_pool=peak_floor_090`.
+  - No new model, new tau, gate, router, v222b, or v223 is unlocked by v226.
+  - Next action is to report v226 results to GPTPro and wait for the next bounded instruction.
+- Plain-language meaning:
+  - We now have confidence intervals and robustness evidence around the already-locked formal baselines.
+  - The result supports packaging the locked models as the current formal main result while clearly reporting uncertainty and tail-error concentration.
+  - It does not justify local escalation into another selector/generator search.
+- Trigger:
+  - GPTPro v226 accepted v225 as complete and requested audit-only robustness/CI evidence from v225 formal outputs.
+  - v226 reproduced locked test metrics within `1e-5`: loose RMSE/tail `0.544884/0.629752`; strict RMSE/tail `0.571770/0.658306`.
+  - Sample bootstrap test CI: loose RMSE `0.496066-0.593811`, loose tail `0.564811-0.693788`; strict RMSE `0.511036-0.635521`, strict tail `0.581652-0.736696`.
+  - Subject-block test CI: loose RMSE `0.428783-0.599684`, loose tail `0.515881-0.687686`; strict RMSE `0.473689-0.615000`, strict tail `0.539479-0.706505`.
+  - ZIP, required files, metric reproduction, leakage guard, forbidden scan, table alignment, and figure counts all passed.
+- Impact scope:
+  - v226 strengthens reporting/readiness evidence for the locked formal pair.
+  - It preserves the v222b/v223 stop boundary and the rule that diagnostic rows do not enter formal tables.
+  - Future work must come from the GPTPro loop with a bounded instruction and explicit stop condition.
+- Evidence:
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/reports/v226_formal_robustness_ci_audit_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_metric_ci_sample_bootstrap.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_metric_ci_subject_block_bootstrap.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/file_inventory.json`
+- Status:
+  - `active`
+
+---

@@ -1,0 +1,1114 @@
+﻿[1] ControlType.Pane 261,7,1278,1024 方向盘预测修正方案 - Google Chrome - xin
+[1405] ControlType.TabItem 289,7,238,41 ChatGPT
+[1407] ControlType.TabItem 509,7,238,41 Ludan AI商店（GPT源头直供）的小店 - 链动小铺 - 内存用量 - 45.9 MB
+[1409] ControlType.TabItem 729,7,238,41 ChatGPT
+[1411] ControlType.TabItem 949,7,237,41 方向盘预测修正方案 - 内存用量 - 278 MB
+[1414] ControlType.Button 1180,7,28,41 新标签页
+[1417] ControlType.Button 1262,7,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1402,8,45,39 最小化
+[6] ControlType.Button 1447,8,46,39 最大化
+[7] ControlType.Button 1493,8,46,39 关闭
+[1402] ControlType.Button 267,13,28,28 标签页搜索
+[1406] ControlType.Button 485,13,28,28 关闭
+[1408] ControlType.Button 705,13,28,28 关闭
+[1410] ControlType.Button 925,13,28,28 关闭
+[1412] ControlType.Button 1144,13,28,28 关闭
+[11] ControlType.Button 267,53,34,34 返回
+[12] ControlType.Button 303,53,34,34 前进
+[13] ControlType.Button 339,53,34,34 重新加载
+[20] ControlType.Button 1463,53,34,34 xin
+[21] ControlType.Button 1499,53,34,34 Chrome
+[15] ControlType.Button 387,58,24,24 查看网站信息
+[16] ControlType.Edit 419,58,991,24 地址和搜索栏
+[19] ControlType.Button 1418,58,24,24 为此标签页添加书签
+[123] ControlType.Text 918,90,416,2996 # 给本地高级模型的提问：当前窗口快速打方向样本的下一版修正方案
+
+请你作为机器学习实验顾问，基于下面的项目证据，给出下一版可落地的修正方案。请用中文回答，重点给出可以直接实现和验证的实验设计，不要泛泛建议。
+
+## 任务背景
+
+我们在做车辆方向盘曲线预测。模型要在锚点后 0 到 2 秒内预测方向盘变化曲线。用户强调：样本必须是因为当前窗口内方向盘快速转动引起的，不能把后续 2 到 6 秒才发生的大动作错当成当前 0 到 2 秒任务。
+
+当前约束：
+
+1. 不能使用测试集误差做特征、筛选或选模。
+2. 不能把锚点后的真实曲线标签作为预测输入。
+3. 可以使用锚点前已经观测到的车辆信号。
+4. 可以使用预先定义、实验前可知或人工确认的事件类型标签，但不能使用由未来真实曲线自动生成的标签作为部署输入。
+5. 用户不想逐个做人工复核，倾向抽样排查和规则化处理。
+
+## 已完成的关键证据
+
+### 第314版：方向盘快速转动来源审计
+
+全量 1167 个锚点事件中，当前 0 到 2 秒有快速方向盘来源证据的事件为 1083 个，当前窗口证据不足或来源错位的事件为 84 个。
+
+原先 37 个严重错误样本中，只有 4 个属于来源可疑；用户截图指出的 5 个严重样本中，只有 1 个来源可疑。
+
+结论：大多数严重错误不是因为样本来源错，而是模型对已经成立的快速打方向样本仍然预测不好。
+
+### 第315版：过滤和重锚定策略
+
+基于第314版，生成了当前窗口训练保留清单：
+
+- 保留事件：1083 个
+- 隔离事件：84 个
+- 候选重锚定事件：77 个
+- 全程快速方向盘证据弱、候选剔除事件：7 个
+
+按划分后的保留数量：
+
+- 训练：650 个
+- 验证：211 个
+- 测试：222 个
+
+用户截图中的第020号样本被隔离为“当前窗口平缓，但后续才快速打方向”，说明这个样本不能继续当作当前 0 到 2 秒强动作训练样本。
+
+### 第316版：基于保留清单完整重训
+
+第316版复用第307版粗场景条件曲线模型结构，在第315版保留清单上完整重训，隔离样本不参与训练、验证选模或测试主统计。
+
+选中候选在验证集上相对第300版通过无伤门槛。
+
+过滤后测试集结果如下：
+
+- 全部样本：第300版 0.525580，旧第307版 0.496950，第316版 0.502633
+- 原先最难前10个：第300版 0.859987，旧第307版 0.777797，第316版 0.800171
+- 原先最难前20个：第300版 0.703038，旧第307版 0.651121，第316版 0.660814
+- 强方向盘样本：第300版 0.621347，旧第307版 0.594050，第316版 0.601547
+
+保留下来的 33 个严重样本上：
+
+- 第300版平均 0.805638
+- 旧第307版平均 0.877334
+- 第316版平均 0.886424
+
+结论：第316版比第300版好，但没有超过旧第307版；过滤重训可以清理训练边界，但不能修好保留下来的严重样本。
+
+## 当前真正卡点
+
+现在我们认为主要问题不是继续过滤，而是保留下来的严重样本仍有三类模型错误：
+
+1. 幅值压缩：真实方向盘大幅快速变化，模型预测幅值明显偏小。
+2. 相位错位：真实曲线已经提前或延后变化，模型在 0 到 2 秒内跟不上节奏。
+3. 极端峰值跟随不足：车辆已经进入大横向响应或不稳定响应，但模型仍按温和曲线预测。
+
+之前试过简单加权和形状损失，第310版只让平均指标小幅改善，但没有修好严重样本，所以单纯加权不是主要解法。
+
+## 想请你回答的问题
+
+请给出下一版修正方案，重点回答：
+
+1. 下一版应该优先改模型结构、损失函数、样本组织，还是候选曲线选择机制？请排序并说明理由。
+2. 对“幅值压缩、相位错位、极端峰值跟随不足”三类错误，分别应该设计什么可部署的修正项？
+3. 在不能用测试集选模、不能用未来真实曲线做输入的前提下，验证集应该如何设计通过门槛，避免只修严重样本却伤害全部样本？
+4. 是否应该做两阶段模型：第一阶段预测普通曲线，第二阶段只对高风险快速打方向样本做幅值和相位校正？如果做，第二阶段输入、输出和训练目标应该如何定义？
+5. 是否应该改成“原型候选曲线库加门控选择”的方法？如果是，候选库、门控特征和选择损失应该怎么做，才能避免之前候选排序不稳定的问题？
+6. 请给出一个最小可执行的第317版实验方案，包括训练数据、验证规则、模型输出、对照组、通过标准和失败后下一步。
+
+请注意：我们需要的是马上能在当前代码库里实现的方案，不需要大规模重构，也不要建议人工逐个复核。
+[22] ControlType.ToolBar 261,93,1278,34 书签
+[23] ControlType.ToolBar 267,93,36,28 已保存的标签页分组
+[24] ControlType.Button 267,93,28,28 标签页分组
+[25] ControlType.Button 1445,93,86,28 所有书签
+[26] ControlType.Separator 1427,99,18,16 分隔符
+[31] ControlType.Hyperlink 212,127,97,16 跳至内容
+[32] ControlType.Text 260,127,1,1 历史聊天记录
+[30] ControlType.Document 261,128,1278,903 方向盘预测修正方案
+[33] ControlType.Group 261,128,260,837 历史聊天记录
+[35] ControlType.Hyperlink 269,136,129,36 主页
+[36] ControlType.Button 462,136,36,36 关闭边栏
+[118] ControlType.Button 1402,136,78,36 分享
+[121] ControlType.Button 1480,136,36,36 打开对话选项
+[38] ControlType.ListItem 261,188,245,36 新聊天
+[39] ControlType.Hyperlink 267,188,233,36 新聊天
+[41] ControlType.ListItem 261,224,245,36 搜索聊天
+[42] ControlType.Button 267,224,233,36 搜索聊天
+[43] ControlType.Hyperlink 267,260,233,36 文件库
+[45] ControlType.Button 262,293,35,36 新项目
+[44] ControlType.Hyperlink 267,296,233,36 项目 新项目
+[46] ControlType.Hyperlink 267,332,233,36 已安排
+[124] ControlType.Button 918,360,48,24 展开
+[47] ControlType.Hyperlink 267,368,233,36 应用
+[125] ControlType.Group 1282,394,72,40 你的消息操作
+[126] ControlType.Button 1286,398,32,32 复制消息
+[127] ControlType.Button 1318,398,32,32 编辑消息
+[48] ControlType.Hyperlink 267,404,233,36 Codex
+[128] ControlType.Text 710,437,636,46 我会把第317版收敛为低改造、可接到第307/316框架后的增量实验：先定优先级，再把三类错误映射为可部署模块，并用验证集门槛约束。
+[50] ControlType.Text 303,448,28,19 更多
+[53] ControlType.Hyperlink 442,486,34,36 新聊天
+[54] ControlType.Button 466,486,34,36 整理聊天
+[51] ControlType.Button 261,488,185,32 最近
+[52] ControlType.Text 277,494,28,20 最近
+[58] ControlType.Button 250,507,35,37 置顶 方向盘预测修正方案
+[59] ControlType.Button 274,507,35,37 打开“方向盘预测修正方案”的对话选项
+[129] ControlType.Text 710,513,640,46 新增判断是：来源清理已足够，严重样本更像多模态曲线被平均化；因此优先保留主模型，只加高风险门控和受控参数化校正。
+[56] ControlType.ListItem 261,520,245,36 方向盘预测修正方案
+[57] ControlType.Hyperlink 267,520,233,36 方向盘预测修正方案
+[62] ControlType.Button 250,543,35,37 置顶 保护结构优化设计
+[63] ControlType.Button 274,543,35,37 打开“保护结构优化设计”的对话选项
+[60] ControlType.ListItem 261,556,245,36 保护结构优化设计Liu-文档
+[61] ControlType.Hyperlink 267,556,233,36 保护结构优化设计 — 项目 Liu-文档 中的聊天
+[66] ControlType.Button 250,579,35,37 置顶 项目操作与研究
+[67] ControlType.Button 274,579,35,37 打开“项目操作与研究”的对话选项
+[130] ControlType.Button 710,582,123,24 已思考 7m 40s
+[64] ControlType.ListItem 261,592,245,36 项目操作与研究Liu-文档
+[65] ControlType.Hyperlink 267,592,233,36 项目操作与研究 — 项目 Liu-文档 中的聊天
+[70] ControlType.Button 250,615,35,37 置顶 科研流程图设计
+[71] ControlType.Button 274,615,35,37 打开“科研流程图设计”的对话选项
+[132] ControlType.Text 710,622,640,28 总体判断
+[68] ControlType.ListItem 261,628,245,36 科研流程图设计lu-文档
+[69] ControlType.Hyperlink 267,628,233,36 科研流程图设计 — 项目 lu-文档 中的聊天
+[74] ControlType.Button 250,651,35,37 置顶 报告撰写需求补充
+[75] ControlType.Button 274,651,35,37 打开“报告撰写需求补充”的对话选项
+[133] ControlType.Text 710,661,485,20 第317版不应再把主精力放在过滤样本上。第314到316版已经说明：
+[134] ControlType.Text 710,661,640,72 来源错位样本确实要隔离，但保留下来的严重样本仍然预测差，核心问题是模型在强动作样本上发生了均值化、滞后化和保守化预测。
+[72] ControlType.ListItem 261,664,245,36 报告撰写需求补充
+[73] ControlType.Hyperlink 267,664,233,36 报告撰写需求补充
+[78] ControlType.Button 250,687,35,37 置顶 每日简报定制
+[79] ControlType.Button 274,687,35,37 打开“每日简报定制”的对话选项
+[76] ControlType.ListItem 261,700,245,36 每日简报定制
+[77] ControlType.Hyperlink 267,700,233,36 每日简报定制
+[82] ControlType.Button 250,723,35,37 置顶 人民币估算结果
+[83] ControlType.Button 274,723,35,37 打开“人民币估算结果”的对话选项
+[80] ControlType.ListItem 261,736,245,36 人民币估算结果
+[81] ControlType.Hyperlink 267,736,233,36 人民币估算结果
+[135] ControlType.Text 710,755,141,20 第317版建议采用：
+[86] ControlType.Button 250,759,35,37 置顶 403 Forbidden 错误分析
+[87] ControlType.Button 274,759,35,37 打开“403 Forbidden 错误分析”的对话选项
+[84] ControlType.ListItem 261,772,245,36 403 Forbidden 错误分析
+[85] ControlType.Hyperlink 267,772,233,36 403 Forbidden 错误分析
+[90] ControlType.Button 250,795,35,37 置顶 问候交流
+[91] ControlType.Button 274,795,35,37 打开“问候交流”的对话选项
+[137] ControlType.Text 734,804,548,20 冻结或复用第316版主模型 + 增加“当前窗口高风险门控的二阶段候选校正层”
+[88] ControlType.ListItem 261,808,245,36 问候交流
+[89] ControlType.Hyperlink 267,808,233,36 问候交流
+[94] ControlType.Button 250,831,35,37 置顶 研究建议讨论
+[95] ControlType.Button 274,831,35,37 打开“研究建议讨论”的对话选项
+[92] ControlType.ListItem 261,844,245,36 研究建议讨论
+[93] ControlType.Hyperlink 267,844,233,36 研究建议讨论
+[138] ControlType.Text 710,849,480,20 目标不是重写大模型，而是在当前代码库中最小改动实现以下能力：
+[98] ControlType.Button 250,867,35,37 置顶 Claude 更新失败解决
+[99] ControlType.Button 274,867,35,37 打开“Claude 更新失败解决”的对话选项
+[140] ControlType.ListItem 736,876,614,26 对普通样本保持第316版预测，不主动扰动；
+[141] ControlType.Text 742,879,317,20 对普通样本保持第316版预测，不主动扰动；
+[96] ControlType.ListItem 261,880,245,36 Claude 更新失败解决
+[97] ControlType.Hyperlink 267,880,233,36 Claude 更新失败解决
+[142] ControlType.ListItem 736,902,614,130 对当前窗口已经出现快速方向盘证据的高风险样本，允许模型做：• 幅值放大；• 相位提前或延后；• 峰值增强；• 原型曲线替换或重排。
+[102] ControlType.Button 250,903,35,37 置顶 模型任务分析
+[103] ControlType.Button 274,903,35,37 打开“模型任务分析”的对话选项
+[143] ControlType.Text 742,905,464,20 对当前窗口已经出现快速方向盘证据的高风险样本，允许模型做：
+[100] ControlType.ListItem 261,916,245,36 模型任务分析
+[101] ControlType.Hyperlink 267,916,233,36 模型任务分析
+[145] ControlType.ListItem 768,928,582,26 幅值放大；
+[146] ControlType.Text 774,931,80,20 幅值放大；
+[106] ControlType.Button 250,939,35,37 置顶 instoment拼写错误解析
+[107] ControlType.Button 274,939,35,37 打开“instoment拼写错误解析”的对话选项
+[1388] ControlType.Button 718,950,36,37 添加文件等
+[1391] ControlType.Button 1151,950,107,37 Pro 扩展
+[1392] ControlType.Button 1262,950,36,37 开始听写
+[1395] ControlType.Button 1306,950,36,37 启动语音功能
+[104] ControlType.ListItem 261,952,245,36 instoment拼写错误解析
+[105] ControlType.Hyperlink 267,952,233,36 instoment拼写错误解析
+[147] ControlType.ListItem 768,954,582,26 相位提前或延后；
+[1389] ControlType.Edit 761,955,381,43 与 ChatGPT 聊天
+[148] ControlType.Text 774,957,128,20 相位提前或延后；
+[1390] ControlType.Text 762,958,112,21 有问题，尽管问
+[112] ControlType.Button 269,972,246,53 xin zheng Pro，打开“个人资料”菜单
+[110] ControlType.Button 250,975,35,37 置顶 问候交流
+[111] ControlType.Button 274,975,35,37 打开“问候交流”的对话选项
+[114] ControlType.Text 309,979,65,19 xin zheng
+[116] ControlType.Button 471,980,36,37 下载应用
+[149] ControlType.ListItem 768,980,582,26 峰值增强；
+[150] ControlType.Text 774,983,80,20 峰值增强；
+[113] ControlType.Image 277,986,24,25 个人资料图片
+[108] ControlType.ListItem 261,988,245,36 问候交流
+[109] ControlType.Hyperlink 267,988,233,36 问候交流
+[115] ControlType.Text 309,999,20,16 Pro
+[1396] ControlType.Text 913,1003,234,15 ChatGPT 也可能会犯错。请核查重要信息。
+[151] ControlType.ListItem 768,1006,582,26 原型曲线替换或重排。
+[152] ControlType.Text 774,1009,160,20 原型曲线替换或重排。
+[154] ControlType.Text 710,1089,640,32 1. 下一版优先级排序
+[155] ControlType.Text 710,1132,128,20 建议优先级如下：
+[159] ControlType.DataItem 710,1159,160,33 优先级
+[160] ControlType.DataItem 869,1159,241,33 方向
+[161] ControlType.DataItem 1109,1159,241,33 结论
+[179] ControlType.Button 1322,1160,28,28 复制表格
+[163] ControlType.DataItem 710,1192,160,45 1
+[164] ControlType.DataItem 869,1192,241,45 候选曲线选择机制
+[165] ControlType.DataItem 1109,1192,241,45 最优先
+[167] ControlType.DataItem 710,1237,160,45 2
+[168] ControlType.DataItem 869,1237,241,45 二阶段高风险校正模型结构
+[169] ControlType.DataItem 1109,1237,241,45 次优先
+[171] ControlType.DataItem 710,1282,160,45 3
+[172] ControlType.DataItem 869,1282,241,45 样本组织方式
+[173] ControlType.DataItem 1109,1282,241,45 辅助但必要
+[175] ControlType.DataItem 710,1327,160,58 4
+[176] ControlType.DataItem 869,1327,241,58 损失函数
+[177] ControlType.DataItem 1109,1327,241,58 只作为配套，不作为主解法
+[181] ControlType.Text 710,1442,640,28 1.1 第一优先：候选曲线选择机制
+[182] ControlType.Text 710,1481,192,20 当前三类错误本质上都像是
+[183] ControlType.Text 902,1481,144,20 多模态预测被平均化
+[184] ControlType.Text 1046,1481,16,20 ：
+[186] ControlType.ListItem 736,1508,614,26 真实可能是强左打、强右打、提前打、延后打、峰值后回正；
+[187] ControlType.Text 742,1511,432,20 真实可能是强左打、强右打、提前打、延后打、峰值后回正；
+[188] ControlType.ListItem 736,1534,614,26 回归模型为了降低整体误差，容易输出一条“安全的中等幅值曲线”；
+[189] ControlType.Text 742,1537,477,20 回归模型为了降低整体误差，容易输出一条“安全的中等幅值曲线”；
+[190] ControlType.ListItem 736,1560,614,26 这会导致严重样本上出现幅值压缩和相位滞后。
+[191] ControlType.Text 742,1563,336,20 这会导致严重样本上出现幅值压缩和相位滞后。
+[192] ControlType.Text 710,1597,173,20 所以第317版应重点改：
+[194] ControlType.Text 734,1634,585,20 从“预测一条平均曲线”改成“生成多个可解释候选曲线，再由门控模型选择或加权”。
+[195] ControlType.Text 710,1679,448,20 候选不需要很多，先做小库即可。关键是候选中必须显式包含：
+[197] ControlType.ListItem 736,1706,614,26 幅值放大候选；
+[198] ControlType.Text 742,1709,112,20 幅值放大候选；
+[199] ControlType.ListItem 736,1732,614,26 时间平移候选；
+[200] ControlType.Text 742,1735,112,20 时间平移候选；
+[201] ControlType.ListItem 736,1758,614,26 早峰值候选；
+[202] ControlType.Text 742,1761,96,20 早峰值候选；
+[203] ControlType.ListItem 736,1784,614,26 晚峰值候选；
+[204] ControlType.Text 742,1787,96,20 晚峰值候选；
+[205] ControlType.ListItem 736,1810,614,26 快速上升后回正候选；
+[206] ControlType.Text 742,1813,160,20 快速上升后回正候选；
+[207] ControlType.ListItem 736,1836,614,26 原始第316预测候选，也就是 no-op 候选。
+[208] ControlType.Text 742,1839,309,20 原始第316预测候选，也就是 no-op 候选。
+[209] ControlType.Text 710,1873,589,20 这样第317版可以直接验证：严重样本差，是因为候选库没有覆盖，还是门控选错。
+[211] ControlType.Text 710,1953,640,28 1.2 第二优先：二阶段高风险校正
+[212] ControlType.Text 710,1992,617,46 不建议马上推翻第316版主模型。第316版在整体样本上并不差，直接重训大模型风险较高。
+[213] ControlType.Text 710,2060,125,20 第317版应采用：
+[215] ControlType.Text 734,2109,282,20 Stage 1：第316版原模型输出基础曲线
+[217] ControlType.Text 734,2133,348,20 Stage 2：只对高风险快速打方向样本做受控校正
+[218] ControlType.Text 710,2178,128,20 这样有两个好处：
+[220] ControlType.ListItem 736,2205,614,26 普通样本尽量不被伤害；
+[221] ControlType.Text 742,2208,176,20 普通样本尽量不被伤害；
+[222] ControlType.ListItem 736,2231,614,26 严重样本可以专门处理幅值、相位和峰值问题。
+[223] ControlType.Text 742,2234,336,20 严重样本可以专门处理幅值、相位和峰值问题。
+[224] ControlType.Text 710,2268,190,20 Stage 2 的输入只能使用：
+[226] ControlType.ListItem 736,2295,614,26 锚点前车辆信号；
+[227] ControlType.Text 742,2298,128,20 锚点前车辆信号；
+[228] ControlType.ListItem 736,2321,614,26 当前窗口事件类型标签，前提是实验前可知或人工确认；
+[229] ControlType.Text 742,2324,400,20 当前窗口事件类型标签，前提是实验前可知或人工确认；
+[230] ControlType.ListItem 736,2347,614,26 第316版模型自己的预测曲线摘要。
+[231] ControlType.Text 742,2350,253,20 第316版模型自己的预测曲线摘要。
+[232] ControlType.Text 710,2384,80,20 不能使用：
+[234] ControlType.ListItem 736,2411,614,26 测试集误差；
+[235] ControlType.Text 742,2414,96,20 测试集误差；
+[236] ControlType.ListItem 736,2437,614,26 锚点后真实标签；
+[237] ControlType.Text 742,2440,128,20 锚点后真实标签；
+[238] ControlType.ListItem 736,2463,614,26 由未来真实曲线自动生成并在部署时直接输入的标签。
+[239] ControlType.Text 742,2466,384,20 由未来真实曲线自动生成并在部署时直接输入的标签。
+[241] ControlType.Text 710,2546,640,28 1.3 第三优先：样本组织
+[242] ControlType.Text 710,2585,573,20 样本已经过滤过一次，不建议继续扩大剔除范围。第317版样本组织重点应改成：
+[244] ControlType.Text 734,2622,432,20 按风险和曲线形态分层训练、分层验证，而不是继续删样本。
+[245] ControlType.Text 710,2667,638,46 建议在第315版保留清单的 1083 个样本中增加以下分组标签，仅用于训练统计、loss 权重和验证报表：
+[249] ControlType.DataItem 710,2720,205,33 分组
+[250] ControlType.DataItem 914,2720,219,33 定义方式
+[251] ControlType.DataItem 1132,2720,218,33 是否可部署
+[273] ControlType.Button 1322,2721,28,28 复制表格
+[253] ControlType.DataItem 710,2753,205,69 普通样本
+[254] ControlType.DataItem 914,2753,219,69 锚点前方向盘角速度、横摆角速度、横向加速度均不高
+[255] ControlType.DataItem 1132,2753,218,69 是
+[257] ControlType.DataItem 710,2822,205,69 当前快速转向样本
+[258] ControlType.DataItem 914,2822,219,69 锚点前或锚点附近方向盘角速度高
+[259] ControlType.DataItem 1132,2822,218,69 是
+[261] ControlType.DataItem 710,2891,205,69 车辆横向高响应样本
+[262] ControlType.DataItem 914,2891,219,69 锚点前横摆角速度、横向加速度、车速组合较高
+[263] ControlType.DataItem 1132,2891,218,69 是
+[265] ControlType.DataItem 710,2960,205,69 验证集困难样本
+[266] ControlType.DataItem 914,2960,219,69 由验证集上第316版误差预先固定
+[267] ControlType.DataItem 1132,2960,218,69 不部署，仅验证用
+[269] ControlType.DataItem 710,3029,205,82 强幅值标签样本
+[270] ControlType.DataItem 914,3029,219,82 训练或验证标签中峰值幅度较大
+[271] ControlType.DataItem 1132,3029,218,82 不部署，仅训练目标或诊断用
+[274] ControlType.Text 710,3122,48,20 注意：
+[276] ControlType.Text 710,3148,509,20 “强幅值标签样本”可以作为训练目标或验证诊断，但不能作为部署输入。
+[278] ControlType.Text 710,3228,640,28 1.4 第四优先：损失函数
+[279] ControlType.Text 710,3267,541,20 第310版已经说明，简单加权和形状损失只能小幅改善，不能根治严重样本。
+[280] ControlType.Text 710,3309,285,20 第317版的损失函数应只承担辅助作用：
+[282] ControlType.ListItem 736,3348,614,26 约束校正不要过度；
+[283] ControlType.Text 742,3351,144,20 约束校正不要过度；
+[284] ControlType.ListItem 736,3374,614,26 奖励峰值跟随；
+[285] ControlType.Text 742,3377,112,20 奖励峰值跟随；
+[286] ControlType.ListItem 736,3400,614,26 惩罚严重低估；
+[287] ControlType.Text 742,3403,112,20 惩罚严重低估；
+[288] ControlType.ListItem 736,3426,614,26 约束普通样本尽量保持原预测。
+[289] ControlType.Text 742,3429,224,20 约束普通样本尽量保持原预测。
+[290] ControlType.Text 710,3463,285,20 不要再做单纯的“把严重样本权重调大”。
+[292] ControlType.Text 710,3543,640,32 2. 三类错误的可部署修正项
+[293] ControlType.Text 710,3591,640,28 2.1 幅值压缩：增加幅值校正头
+[294] ControlType.Text 710,3635,640,28 问题
+[295] ControlType.Text 710,3674,368,20 真实方向盘变化很大，但模型输出偏小。典型表现：
+[296] ControlType.Text 710,3756,304,21 这通常来自均值化预测和高风险样本不足。
+[298] ControlType.Text 710,3836,640,29 修正项 A：幅值缩放候选
+[299] ControlType.Text 710,3875,177,21 在第316版基础预测曲线 
+[300] ControlType.Text 926,3875,165,21  上生成多个缩放候选：
+[301] ControlType.Text 710,3957,237,21 建议第317版先用固定缩放系数：
+[302] ControlType.Button 1306,4000,36,37 复制
+[303] ControlType.Text 731,4012,275,15 s ∈ {0.85, 1.00, 1.15, 1.30, 1.50, 1.75}
+[304] ControlType.Text 710,4053,48,21 其中：
+[306] ControlType.ListItem 736,4080,614,29 1.00 是 no-op；
+[308] ControlType.Text 782,4083,90,21  是 no-op；
+[307] ControlType.Text 746,4086,32,18 1.00
+[309] ControlType.ListItem 736,4108,614,29 0.85 用于避免原模型过冲；
+[311] ControlType.Text 782,4111,166,21  用于避免原模型过冲；
+[310] ControlType.Text 746,4114,32,18 0.85
+[312] ControlType.ListItem 736,4136,614,29 1.30、1.50、1.75 用于修正强动作幅值压缩。
+[314] ControlType.Text 871,4139,198,21  用于修正强动作幅值压缩。
+[313] ControlType.Text 746,4142,122,18 1.30、1.50、1.75
+[316] ControlType.Text 710,4221,640,29 修正项 B：幅值预测辅助头
+[317] ControlType.Text 710,4260,254,21 Stage 2 增加一个峰值幅度预测头：
+[318] ControlType.Text 710,4344,48,21 其中：
+[319] ControlType.Text 710,4437,165,21 训练时用真实标签计算 
+[320] ControlType.Text 889,4437,365,21 ，但部署时只输入锚点前信号和第316版预测摘要。
+[321] ControlType.Text 710,4480,80,21 辅助损失：
+[322] ControlType.Text 710,4563,128,21 再加入低估惩罚：
+[323] ControlType.Text 710,4647,240,21 低估惩罚只在高风险样本上开启。
+[325] ControlType.Text 710,4727,640,29 修正项 C：低风险 no-op 正则
+[326] ControlType.Text 710,4766,240,21 为了防止普通样本被放大，增加：
+[327] ControlType.Text 710,4848,224,21 只对低风险样本施加较强约束。
+[328] ControlType.Text 710,4890,320,21 可部署的低风险判断来自锚点前信号，例如：
+[329] ControlType.Button 1306,4933,36,37 复制
+[330] ControlType.Text 731,4945,174,15 abs(steer_rate_pre_max) 低
+[332] ControlType.Text 731,4965,161,15 abs(yaw_rate_pre_max) 低
+[334] ControlType.Text 731,4985,181,15 abs(lateral_acc_pre_max) 低
+[336] ControlType.Text 731,5005,65,15 speed 不高
+[338] ControlType.Text 731,5025,132,15 第316预测峰值 A0 不高
+[340] ControlType.Text 710,5112,640,29 2.2 相位错位：增加时间平移候选和相位校正头
+[341] ControlType.Text 710,5156,640,29 问题
+[342] ControlType.Text 710,5195,630,47 真实方向盘曲线已经提前变化，但模型晚了；或者真实动作在 0 到 2 秒后半段才出现，但模型提前响应。
+[343] ControlType.Text 710,5263,240,21 这类问题不能只靠幅值加权解决。
+[345] ControlType.Text 710,5343,640,29 修正项 A：固定时间平移候选
+[346] ControlType.Text 710,5382,237,21 对第316版预测曲线做时间平移：
+[347] ControlType.Text 710,5464,205,21 建议第317版先用离散平移：
+[348] ControlType.Button 1306,5507,36,37 复制
+[349] ControlType.Text 731,5519,403,15 τ ∈ {-0.40s, -0.25s, -0.10s, 0.00s, +0.10s, +0.25s, +0.40s}
+[350] ControlType.Text 710,5560,48,21 解释：
+[354] ControlType.DataItem 710,5587,284,34 τ
+[355] ControlType.DataItem 993,5587,357,34 含义
+[366] ControlType.Button 1322,5588,28,29 复制表格
+[357] ControlType.DataItem 710,5620,284,46 负值
+[358] ControlType.DataItem 993,5620,357,46 让预测曲线提前发生
+[360] ControlType.DataItem 710,5665,284,46 正值
+[361] ControlType.DataItem 993,5665,357,46 让预测曲线延后发生
+[363] ControlType.DataItem 710,5710,284,59 0
+[364] ControlType.DataItem 993,5710,357,59 保持第316版原预测
+[367] ControlType.Text 710,5779,336,21 实现时可用线性插值，边界位置用端点值填充。
+[369] ControlType.Text 710,5859,640,29 修正项 B：相位辅助监督
+[370] ControlType.Text 710,5898,416,21 训练阶段可以为每个训练样本离线计算一个最优平移标签：
+[371] ControlType.Text 710,5988,37,21 其中 
+[372] ControlType.Text 763,5988,347,21  是曲线误差，例如 Huber、MAE 或加权 MAE。
+[373] ControlType.Text 710,6030,160,21 然后训练一个相位头：
+[374] ControlType.Text 710,6113,80,21 辅助损失：
+[375] ControlType.Text 710,6195,96,21 或者用回归：
+[376] ControlType.Text 710,6277,37,21 这里 
+[377] ControlType.Text 765,6277,581,21  来自训练标签，只作为训练目标；部署时不输入真实未来曲线，因此不违反约束。
+[379] ControlType.Text 710,6357,640,29 修正项 C：相位门控特征
+[380] ControlType.Text 710,6396,288,21 相位校正头应重点输入以下锚点前特征：
+[381] ControlType.Button 1306,6439,36,37 复制
+[382] ControlType.Text 731,6451,102,15 steer_angle_now
+[384] ControlType.Text 731,6471,95,15 steer_rate_now
+[386] ControlType.Text 731,6491,155,15 steer_rate_pre_max_0.3s
+[388] ControlType.Text 731,6511,155,15 steer_rate_pre_max_0.5s
+[390] ControlType.Text 731,6531,88,15 steer_acc_now
+[392] ControlType.Text 731,6551,95,15 steer_jerk_pre
+[394] ControlType.Text 731,6571,81,15 yaw_rate_now
+[396] ControlType.Text 731,6591,122,15 yaw_rate_slope_pre
+[398] ControlType.Text 731,6611,102,15 lateral_acc_now
+[400] ControlType.Text 731,6631,142,15 lateral_acc_slope_pre
+[402] ControlType.Text 731,6651,61,15 speed_now
+[404] ControlType.Text 731,6671,159,15 第316预测峰值时间 t_peak0
+[406] ControlType.Text 731,6691,192,15 第316预测首段斜率 slope_0_0.3s
+[407] ControlType.Text 710,6732,112,21 特别重要的是：
+[409] ControlType.ListItem 736,6759,614,27 当前方向盘角速度；
+[410] ControlType.Text 742,6762,144,21 当前方向盘角速度；
+[411] ControlType.ListItem 736,6785,614,27 当前方向盘角加速度；
+[412] ControlType.Text 742,6788,160,21 当前方向盘角加速度；
+[413] ControlType.ListItem 736,6811,614,27 锚点前 0.3 秒是否已经启动；
+[414] ControlType.Text 742,6814,209,21 锚点前 0.3 秒是否已经启动；
+[415] ControlType.ListItem 736,6837,614,27 第316版预测峰值时间。
+[416] ControlType.Text 742,6840,173,21 第316版预测峰值时间。
+[417] ControlType.Text 710,6874,512,21 这些特征可以帮助判断真实动作是已经发生、正在发生，还是尚未开始。
+[419] ControlType.Text 710,6954,640,29 2.3 极端峰值跟随不足：增加峰值风险门控和峰值残差原型
+[420] ControlType.Text 710,6998,640,29 问题
+[421] ControlType.Text 710,7037,496,21 车辆已经进入大横向响应或接近不稳定响应，但模型仍输出温和曲线。
+[422] ControlType.Text 710,7079,397,21 这说明模型没有识别出“当前窗口应采用激进候选曲线”。
+[424] ControlType.Text 710,7159,640,29 修正项 A：高风险门控分数
+[425] ControlType.Text 710,7198,206,21 Stage 2 输出一个风险门控：
+[426] ControlType.Text 710,7280,37,21 其中 
+[427] ControlType.Text 756,7280,150,21  表示是否启用校正。
+[428] ControlType.Text 710,7323,144,21 输入特征建议包括：
+[429] ControlType.Button 1306,7366,36,37 复制
+[430] ControlType.Text 731,7378,61,15 speed_now
+[432] ControlType.Text 731,7398,128,15 abs(steer_rate_now)
+[434] ControlType.Text 731,7418,189,15 abs(steer_rate_pre_max_0.5s)
+[436] ControlType.Text 731,7438,182,15 abs(steer_acc_pre_max_0.5s)
+[438] ControlType.Text 731,7458,115,15 abs(yaw_rate_now)
+[440] ControlType.Text 731,7478,176,15 abs(yaw_rate_pre_max_0.5s)
+[442] ControlType.Text 731,7498,135,15 abs(lateral_acc_now)
+[444] ControlType.Text 731,7518,196,15 abs(lateral_acc_pre_max_0.5s)
+[446] ControlType.Text 731,7538,108,15 yaw_rate * speed
+[448] ControlType.Text 731,7558,196,15 lateral_acc / max(speed, eps)
+[450] ControlType.Text 731,7578,101,15 第316预测峰值 A0
+[452] ControlType.Text 731,7598,159,15 第316预测峰值时间 t_peak0
+[454] ControlType.Text 731,7618,125,15 第316预测曲线能量 E0
+[455] ControlType.Text 710,7659,288,21 部署时只用锚点前信号和模型预测摘要。
+[457] ControlType.Text 710,7739,640,29 修正项 B：峰值残差原型
+[458] ControlType.Text 710,7778,349,21 从训练集中提取第316版在高风险样本上的残差：
+[459] ControlType.Text 710,7860,323,21 对残差做符号归一化后聚类，建议先取 4 类：
+[463] ControlType.DataItem 710,7887,283,34 残差原型
+[464] ControlType.DataItem 992,7887,358,34 含义
+[478] ControlType.Button 1322,7888,28,29 复制表格
+[466] ControlType.DataItem 710,7920,283,46 early-rise
+[467] ControlType.DataItem 992,7920,358,46 真实曲线前段比预测更快上升
+[469] ControlType.DataItem 710,7965,283,46 late-rise
+[470] ControlType.DataItem 992,7965,358,46 真实曲线后段比预测更强
+[472] ControlType.DataItem 710,8010,283,46 spike-return
+[473] ControlType.DataItem 992,8010,358,46 真实快速到峰值后回正
+[475] ControlType.DataItem 710,8055,283,59 sustained-peak
+[476] ControlType.DataItem 992,8055,358,59 真实维持大幅转角
+[479] ControlType.Text 710,8124,80,21 候选曲线：
+[480] ControlType.Text 710,8206,37,21 其中 
+[481] ControlType.Text 767,8206,118,21  可以取固定值：
+[482] ControlType.Button 1306,8249,36,37 复制
+[483] ControlType.Text 731,8261,134,15 α ∈ {0.5, 1.0, 1.5}
+[484] ControlType.Text 710,8302,317,21 第317版不需要复杂化，先做小残差库即可。
+[486] ControlType.Text 710,8382,640,29 修正项 C：峰值低估损失
+[487] ControlType.Text 710,8421,144,21 对高风险样本增加：
+[488] ControlType.Text 710,8503,48,21 其中：
+[489] ControlType.Text 710,8626,48,21 注意：
+[491] ControlType.Text 710,8652,384,21 这个损失只在训练中使用真实标签，不作为部署输入。
+[493] ControlType.Text 710,8732,640,33 3. 验证集通过门槛设计
+[494] ControlType.Text 710,8775,633,47 第317版必须避免“严重样本好了，整体样本坏了”。建议建立一个固定验证门槛，不用测试集参与任何选择。
+[496] ControlType.Text 710,8881,640,29 3.1 验证集重新分层
+[497] ControlType.Text 710,8920,498,21 第315版保留清单中验证集有 211 个样本。建议固定划分为两个部分：
+[498] ControlType.Button 1306,8963,36,37 复制
+[499] ControlType.Text 731,8975,212,15 V_dev：约 100 个，用于调参数和早停
+[501] ControlType.Text 731,8995,263,15 V_lock：约 111 个，用于第317版最终通过门槛
+[502] ControlType.Text 710,9036,192,21 划分时保持以下分布一致：
+[504] ControlType.ListItem 736,9063,614,27 事件类型；
+[505] ControlType.Text 742,9066,80,21 事件类型；
+[506] ControlType.ListItem 736,9089,614,27 方向盘幅值分布；
+[507] ControlType.Text 742,9092,128,21 方向盘幅值分布；
+[508] ControlType.ListItem 736,9115,614,27 当前窗口快速方向盘证据强弱；
+[509] ControlType.Text 742,9118,224,21 当前窗口快速方向盘证据强弱；
+[510] ControlType.ListItem 736,9141,614,27 第316版验证误差分布；
+[511] ControlType.Text 742,9144,173,21 第316版验证误差分布；
+[512] ControlType.ListItem 736,9167,614,27 车速区间；
+[513] ControlType.Text 742,9170,80,21 车速区间；
+[514] ControlType.ListItem 736,9193,614,27 横摆角速度区间；
+[515] ControlType.Text 742,9196,128,21 横摆角速度区间；
+[516] ControlType.ListItem 736,9219,614,27 横向加速度区间。
+[517] ControlType.Text 742,9222,128,21 横向加速度区间。
+[518] ControlType.Text 710,9256,630,47 如果不想重新切验证集，也可以保留原 211 个验证集，但必须提前固定所有门槛，不允许边看结果边改标准。
+[520] ControlType.Text 710,9362,640,29 3.2 固定验证分组
+[521] ControlType.Text 710,9401,224,21 建议验证报表至少包含以下组：
+[525] ControlType.DataItem 710,9428,213,34 验证组
+[526] ControlType.DataItem 922,9428,223,34 定义
+[527] ControlType.DataItem 1144,9428,206,34 用途
+[561] ControlType.Button 1322,9429,28,29 复制表格
+[529] ControlType.DataItem 710,9461,213,46 Val-All
+[530] ControlType.DataItem 922,9461,223,46 全部 211 个验证样本
+[531] ControlType.DataItem 1144,9461,206,46 防止整体退化
+[533] ControlType.DataItem 710,9506,213,46 Val-Normal
+[534] ControlType.DataItem 922,9506,223,46 低风险普通样本
+[535] ControlType.DataItem 1144,9506,206,46 防止普通样本被误放大
+[537] ControlType.DataItem 710,9551,213,70 Val-Strong-Steer
+[538] ControlType.DataItem 922,9551,223,70 当前窗口快速方向盘证据强样本
+[539] ControlType.DataItem 1144,9551,206,70 主优化目标
+[541] ControlType.DataItem 710,9620,213,70 Val-High-Dynamics
+[542] ControlType.DataItem 922,9620,223,70 锚点前横摆角速度或横向加速度高样本
+[543] ControlType.DataItem 1144,9620,206,70 检查极端响应
+[545] ControlType.DataItem 710,9689,213,70 Val-Hard-Top20
+[546] ControlType.DataItem 922,9689,223,70 第316版在验证集误差最高的前 20 个样本
+[547] ControlType.DataItem 1144,9689,206,70 检查严重样本
+[549] ControlType.DataItem 710,9758,213,70 Val-Hard-Top10
+[550] ControlType.DataItem 922,9758,223,70 第316版在验证集误差最高的前 10 个样本
+[551] ControlType.DataItem 1144,9758,206,70 检查最难样本
+[553] ControlType.DataItem 710,9827,213,70 Val-Amp-Under
+[554] ControlType.DataItem 922,9827,223,70 第316版峰值低估明显的验证样本
+[555] ControlType.DataItem 1144,9827,206,70 检查幅值压缩
+[557] ControlType.DataItem 710,9896,213,83 Val-Phase-Miss
+[558] ControlType.DataItem 922,9896,223,83 第316版最优时间平移后误差明显下降的样本
+[559] ControlType.DataItem 1144,9896,206,83 检查相位错位
+[562] ControlType.Text 710,9989,37,21 其中 
+[566] ControlType.Text 710,9989,629,49  可以用验证集真实误差定义，因为它们只用于验证，不进入部署输入。
+[564] ControlType.Text 864,9989,17,21 、
+[563] ControlType.Text 751,9992,109,18 Val-Hard-Top20
+[565] ControlType.Text 884,9992,109,18 Val-Hard-Top10
+[568] ControlType.Text 710,10097,640,29 3.3 建议通过标准
+[569] ControlType.Text 710,10136,285,21 第317版主模型必须同时满足以下条件。
+[570] ControlType.Text 710,10175,640,29 全局无伤门槛
+[571] ControlType.Button 1306,10223,36,37 复制
+[572] ControlType.Text 731,10235,336,15 Val-All 平均误差 <= 第316版 Val-All 平均误差 * 1.005
+[573] ControlType.Text 710,10276,287,21 也就是整体最多允许 0.5% 以内的波动。
+[574] ControlType.Text 710,10318,128,21 更稳妥的标准是：
+[575] ControlType.Button 1306,10361,36,37 复制
+[576] ControlType.Text 731,10373,397,15 Val-All 平均误差 <= min(第307版, 第316版) 的验证集均值 * 1.005
+[577] ControlType.Text 710,10414,441,21 如果旧第307版在验证集也更好，则不能只拿第316版当基线。
+[579] ControlType.Text 710,10494,640,29 普通样本无伤门槛
+[580] ControlType.Button 1306,10542,36,37 复制
+[581] ControlType.Text 731,10554,200,15 Val-Normal 平均误差退化 <= 1.0%
+[583] ControlType.Text 731,10574,203,15 Val-Normal P90 误差退化 <= 2.0%
+[584] ControlType.Text 710,10615,112,21 这条非常关键。
+[586] ControlType.Text 710,10641,419,21 如果 Stage 2 校正把普通样本也放大，说明风险门控失控。
+[588] ControlType.Text 710,10721,640,29 强方向盘样本改善门槛
+[589] ControlType.Button 1306,10769,36,37 复制
+[590] ControlType.Text 731,10781,241,15 Val-Strong-Steer 平均误差改善 >= 3.0%
+[592] ControlType.Text 731,10801,244,15 Val-Strong-Steer P90 误差改善 >= 5.0%
+[593] ControlType.Text 710,10842,429,21 第317版就是为了修强动作样本，所以这里必须有明确收益。
+[595] ControlType.Text 710,10922,640,29 严重样本改善门槛
+[596] ControlType.Button 1306,10970,36,37 复制
+[597] ControlType.Text 731,10982,227,15 Val-Hard-Top20 平均误差改善 >= 5.0%
+[599] ControlType.Text 731,11002,227,15 Val-Hard-Top10 平均误差改善 >= 8.0%
+[600] ControlType.Text 710,11043,413,21 如果这两个组没有改善，第317版没有解决当前核心问题。
+[602] ControlType.Text 710,11123,640,29 幅值压缩改善门槛
+[603] ControlType.Text 710,11162,128,21 定义峰值幅值比：
+[604] ControlType.Text 710,11262,176,21 对明显低估样本，要求：
+[605] ControlType.Button 1306,11305,36,37 复制
+[606] ControlType.Text 731,11317,213,15 median(abs(1 - R_A)) 下降 >= 10%
+[608] ControlType.Text 731,11337,144,15 严重低估比例下降 >= 20%
+[609] ControlType.Text 710,11378,144,21 严重低估可定义为：
+[610] ControlType.Button 1306,11421,36,37 复制
+[611] ControlType.Text 731,11433,149,15 A_pred / A_true < 0.65
+[613] ControlType.Text 710,11520,640,29 相位错位改善门槛
+[614] ControlType.Text 710,11559,21,21 对 
+[616] ControlType.Text 848,11559,17,21 ：
+[615] ControlType.Text 735,11562,109,18 Val-Phase-Miss
+[617] ControlType.Button 1306,11604,36,37 复制
+[618] ControlType.Text 731,11616,361,15 最优平移后误差收益较大的样本中，第317版原始误差应下降 >= 5%
+[620] ControlType.Text 731,11636,144,15 峰值时间误差下降 >= 10%
+[621] ControlType.Text 710,11677,112,21 峰值时间误差：
+[623] ControlType.Text 710,11798,640,29 单样本退化控制
+[624] ControlType.Text 710,11837,160,21 还要控制单样本恶化：
+[625] ControlType.Button 1306,11880,36,37 复制
+[626] ControlType.Text 731,11892,279,15 Val-All 中误差恶化超过 10% 的样本比例 <= 15%
+[628] ControlType.Text 731,11912,299,15 Val-Normal 中误差恶化超过 10% 的样本比例 <= 10%
+[629] ControlType.Text 710,11953,352,21 如果平均值改善但大量普通样本变差，不能通过。
+[631] ControlType.Text 710,12033,640,33 4. 是否应该做两阶段模型？
+[632] ControlType.Text 710,12076,48,21 结论：
+[633] ControlType.Text 758,12076,64,21 应该做。
+[634] ControlType.Text 710,12118,461,21 但第317版不要做复杂两阶段大模型，而是做轻量二阶段校正器。
+[636] ControlType.Text 710,12198,640,29 4.1 Stage 1：基础曲线模型
+[637] ControlType.Text 710,12237,173,21 直接使用第316版模型：
+[638] ControlType.Text 710,12319,174,21 Stage 1 不变，先冻结。
+[639] ControlType.Text 710,12361,205,21 这样第317版可以清楚回答：
+[641] ControlType.Text 734,12410,445,21 问题是不是来自第316版基础模型无法表达幅值、相位和峰值？
+[643] ControlType.Text 710,12501,640,29 4.2 Stage 2：风险门控校正器
+[644] ControlType.Text 710,12540,110,21 Stage 2 输入：
+[645] ControlType.Text 710,12622,37,21 其中 
+[647] ControlType.Text 871,12622,182,21  只来自锚点前车辆信号。
+[646] ControlType.Text 751,12625,116,18 x_past_features
+[649] ControlType.Text 710,12704,640,29 4.3 Stage 2 输入特征
+[650] ControlType.Text 710,12743,512,21 建议不要直接把整段高频时序都塞进去，先做统计特征，便于快速落地。
+[651] ControlType.Text 710,12782,640,29 方向盘特征
+[652] ControlType.Button 1306,12830,36,37 复制
+[653] ControlType.Text 731,12842,102,15 steer_angle_now
+[655] ControlType.Text 731,12862,95,15 steer_rate_now
+[657] ControlType.Text 731,12882,135,15 steer_rate_mean_0.2s
+[659] ControlType.Text 731,12902,135,15 steer_rate_mean_0.5s
+[661] ControlType.Text 731,12922,155,15 steer_rate_max_abs_0.2s
+[663] ControlType.Text 731,12942,155,15 steer_rate_max_abs_0.5s
+[665] ControlType.Text 731,12962,155,15 steer_rate_max_abs_1.0s
+[667] ControlType.Text 731,12982,88,15 steer_acc_now
+[669] ControlType.Text 731,13002,149,15 steer_acc_max_abs_0.5s
+[671] ControlType.Text 731,13022,155,15 steer_jerk_max_abs_0.5s
+[673] ControlType.Text 731,13042,216,15 steer_rate_sign_consistency_0.5s
+[675] ControlType.Text 731,13062,135,15 steer_abs_delta_0.5s
+[677] ControlType.Text 731,13082,135,15 steer_abs_delta_1.0s
+[678] ControlType.Text 710,13128,640,29 车辆横向动态特征
+[679] ControlType.Button 1306,13176,36,37 复制
+[680] ControlType.Text 731,13188,61,15 speed_now
+[682] ControlType.Text 731,13208,81,15 yaw_rate_now
+[684] ControlType.Text 731,13228,142,15 yaw_rate_max_abs_0.5s
+[686] ControlType.Text 731,13248,128,15 yaw_rate_slope_0.5s
+[688] ControlType.Text 731,13268,102,15 lateral_acc_now
+[690] ControlType.Text 731,13288,162,15 lateral_acc_max_abs_0.5s
+[692] ControlType.Text 731,13308,149,15 lateral_acc_slope_0.5s
+[694] ControlType.Text 731,13328,135,15 longitudinal_acc_now
+[696] ControlType.Text 731,13348,203,15 brake_or_throttle_if_available
+[697] ControlType.Text 710,13394,640,29 第316版预测摘要
+[698] ControlType.Button 1306,13442,36,37 复制
+[699] ControlType.Text 731,13454,75,15 pred_amp_A0
+[701] ControlType.Text 731,13474,88,15 pred_endpoint
+[703] ControlType.Text 731,13494,95,15 pred_peak_time
+[705] ControlType.Text 731,13514,95,15 pred_peak_sign
+[707] ControlType.Text 731,13534,75,15 pred_energy
+[709] ControlType.Text 731,13554,142,15 pred_first_0.3s_slope
+[711] ControlType.Text 731,13574,142,15 pred_first_0.5s_delta
+[713] ControlType.Text 731,13594,128,15 pred_max_derivative
+[714] ControlType.Text 710,13635,483,21 这些是模型输出摘要，不是未来真实标签，可以作为 Stage 2 输入。
+[716] ControlType.Text 710,13715,640,29 4.4 Stage 2 输出
+[717] ControlType.Text 710,13754,189,21 建议第317版输出四类量：
+[718] ControlType.Button 1306,13797,36,37 复制
+[719] ControlType.Text 731,13809,234,15 g：是否启用校正的门控分数，范围 [0, 1]
+[721] ControlType.Text 731,13829,215,15 s：幅值缩放系数，范围 [0.85, 1.75]
+[723] ControlType.Text 731,13849,230,15 τ：时间平移量，范围 [-0.40s, +0.40s]
+[725] ControlType.Text 731,13869,129,15 p_k：候选曲线选择权重
+[726] ControlType.Text 710,13910,80,21 最终预测：
+[727] ControlType.Text 710,13992,48,21 其中：
+[729] ControlType.Text 765,14075,337,21  可以是 softmax 加权，也可以是 top-1 候选。
+[728] ControlType.Text 714,14078,47,18 Select
+[731] ControlType.Text 710,14103,628,47 第317版建议训练时用 softmax，部署和评估时优先用低温 softmax 或 top-1，避免再次平均化。
+[733] ControlType.Text 710,14209,640,29 4.5 Stage 2 训练目标
+[734] ControlType.Text 710,14248,96,21 总损失建议：
+[735] ControlType.Text 710,14330,112,21 推荐初始权重：
+[736] ControlType.Button 1306,14373,36,37 复制
+[737] ControlType.Text 731,14385,155,15 L_curve          : 1.00
+[739] ControlType.Text 731,14405,155,15 L_amp            : 0.30
+[741] ControlType.Text 731,14425,155,15 L_phase          : 0.20
+[743] ControlType.Text 731,14445,155,15 L_peak-under     : 0.30
+[745] ControlType.Text 731,14465,155,15 L_noop           : 0.20
+[747] ControlType.Text 731,14485,155,15 L_smooth         : 0.05
+[748] ControlType.Text 710,14526,432,21 不要一开始把严重样本权重开得很大，否则容易伤普通样本。
+[750] ControlType.Text 710,14606,640,33 5. 是否改成“原型候选曲线库 + 门控选择”？
+[751] ControlType.Text 710,14649,48,21 结论：
+[752] ControlType.Text 758,14649,414,21 应该做，但第317版先做小型候选库，不做大规模复杂库。
+[753] ControlType.Text 710,14691,48,21 原因：
+[755] ControlType.ListItem 736,14730,614,27 幅值压缩来自平均化，候选机制比单曲线回归更合适；
+[756] ControlType.Text 742,14733,384,21 幅值压缩来自平均化，候选机制比单曲线回归更合适；
+[757] ControlType.ListItem 736,14756,614,27 相位错位可以通过时间平移候选直接表达；
+[758] ControlType.Text 742,14759,304,21 相位错位可以通过时间平移候选直接表达；
+[759] ControlType.ListItem 736,14782,614,27 极端峰值可以通过峰值原型表达；
+[760] ControlType.Text 742,14785,240,21 极端峰值可以通过峰值原型表达；
+[761] ControlType.ListItem 736,14808,614,27 候选库便于诊断：可以区分“候选覆盖不够”和“门控选择错误”。
+[762] ControlType.Text 742,14811,441,21 候选库便于诊断：可以区分“候选覆盖不够”和“门控选择错误”。
+[764] ControlType.Text 710,14891,640,29 5.1 候选库构建方式
+[765] ControlType.Text 710,14930,112,21 候选库分三层。
+[767] ControlType.Text 710,15010,640,29 第一层：第316版原始候选
+[768] ControlType.Button 1306,15058,36,37 复制
+[769] ControlType.Text 731,15070,150,15 C0 = 第316版原始预测曲线
+[770] ControlType.Text 710,15111,329,21 这是 no-op 候选，防止普通样本被错误校正。
+[772] ControlType.Text 710,15191,640,29 第二层：参数变换候选
+[773] ControlType.Text 710,15230,173,21 基于第316版预测生成：
+[774] ControlType.Text 710,15269,640,29 幅值候选
+[775] ControlType.Button 1306,15317,36,37 复制
+[776] ControlType.Text 731,15329,302,15 scale ∈ {0.85, 1.00, 1.15, 1.30, 1.50, 1.75}
+[777] ControlType.Text 710,15375,640,29 相位候选
+[778] ControlType.Button 1306,15423,36,37 复制
+[779] ControlType.Text 731,15435,430,15 shift ∈ {-0.40s, -0.25s, -0.10s, 0.00s, +0.10s, +0.25s, +0.40s}
+[780] ControlType.Text 710,15481,640,29 组合候选
+[781] ControlType.Text 710,15520,429,21 不要做全组合，否则候选过多。第317版只保留高价值组合：
+[782] ControlType.Button 1306,15563,36,37 复制
+[783] ControlType.Text 731,15575,162,15 scale=1.30, shift=-0.25s
+[785] ControlType.Text 731,15595,162,15 scale=1.30, shift=+0.25s
+[787] ControlType.Text 731,15615,162,15 scale=1.50, shift=-0.25s
+[789] ControlType.Text 731,15635,162,15 scale=1.50, shift=+0.25s
+[790] ControlType.Text 710,15676,112,21 这样可以覆盖：
+[792] ControlType.ListItem 736,15703,614,27 大幅提前；
+[793] ControlType.Text 742,15706,80,21 大幅提前；
+[794] ControlType.ListItem 736,15729,614,27 大幅延后；
+[795] ControlType.Text 742,15732,80,21 大幅延后；
+[796] ControlType.ListItem 736,15755,614,27 中强幅值；
+[797] ControlType.Text 742,15758,80,21 中强幅值；
+[798] ControlType.ListItem 736,15781,614,27 极强幅值。
+[799] ControlType.Text 742,15784,80,21 极强幅值。
+[801] ControlType.Text 710,15864,640,29 第三层：残差原型候选
+[802] ControlType.Text 710,15903,160,21 从训练集残差中提取：
+[803] ControlType.Text 710,15985,288,21 只在训练集上做，不用验证集和测试集。
+[804] ControlType.Text 710,16027,48,21 步骤：
+[806] ControlType.ListItem 736,16066,614,27 对残差按主方向做符号归一化；
+[807] ControlType.Text 742,16069,224,21 对残差按主方向做符号归一化；
+[808] ControlType.ListItem 736,16092,614,27 只取当前窗口快速方向盘证据强的训练样本；
+[809] ControlType.Text 742,16095,320,21 只取当前窗口快速方向盘证据强的训练样本；
+[810] ControlType.ListItem 736,16118,614,27 对残差曲线做 K-medoids 或 K-means；
+[811] ControlType.Text 742,16121,293,21 对残差曲线做 K-medoids 或 K-means；
+[812] ControlType.ListItem 736,16144,614,27 取 4 到 8 个原型；
+[813] ControlType.Text 742,16147,134,21 取 4 到 8 个原型；
+[814] ControlType.ListItem 736,16170,614,27 生成残差候选：
+[815] ControlType.Text 742,16173,112,21 生成残差候选：
+[816] ControlType.Text 710,16255,109,21 建议第317版：
+[817] ControlType.Button 1306,16298,36,37 复制
+[818] ControlType.Text 731,16310,128,15 残差原型数 K_res = 4
+[820] ControlType.Text 731,16330,114,15 α ∈ {0.75, 1.25}
+[821] ControlType.Text 710,16371,249,21 候选总数控制在 20 到 30 条以内。
+[823] ControlType.Text 710,16451,640,29 5.2 门控特征
+[824] ControlType.Text 710,16490,112,21 门控模型输入：
+[825] ControlType.Button 1306,16533,36,37 复制
+[826] ControlType.Text 731,16545,120,15 锚点前方向盘统计特征
+[828] ControlType.Text 731,16565,144,15 锚点前横摆角速度统计特征
+[830] ControlType.Text 731,16585,144,15 锚点前横向加速度统计特征
+[832] ControlType.Text 731,16605,24,15 车速
+[834] ControlType.Text 731,16625,117,15 第316版预测曲线摘要
+[836] ControlType.Text 731,16645,132,15 预先定义的事件类型标签
+[837] ControlType.Text 710,16686,64,21 不输入：
+[838] ControlType.Button 1306,16729,36,37 复制
+[839] ControlType.Text 731,16741,120,15 锚点后真实方向盘曲线
+[841] ControlType.Text 731,16761,60,15 测试集误差
+[843] ControlType.Text 731,16781,168,15 由未来标签生成的真实风险类别
+[845] ControlType.Text 710,16868,640,29 5.3 选择损失
+[846] ControlType.Text 710,16907,85,21 对每个候选 
+[847] ControlType.Text 817,16907,145,21 ，计算其训练误差：
+[848] ControlType.Text 710,16990,202,21 然后构造 soft oracle 分布：
+[849] ControlType.Text 710,17097,80,21 门控输出：
+[850] ControlType.Text 710,17179,80,21 训练损失：
+[851] ControlType.Text 710,17261,160,21 同时加期望曲线误差：
+[852] ControlType.Text 710,17365,96,21 总选择损失：
+[853] ControlType.Text 710,17447,48,21 建议：
+[854] ControlType.Button 1306,17490,36,37 复制
+[855] ControlType.Text 731,17502,215,15 T = 0.05 到 0.10，根据误差量纲调整
+[857] ControlType.Text 731,17522,48,15 β = 0.5
+[859] ControlType.Text 710,17609,640,29 5.4 避免候选排序不稳定的方法
+[860] ControlType.Text 710,17648,272,21 之前候选排序不稳定，很可能是因为：
+[862] ControlType.ListItem 736,17675,614,27 候选之间差异太小；
+[863] ControlType.Text 742,17678,144,21 候选之间差异太小；
+[864] ControlType.ListItem 736,17701,614,27 排序目标只看单一误差；
+[865] ControlType.Text 742,17704,176,21 排序目标只看单一误差；
+[866] ControlType.ListItem 736,17727,614,27 没有 no-op 约束；
+[867] ControlType.Text 742,17730,137,21 没有 no-op 约束；
+[868] ControlType.ListItem 736,17753,614,27 门控过度依赖弱特征；
+[869] ControlType.Text 742,17756,160,21 门控过度依赖弱特征；
+[870] ControlType.ListItem 736,17779,614,27 top-1 选择在边界样本上跳变。
+[871] ControlType.Text 742,17782,224,21 top-1 选择在边界样本上跳变。
+[872] ControlType.Text 710,17816,173,21 第317版要做以下约束。
+[873] ControlType.Text 710,17855,640,29 方法 1：候选 ID 固定
+[874] ControlType.Text 710,17894,198,21 每个候选有固定 ID，例如：
+[875] ControlType.Button 1306,17937,36,37 复制
+[876] ControlType.Text 731,17949,75,15 C00 = no-op
+[878] ControlType.Text 731,17969,108,15 C01 = scale_0.85
+[880] ControlType.Text 731,17989,108,15 C02 = scale_1.15
+[882] ControlType.Text 731,18009,108,15 C03 = scale_1.30
+[884] ControlType.Text 731,18029,108,15 C04 = scale_1.50
+[886] ControlType.Text 731,18049,115,15 C05 = shift_-0.25
+[888] ControlType.Text 731,18069,115,15 C06 = shift_+0.25
+[890] ControlType.Text 731,18089,21,15 ...
+[891] ControlType.Text 710,18130,250,21 不要每个 batch 动态重排候选 ID。
+[893] ControlType.Text 710,18210,640,29 方法 2：训练用 soft oracle，不直接 hard top-1
+[894] ControlType.Text 710,18249,301,21 不要直接把最优候选设为 1，其余设为 0。
+[896] ControlType.Text 710,18275,394,21 用 soft oracle 能减少候选之间误差接近时的随机跳变。
+[898] ControlType.Text 710,18355,640,29 方法 3：候选间要有足够差异
+[899] ControlType.Text 710,18394,368,21 如果候选曲线之间差别很小，门控排序必然不稳定。
+[900] ControlType.Text 710,18436,160,21 候选库构建后要计算：
+[901] ControlType.Button 1306,18479,36,37 复制
+[902] ControlType.Text 731,18491,96,15 候选两两平均距离
+[904] ControlType.Text 731,18511,132,15 候选 oracle coverage
+[906] ControlType.Text 731,18531,215,15 每个候选被选为 oracle top-1 的次数
+[907] ControlType.Text 710,18572,256,21 删除几乎没人用或高度重复的候选。
+[909] ControlType.Text 710,18652,640,29 方法 4：增加 no-op 优先约束
+[910] ControlType.Text 710,18691,297,21 对低风险样本，要求 no-op 候选概率高：
+[911] ControlType.Text 710,18773,176,21 只在低风险样本上使用。
+[912] ControlType.Text 710,18815,224,21 这样普通样本不会被强行放大。
+[914] ControlType.Text 710,18895,640,29 方法 5：评估 top-1 和 softmax 两种输出
+[915] ControlType.Text 710,18934,189,21 第317版验证时同时报告：
+[916] ControlType.Button 1306,18977,36,37 复制
+[917] ControlType.Text 731,18989,102,15 softmax 加权输出
+[919] ControlType.Text 731,19009,89,15 top-1 候选输出
+[920] ControlType.Text 710,19050,603,47 如果 softmax 好但严重样本仍幅值压缩，说明加权又平均化了，应使用 top-1 或降低 softmax 温度。
+[922] ControlType.Text 710,19156,640,33 6. 最小可执行第317版实验方案
+[923] ControlType.Text 710,19199,240,21 下面是可以直接落地的实验设计。
+[925] ControlType.Text 710,19279,640,29 6.1 实验目标
+[926] ControlType.Text 710,19318,109,21 第317版目标：
+[928] ControlType.Text 734,19355,605,45 在不使用测试集选模、不使用未来真实曲线作为输入的前提下，修正第316版在保留严重样本上的幅值压缩、相位错位和峰值不足，同时不伤害普通样本。
+[930] ControlType.Text 710,19470,640,29 6.2 训练数据
+[931] ControlType.Text 710,19509,173,21 使用第315版保留清单：
+[932] ControlType.Button 1306,19552,36,37 复制
+[933] ControlType.Text 731,19564,75,15 训练：650 个
+[935] ControlType.Text 731,19584,75,15 验证：211 个
+[937] ControlType.Text 731,19604,75,15 测试：222 个
+[939] ControlType.Text 731,19624,273,15 隔离：84 个，不参与训练、验证选模或主测试统计
+[940] ControlType.Text 710,19665,397,21 隔离样本只做最终附录分析，不参与第317版通过判断。
+[942] ControlType.Text 710,19745,640,29 6.3 训练输入
+[943] ControlType.Text 710,19784,144,21 每个锚点样本输入：
+[944] ControlType.Button 1306,19827,36,37 复制
+[945] ControlType.Text 731,19839,132,15 锚点前车辆信号统计特征
+[947] ControlType.Text 731,19859,117,15 第316版预测曲线摘要
+[949] ControlType.Text 731,19879,252,15 预先定义或人工确认的事件类型标签，如果已有
+[950] ControlType.Text 710,19920,144,21 锚点前窗口建议取：
+[951] ControlType.Button 1306,19963,36,37 复制
+[952] ControlType.Text 731,19975,75,15 [-2.0s, 0s]
+[954] ControlType.Text 731,19995,75,15 [-1.0s, 0s]
+[956] ControlType.Text 731,20015,75,15 [-0.5s, 0s]
+[958] ControlType.Text 731,20035,75,15 [-0.3s, 0s]
+[959] ControlType.Text 710,20076,432,21 分别提取均值、最大值、斜率、积分、符号一致性等统计量。
+[961] ControlType.Text 710,20156,640,29 6.4 训练标签
+[962] ControlType.Text 710,20195,96,21 标签仍然是：
+[963] ControlType.Button 1306,20238,36,37 复制
+[964] ControlType.Text 731,20250,185,15 锚点后 0 到 2 秒方向盘变化曲线
+[965] ControlType.Text 710,20291,32,21 即：
+[966] ControlType.Text 710,20374,112,21 辅助训练标签：
+[967] ControlType.Button 1306,20417,36,37 复制
+[968] ControlType.Text 731,20429,120,15 真实峰值幅度 A_true
+[970] ControlType.Text 731,20449,153,15 真实峰值时间 t_peak_true
+[972] ControlType.Text 731,20469,207,15 每个候选曲线相对真实曲线的误差 D_k
+[974] ControlType.Text 731,20489,189,15 训练样本的 oracle 候选分布 q_k
+[975] ControlType.Text 710,20530,288,21 这些只在训练中使用，不作为部署输入。
+[977] ControlType.Text 710,20610,640,29 6.5 模型输出
+[978] ControlType.Text 710,20649,109,21 第317版输出：
+[979] ControlType.Button 1306,20692,36,37 复制
+[980] ControlType.Text 731,20704,169,15 最终方向盘变化曲线 y_hat(t)
+[982] ControlType.Text 731,20724,62,15 校正门控 g
+[984] ControlType.Text 731,20744,75,15 候选权重 p_k
+[986] ControlType.Text 731,20764,62,15 幅值缩放 s
+[988] ControlType.Text 731,20784,62,15 相位平移 τ
+[990] ControlType.Text 731,20804,113,15 峰值幅度预测 A_hat
+[991] ControlType.Text 710,20845,37,21 其中 
+[993] ControlType.Text 897,20845,165,21  都要保存，方便诊断。
+[992] ControlType.Text 751,20848,142,18 g、p_k、s、τ、A_hat
+[995] ControlType.Text 710,20927,640,29 6.6 主模型结构
+[996] ControlType.Text 710,20966,80,21 推荐结构：
+[997] ControlType.Button 1306,21009,36,37 复制
+[998] ControlType.Text 731,21021,162,15 第316版基础模型 M316：冻结
+[1000] ControlType.Text 731,21041,61,15         ↓
+[1002] ControlType.Text 731,21061,93,15 基础预测曲线 y0
+[1004] ControlType.Text 731,21081,61,15         ↓
+[1006] ControlType.Text 731,21101,129,15 特征摘要 summary(y0)
+[1008] ControlType.Text 731,21121,61,15         ↓
+[1010] ControlType.Text 731,21141,141,15 Stage 2 MLP 门控校正器
+[1012] ControlType.Text 731,21161,61,15         ↓
+[1014] ControlType.Text 731,21181,189,15 候选曲线选择 / 幅值相位峰值校正
+[1016] ControlType.Text 731,21201,61,15         ↓
+[1018] ControlType.Text 731,21221,89,15 最终预测 y_hat
+[1019] ControlType.Text 710,21262,181,21 Stage 2 MLP 可以很小：
+[1020] ControlType.Button 1306,21305,36,37 复制
+[1021] ControlType.Text 731,21317,192,15 输入维度：几十到一百多个统计特征
+[1023] ControlType.Text 731,21337,109,15 隐藏层：128 -> 64
+[1025] ControlType.Text 731,21357,111,15 激活：ReLU / GELU
+[1027] ControlType.Text 731,21377,80,15 Dropout：0.1
+[1029] ControlType.Text 731,21397,287,15 输出：候选权重 p_k、门控 g、幅值 A_hat、相位 τ
+[1030] ControlType.Text 710,21438,278,21 不需要 Transformer 或复杂序列模型。
+[1032] ControlType.Text 710,21518,640,29 6.7 候选曲线集合
+[1033] ControlType.Text 710,21557,173,21 第317版建议候选如下。
+[1034] ControlType.Text 710,21596,640,29 基础候选
+[1035] ControlType.Button 1306,21644,36,37 复制
+[1036] ControlType.Text 731,21656,54,15 C00 = y0
+[1037] ControlType.Text 710,21702,640,29 幅值候选
+[1038] ControlType.Button 1306,21750,36,37 复制
+[1039] ControlType.Text 731,21762,108,15 C01 = scale 0.85
+[1041] ControlType.Text 731,21782,108,15 C02 = scale 1.15
+[1043] ControlType.Text 731,21802,108,15 C03 = scale 1.30
+[1045] ControlType.Text 731,21822,108,15 C04 = scale 1.50
+[1047] ControlType.Text 731,21842,108,15 C05 = scale 1.75
+[1048] ControlType.Text 710,21888,640,29 相位候选
+[1049] ControlType.Button 1306,21936,36,37 复制
+[1050] ControlType.Text 731,21948,122,15 C06 = shift -0.40s
+[1052] ControlType.Text 731,21968,122,15 C07 = shift -0.25s
+[1054] ControlType.Text 731,21988,122,15 C08 = shift -0.10s
+[1056] ControlType.Text 731,22008,122,15 C09 = shift +0.10s
+[1058] ControlType.Text 731,22028,122,15 C10 = shift +0.25s
+[1060] ControlType.Text 731,22048,122,15 C11 = shift +0.40s
+[1061] ControlType.Text 710,22094,640,29 幅值 + 相位组合候选
+[1062] ControlType.Button 1306,22142,36,37 复制
+[1063] ControlType.Text 731,22154,209,15 C12 = scale 1.30 + shift -0.25s
+[1065] ControlType.Text 731,22174,209,15 C13 = scale 1.30 + shift +0.25s
+[1067] ControlType.Text 731,22194,209,15 C14 = scale 1.50 + shift -0.25s
+[1069] ControlType.Text 731,22214,209,15 C15 = scale 1.50 + shift +0.25s
+[1070] ControlType.Text 710,22260,640,29 残差原型候选
+[1071] ControlType.Text 710,22299,275,21 从训练集残差聚类得到 4 个残差原型：
+[1072] ControlType.Button 1306,22342,36,37 复制
+[1073] ControlType.Text 731,22354,290,15 C16 = y0 + 0.75 * residual_proto_early_rise
+[1075] ControlType.Text 731,22374,283,15 C17 = y0 + 0.75 * residual_proto_late_rise
+[1077] ControlType.Text 731,22394,304,15 C18 = y0 + 0.75 * residual_proto_spike_return
+[1079] ControlType.Text 731,22414,317,15 C19 = y0 + 0.75 * residual_proto_sustained_peak
+[1080] ControlType.Text 710,22455,297,21 总计 20 个候选，足够第317版验证方向。
+[1082] ControlType.Text 710,22535,640,29 6.8 对照组设计
+[1083] ControlType.Text 710,22574,131,21 至少做 4 组对照。
+[1087] ControlType.DataItem 710,22601,165,34 版本
+[1088] ControlType.DataItem 874,22601,248,34 内容
+[1089] ControlType.DataItem 1121,22601,229,34 目的
+[1107] ControlType.Button 1322,22602,28,29 复制表格
+[1091] ControlType.DataItem 710,22634,165,46 B0
+[1092] ControlType.DataItem 874,22634,248,46 第316版原模型
+[1093] ControlType.DataItem 1121,22634,229,46 基线
+[1095] ControlType.DataItem 710,22679,165,46 B1
+[1096] ControlType.DataItem 874,22679,248,46 第316 + 幅值缩放候选
+[1097] ControlType.DataItem 1121,22679,229,46 验证幅值压缩是否主因
+[1099] ControlType.DataItem 710,22724,165,46 B2
+[1100] ControlType.DataItem 874,22724,248,46 第316 + 时间平移候选
+[1101] ControlType.DataItem 1121,22724,229,46 验证相位错位是否主因
+[1103] ControlType.DataItem 710,22769,165,83 B3
+[1104] ControlType.DataItem 874,22769,248,83 第316 + 幅值 + 相位 + 残差原型候选门控
+[1105] ControlType.DataItem 1121,22769,229,83 第317主方案
+[1108] ControlType.Text 710,22862,285,21 不建议第317版同时尝试太多复杂变体。
+[1110] ControlType.Text 710,22888,250,21 优先把 B0 到 B3 的因果链跑清楚。
+[1112] ControlType.Text 710,22968,640,29 6.9 训练方式
+[1113] ControlType.Text 710,23012,640,29 推荐训练流程
+[1115] ControlType.ListItem 736,23044,614,27 训练或加载第316版模型；
+[1116] ControlType.Text 742,23047,189,21 训练或加载第316版模型；
+[1117] ControlType.ListItem 736,23070,614,27 对训练集、验证集生成第316版基础预测 ；
+[1118] ControlType.Text 742,23073,289,21 对训练集、验证集生成第316版基础预测 
+[1119] ControlType.Text 1048,23073,17,21 ；
+[1120] ControlType.ListItem 736,23096,614,27 用训练集构建残差原型库；
+[1121] ControlType.Text 742,23099,192,21 用训练集构建残差原型库；
+[1122] ControlType.ListItem 736,23122,614,27 为训练集每个样本生成 20 个候选；
+[1123] ControlType.Text 742,23125,253,21 为训练集每个样本生成 20 个候选；
+[1124] ControlType.ListItem 736,23148,614,27 计算每个候选相对真实标签的误差 ；
+[1125] ControlType.Text 742,23151,245,21 计算每个候选相对真实标签的误差 
+[1126] ControlType.Text 1011,23151,17,21 ；
+[1127] ControlType.ListItem 736,23174,614,27 生成 soft oracle 分布 ；
+[1128] ControlType.Text 742,23177,159,21 生成 soft oracle 分布 
+[1129] ControlType.Text 917,23177,17,21 ；
+[1130] ControlType.ListItem 736,23200,614,27 训练 Stage 2 门控模型；
+[1131] ControlType.Text 742,23203,179,21 训练 Stage 2 门控模型；
+[1132] ControlType.ListItem 736,23226,614,27 在验证集上固定评估；
+[1133] ControlType.Text 742,23229,160,21 在验证集上固定评估；
+[1134] ControlType.ListItem 736,23252,614,27 只选一个通过门槛的第317版；
+[1135] ControlType.Text 742,23255,221,21 只选一个通过门槛的第317版；
+[1136] ControlType.ListItem 736,23278,614,27 最后只跑一次测试集。
+[1137] ControlType.Text 742,23281,160,21 最后只跑一次测试集。
+[1139] ControlType.Text 710,23361,640,29 6.10 关于训练集第316预测的防泄漏处理
+[1140] ControlType.Text 710,23400,299,21 最好使用 out-of-fold 预测训练 Stage 2：
+[1141] ControlType.Button 1306,23443,36,37 复制
+[1142] ControlType.Text 731,23455,174,15 把训练集 650 个样本分成 5 折
+[1144] ControlType.Text 731,23475,221,15 每折用另外 4 折训练一个第316结构模型
+[1146] ControlType.Text 731,23495,93,15 对当前折生成 y0
+[1148] ControlType.Text 731,23515,195,15 最终得到 650 个 out-of-fold y0
+[1149] ControlType.Text 710,23556,48,21 原因：
+[1151] ControlType.Text 710,23582,623,21 如果 Stage 2 看到的是第316版在训练集上的过拟合预测，它会学到不真实的校正规律。
+[1152] ControlType.Text 710,23624,604,21 如果当前代码库暂时不方便做 5 折，第317版可以先用第316训练集预测，但要加严：
+[1153] ControlType.Button 1306,23667,36,37 复制
+[1154] ControlType.Text 731,23679,90,15 Stage 2 小模型
+[1156] ControlType.Text 731,23699,96,15 较强 no-op 正则
+[1158] ControlType.Text 731,23719,105,15 候选数量不超过 20
+[1160] ControlType.Text 731,23739,84,15 早停只看验证集
+[1161] ControlType.Text 710,23780,318,21 不过正式结论建议以 out-of-fold 版本为准。
+[1163] ControlType.Text 710,23860,640,29 6.11 损失函数
+[1164] ControlType.Text 710,23899,125,21 第317版主损失：
+[1165] ControlType.Text 710,23981,48,21 其中：
+[1166] ControlType.Text 710,24020,640,29 候选选择损失
+[1167] ControlType.Text 710,24126,640,29 最终曲线损失
+[1168] ControlType.Text 710,24210,640,29 幅值损失
+[1169] ControlType.Text 710,24296,640,29 相位损失
+[1170] ControlType.Text 710,24380,640,29 峰值低估损失
+[1171] ControlType.Text 710,24464,640,29 no-op 正则
+[1172] ControlType.Text 710,24503,96,21 低风险样本：
+[1173] ControlType.Text 710,24585,80,21 也可以加：
+[1174] ControlType.Text 710,24665,640,29 平滑损失
+[1175] ControlType.Text 710,24772,160,21 防止校正后曲线抖动。
+[1177] ControlType.Text 710,24852,640,29 6.12 验证报告必须输出的指标
+[1178] ControlType.Text 710,24891,237,21 第317版每次实验都输出以下表。
+[1179] ControlType.Text 710,24930,640,29 曲线误差
+[1180] ControlType.Button 1306,24978,36,37 复制
+[1181] ControlType.Text 731,24990,81,15 Val-All mean
+[1183] ControlType.Text 731,25010,95,15 Val-All median
+[1185] ControlType.Text 731,25030,75,15 Val-All P90
+[1187] ControlType.Text 731,25050,142,15 Val-Strong-Steer mean
+[1189] ControlType.Text 731,25070,135,15 Val-Strong-Steer P90
+[1191] ControlType.Text 731,25090,128,15 Val-Hard-Top10 mean
+[1193] ControlType.Text 731,25110,128,15 Val-Hard-Top20 mean
+[1195] ControlType.Text 731,25130,102,15 Val-Normal mean
+[1197] ControlType.Text 731,25150,95,15 Val-Normal P90
+[1198] ControlType.Text 710,25196,640,29 幅值指标
+[1199] ControlType.Button 1306,25244,36,37 复制
+[1200] ControlType.Text 731,25256,96,15 真实峰值 A_true
+[1202] ControlType.Text 731,25276,96,15 预测峰值 A_pred
+[1204] ControlType.Text 731,25296,167,15 A_pred / A_true 的 median
+[1206] ControlType.Text 731,25316,233,15 严重低估比例：A_pred / A_true < 0.65
+[1208] ControlType.Text 731,25336,233,15 严重过估比例：A_pred / A_true > 1.50
+[1209] ControlType.Text 710,25382,640,29 相位指标
+[1210] ControlType.Button 1306,25430,36,37 复制
+[1211] ControlType.Text 731,25442,75,15 t_peak_pred
+[1213] ControlType.Text 731,25462,75,15 t_peak_true
+[1215] ControlType.Text 731,25482,203,15 abs(t_peak_pred - t_peak_true)
+[1217] ControlType.Text 731,25502,77,15 前 0.5s 误差
+[1219] ControlType.Text 731,25522,77,15 后 1.5s 误差
+[1220] ControlType.Text 710,25568,640,29 门控诊断
+[1221] ControlType.Button 1306,25616,36,37 复制
+[1222] ControlType.Text 731,25628,96,15 平均 no-op 概率
+[1224] ControlType.Text 731,25648,132,15 高风险样本 no-op 概率
+[1226] ControlType.Text 731,25668,120,15 普通样本 no-op 概率
+[1228] ControlType.Text 731,25688,120,15 每个候选被选中的次数
+[1230] ControlType.Text 731,25708,167,15 每个候选 oracle top-1 次数
+[1232] ControlType.Text 731,25728,214,15 门控 top-1 与 oracle top-1 一致率
+[1233] ControlType.Text 710,25769,112,21 这部分很关键。
+[1235] ControlType.Text 710,25795,424,21 如果 oracle 候选明显好，但门控选不中，说明是门控问题。
+[1237] ControlType.Text 710,25821,360,21 如果 oracle 候选也不够好，说明候选库覆盖不足。
+[1239] ControlType.Text 710,25901,640,33 7. 第317版通过标准
+[1240] ControlType.Text 710,25944,173,21 第317版通过必须满足：
+[1241] ControlType.Button 1306,25987,36,37 复制
+[1242] ControlType.Text 731,25999,260,15 1. Val-All 平均误差不劣于第316版超过 0.5%
+[1244] ControlType.Text 731,26019,236,15 2. Val-Normal 平均误差退化不超过 1.0%
+[1246] ControlType.Text 731,26039,265,15 3. Val-Strong-Steer 平均误差改善至少 3.0%
+[1248] ControlType.Text 731,26059,251,15 4. Val-Hard-Top20 平均误差改善至少 5.0%
+[1250] ControlType.Text 731,26079,251,15 5. Val-Hard-Top10 平均误差改善至少 8.0%
+[1252] ControlType.Text 731,26099,192,15 6. 幅值严重低估比例下降至少 20%
+[1254] ControlType.Text 731,26119,291,15 7. Val-All 中恶化超过 10% 的样本比例不超过 15%
+[1256] ControlType.Text 731,26139,311,15 8. Val-Normal 中恶化超过 10% 的样本比例不超过 10%
+[1257] ControlType.Text 710,26180,441,21 如果旧第307版在验证集上优于第316版，则全局门槛应改为：
+[1258] ControlType.Button 1306,26223,36,37 复制
+[1259] ControlType.Text 731,26235,239,15 Val-All <= 旧第307版 Val-All * 1.005
+[1260] ControlType.Text 710,26276,221,21 不能只拿第316版作为低标准。
+[1262] ControlType.Text 710,26356,640,33 8. 失败后的下一步判断
+[1263] ControlType.Text 710,26399,445,21 第317版失败后，不要盲目继续调权重，要根据失败类型分流。
+[1265] ControlType.Text 710,26479,640,29 情况 A：Val-All 变差，Hard 样本变好
+[1266] ControlType.Text 710,26518,144,21 说明校正范围过宽。
+[1267] ControlType.Text 710,26560,64,21 下一步：
+[1268] ControlType.Button 1306,26603,36,37 复制
+[1269] ControlType.Text 731,26615,108,15 提高高风险门控阈值
+[1271] ControlType.Text 731,26635,132,15 增强低风险 no-op 正则
+[1273] ControlType.Text 731,26655,254,15 降低 scale 最大值，例如从 1.75 降到 1.50
+[1275] ControlType.Text 731,26675,331,15 只允许 Val-Strong-Steer 或 High-Dynamics 组启用校正
+[1277] ControlType.Text 710,26762,640,29 情况 B：Val-All 不变，但 Hard 样本没改善
+[1278] ControlType.Text 710,26801,208,21 说明校正没有命中核心错误。
+[1279] ControlType.Text 710,26843,152,21 继续看 oracle 结果：
+[1280] ControlType.Text 710,26882,640,29 如果 oracle 候选能显著改善
+[1281] ControlType.Text 710,26921,208,21 说明候选库够用，门控选错。
+[1282] ControlType.Text 710,26963,64,21 下一步：
+[1283] ControlType.Button 1306,27006,36,37 复制
+[1284] ControlType.Text 731,27018,72,15 增强门控特征
+[1286] ControlType.Text 731,27038,96,15 加入事件类型标签
+[1288] ControlType.Text 731,27058,105,15 加入第316预测摘要
+[1290] ControlType.Text 731,27078,129,15 提高 KL(q || p) 权重
+[1292] ControlType.Text 731,27098,216,15 使用 top-1 训练或降低 softmax 温度
+[1293] ControlType.Text 710,27144,640,29 如果 oracle 候选也不能改善
+[1294] ControlType.Text 710,27183,128,21 说明候选库不够。
+[1295] ControlType.Text 710,27225,64,21 下一步：
+[1296] ControlType.Button 1306,27268,36,37 复制
+[1297] ControlType.Text 731,27280,110,15 增加残差原型数到 8
+[1299] ControlType.Text 731,27300,131,15 增加 shift 到 ±0.60s
+[1301] ControlType.Text 731,27320,213,15 增加 scale 到 2.00，但仅高风险启用
+[1303] ControlType.Text 731,27340,240,15 按早打、晚打、峰值回正、持续峰值分组建库
+[1305] ControlType.Text 710,27427,640,29 情况 C：幅值改善，相位仍错
+[1306] ControlType.Text 710,27466,272,21 说明幅值校正有效，但时间对齐不足。
+[1307] ControlType.Text 710,27508,64,21 下一步：
+[1308] ControlType.Button 1306,27551,36,37 复制
+[1309] ControlType.Text 731,27563,129,15 增加 phase head 权重
+[1311] ControlType.Text 731,27583,96,15 扩大 shift 网格
+[1313] ControlType.Text 731,27603,149,15 增加前 0.5s 曲线误差权重
+[1315] ControlType.Text 731,27623,398,15 加入 steer_rate_now、steer_acc_now、yaw_rate_slope 等相位特征
+[1317] ControlType.Text 710,27710,640,29 情况 D：相位改善，幅值仍小
+[1318] ControlType.Text 710,27749,288,21 说明时间对齐有效，但高幅值候选不够。
+[1319] ControlType.Text 710,27791,64,21 下一步：
+[1320] ControlType.Button 1306,27834,36,37 复制
+[1321] ControlType.Text 731,27846,123,15 增加 scale=2.0 候选
+[1323] ControlType.Text 731,27866,113,15 训练峰值幅度 A_hat
+[1325] ControlType.Text 731,27886,132,15 增加 peak-under loss
+[1327] ControlType.Text 731,27906,108,15 加入高幅值残差原型
+[1329] ControlType.Text 710,27993,640,29 情况 E：严重样本过冲
+[1330] ControlType.Text 710,28032,128,21 说明校正太激进。
+[1331] ControlType.Text 710,28074,64,21 下一步：
+[1332] ControlType.Button 1306,28117,36,37 复制
+[1333] ControlType.Text 731,28129,72,15 增加过估惩罚
+[1335] ControlType.Text 731,28149,108,15 限制 scale 最大值
+[1337] ControlType.Text 731,28169,275,15 对 A_pred / A_true > 1.5 的训练样本增加惩罚
+[1339] ControlType.Text 731,28189,113,15 普通样本强制 no-op
+[1341] ControlType.Text 710,28276,640,33 9. 最推荐的第317版命名和实验矩阵
+[1342] ControlType.Text 710,28319,237,21 建议第317版拆成以下实验编号：
+[1343] ControlType.Button 1306,28362,36,37 复制
+[1344] ControlType.Text 731,28374,171,15 317-A：第316 + 幅值候选门控
+[1346] ControlType.Text 731,28394,171,15 317-B：第316 + 相位候选门控
+[1348] ControlType.Text 731,28414,215,15 317-C：第316 + 幅值 + 相位候选门控
+[1350] ControlType.Text 731,28434,283,15 317-D：第316 + 幅值 + 相位 + 残差原型候选门控
+[1351] ControlType.Text 710,28475,80,21 最终主推：
+[1352] ControlType.Button 1306,28518,36,37 复制
+[1353] ControlType.Text 731,28530,46,15 第317-D
+[1354] ControlType.Text 710,28571,521,21 但只有当 317-D 同时满足全局无伤和困难样本改善门槛，才进入测试集。
+[1356] ControlType.Text 710,28651,640,33 10. 最终建议
+[1357] ControlType.Text 710,28694,189,21 第317版的核心方案应是：
+[1359] ControlType.Text 734,28731,336,21 不要继续过滤；不要只加权；不要重写主模型。
+[1361] ControlType.Text 734,28755,572,21 冻结第316版，增加一个只用锚点前信息和第316预测摘要的二阶段候选校正器。
+[1363] ControlType.Text 734,28779,400,21 候选显式覆盖幅值放大、时间平移和峰值残差三类错误。
+[1365] ControlType.Text 734,28803,530,21 验证集用全局无伤 + 普通无伤 + 强方向盘改善 + 困难样本改善四重门槛。
+[1366] ControlType.Text 710,28848,416,21 这版如果成功，能证明问题主要来自候选表达和门控选择。
+[1368] ControlType.Text 710,28874,208,21 如果失败，也能明确定位是：
+[1369] ControlType.Button 1306,28917,36,37 复制
+[1370] ControlType.Text 731,28929,84,15 候选库覆盖不足
+[1372] ControlType.Text 731,28949,84,15 还是门控选不准
+[1374] ControlType.Text 731,28969,228,15 还是锚点前信号本身不足以预测后续强动作
+[1375] ControlType.Text 710,29010,631,47 这比继续筛样本或继续调损失函数更有实验价值，也更符合当前毕业论文中“从样本边界清理到模型机制修正”的研究逻辑。
+[1376] ControlType.Group 700,29059,650,51 回复操作
+[1377] ControlType.Button 704,29068,32,33 复制回复
+[1378] ControlType.Button 736,29068,32,33 喜欢
+[1379] ControlType.Button 768,29068,32,33 不喜欢
+[1380] ControlType.Button 800,29068,32,33 Pro 反馈
+[1381] ControlType.Button 832,29068,32,33 分享
+[1384] ControlType.Button 896,29068,32,33 更多操作
+[1383] ControlType.Button 864,29069,32,31 切换模型
+[1385] ControlType.Button 928,29069,72,31 来源

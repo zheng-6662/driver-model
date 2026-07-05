@@ -1,0 +1,221 @@
+﻿[138] ControlType.Edit 813,-2004,594,3007 与 ChatGPT 聊天
+[139] ControlType.Text 813,-2001,520,21 # 给本地高级模型的提问词：第318版保守门控失败后，第319版怎么修正
+[141] ControlType.Text 813,-1949,592,47 你现在作为外部方法评审，只基于下面的本地实验事实给建议。请不要要求看测试集结果，因为第318版验证集没有通过，测试集被压制未报告。
+[143] ControlType.Text 813,-1871,90,21 ## 项目目标
+[145] ControlType.Text 813,-1819,583,47 我们在做方向盘快速转动触发的车辆未来 0 到 2 秒方向盘变化曲线预测。用户强调样本一定要由方向盘快速转动引起，当前主线围绕严重方向/意图错误样本做修正。
+[147] ControlType.Text 813,-1741,90,21 ## 已有基线
+[149] ControlType.Text 813,-1689,232,21 - 第316版是当前默认基线预测。
+[150] ControlType.Text 813,-1663,593,47 - 第317版复用第316版原预测，构造 20 个候选，包括原预测不改、幅值缩放、时间平移、幅值加时间组合、残差原型。
+[151] ControlType.Text 813,-1611,580,47 - 第317版候选最优上限在验证集明显好于第316版，但实际门控强制选候选导致普通样本被大面积改坏。
+[152] ControlType.Text 813,-1559,392,21 - 因此第318版按你的上一轮建议做了保守两段式门控。
+[154] ControlType.Text 813,-1507,118,21 ## 第318版实现
+[156] ControlType.Text 813,-1455,109,21 第318版脚本：
+[157] ControlType.Text 813,-1429,592,47 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v318_conservative_two_stage_gate_20260705.py`
+[159] ControlType.Text 813,-1351,80,21 输出目录：
+[160] ControlType.Text 813,-1325,592,47 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v318_conservative_two_stage_gate_20260705`
+[162] ControlType.Text 813,-1247,80,21 关键做法：
+[164] ControlType.Text 813,-1195,539,21 1. 继续复用第316版原预测和第317版候选库，不重训主模型，不扩候选库。
+[165] ControlType.Text 813,-1169,399,21 2. 第一段训练“是否值得校正”的二分类器和收益回归器。
+[166] ControlType.Text 813,-1143,402,21 3. 第二段训练候选收益回归器和候选大退化风险分类器。
+[167] ControlType.Text 813,-1117,565,21 4. 训练集内部 5 折交叉验证生成折外预测，只用折外预测搜索阈值和融合幅度。
+[168] ControlType.Text 813,-1091,217,21 5. 验证集只做通过/失败判定。
+[169] ControlType.Text 813,-1065,370,21 6. 测试集没有参与任何阈值、候选、融合幅度选择。
+[171] ControlType.Text 813,-1013,150,21 ## 第318版验证结果
+[173] ControlType.Text 813,-961,324,21 固定方案：第318丙-候选收益安全残差融合。
+[175] ControlType.Text 813,-909,230,21 验证门槛是否全部通过：False。
+[176] ControlType.Text 813,-883,182,21 是否报告测试集：False。
+[178] ControlType.Text 813,-831,112,21 验证集主结果：
+[180] ControlType.Text 813,-779,500,21 | 方法 | 分组 | 平均误差 | 相对第316变化 | 大退化比例 | 原预测保持率 |
+[181] ControlType.Text 813,-753,212,21 | --- | --- | --- | --- | --- | --- |
+[182] ControlType.Text 813,-727,364,21 | 第316版原预测 | 全部样本 | 0.531658 | 0 | 0 | 空 |
+[183] ControlType.Text 813,-701,364,21 | 第316版原预测 | 普通样本 | 0.405874 | 0 | 0 | 空 |
+[184] ControlType.Text 813,-675,396,21 | 第316版原预测 | 强方向盘样本 | 0.624528 | 0 | 0 | 空 |
+[185] ControlType.Text 813,-649,367,21 | 第316版原预测 | 困难前20 | 0.810938 | 0 | 0 | 空 |
+[186] ControlType.Text 813,-623,367,21 | 第316版原预测 | 困难前10 | 1.002263 | 0 | 0 | 空 |
+[187] ControlType.Text 813,-597,472,21 | 候选最优上限 | 全部样本 | 0.375720 | -0.155938 | 0 | 0.033175 |
+[188] ControlType.Text 813,-571,472,21 | 候选最优上限 | 普通样本 | 0.277041 | -0.128833 | 0 | 0.044944 |
+[189] ControlType.Text 813,-545,504,21 | 候选最优上限 | 强方向盘样本 | 0.445976 | -0.178552 | 0 | 0.026786 |
+[190] ControlType.Text 813,-519,415,21 | 候选最优上限 | 困难前20 | 0.625704 | -0.185234 | 0 | 0 |
+[191] ControlType.Text 813,-493,415,21 | 候选最优上限 | 困难前10 | 0.766732 | -0.235531 | 0 | 0 |
+[192] ControlType.Text 813,-467,309,21 | 第318丙 | 全部样本 | 0.531658 | 0 | 0 | 1 |
+[193] ControlType.Text 813,-441,309,21 | 第318丙 | 普通样本 | 0.405874 | 0 | 0 | 1 |
+[194] ControlType.Text 813,-415,341,21 | 第318丙 | 强方向盘样本 | 0.624528 | 0 | 0 | 1 |
+[195] ControlType.Text 813,-389,312,21 | 第318丙 | 困难前20 | 0.810938 | 0 | 0 | 1 |
+[196] ControlType.Text 813,-363,312,21 | 第318丙 | 困难前10 | 1.002263 | 0 | 0 | 1 |
+[198] ControlType.Text 813,-311,160,21 三条方案的验证门槛：
+[200] ControlType.Text 813,-259,591,47 | 方法 | 是否全通过 | 通过项数 | 全部样本改善 | 强方向盘改善 | 困难前20改善 | 困难前10改善 | 全部样本大退化 | 普通样本大退化 | 全部校正率 | 普通校正率 |
+[201] ControlType.Text 813,-207,385,21 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+[202] ControlType.Text 813,-181,338,21 | 第318甲 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+[203] ControlType.Text 813,-155,338,21 | 第318乙 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+[204] ControlType.Text 813,-129,338,21 | 第318丙 | False | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+[206] ControlType.Text 813,-77,269,21 第318版训练集内部搜索选出的阈值：
+[208] ControlType.Text 813,-25,465,47 | 方法 | p_min | gain_min | p_normal_min | gain_normal_min | candidate_gain_min | bad_prob_max | margin_min | alpha |
+[209] ControlType.Text 813,27,316,21 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+[210] ControlType.Text 813,53,404,21 | 第318甲 | 0.90 | 0.02 | 0.98 | 0.04 | -9 | 1.0 | -9 | 0.50 |
+[211] ControlType.Text 813,79,445,21 | 第318乙 | 0.90 | 0.08 | 0.98 | 0.10 | 0.10 | 0.50 | 0.03 | 1.00 |
+[212] ControlType.Text 813,105,445,21 | 第318丙 | 0.90 | 0.08 | 0.98 | 0.10 | 0.10 | 0.50 | 0.03 | 0.75 |
+[214] ControlType.Text 813,157,141,21 第318版失败形态：
+[216] ControlType.Text 813,209,188,21 - 守卫通过，压缩包通过。
+[1] ControlType.Pane 346,233,1278,1024 ChatGPT - Google Chrome - xin
+[260] ControlType.TabItem 374,233,116,41 ChatGPT - 闲置标签页 - 已释放 175 MB
+[262] ControlType.TabItem 472,233,116,41 ChatGPT - 闲置标签页 - 已释放 184 MB
+[264] ControlType.TabItem 570,233,116,41 方向盘预测修正方案 - 闲置标签页 - 已释放 300 MB
+[266] ControlType.TabItem 668,233,116,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[268] ControlType.TabItem 766,233,116,41 凡人修仙传-哔哩哔哩_bilibili
+[270] ControlType.TabItem 864,233,116,41 第318版门控优化方案 - 内存用量 - 298 MB
+[272] ControlType.TabItem 962,233,115,41 第319版修正建议 - 内存用量 - 290 MB
+[274] ControlType.TabItem 1059,233,115,41 ChatGPT
+[276] ControlType.TabItem 1156,233,115,41 ChatGPT
+[279] ControlType.Button 1265,233,28,41 新标签页
+[282] ControlType.Button 1347,233,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1487,234,45,39 最小化
+[6] ControlType.Button 1532,234,46,39 最大化
+[7] ControlType.Button 1578,234,46,39 关闭
+[217] ControlType.Text 813,235,172,21 - 普通样本没有被改坏。
+[257] ControlType.Button 352,239,28,28 标签页搜索
+[261] ControlType.Button 448,239,28,28 关闭
+[263] ControlType.Button 546,239,28,28 关闭
+[265] ControlType.Button 644,239,28,28 关闭
+[267] ControlType.Button 742,239,28,28 关闭
+[269] ControlType.Button 840,239,28,28 关闭
+[271] ControlType.Button 938,239,28,28 关闭
+[273] ControlType.Button 1035,239,28,28 关闭
+[275] ControlType.Button 1132,239,28,28 关闭
+[277] ControlType.Button 1229,239,28,28 关闭
+[218] ControlType.Text 813,261,458,21 - 但是三条方案都退回到完全不校正，验证集原预测保持率为 1。
+[11] ControlType.Button 352,279,34,34 返回
+[12] ControlType.Button 388,279,34,34 前进
+[13] ControlType.Button 424,279,34,34 重新加载
+[20] ControlType.Button 1548,279,34,34 xin
+[21] ControlType.Button 1584,279,34,34 Chrome
+[15] ControlType.Button 472,284,24,24 查看网站信息
+[16] ControlType.Edit 504,284,991,24 地址和搜索栏
+[19] ControlType.Button 1503,284,24,24 为此标签页添加书签
+[219] ControlType.Text 813,287,428,21 - 困难样本、强方向盘样本、幅值低估比例都没有任何改善。
+[220] ControlType.Text 813,313,589,21 - 这说明第318版从第317版的“过度修改”走到了另一个极端：“过度保守，全不改”。
+[22] ControlType.ToolBar 346,319,1278,34 书签
+[23] ControlType.ToolBar 352,319,36,28 已保存的标签页分组
+[24] ControlType.Button 352,319,28,28 标签页分组
+[25] ControlType.Button 1530,319,86,28 所有书签
+[26] ControlType.Separator 1512,325,18,16 分隔符
+[31] ControlType.Hyperlink 297,353,97,16 跳至内容
+[32] ControlType.Text 345,353,1,1 历史聊天记录
+[30] ControlType.Document 346,354,1278,903 ChatGPT
+[33] ControlType.Group 346,354,260,837 历史聊天记录
+[35] ControlType.Hyperlink 354,362,129,36 主页
+[36] ControlType.Button 547,362,36,36 关闭边栏
+[132] ControlType.Button 1565,362,36,36 开启临时聊天
+[222] ControlType.Text 813,365,294,21 ## 我希望你给出第319版的具体修正建议
+[251] ControlType.Button 1193,375,16,24 关闭
+[250] ControlType.Text 785,377,400,20 你没有访问此项目的权限。请确认你已登录正确的账号。
+[38] ControlType.ListItem 346,414,245,36 新聊天
+[39] ControlType.Hyperlink 352,414,233,36 新聊天
+[224] ControlType.Text 813,417,96,21 请重点回答：
+[41] ControlType.ListItem 346,450,245,36 搜索聊天
+[42] ControlType.Button 352,450,233,36 搜索聊天
+[226] ControlType.Text 813,469,571,47 1. 第319版应该怎么改训练集内部阈值搜索目标，避免“通过无伤项但全不改”被选中？
+[43] ControlType.Hyperlink 352,486,233,36 文件库
+[45] ControlType.Button 347,519,35,36 新项目
+[227] ControlType.Text 813,521,581,47 2. 是否应该设置最低校正覆盖率，尤其是强方向盘样本和困难前20样本的最低校正率？合理范围是多少？
+[44] ControlType.Hyperlink 352,522,233,36 项目 新项目
+[46] ControlType.Hyperlink 352,558,233,36 已安排
+[228] ControlType.Text 813,573,587,47 3. 是否应该把“普通样本保护”和“困难样本激活”拆成双通道策略？例如普通样本严门槛，强方向盘/困难样本较松门槛。
+[47] ControlType.Hyperlink 352,594,233,36 应用
+[229] ControlType.Text 813,625,591,47 4. 第318版的第一段可校正性模型和第二段候选收益模型，下一版应该先修哪个？还是先改阈值搜索目标？
+[48] ControlType.Hyperlink 352,630,233,36 Codex
+[134] ControlType.Text 1003,669,224,43 准备好了，随时开始
+[50] ControlType.Text 388,674,28,19 更多
+[230] ControlType.Text 813,677,594,47 5. 候选最优上限仍明显存在，但选择器不敢用，是否建议引入验证集前固定的候选风险预算、收益预算或分组配额？
+[53] ControlType.Hyperlink 527,712,34,36 新聊天
+[54] ControlType.Button 551,712,34,36 整理聊天
+[51] ControlType.Button 346,714,185,32 最近
+[52] ControlType.Text 362,720,28,20 最近
+[231] ControlType.Text 813,729,511,21 6. 第319版应该保留残差融合，还是先做只对困难样本开放的候选单选？
+[58] ControlType.Button 549,733,35,37 置顶 第319版修正建议
+[59] ControlType.Button 573,733,35,37 打开“第319版修正建议”的对话选项
+[56] ControlType.ListItem 346,746,245,36 第319版修正建议
+[57] ControlType.Hyperlink 352,746,233,36 第319版修正建议（未读）
+[232] ControlType.Text 813,755,447,21 7. 请给出一个可以直接落地到当前脚本的第319版方案，包括：
+[63] ControlType.Button 335,769,35,37 置顶 第319版修正建议
+[64] ControlType.Button 359,769,35,37 打开“第319版修正建议”的对话选项
+[233] ControlType.Text 813,781,122,21    - 固定实验名；
+[61] ControlType.ListItem 346,782,245,36 第319版修正建议
+[62] ControlType.Hyperlink 352,782,233,36 第319版修正建议
+[67] ControlType.Button 335,805,35,37 置顶 科研流程图设计
+[68] ControlType.Button 359,805,35,37 打开“科研流程图设计”的对话选项
+[234] ControlType.Text 813,807,138,21    - 阈值搜索目标；
+[65] ControlType.ListItem 346,818,245,36 科研流程图设计lu-文档
+[66] ControlType.Hyperlink 352,818,233,36 科研流程图设计 — 项目 lu-文档 中的聊天
+[235] ControlType.Text 813,833,122,21    - 分组硬约束；
+[71] ControlType.Button 335,841,35,37 置顶 第318版门控优化方案
+[72] ControlType.Button 359,841,35,37 打开“第318版门控优化方案”的对话选项
+[69] ControlType.ListItem 346,854,245,36 第318版门控优化方案
+[70] ControlType.Hyperlink 352,854,233,36 第318版门控优化方案
+[236] ControlType.Text 813,859,90,21    - 输出表；
+[75] ControlType.Button 335,877,35,37 置顶 保护结构优化设计
+[76] ControlType.Button 359,877,35,37 打开“保护结构优化设计”的对话选项
+[237] ControlType.Text 813,885,138,21    - 验证通过标准；
+[73] ControlType.ListItem 346,890,245,36 保护结构优化设计Liu-文档
+[74] ControlType.Hyperlink 352,890,233,36 保护结构优化设计 — 项目 Liu-文档 中的聊天
+[238] ControlType.Text 813,911,359,21    - 如果第319版仍不通过，下一步应该怎么分流。
+[79] ControlType.Button 335,913,35,37 置顶 方向盘预测修正方案
+[80] ControlType.Button 359,913,35,37 打开“方向盘预测修正方案”的对话选项
+[77] ControlType.ListItem 346,926,245,36 方向盘预测修正方案
+[78] ControlType.Hyperlink 352,926,233,36 方向盘预测修正方案
+[83] ControlType.Button 335,949,35,37 置顶 项目操作与研究
+[84] ControlType.Button 359,949,35,37 打开“项目操作与研究”的对话选项
+[81] ControlType.ListItem 346,962,245,36 项目操作与研究Liu-文档
+[82] ControlType.Hyperlink 352,962,233,36 项目操作与研究 — 项目 Liu-文档 中的聊天
+[240] ControlType.Text 813,963,448,21 要求：请给具体数值范围和伪代码级别的规则，不要只给原则。
+[87] ControlType.Button 335,985,35,37 置顶 报告撰写需求补充
+[88] ControlType.Button 359,985,35,37 打开“报告撰写需求补充”的对话选项
+[85] ControlType.ListItem 346,998,245,36 报告撰写需求补充
+[86] ControlType.Hyperlink 352,998,233,36 报告撰写需求补充
+[137] ControlType.Button 803,1003,36,37 添加文件等
+[241] ControlType.Button 1236,1003,107,37 Pro 扩展
+[242] ControlType.Button 1347,1003,36,37 开始听写
+[244] ControlType.Button 1391,1003,36,37 发送提示
+[91] ControlType.Button 335,1021,35,37 置顶 每日简报定制
+[92] ControlType.Button 359,1021,35,37 打开“每日简报定制”的对话选项
+[89] ControlType.ListItem 346,1034,245,36 每日简报定制
+[90] ControlType.Hyperlink 352,1034,233,36 每日简报定制
+[95] ControlType.Button 335,1057,35,37 置顶 人民币估算结果
+[96] ControlType.Button 359,1057,35,37 打开“人民币估算结果”的对话选项
+[93] ControlType.ListItem 346,1070,245,36 人民币估算结果
+[94] ControlType.Hyperlink 352,1070,233,36 人民币估算结果
+[246] ControlType.Button 909,1072,124,41 生成图片
+[247] ControlType.Button 1045,1072,140,41 撰写或编辑
+[248] ControlType.Button 1197,1072,124,41 查找资料
+[99] ControlType.Button 335,1093,35,37 置顶 403 Forbidden 错误分析
+[100] ControlType.Button 359,1093,35,37 打开“403 Forbidden 错误分析”的对话选项
+[97] ControlType.ListItem 346,1106,245,36 403 Forbidden 错误分析
+[98] ControlType.Hyperlink 352,1106,233,36 403 Forbidden 错误分析
+[103] ControlType.Button 335,1129,35,37 置顶 问候交流
+[104] ControlType.Button 359,1129,35,37 打开“问候交流”的对话选项
+[101] ControlType.ListItem 346,1142,245,36 问候交流
+[102] ControlType.Hyperlink 352,1142,233,36 问候交流
+[107] ControlType.Button 335,1165,35,37 置顶 研究建议讨论
+[108] ControlType.Button 359,1165,35,37 打开“研究建议讨论”的对话选项
+[105] ControlType.ListItem 346,1178,245,36 研究建议讨论
+[106] ControlType.Hyperlink 352,1178,233,36 研究建议讨论
+[125] ControlType.Button 354,1198,246,53 xin zheng Pro，打开“个人资料”菜单
+[111] ControlType.Button 335,1201,35,37 置顶 Claude 更新失败解决
+[112] ControlType.Button 359,1201,35,37 打开“Claude 更新失败解决”的对话选项
+[127] ControlType.Text 394,1205,65,19 xin zheng
+[129] ControlType.Button 556,1206,36,37 下载应用
+[126] ControlType.Image 362,1212,24,25 个人资料图片
+[109] ControlType.ListItem 346,1214,245,36 Claude 更新失败解决
+[110] ControlType.Hyperlink 352,1214,233,36 Claude 更新失败解决
+[128] ControlType.Text 394,1225,20,16 Pro
+[115] ControlType.Button 335,1237,35,37 置顶 模型任务分析
+[116] ControlType.Button 359,1237,35,37 打开“模型任务分析”的对话选项
+[113] ControlType.ListItem 346,1250,245,36 模型任务分析
+[114] ControlType.Hyperlink 352,1250,233,36 模型任务分析
+[119] ControlType.Button 335,1273,35,37 置顶 instoment拼写错误解析
+[120] ControlType.Button 359,1273,35,37 打开“instoment拼写错误解析”的对话选项
+[117] ControlType.ListItem 346,1286,245,36 instoment拼写错误解析
+[118] ControlType.Hyperlink 352,1286,233,36 instoment拼写错误解析
+[123] ControlType.Button 335,1309,35,37 置顶 问候交流
+[124] ControlType.Button 359,1309,35,37 打开“问候交流”的对话选项
+[121] ControlType.ListItem 346,1322,245,36 问候交流
+[122] ControlType.Hyperlink 352,1322,233,36 问候交流

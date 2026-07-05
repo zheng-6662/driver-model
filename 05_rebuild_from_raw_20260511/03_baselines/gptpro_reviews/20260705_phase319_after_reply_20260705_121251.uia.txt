@@ -1,0 +1,514 @@
+﻿[403] ControlType.Image 3930,-6844,107,61 斩龙篇预热PV
+[402] ControlType.Hyperlink 3930,-6843,382,59 斩龙篇预热PV 斩龙篇预热PV
+[406] ControlType.Image 3930,-6773,107,61 秦牧月亮守形态PV
+[405] ControlType.Hyperlink 3930,-6772,382,59 秦牧月亮守形态PV 秦牧月亮守形态PV
+[409] ControlType.Image 3930,-6702,107,61 全新篇章预热PV
+[408] ControlType.Hyperlink 3930,-6701,382,59 全新篇章预热PV 全新篇章预热PV 牧儿化身月亮守？祖师、婆婆和爷爷们竟然在.....
+[413] ControlType.Image 3930,-6631,107,61 南疆平叛篇终战预热PV
+[412] ControlType.Hyperlink 3930,-6630,382,59 南疆平叛篇终战预热PV 南疆平叛篇终战预热PV 这一剑，有着冲破时代的锋芒！
+[417] ControlType.Image 3930,-6560,107,61 秦牧双形态PV公布
+[416] ControlType.Hyperlink 3930,-6559,382,59 秦牧双形态PV公布 秦牧双形态PV公布 荧惑星君形态&镇星君形态
+[421] ControlType.Image 3930,-6489,107,61 PV. 要获取缺失的图片说明，请打开上下文菜单。
+[420] ControlType.Hyperlink 3930,-6488,382,59 PV PV 不断更年番，正在热播！
+[425] ControlType.Image 3930,-6418,107,61 大青牛突击探班玄机科技！
+[424] ControlType.Hyperlink 3930,-6417,382,59 大青牛突击探班玄机科技！ 大青牛突击探班玄机科技！ 主创们私下竟然......
+[429] ControlType.Image 3930,-6347,107,61 祝贺牧神记开播一周年
+[428] ControlType.Hyperlink 3930,-6346,382,59 祝贺牧神记开播一周年 祝贺牧神记开播一周年 【牧神记动画】开播一周年 牧儿携友送福来~
+[433] ControlType.Image 3930,-6276,107,61 一周年主创访谈
+[432] ControlType.Hyperlink 3930,-6275,382,59 一周年主创访谈 一周年主创访谈
+[436] ControlType.Image 3930,-6205,107,61 【实力翻唱】
+[435] ControlType.Hyperlink 3930,-6204,382,59 【实力翻唱】 【实力翻唱】 牧神记动画一周年 娱乐主播阿饼倾情献唱动画主题曲《式微》
+[440] ControlType.Image 3930,-6134,107,61 【公益】
+[439] ControlType.Hyperlink 3930,-6133,382,59 【公益】 【公益】 和秦牧一起陪伴爷爷奶奶
+[444] ControlType.Image 3930,-6063,107,61 花絮3：一镜到底带你看遍黄金宫！
+[443] ControlType.Hyperlink 3930,-6062,382,59 花絮3：一镜到底带你看遍黄金宫！ 花絮3：一镜到底带你看遍黄金宫！
+[447] ControlType.Image 3930,-5992,107,61 花絮2：黄金宫原画揭秘！细节满满
+[446] ControlType.Hyperlink 3930,-5991,382,59 花絮2：黄金宫原画揭秘！细节满满 花絮2：黄金宫原画揭秘！细节满满
+[450] ControlType.Image 3930,-5921,107,61 花絮1：带你光顾秦牧的房间！
+[449] ControlType.Hyperlink 3930,-5920,382,59 花絮1：带你光顾秦牧的房间！ 花絮1：带你光顾秦牧的房间！
+[453] ControlType.Image 3930,-5850,107,61 【牧神记动画】一周年庆典
+[452] ControlType.Hyperlink 3930,-5849,382,59 【牧神记动画】一周年庆典 【牧神记动画】一周年庆典 暨大墟年会现场回顾
+[457] ControlType.Image 3930,-5779,107,61 黄霄雲祝福视频
+[456] ControlType.Hyperlink 3930,-5778,382,59 黄霄雲祝福视频 黄霄雲祝福视频 黄霄雲为牧神记动画倾情打call
+[461] ControlType.Image 3930,-5708,107,61 黄金宫篇PV
+[460] ControlType.Hyperlink 3930,-5707,382,59 黄金宫篇PV 黄金宫篇PV
+[464] ControlType.Image 3930,-5637,107,61 【独家】豫园×牧神记动画
+[463] ControlType.Hyperlink 3930,-5636,382,59 【独家】豫园×牧神记动画 【独家】豫园×牧神记动画 吴垚滔现场演绎主题曲《天外的天》
+[468] ControlType.Image 3930,-5566,107,61 灵毓秀宫装PV
+[467] ControlType.Hyperlink 3930,-5565,382,59 灵毓秀宫装PV 灵毓秀宫装PV
+[471] ControlType.Image 3930,-5495,107,61 太学院篇PV
+[470] ControlType.Hyperlink 3930,-5494,382,59 太学院篇PV 太学院篇PV
+[474] ControlType.Image 3930,-5424,107,61 秦牧新造型PV
+[473] ControlType.Hyperlink 3930,-5423,382,59 秦牧新造型PV 秦牧新造型PV
+[477] ControlType.Image 3930,-5353,107,61 年番全新PV
+[476] ControlType.Hyperlink 3930,-5352,382,59 年番全新PV 年番全新PV
+[480] ControlType.Image 3930,-5282,107,61 灵毓秀角色pv
+[479] ControlType.Hyperlink 3930,-5281,382,59 灵毓秀角色pv 灵毓秀角色pv
+[483] ControlType.Image 3930,-5211,107,61 少年版秦牧角色PV
+[482] ControlType.Hyperlink 3930,-5210,382,59 少年版秦牧角色PV 少年版秦牧角色PV
+[486] ControlType.Image 3930,-5140,107,61 苏绣纪录花絮特辑上线！
+[485] ControlType.Hyperlink 3930,-5139,382,59 苏绣纪录花絮特辑上线！ 苏绣纪录花絮特辑上线！
+[489] ControlType.Image 3930,-5069,107,61 年番PV
+[488] ControlType.Hyperlink 3930,-5068,382,59 年番PV 年番PV 与其跪神乞怜，不如站着，做自己的神
+[493] ControlType.Image 3930,-4998,107,61 开播PV
+[492] ControlType.Hyperlink 3930,-4997,382,59 开播PV 开播PV
+[496] ControlType.Image 3930,-4927,107,61 秦牧角色PV
+[495] ControlType.Hyperlink 3930,-4926,382,59 秦牧角色PV 秦牧角色PV
+[499] ControlType.Image 3930,-4856,107,61 残老村九老群像PV
+[498] ControlType.Hyperlink 3930,-4855,382,59 残老村九老群像PV 残老村九老群像PV
+[502] ControlType.Image 3930,-4785,107,61 司幼幽角色PV
+[501] ControlType.Hyperlink 3930,-4784,382,59 司幼幽角色PV 司幼幽角色PV
+[505] ControlType.Image 3930,-4714,107,61 场景PV公开！
+[504] ControlType.Hyperlink 3930,-4713,382,59 场景PV公开！ 场景PV公开！
+[508] ControlType.Image 3930,-4643,107,61 陈楚生为牧神记开播倾情打call
+[507] ControlType.Hyperlink 3930,-4642,382,59 陈楚生为牧神记开播倾情打call 陈楚生为牧神记开播倾情打call
+[511] ControlType.Image 3930,-4572,107,61 牧神记定档10月27日！
+[510] ControlType.Hyperlink 3930,-4571,382,59 牧神记定档10月27日！ 牧神记定档10月27日！ 放牛娃的传奇人生即将开始
+[515] ControlType.Image 3930,-4501,107,61 PV
+[514] ControlType.Hyperlink 3930,-4500,382,59 PV PV 放牧诸神，为芸芸众生而战！
+[519] ControlType.Image 3930,-4430,107,61 片尾曲《不息》乐队版MV
+[518] ControlType.Hyperlink 3930,-4429,382,59 片尾曲《不息》乐队版MV 片尾曲《不息》乐队版MV
+[522] ControlType.Image 3930,-4359,107,61 第2集预告
+[521] ControlType.Hyperlink 3930,-4358,382,59 第2集预告 第2集预告
+[525] ControlType.Image 3930,-4288,107,61 第3集预告
+[524] ControlType.Hyperlink 3930,-4287,382,59 第3集预告 第3集预告
+[528] ControlType.Image 3930,-4217,107,61 第4集预告
+[527] ControlType.Hyperlink 3930,-4216,382,59 第4集预告 第4集预告
+[531] ControlType.Image 3930,-4146,107,61 第5集预告
+[530] ControlType.Hyperlink 3930,-4145,382,59 第5集预告 第5集预告
+[534] ControlType.Image 3930,-4075,107,61 第6集预告
+[533] ControlType.Hyperlink 3930,-4074,382,59 第6集预告 第6集预告
+[537] ControlType.Image 3930,-4004,107,61 第7集预告
+[536] ControlType.Hyperlink 3930,-4003,382,59 第7集预告 第7集预告
+[540] ControlType.Image 3930,-3933,107,61 第8集预告
+[539] ControlType.Hyperlink 3930,-3932,382,59 第8集预告 第8集预告
+[543] ControlType.Image 3930,-3862,107,61 第9集预告
+[542] ControlType.Hyperlink 3930,-3861,382,59 第9集预告 第9集预告
+[546] ControlType.Image 3930,-3791,107,61 第10集预告
+[545] ControlType.Hyperlink 3930,-3790,382,59 第10集预告 第10集预告
+[549] ControlType.Image 3930,-3720,107,61 第11集预告
+[548] ControlType.Hyperlink 3930,-3719,382,59 第11集预告 第11集预告
+[552] ControlType.Image 3930,-3649,107,61 第12集预告
+[551] ControlType.Hyperlink 3930,-3648,382,59 第12集预告 第12集预告
+[555] ControlType.Image 3930,-3578,107,61 第13集预告
+[554] ControlType.Hyperlink 3930,-3577,382,59 第13集预告 第13集预告
+[558] ControlType.Image 3930,-3507,107,61 第14集预告
+[557] ControlType.Hyperlink 3930,-3506,382,59 第14集预告 第14集预告
+[561] ControlType.Image 3930,-3436,107,61 第15集预告
+[560] ControlType.Hyperlink 3930,-3435,382,59 第15集预告 第15集预告
+[564] ControlType.Image 3930,-3365,107,61 第16集预告
+[563] ControlType.Hyperlink 3930,-3364,382,59 第16集预告 第16集预告
+[567] ControlType.Image 3930,-3294,107,61 第17集预告
+[566] ControlType.Hyperlink 3930,-3293,382,59 第17集预告 第17集预告
+[570] ControlType.Image 3930,-3223,107,61 第18集预告
+[569] ControlType.Hyperlink 3930,-3222,382,59 第18集预告 第18集预告
+[573] ControlType.Image 3930,-3152,107,61 第19集预告
+[572] ControlType.Hyperlink 3930,-3151,382,59 第19集预告 第19集预告
+[576] ControlType.Image 3930,-3081,107,61 第20集预告
+[575] ControlType.Hyperlink 3930,-3080,382,59 第20集预告 第20集预告
+[579] ControlType.Image 3930,-3010,107,61 第21集预告
+[578] ControlType.Hyperlink 3930,-3009,382,59 第21集预告 第21集预告
+[582] ControlType.Image 3930,-2939,107,61 第22集预告
+[581] ControlType.Hyperlink 3930,-2938,382,59 第22集预告 第22集预告
+[585] ControlType.Image 3930,-2868,107,61 第23集预告
+[584] ControlType.Hyperlink 3930,-2867,382,59 第23集预告 第23集预告
+[588] ControlType.Image 3930,-2797,107,61 第24集预告
+[587] ControlType.Hyperlink 3930,-2796,382,59 第24集预告 第24集预告
+[591] ControlType.Image 3930,-2726,107,61 第25集预告
+[590] ControlType.Hyperlink 3930,-2725,382,59 第25集预告 第25集预告 年番定档4月20日
+[595] ControlType.Image 3930,-2655,107,61 第26集预告
+[594] ControlType.Hyperlink 3930,-2654,382,59 第26集预告 第26集预告
+[598] ControlType.Image 3930,-2584,107,61 第27集预告
+[597] ControlType.Hyperlink 3930,-2583,382,59 第27集预告 第27集预告
+[601] ControlType.Image 3930,-2513,107,61 第28集预告
+[600] ControlType.Hyperlink 3930,-2512,382,59 第28集预告 第28集预告
+[604] ControlType.Image 3930,-2442,107,61 第29集预告
+[603] ControlType.Hyperlink 3930,-2441,382,59 第29集预告 第29集预告
+[607] ControlType.Image 3930,-2371,107,61 第30集预告
+[606] ControlType.Hyperlink 3930,-2370,382,59 第30集预告 第30集预告
+[610] ControlType.Image 3930,-2300,107,61 第31集预告
+[609] ControlType.Hyperlink 3930,-2299,382,59 第31集预告 第31集预告
+[613] ControlType.Image 3930,-2229,107,61 第32集预告
+[612] ControlType.Hyperlink 3930,-2228,382,59 第32集预告 第32集预告
+[616] ControlType.Image 3930,-2158,107,61 第33集预告
+[615] ControlType.Hyperlink 3930,-2157,382,59 第33集预告 第33集预告
+[619] ControlType.Image 3930,-2087,107,61 第34集预告
+[618] ControlType.Hyperlink 3930,-2086,382,59 第34集预告 第34集预告
+[622] ControlType.Image 3930,-2016,107,61 第35集预告
+[621] ControlType.Hyperlink 3930,-2015,382,59 第35集预告 第35集预告
+[625] ControlType.Image 3930,-1945,107,61 第36集预告
+[624] ControlType.Hyperlink 3930,-1944,382,59 第36集预告 第36集预告
+[628] ControlType.Image 3930,-1874,107,61 第37集预告
+[627] ControlType.Hyperlink 3930,-1873,382,59 第37集预告 第37集预告
+[631] ControlType.Image 3930,-1803,107,61 第38集预告
+[630] ControlType.Hyperlink 3930,-1802,382,59 第38集预告 第38集预告
+[634] ControlType.Image 3930,-1732,107,61 第39集预告
+[633] ControlType.Hyperlink 3930,-1731,382,59 第39集预告 第39集预告
+[637] ControlType.Image 3930,-1661,107,61 第40集预告
+[636] ControlType.Hyperlink 3930,-1660,382,59 第40集预告 第40集预告
+[640] ControlType.Image 3930,-1590,107,61 第41集预告
+[639] ControlType.Hyperlink 3930,-1589,382,59 第41集预告 第41集预告
+[643] ControlType.Image 3930,-1519,107,61 第42集预告
+[642] ControlType.Hyperlink 3930,-1518,382,59 第42集预告 第42集预告
+[646] ControlType.Image 3930,-1448,107,61 第43集预告
+[645] ControlType.Hyperlink 3930,-1447,382,59 第43集预告 第43集预告
+[649] ControlType.Image 3930,-1377,107,61 第44集预告
+[648] ControlType.Hyperlink 3930,-1376,382,59 第44集预告 第44集预告
+[652] ControlType.Image 3930,-1306,107,61 第45集预告
+[651] ControlType.Hyperlink 3930,-1305,382,59 第45集预告 第45集预告
+[655] ControlType.Image 3930,-1235,107,61 第46集预告
+[654] ControlType.Hyperlink 3930,-1234,382,59 第46集预告 第46集预告
+[658] ControlType.Image 3930,-1164,107,61 第47集预告
+[657] ControlType.Hyperlink 3930,-1163,382,59 第47集预告 第47集预告
+[661] ControlType.Image 3930,-1093,107,61 第48集预告
+[660] ControlType.Hyperlink 3930,-1092,382,59 第48集预告 第48集预告
+[664] ControlType.Image 3930,-1022,107,61 第49集预告
+[663] ControlType.Hyperlink 3930,-1021,382,59 第49集预告 第49集预告
+[667] ControlType.Image 3930,-951,107,61 第50集预告
+[666] ControlType.Hyperlink 3930,-950,382,59 第50集预告 第50集预告
+[670] ControlType.Image 3930,-880,107,61 第51集预告
+[669] ControlType.Hyperlink 3930,-879,382,59 第51集预告 第51集预告
+[673] ControlType.Image 3930,-809,107,61 第52集预告
+[672] ControlType.Hyperlink 3930,-808,382,59 第52集预告 第52集预告
+[676] ControlType.Image 3930,-738,107,61 第53集预告
+[675] ControlType.Hyperlink 3930,-737,382,59 第53集预告 第53集预告
+[679] ControlType.Image 3930,-667,107,61 第54集预告
+[678] ControlType.Hyperlink 3930,-666,382,59 第54集预告 第54集预告
+[682] ControlType.Image 3930,-596,107,61 第55集预告
+[681] ControlType.Hyperlink 3930,-595,382,59 第55集预告 第55集预告
+[685] ControlType.Image 3930,-525,107,61 第56集预告
+[684] ControlType.Hyperlink 3930,-524,382,59 第56集预告 第56集预告
+[688] ControlType.Image 3930,-454,107,61 第57集预告
+[687] ControlType.Hyperlink 3930,-453,382,59 第57集预告 第57集预告
+[691] ControlType.Image 3930,-383,107,61 第58集预告
+[690] ControlType.Hyperlink 3930,-382,382,59 第58集预告 第58集预告
+[694] ControlType.Image 3930,-312,107,61 第59集预告
+[693] ControlType.Hyperlink 3930,-311,382,59 第59集预告 第59集预告
+[697] ControlType.Image 3930,-241,107,61 第60集预告
+[696] ControlType.Hyperlink 3930,-240,382,59 第60集预告 第60集预告
+[208] ControlType.Hyperlink 3935,-217,47,54 1
+[210] ControlType.Hyperlink 3999,-217,47,54 2 限免
+[212] ControlType.Hyperlink 4062,-217,47,54 3 限免
+[214] ControlType.Hyperlink 4126,-217,47,54 4 限免
+[216] ControlType.Hyperlink 4189,-217,47,54 5 限免
+[218] ControlType.Hyperlink 4252,-217,47,54 6 限免
+[700] ControlType.Image 3930,-170,107,61 第61集预告
+[699] ControlType.Hyperlink 3930,-169,382,59 第61集预告 第61集预告
+[220] ControlType.Hyperlink 3935,-154,47,55 7 限免
+[222] ControlType.Hyperlink 3999,-154,47,55 8 限免
+[224] ControlType.Hyperlink 4062,-154,47,55 9 限免
+[226] ControlType.Hyperlink 4126,-154,47,55 10 限免
+[228] ControlType.Hyperlink 4189,-154,47,55 11 限免
+[230] ControlType.Hyperlink 4252,-154,47,55 12 限免
+[703] ControlType.Image 3930,-99,107,61 第62集预告
+[702] ControlType.Hyperlink 3930,-98,382,59 第62集预告 第62集预告
+[232] ControlType.Hyperlink 3935,-91,47,55 13 限免
+[234] ControlType.Hyperlink 3999,-91,47,55 14 限免
+[236] ControlType.Hyperlink 4062,-91,47,55 15 限免
+[238] ControlType.Hyperlink 4126,-91,47,55 16 限免
+[240] ControlType.Hyperlink 4189,-91,47,55 17 限免
+[242] ControlType.Hyperlink 4252,-91,47,55 18 限免
+[706] ControlType.Image 3930,-28,107,61 第63集预告
+[705] ControlType.Hyperlink 3930,-27,382,59 第63集预告 第63集预告
+[244] ControlType.Hyperlink 3935,-27,47,55 19 会员
+[246] ControlType.Hyperlink 3999,-27,47,55 20 会员
+[248] ControlType.Hyperlink 4062,-27,47,55 21 会员
+[250] ControlType.Hyperlink 4126,-27,47,55 22 会员
+[252] ControlType.Hyperlink 4189,-27,47,55 23 会员
+[254] ControlType.Hyperlink 4252,-27,47,55 24 会员
+[256] ControlType.Hyperlink 3935,36,47,55 25 会员
+[258] ControlType.Hyperlink 3999,36,47,55 26 会员
+[260] ControlType.Hyperlink 4062,36,47,55 27 会员
+[262] ControlType.Hyperlink 4126,36,47,55 28 会员
+[264] ControlType.Hyperlink 4189,36,47,55 29 会员
+[266] ControlType.Hyperlink 4252,36,47,55 30 会员
+[709] ControlType.Image 3930,43,107,61 第64集预告
+[708] ControlType.Hyperlink 3930,44,382,59 第64集预告 第64集预告
+[1] ControlType.Pane 2568,60,1904,1072 牧神记第90集-国创-高清独家在线观看-bilibili-哔哩哔哩 - 正在播放音频 - Google Chrome - xin
+[898] ControlType.TabItem 2596,60,256,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[900] ControlType.TabItem 2834,60,256,41 牧神记-哔哩哔哩_bilibili
+[902] ControlType.TabItem 3072,60,256,41 牧神记第90集-国创-高清独家在线观看-bilibili-哔哩哔哩 - 正在播放音频 - 内存用量 - 419 MB
+[906] ControlType.Button 3322,60,28,41 新标签页
+[909] ControlType.Button 4195,60,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 4335,61,45,39 最小化
+[6] ControlType.Button 4380,61,46,39 最大化
+[7] ControlType.Button 4426,61,46,39 关闭
+[895] ControlType.Button 2574,66,28,28 标签页搜索
+[899] ControlType.Button 2810,66,28,28 关闭
+[901] ControlType.Button 3048,66,28,28 关闭
+[904] ControlType.Button 3286,66,28,28 关闭
+[903] ControlType.Button 3268,72,16,16 将此标签页静音
+[268] ControlType.Hyperlink 3935,100,47,55 31 会员
+[270] ControlType.Hyperlink 3999,100,47,55 32 会员
+[272] ControlType.Hyperlink 4062,100,47,55 33 会员
+[274] ControlType.Hyperlink 4126,100,47,55 34 会员
+[276] ControlType.Hyperlink 4189,100,47,55 35 会员
+[278] ControlType.Hyperlink 4252,100,47,55 36 会员
+[11] ControlType.Button 2574,106,34,34 返回
+[12] ControlType.Button 2610,106,34,34 前进
+[13] ControlType.Button 2646,106,34,34 重新加载
+[20] ControlType.Button 4360,106,34,34 控制您的音乐、视频等媒体内容
+[21] ControlType.Button 4396,106,34,34 xin
+[22] ControlType.Button 4432,106,34,34 Chrome
+[15] ControlType.Button 2694,111,24,24 查看网站信息
+[16] ControlType.Edit 2726,111,1581,24 地址和搜索栏
+[19] ControlType.Button 4315,111,24,24 为此标签页添加书签
+[712] ControlType.Image 3930,114,107,61 第65集预告
+[711] ControlType.Hyperlink 3930,115,382,59 第65集预告 第65集预告
+[23] ControlType.ToolBar 2568,146,1904,34 书签
+[24] ControlType.ToolBar 2574,146,36,28 已保存的标签页分组
+[25] ControlType.Button 2574,146,28,28 标签页分组
+[26] ControlType.Button 4378,146,86,28 所有书签
+[27] ControlType.Separator 4360,152,18,16 分隔符
+[280] ControlType.Hyperlink 3935,163,47,55 37 会员
+[282] ControlType.Hyperlink 3999,163,47,55 38 会员
+[284] ControlType.Hyperlink 4062,163,47,55 39 会员
+[286] ControlType.Hyperlink 4126,163,47,55 40 会员
+[288] ControlType.Hyperlink 4189,163,47,55 41 会员
+[290] ControlType.Hyperlink 4252,163,47,55 42 会员
+[31] ControlType.Document 2568,181,1904,951 牧神记第90集-国创-高清独家在线观看-bilibili-哔哩哔哩
+[39] ControlType.ListItem 2740,181,48,64 番剧
+[40] ControlType.Hyperlink 2740,181,28,64 番剧
+[41] ControlType.ListItem 2788,181,48,64 直播
+[42] ControlType.Hyperlink 2788,181,28,64 直播
+[43] ControlType.ListItem 2836,181,76,64 游戏中心
+[44] ControlType.Hyperlink 2836,181,56,64 游戏中心
+[45] ControlType.ListItem 2912,181,62,64 会员购
+[46] ControlType.Hyperlink 2912,181,42,64 会员购
+[47] ControlType.ListItem 2974,181,48,64 漫画
+[48] ControlType.Hyperlink 2974,181,28,64 漫画
+[49] ControlType.ListItem 3022,181,48,64 赛事
+[50] ControlType.Hyperlink 3022,181,28,64 赛事
+[51] ControlType.ListItem 3070,181,74,64 MSIMSI
+[52] ControlType.Hyperlink 3070,181,54,64 MSI 图片 MSI
+[54] ControlType.ListItem 3144,181,91,64 下载客户端
+[55] ControlType.Hyperlink 3144,181,91,64 下载客户端
+[891] ControlType.Text 2567,183,415,17 牧神记第90集预告-国创-高清独家在线观看-bilibili-哔哩哔哩
+[35] ControlType.ListItem 2592,185,148,56 首页
+[36] ControlType.Hyperlink 2592,185,128,56 首页
+[715] ControlType.Image 3930,185,107,61 第66集预告
+[714] ControlType.Hyperlink 3930,186,382,59 第66集预告 第66集预告
+[68] ControlType.Text 4099,187,14,15 29
+[72] ControlType.Text 4150,187,14,15 39
+[64] ControlType.ListItem 4021,193,50,40 大会员
+[65] ControlType.Hyperlink 4021,193,50,40 大会员
+[67] ControlType.ListItem 4071,193,50,40 29消息
+[69] ControlType.Hyperlink 4071,193,50,40 消息
+[71] ControlType.ListItem 4121,193,50,40 39动态
+[73] ControlType.Hyperlink 4121,193,50,40 动态
+[75] ControlType.ListItem 4171,193,50,40 收藏
+[76] ControlType.Hyperlink 4171,193,50,40 收藏
+[78] ControlType.ListItem 4221,193,50,40 历史
+[79] ControlType.Hyperlink 4221,193,50,40 历史
+[81] ControlType.ListItem 4271,193,52,40 创作中心
+[82] ControlType.Hyperlink 4271,193,52,40 创作中心
+[84] ControlType.ListItem 4327,196,106,34 投稿
+[85] ControlType.ListItem 4327,196,106,34 投稿
+[86] ControlType.Hyperlink 4327,196,106,34 投稿
+[53] ControlType.Image 3070,203,54,20 图片
+[58] ControlType.Edit 3368,204,410,20 凡人修仙动漫
+[292] ControlType.Hyperlink 3935,226,47,55 43 会员
+[294] ControlType.Hyperlink 3999,226,47,55 44 会员
+[296] ControlType.Hyperlink 4062,226,47,55 45 会员
+[298] ControlType.Hyperlink 4126,226,47,55 46 会员
+[300] ControlType.Hyperlink 4189,226,47,55 47 会员
+[302] ControlType.Hyperlink 4252,226,47,55 48 会员
+[718] ControlType.Image 3930,256,107,61 第67集预告
+[717] ControlType.Hyperlink 3930,257,382,59 第67集预告 第67集预告
+[88] ControlType.Group 2699,285,1186,723 哔哩哔哩播放器
+[304] ControlType.Hyperlink 3935,290,47,55 49 会员
+[306] ControlType.Hyperlink 3999,290,47,55 50 会员
+[308] ControlType.Hyperlink 4062,290,47,55 51 会员
+[310] ControlType.Hyperlink 4126,290,47,55 52 会员
+[312] ControlType.Hyperlink 4189,290,47,55 53 会员
+[314] ControlType.Hyperlink 4252,290,47,55 54 会员
+[195] ControlType.Text 4002,297,237,17 您有未使用的大会员礼包，戳我查看 >
+[721] ControlType.Image 3930,327,107,61 第68集预告
+[720] ControlType.Hyperlink 3930,328,382,59 第68集预告 第68集预告
+[198] ControlType.Text 3930,353,65,18 弹幕列表
+[316] ControlType.Hyperlink 3935,353,47,55 55 会员
+[318] ControlType.Hyperlink 3999,353,47,55 56 会员
+[320] ControlType.Hyperlink 4062,353,47,55 57 会员
+[322] ControlType.Hyperlink 4126,353,47,55 58 会员
+[324] ControlType.Hyperlink 4189,353,47,55 59 会员
+[326] ControlType.Hyperlink 4252,353,47,55 60 会员
+[724] ControlType.Image 3930,398,107,61 第69集预告
+[723] ControlType.Hyperlink 3930,399,382,59 第69集预告 第69集预告
+[201] ControlType.Text 3930,408,33,22 正片
+[202] ControlType.Text 3971,412,39,14 (90/91)
+[328] ControlType.Hyperlink 3935,417,47,55 61 会员
+[330] ControlType.Hyperlink 3999,417,47,55 62 会员
+[332] ControlType.Hyperlink 4062,417,47,55 63 会员
+[334] ControlType.Hyperlink 4126,417,47,55 64 会员
+[336] ControlType.Hyperlink 4189,417,47,55 65 会员
+[338] ControlType.Hyperlink 4252,417,47,55 66 会员
+[727] ControlType.Image 3930,469,107,61 第70集预告
+[726] ControlType.Hyperlink 3930,470,382,59 第70集预告 第70集预告
+[340] ControlType.Hyperlink 3935,480,47,55 67 会员
+[342] ControlType.Hyperlink 3999,480,47,55 68 会员
+[344] ControlType.Hyperlink 4062,480,47,55 69 会员
+[346] ControlType.Hyperlink 4126,480,47,55 70 会员
+[348] ControlType.Hyperlink 4189,480,47,55 71 会员
+[350] ControlType.Hyperlink 4252,480,47,55 72 会员
+[730] ControlType.Image 3930,540,107,61 第71集预告
+[729] ControlType.Hyperlink 3930,541,382,59 第71集预告 第71集预告
+[352] ControlType.Hyperlink 3935,544,47,55 73 会员
+[354] ControlType.Hyperlink 3999,544,47,55 74 会员
+[356] ControlType.Hyperlink 4062,544,47,55 75 会员
+[358] ControlType.Hyperlink 4126,544,47,55 76 会员
+[360] ControlType.Hyperlink 4189,544,47,55 77 会员
+[362] ControlType.Hyperlink 4252,544,47,55 78 会员
+[364] ControlType.Hyperlink 3935,607,47,55 79 会员
+[366] ControlType.Hyperlink 3999,607,47,55 80 会员
+[368] ControlType.Hyperlink 4062,607,47,55 81 会员
+[370] ControlType.Hyperlink 4126,607,47,55 82 会员
+[372] ControlType.Hyperlink 4189,607,47,55 83 会员
+[374] ControlType.Hyperlink 4252,607,47,55 84 会员
+[733] ControlType.Image 3930,611,107,61 第72集预告
+[732] ControlType.Hyperlink 3930,612,382,59 第72集预告 第72集预告
+[376] ControlType.Hyperlink 3935,670,47,55 85 会员
+[378] ControlType.Hyperlink 3999,670,47,55 86 会员
+[380] ControlType.Hyperlink 4062,670,47,55 87 会员
+[382] ControlType.Hyperlink 4126,670,47,55 88 会员
+[384] ControlType.Hyperlink 4189,670,47,55 89 会员
+[386] ControlType.Hyperlink 4252,670,47,55 90 会员
+[736] ControlType.Image 3930,682,107,61 第73集预告
+[735] ControlType.Hyperlink 3930,683,382,59 第73集预告 第73集预告
+[388] ControlType.Hyperlink 3935,734,47,55 91 预告
+[739] ControlType.Image 3930,753,107,61 第74集预告
+[738] ControlType.Hyperlink 3930,754,382,59 第74集预告 第74集预告
+[742] ControlType.Image 3930,824,107,61 第75集预告
+[741] ControlType.Hyperlink 3930,825,382,59 第75集预告 第75集预告
+[389] ControlType.Text 3930,828,55,22 PV花絮
+[393] ControlType.Text 3942,872,48,16 PV花絮
+[395] ControlType.Text 4015,872,29,16 歌单
+[397] ControlType.Text 4069,872,62,16 UP聊牧神
+[399] ControlType.Text 4156,872,57,16 大墟秘闻
+[745] ControlType.Image 3930,895,107,61 第76集预告
+[744] ControlType.Hyperlink 3930,896,382,59 第76集预告 第76集预告
+[91] ControlType.Button 2711,916,37,23 上一个
+[93] ControlType.Button 2747,916,37,23 播放/暂停
+[95] ControlType.Button 2783,916,37,23 下一个
+[103] ControlType.Button 3510,916,87,23 清晰度
+[105] ControlType.Button 3606,916,51,23 倍速
+[106] ControlType.Button 3656,916,37,23 音量
+[109] ControlType.Button 3692,916,37,23 设置
+[111] ControlType.Button 3728,916,37,23 画中画
+[113] ControlType.Button 3764,916,37,23 宽屏
+[115] ControlType.Button 3800,916,37,23 网页全屏
+[117] ControlType.Button 3836,916,37,23 全屏
+[100] ControlType.Text 2862,920,4,15 /
+[102] ControlType.Text 2871,920,31,15 20:04
+[131] ControlType.Hyperlink 3731,965,73,29 弹幕礼仪
+[748] ControlType.Image 3930,966,107,61 第77集预告
+[125] ControlType.Group 2981,967,25,25 弹幕显示隐藏
+[747] ControlType.Hyperlink 3930,967,382,59 第77集预告 第77集预告
+[119] ControlType.Text 2711,971,42,17 2.1万+
+[120] ControlType.Text 2752,971,57,17 人正在看
+[121] ControlType.Text 2808,971,15,17 ，
+[122] ControlType.Text 2822,971,47,17 已装填 
+[123] ControlType.Text 2868,971,32,17 1759
+[124] ControlType.Text 2899,971,47,17  条弹幕
+[130] ControlType.Text 3071,971,71,17 已关闭弹幕
+[134] ControlType.Text 3826,972,29,17 发送
+[137] ControlType.Text 2743,1035,32,17 6485
+[141] ControlType.Text 2854,1035,32,17 5756
+[145] ControlType.Text 2965,1035,24,17 765
+[148] ControlType.Text 3068,1035,17,17 46
+[751] ControlType.Image 3930,1037,107,61 第78集预告
+[750] ControlType.Hyperlink 3930,1038,382,59 第78集预告 第78集预告
+[149] ControlType.Text 3068,1071,85,17 点击复制链接
+[151] ControlType.Hyperlink 2699,1094,166,222 牧神记
+[152] ControlType.Image 2699,1094,166,222 牧神记
+[153] ControlType.Hyperlink 2880,1094,1005,26 牧神记
+[185] ControlType.Hyperlink 3678,1094,109,35 国创频道
+[189] ControlType.Text 3836,1104,29,17 追番
+[754] ControlType.Image 3930,1108,107,61 第79集预告
+[753] ControlType.Hyperlink 3930,1109,382,59 第79集预告 第79集预告
+[154] ControlType.Text 2880,1130,70,17 19.1亿播放
+[155] ControlType.Text 2949,1130,21,17   ·  
+[156] ControlType.Text 2969,1130,78,17 366.1万弹幕
+[157] ControlType.Text 3046,1130,21,17   ·  
+[158] ControlType.Text 3066,1130,78,17 672.6万追番
+[159] ControlType.Text 2880,1160,162,17 小说改 / 玄幻 / 热血 / 战斗
+[160] ControlType.Text 3041,1160,13,17  · 
+[161] ControlType.Text 3053,1160,32,17 2024
+[162] ControlType.Text 3084,1160,14,17  · 
+[163] ControlType.Text 3097,1160,158,17 连载中, 每周日 11:00更新
+[164] ControlType.Text 3254,1160,14,17  · 
+[165] ControlType.Hyperlink 3267,1160,107,17 BV19oMw6nEgw
+[757] ControlType.Image 3930,1179,107,61 第80集预告
+[756] ControlType.Hyperlink 3930,1180,382,59 第80集预告 第80集预告
+[167] ControlType.Text 2880,1184,29,17 配音
+[169] ControlType.Text 2880,1184,1001,35 少年秦牧：张若瑜/姚铭舜 灵毓秀：李欣 村长：程玉珠 司幼幽&司婆婆：龟娘 聋子：虞晓旭 瞎子：于凯隆 马爷：高嗣航 瘸子：张恒 屠夫：王宇航 药师：刘雨轩 国师：唐昊
+[168] ControlType.Text 2908,1184,15,17 ：
+[170] ControlType.Hyperlink 2880,1207,1005,41 简介：主角秦牧，幼时被一女尸托举至涌江边并被司婆婆捡到，村长根据玉佩上的字为其取名为“秦牧”。被一只母牛哺乳长大，是天生凡体，但被村长骗为霸体，修炼霸体三丹功。后走出大墟闯荡，进入京城，拜入太学院。历经考验成为天魔教教主，并被延康国封为第一任太学博士。秦牧随武可汗入楼兰黄金宫，一个人打遍圣宫无敌手，麻翻无数大巫，盗走无数珍宝。后返回延康，助国师平叛、入京城斩杀太子、造射日神炮。秦牧得人皇传承成为新一代人皇。机缘巧合下遇到了亲生父亲，揭开了自己的身世，借助道门小玉京等人的帮助，开启了道法神通改革的大世。一步步逐渐成长，作为延康变法三杰之一，为芸芸众生而战。 展开 主角秦牧，幼时被一女尸托举至涌江边并被司婆婆捡到，村长根据玉佩上的字为其取名为“秦牧”。被一只母牛哺乳长大，是天生凡体，但被村长骗为霸体，修炼霸体三丹功。后走出大墟闯荡，进入京城，拜入太学院。历经考验成为天魔教教主，并被延康国封为第一任太学博士。秦牧随武可汗入楼兰黄金宫，一个人打遍圣宫无敌手，麻翻无数大巫，盗走无数珍宝。后返回延康，助国师平叛、入京城斩杀太子、造射日神炮。秦牧得人皇传承成为新一代人皇。机缘巧合下遇到了亲生父亲，揭开了自己的身世，借助道门小玉京等人的帮助，开启了道法神通改革的大世。一步步逐渐成长，作为延康变法三杰之一，为芸芸众生而战。
+[760] ControlType.Image 3930,1250,107,61 第81集预告
+[759] ControlType.Hyperlink 3930,1251,382,59 第81集预告 第81集预告
+[172] ControlType.Text 2880,1272,30,25 9.6
+[173] ControlType.Text 2909,1279,14,16 分
+[175] ControlType.Hyperlink 2971,1284,128,25 哔哩哔哩国创
+[177] ControlType.Text 3109,1288,29,17 关注
+[179] ControlType.Text 3771,1290,25,15 评分
+[788] ControlType.Text 3914,1293,65,17 相关推荐
+[174] ControlType.Text 2880,1299,65,15 2.1万人评分
+[763] ControlType.Image 3930,1321,107,61 第82集预告
+[762] ControlType.Hyperlink 3930,1322,382,59 第82集预告 第82集预告
+[790] ControlType.Hyperlink 3914,1325,412,107 将夜 将夜 更新至第12话 4574.2万 10.8万
+[791] ControlType.Image 3914,1325,190,107 将夜
+[190] ControlType.Text 2699,1346,41,23 评论
+[766] ControlType.Image 3930,1392,107,61 第83集预告
+[765] ControlType.Hyperlink 3930,1393,382,59 第83集预告 第83集预告
+[193] ControlType.Text 3260,1416,99,17 正在玩命加载…
+[795] ControlType.Hyperlink 3914,1445,412,107 凡人修仙传 凡人修仙传 更新至第181话 68亿 3985.5万
+[796] ControlType.Image 3914,1445,190,107 凡人修仙传
+[769] ControlType.Image 3930,1463,107,61 第84集预告
+[768] ControlType.Hyperlink 3930,1464,382,59 第84集预告 第84集预告
+[772] ControlType.Image 3930,1534,107,61 第85集预告
+[771] ControlType.Hyperlink 3930,1535,382,59 第85集预告 第85集预告
+[800] ControlType.Hyperlink 3914,1565,412,107 永生 永生 全82话 8.5亿 228.7万
+[801] ControlType.Image 3914,1565,190,107 永生
+[775] ControlType.Image 3930,1605,107,61 第86集预告
+[774] ControlType.Hyperlink 3930,1606,382,59 第86集预告 第86集预告
+[778] ControlType.Image 3930,1676,107,61 第87集预告
+[777] ControlType.Hyperlink 3930,1677,382,59 第87集预告 第87集预告
+[805] ControlType.Hyperlink 3914,1685,412,107 非人哉 第三季 非人哉 第三季 更新至第22话 1.4亿 23.3万
+[806] ControlType.Image 3914,1685,190,107 非人哉 第三季
+[781] ControlType.Image 3930,1747,107,61 第88集预告
+[780] ControlType.Hyperlink 3930,1748,382,59 第88集预告 第88集预告
+[810] ControlType.Hyperlink 3914,1805,412,107 深空彼岸 深空彼岸 全26话 7408.1万 10.3万
+[811] ControlType.Image 3914,1805,190,107 深空彼岸
+[784] ControlType.Image 3930,1818,107,61 第89集预告
+[783] ControlType.Hyperlink 3930,1819,382,59 第89集预告 第89集预告
+[787] ControlType.Image 3930,1889,107,61 第90集预告
+[786] ControlType.Hyperlink 3930,1890,382,59 第90集预告 第90集预告
+[815] ControlType.Hyperlink 3914,1925,412,107 灵笼 第二季 灵笼 第二季 全12话 3.9亿 311.3万
+[816] ControlType.Image 3914,1925,190,107 灵笼 第二季
+[820] ControlType.Hyperlink 3914,2045,412,107 大道独行之蝶龙变 大道独行之蝶龙变 更新至第14话 1224.2万 1.9万
+[821] ControlType.Image 3914,2045,190,107 大道独行之蝶龙变
+[825] ControlType.Hyperlink 3914,2165,412,107 盗妖行 盗妖行 更新至第41话 3744.3万 2.4万
+[826] ControlType.Image 3914,2165,190,107 盗妖行
+[830] ControlType.Hyperlink 3914,2285,412,107 伍六七之记忆碎片 伍六七之记忆碎片 全10话 3.9亿 423.2万
+[831] ControlType.Image 3914,2285,190,107 伍六七之记忆碎片
+[835] ControlType.Hyperlink 3914,2405,412,107 镇魂街 第四季 镇魂街 第四季 全26话 2.4亿 90.1万
+[836] ControlType.Image 3914,2405,190,107 镇魂街 第四季
+[840] ControlType.Hyperlink 3914,2525,412,107 王者？别闹！ 王者？别闹！ 更新至第87话 10.3亿 183万
+[841] ControlType.Image 3914,2525,190,107 王者？别闹！
+[845] ControlType.Hyperlink 3914,2645,412,107 玄界之门 玄界之门 全26话 8774.1万 16.9万
+[846] ControlType.Image 3914,2645,190,107 玄界之门
+[850] ControlType.Hyperlink 3914,2765,412,107 放开那个女巫 放开那个女巫 全8话 1327.8万 6.5万
+[851] ControlType.Image 3914,2765,190,107 放开那个女巫
+[855] ControlType.Hyperlink 3914,2885,412,107 宗门里除了我都是卧底 宗门里除了我都是卧底 全152话 4.6亿 26.3万
+[856] ControlType.Image 3914,2885,190,107 宗门里除了我都是卧底
+[860] ControlType.Hyperlink 3914,3005,412,107 乐宝之奇妙的世界 乐宝之奇妙的世界 全10话 7788 -
+[861] ControlType.Image 3914,3005,190,107 乐宝之奇妙的世界
+[865] ControlType.Hyperlink 3914,3125,412,107 雾山五行 雾山五行 全7话 4.8亿 240.5万
+[866] ControlType.Image 3914,3125,190,107 雾山五行
+[870] ControlType.Hyperlink 3914,3245,412,107 彭祖传奇之少年奇缘 彭祖传奇之少年奇缘 全26话 3.9万 7
+[871] ControlType.Image 3914,3245,190,107 彭祖传奇之少年奇缘
+[875] ControlType.Hyperlink 3914,3365,412,107 驭灵师 驭灵师 全18话 723.6万 1.9万
+[876] ControlType.Image 3914,3365,190,107 驭灵师
+[880] ControlType.Hyperlink 3914,3485,412,107 快乐星猫 第八季 快乐星猫 第八季 全26话 308.5万 7034
+[881] ControlType.Image 3914,3485,190,107 快乐星猫 第八季
+[885] ControlType.Hyperlink 3914,3605,412,107 喜羊羊与灰太狼 喜羊羊与灰太狼 全530话 1.4亿 15.5万
+[886] ControlType.Image 3914,3605,190,107 喜羊羊与灰太狼

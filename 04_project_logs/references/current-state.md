@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-04-23
+Updated: 2026-06-23
 Owner: Codex
 
 ## Read Order
@@ -19,6 +19,29 @@ Owner: Codex
 
 ## Handoff Priority
 
+- 2026-06-23 v230 failure-case manual review / paper-case evidence pack is complete. GPTPro accepted v229 and explicitly kept model work stopped; the only allowed local step was audit-only casebook packaging. Codex implemented `stage03_v230_failure_case_manual_review_casebook_20260623.py` using only v225/v226/v228/v229 outputs. Output: `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/`; ZIP `v230_failure_case_manual_review_casebook_pack.zip`; validation passed with `py_compile`, full script run, ZIP `testzip=None`, selected case count `46` (`23` per pool), required files `[]`, guardrail `pass=True`, consistency `pass=True`, forbidden hits `[]`, copied figures `85`, logged missing case figures `13`, and all manual review fields left blank.
+- v230 current boundary: this is not a new experiment and not model progress. Formal headline remains `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`. Do not train models, generate predictions, tune tau/threshold, create gate/router/selector, run v222b/v223, or change formal headline. The only reasonable next step after v230 is manual reading of the casebook, filling `v230_manual_review_template.csv`, and drafting/refining the paper failure-case section.
+- 2026-06-23 v228 final paper artifact freeze is complete. The user identified the earlier GPTPro handoff as mojibake; Codex switched to the local ChatGPT Desktop app, used a clean ASCII retry, obtained a valid GPTPro reply, and executed `stage03_v228_final_paper_artifact_freeze_20260623.py`. Output: `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/`; ZIP `v228_final_paper_artifact_freeze_pack.zip`; validation passed with ZIP `testzip=None`, required files `[]`, exact formal lock, zero main-metric diffs, v226 CI row count match, forbidden hits `0`, and guardrail/consistency pass.
+- The previous 2026-06-23 goal-level blocked diagnosis is superseded for current-state purposes: it was incomplete because the prompt itself was unreadable in GPTPro. Keep the blocked archive as process history, but treat v228 as the current latest completed step.
+- 2026-06-23 prompt encoding correction: the earlier Desktop GPTPro handoff was observed by the user as mojibake / garbled Chinese, so the prior "no valid GPTPro reply" diagnosis is incomplete. Use the self-contained ASCII-only prompt `gptpro_reviews/20260623_v227_clean_ascii_handoff_prompt.md` for the next GPTPro handoff.
+- 2026-06-23 goal-level blocked audit: the Codex-GPTPro loop cannot continue automatically because the same GPTPro channel blocker repeated across consecutive goal turns. Desktop still lacks a valid bounded GPTPro reply, and Chrome bridge still cannot verify Pro/进阶 mode before sending. Final blocked archive: `gptpro_reviews/20260623_goal_blocked_gptpro_channel_*`.
+- 2026-06-22 Gold-V2/v226 formal robustness / confidence-interval audit is complete. The authoritative live note layer is under `05_rebuild_from_raw_20260511/00_project_notes/`.
+- GPTPro's latest instruction was accepted locally: build an audit-only robustness/CI pack from the v225 locked formal outputs, with no training, no new tau/threshold, no router/gate, and no v222b/v223.
+- Formal headline remains locked as `loose_main_pool=avg_joint_focus` and `strict_main_pool=peak_floor_090`; `v222a_bounded_residual`, `v222a_noharm_gate`, `oracle_safe_gate`, and other diagnostic variants are excluded from formal tables.
+- v225 reproduced the locked test metrics within `1e-5`: loose `avg_joint_focus` RMSE/tail `0.544884/0.629752`; strict `peak_floor_090` RMSE/tail `0.571770/0.658306`.
+- v226 reproduced the same locked test metrics within `1e-5` and produced robustness CIs:
+  - sample bootstrap test CI: loose RMSE `0.496066-0.593811`, loose tail `0.564811-0.693788`; strict RMSE `0.511036-0.635521`, strict tail `0.581652-0.736696`.
+  - subject-block test CI: loose RMSE `0.428783-0.599684`, loose tail `0.515881-0.687686`; strict RMSE `0.473689-0.615000`, strict tail `0.539479-0.706505`.
+  - tail error concentration remains non-uniform: test top-20% tail-SSE share is `0.659320` for loose and `0.672493` for strict.
+- v226 verification passed: `py_compile`, full script run, ZIP `bad_file=None`, required files `[]`, formal lock, metric reproduction, leakage guard, forbidden scan, table alignment, and required figure counts.
+- 2026-06-22 Gold-V2/v227 paper / claim readiness pack is complete as a reporting-only fallback. It was created only because the v226-to-GPTPro handoff channel was blocked: Desktop returned empty stopped-thinking outputs and Chrome required login. It does not unlock any new model work.
+- v227 outputs live under `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/`; the next GPTPro prompt is `reports/v227_next_gptpro_prompt_ascii.md`.
+- v227 verification passed: `py_compile`, full script run, ZIP `bad_file=None`, required files `[]`, `no_model_change_guard.pass=True`, `source_artifact_checks.pass=True`, and formal lock unchanged.
+- A second GPTPro handoff attempt with the v227 prompt was blocked by Chrome bridge before sending: `Could not verify Pro/进阶 mode. Refusing to send.` The blocked v227 archive is under `gptpro_reviews/20260622_v227_result_gptpro_*_blocked.md`.
+- 2026-06-23 heartbeat retry remains blocked. Desktop ChatGPT still shows the v226/v227 handoff prompt plus `已停止思考` and no valid six-item bounded GPTPro reply. Chrome bridge again failed before sending because it could not verify Pro/进阶 mode. The heartbeat blocked archive is under `gptpro_reviews/20260623_v227_heartbeat_gptpro_*_blocked.md`.
+- Current next step when GPTPro is reachable: report v226+v227 results and ask only for a bounded writing/claim/reporting instruction. Do not start v222b/v223, a new tau, gate/router, selector, or test-based retuning.
+- Closeout diagnosis still stands: locked test `selector_failed_rate` is about 0.41 combined, `candidate_missing_rate` is about 0.028 combined, and high-tail `candidate_missing_rate` is about 0.127 combined. This does not unlock v222b/v223.
+- Do not enter v222b/v223, a new tau, a gate_v2, or a multi-candidate router from this state. The active next step is to report the v226 robustness/CI pack to GPTPro for the next bounded instruction.
 - The 2026-04-22 effectiveness plan is now the active closure for this round.
 - Bridge / gate / loss are closed as the main frontier.
 - When older 2026-04-21 bridge guidance conflicts with this file, follow the 2026-04-22 effectiveness outcome.
@@ -50,6 +73,59 @@ Owner: Codex
 
 ## Current Task Definition
 
+- Current active 2026-06-23 task state: v230 failure-case manual review casebook has completed and passed validation. If work continues, do not ask for or run another model. The next useful action is human review: open the casebook figures and fill `tables/v230_manual_review_template.csv`, then use `reports/v230_paper_failure_case_section_draft_cn.md` as the starting point for the paper failure-case section.
+- Current active v230 outputs:
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v230_failure_case_manual_review_casebook_20260623.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/reports/v230_failure_case_manual_review_casebook_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/reports/v230_advisor_discussion_notes_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/reports/v230_paper_failure_case_section_draft_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/tables/v230_case_selection_index.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/tables/v230_manual_review_template.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/tables/v230_failure_casebook_table.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/tables/v230_bucket_to_claim_mapping.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/logs/guardrail_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/logs/consistency_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/logs/figure_copy_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v230_failure_case_manual_review_casebook_20260623/v230_failure_case_manual_review_casebook_pack.zip`
+- Current active 2026-06-23 task state: v228 final paper artifact freeze has completed and passed validation. If the loop continues, report v228 results back to GPTPro and request exactly one bounded next step; do not start new model, threshold, gate/router/selector, or test-retuning work locally.
+- Current active v228 outputs:
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v228_final_paper_artifact_freeze_20260623.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/reports/v228_final_paper_artifact_freeze_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/reports/manuscript_results_section_draft_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/reports/manuscript_claim_boundary_notes_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/tables/final_main_result_table.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/logs/guardrail_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/logs/consistency_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v228_final_paper_artifact_freeze_20260623/v228_final_paper_artifact_freeze_pack.zip`
+- Current active 2026-06-22 task: GPTPro handoff is temporarily blocked after reporting the completed v226 robustness / confidence-interval audit. v227 has therefore been completed only as a reporting-only paper/claim readiness fallback from v225+v226 evidence. The next active action is to report v226+v227 to GPTPro once the GPTPro channel is reachable and wait for the next bounded instruction.
+- Current active outputs:
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v227_paper_claim_readiness_pack_20260622.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/reports/v227_paper_claim_readiness_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/reports/v227_next_gptpro_prompt_ascii.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/tables/paper_main_result_table.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/tables/paper_claim_support_matrix.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/tables/paper_limitation_table.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/logs/no_model_change_guard.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/logs/source_artifact_checks.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/logs/file_inventory.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v227_paper_claim_readiness_pack_20260622/v227_paper_claim_readiness_pack.zip`
+  - `05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v226_formal_robustness_ci_audit_20260622.py`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/reports/v226_formal_robustness_ci_audit_cn.md`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_model_lock_recheck.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_metric_ci_sample_bootstrap.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_metric_ci_subject_block_bootstrap.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_subject_level_metrics.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_tail_error_concentration.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/tables/formal_readiness_decision.csv`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/run_manifest.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/metric_reproduction_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/leakage_guard_report.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/forbidden_scan_report.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/table_alignment_check.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/logs/file_inventory.json`
+  - `05_rebuild_from_raw_20260511/03_baselines/v226_formal_robustness_ci_audit_20260622/v226_formal_robustness_ci_audit_pack.zip`
+  - Prior v225 input remains at `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/`.
+  - `05_rebuild_from_raw_20260511/03_baselines/v225_formal_route_reconstruction_evidence_pack_20260622/v225_formal_route_reconstruction_evidence_pack.zip`
 - The project remains pooled post-trigger steering response prediction.
 - The four scenarios remain elicitation protocols, not separate scene-specific models.
 - `fixed_v20260421` stays as the active input version.

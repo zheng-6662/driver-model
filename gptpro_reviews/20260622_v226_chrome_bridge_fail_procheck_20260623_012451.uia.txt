@@ -1,0 +1,73 @@
+﻿[13] ControlType.Text -8840,-9036,68,20 ChatGPT
+[32] ControlType.Text -8840,-9036,68,20 ChatGPT
+[84] ControlType.Text -8840,-8915,68,20 ChatGPT
+[0] ControlType.Document 533,172,1278,903 开始使用 | ChatGPT
+[19] ControlType.Document 533,172,1278,903 开始使用 | ChatGPT
+[39] ControlType.Pane 533,172,1278,1024 开始使用 | ChatGPT - Google Chrome - xin
+[96] ControlType.TabItem 561,172,256,41 开始使用 | ChatGPT
+[98] ControlType.TabItem 799,172,256,41 开始使用 | ChatGPT
+[100] ControlType.TabItem 1037,172,256,41 开始使用 | ChatGPT
+[102] ControlType.TabItem 1275,172,256,41 开始使用 | ChatGPT
+[105] ControlType.Button 1525,172,28,41 新标签页
+[43] ControlType.Button 1674,173,45,39 最小化
+[44] ControlType.Button 1719,173,46,39 最大化
+[45] ControlType.Button 1765,173,46,39 关闭
+[93] ControlType.Button 539,178,28,28 标签页搜索
+[97] ControlType.Button 775,178,28,28 关闭
+[99] ControlType.Button 1013,178,28,28 关闭
+[101] ControlType.Button 1251,178,28,28 关闭
+[103] ControlType.Button 1489,178,28,28 关闭
+[1] ControlType.Hyperlink 565,196,96,24 ChatGPT 首页
+[2] ControlType.Image 565,196,96,24 ChatGPT 徽标
+[20] ControlType.Hyperlink 565,196,96,24 ChatGPT 首页
+[21] ControlType.Image 565,196,96,24 ChatGPT 徽标
+[49] ControlType.Button 539,218,34,34 返回
+[50] ControlType.Button 575,218,34,34 前进
+[51] ControlType.Button 611,218,34,34 重新加载
+[59] ControlType.Button 1681,218,34,34 扩展程序
+[61] ControlType.Button 1735,218,34,34 xin
+[62] ControlType.Button 1771,218,34,34 Chrome
+[53] ControlType.Button 659,223,24,24 查看网站信息
+[54] ControlType.Edit 691,223,937,24 地址和搜索栏
+[57] ControlType.Button 1636,223,24,24 为此标签页添加书签
+[63] ControlType.ToolBar 533,258,1278,34 书签
+[64] ControlType.ToolBar 539,258,36,28 已保存的标签页分组
+[65] ControlType.Button 539,258,28,28 标签页分组
+[66] ControlType.Button 1717,258,86,28 所有书签
+[67] ControlType.Separator 1699,264,18,16 分隔符
+[71] ControlType.Document 533,293,1278,903 开始使用 | ChatGPT
+[72] ControlType.Hyperlink 565,317,96,24 ChatGPT 首页
+[73] ControlType.Image 565,317,96,24 ChatGPT 徽标
+[3] ControlType.Text 976,325,392,37 登录或注册
+[22] ControlType.Text 976,325,392,37 登录或注册
+[5] ControlType.Button 976,381,392,53 使用 Google 账户继续
+[24] ControlType.Button 976,381,392,53 使用 Google 账户继续
+[6] ControlType.Button 976,445,392,53 使用 Apple 账户继续
+[25] ControlType.Button 976,445,392,53 使用 Apple 账户继续
+[74] ControlType.Text 976,446,392,37 登录或注册
+[76] ControlType.Button 976,502,392,53 使用 Google 账户继续
+[7] ControlType.Button 976,509,392,53 使用电话号码继续
+[26] ControlType.Button 976,509,392,53 使用电话号码继续
+[77] ControlType.Button 976,566,392,53 使用 Apple 账户继续
+[8] ControlType.Text 1165,586,14,17 或
+[27] ControlType.Text 1165,586,14,17 或
+[78] ControlType.Button 976,630,392,53 使用电话号码继续
+[9] ControlType.Edit 977,630,390,53 电子邮件地址
+[28] ControlType.Edit 977,630,390,53 电子邮件地址
+[10] ControlType.Button 976,705,392,53 继续
+[29] ControlType.Button 976,705,392,53 继续
+[79] ControlType.Text 1165,707,14,17 或
+[80] ControlType.Edit 977,751,390,53 电子邮件地址
+[11] ControlType.Hyperlink 1144,777,56,19 抢先试用
+[30] ControlType.Hyperlink 1144,777,56,19 抢先试用
+[81] ControlType.Button 976,826,392,53 继续
+[82] ControlType.Hyperlink 1144,898,56,19 抢先试用
+[14] ControlType.Hyperlink 1110,1015,49,16 使用条款
+[33] ControlType.Hyperlink 1110,1015,49,16 使用条款
+[15] ControlType.Text 1170,1015,4,15 |
+[34] ControlType.Text 1170,1015,4,15 |
+[16] ControlType.Hyperlink 1185,1015,49,16 隐私政策
+[35] ControlType.Hyperlink 1185,1015,49,16 隐私政策
+[85] ControlType.Hyperlink 1110,1136,49,16 使用条款
+[86] ControlType.Text 1170,1136,4,15 |
+[87] ControlType.Hyperlink 1185,1136,49,16 隐私政策

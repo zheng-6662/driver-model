@@ -1,0 +1,22 @@
+|--- true_peak_abs <= 1.765
+|   |--- hist_abs_max_steer <= 1.056
+|   |   |--- delay_ms <= 300.000
+|   |   |   |--- class: 0
+|   |   |--- delay_ms >  300.000
+|   |   |   |--- class: 0
+|   |--- hist_abs_max_steer >  1.056
+|   |   |--- early_abs_0_0p5 <= 0.209
+|   |   |   |--- class: 0
+|   |   |--- early_abs_0_0p5 >  0.209
+|   |   |   |--- class: 1
+|--- true_peak_abs >  1.765
+|   |--- peak_time_abs_err_v241 <= 0.200
+|   |   |--- future_vs_history_peak_ratio <= 3.128
+|   |   |   |--- class: 0
+|   |   |--- future_vs_history_peak_ratio >  3.128
+|   |   |   |--- class: 1
+|   |--- peak_time_abs_err_v241 >  0.200
+|   |   |--- true_peak_abs <= 2.339
+|   |   |   |--- class: 1
+|   |   |--- true_peak_abs >  2.339
+|   |   |   |--- class: 1

@@ -1,0 +1,637 @@
+﻿[356] ControlType.Hyperlink 1247,-1005,47,54 1
+[358] ControlType.Hyperlink 1311,-1005,47,54 2 限免
+[360] ControlType.Hyperlink 1375,-1005,47,54 3 限免
+[362] ControlType.Hyperlink 1439,-1005,47,54 4 限免
+[364] ControlType.Hyperlink 1503,-1005,47,54 5 限免
+[366] ControlType.Hyperlink 1247,-941,47,54 6 限免
+[368] ControlType.Hyperlink 1311,-941,47,54 7 限免
+[370] ControlType.Hyperlink 1375,-941,47,54 8 限免
+[372] ControlType.Hyperlink 1439,-941,47,54 9 限免
+[374] ControlType.Hyperlink 1503,-941,47,54 10 限免
+[376] ControlType.Hyperlink 1247,-877,47,54 11 限免
+[378] ControlType.Hyperlink 1311,-877,47,54 12 限免
+[380] ControlType.Hyperlink 1375,-877,47,54 13 限免
+[382] ControlType.Hyperlink 1439,-877,47,54 14 限免
+[384] ControlType.Hyperlink 1503,-877,47,54 15 限免
+[386] ControlType.Hyperlink 1247,-813,47,54 16 限免
+[388] ControlType.Hyperlink 1311,-813,47,54 17 限免
+[390] ControlType.Hyperlink 1375,-813,47,54 18 限免
+[392] ControlType.Hyperlink 1439,-813,47,54 19 限免
+[394] ControlType.Hyperlink 1503,-813,47,54 20 限免
+[396] ControlType.Hyperlink 1247,-749,47,54 21 限免
+[398] ControlType.Hyperlink 1311,-749,47,54 22 限免
+[400] ControlType.Hyperlink 1375,-749,47,54 23 限免
+[402] ControlType.Hyperlink 1439,-749,47,54 24 限免
+[404] ControlType.Hyperlink 1503,-749,47,54 25 限免
+[406] ControlType.Hyperlink 1247,-685,47,54 26 限免
+[408] ControlType.Hyperlink 1311,-685,47,54 27 限免
+[410] ControlType.Hyperlink 1375,-685,47,54 28 限免
+[412] ControlType.Hyperlink 1439,-685,47,54 29 限免
+[414] ControlType.Hyperlink 1503,-685,47,54 30 限免
+[416] ControlType.Hyperlink 1247,-621,47,54 31 限免
+[418] ControlType.Hyperlink 1311,-621,47,54 32 限免
+[420] ControlType.Hyperlink 1375,-621,47,54 33 限免
+[422] ControlType.Hyperlink 1439,-621,47,54 34 限免
+[424] ControlType.Hyperlink 1503,-621,47,54 35 限免
+[426] ControlType.Hyperlink 1247,-557,47,54 36 限免
+[428] ControlType.Hyperlink 1311,-557,47,54 37 限免
+[430] ControlType.Hyperlink 1375,-557,47,54 38 限免
+[432] ControlType.Hyperlink 1439,-557,47,54 39 限免
+[434] ControlType.Hyperlink 1503,-557,47,54 40 限免
+[436] ControlType.Hyperlink 1247,-493,47,54 41 限免
+[438] ControlType.Hyperlink 1311,-493,47,54 42 限免
+[440] ControlType.Hyperlink 1375,-493,47,54 43 限免
+[442] ControlType.Hyperlink 1439,-493,47,54 44 限免
+[444] ControlType.Hyperlink 1503,-493,47,54 45 限免
+[446] ControlType.Hyperlink 1247,-429,47,54 46 限免
+[448] ControlType.Hyperlink 1311,-429,47,54 47 限免
+[450] ControlType.Hyperlink 1375,-429,47,54 48 限免
+[452] ControlType.Hyperlink 1439,-429,47,54 49 限免
+[454] ControlType.Hyperlink 1503,-429,47,54 50 限免
+[456] ControlType.Hyperlink 1247,-365,47,54 51 限免
+[458] ControlType.Hyperlink 1311,-365,47,54 52 限免
+[460] ControlType.Hyperlink 1375,-365,47,54 53 限免
+[462] ControlType.Hyperlink 1439,-365,47,54 54 限免
+[464] ControlType.Hyperlink 1503,-365,47,54 55 限免
+[466] ControlType.Hyperlink 1247,-301,47,54 56 限免
+[468] ControlType.Hyperlink 1311,-301,47,54 57 限免
+[470] ControlType.Hyperlink 1375,-301,47,54 58 限免
+[472] ControlType.Hyperlink 1439,-301,47,54 59 限免
+[474] ControlType.Hyperlink 1503,-301,47,54 60 限免
+[476] ControlType.Hyperlink 1247,-237,47,54 61 限免
+[478] ControlType.Hyperlink 1311,-237,47,54 62 限免
+[480] ControlType.Hyperlink 1375,-237,47,54 63 限免
+[482] ControlType.Hyperlink 1439,-237,47,54 64 限免
+[484] ControlType.Hyperlink 1503,-237,47,54 65 限免
+[486] ControlType.Hyperlink 1247,-173,47,54 66 限免
+[488] ControlType.Hyperlink 1311,-173,47,54 67 限免
+[490] ControlType.Hyperlink 1375,-173,47,54 68 限免
+[492] ControlType.Hyperlink 1439,-173,47,54 69 限免
+[494] ControlType.Hyperlink 1503,-173,47,54 70 限免
+[496] ControlType.Hyperlink 1247,-109,47,54 71 限免
+[498] ControlType.Hyperlink 1311,-109,47,54 72 限免
+[500] ControlType.Hyperlink 1375,-109,47,54 73 限免
+[502] ControlType.Hyperlink 1439,-109,47,54 74 限免
+[504] ControlType.Hyperlink 1503,-109,47,54 75 限免
+[506] ControlType.Hyperlink 1247,-45,47,54 76 限免
+[508] ControlType.Hyperlink 1311,-45,47,54 77 会员
+[510] ControlType.Hyperlink 1375,-45,47,54 78 会员
+[512] ControlType.Hyperlink 1439,-45,47,54 79 会员
+[514] ControlType.Hyperlink 1503,-45,47,54 80 会员
+[516] ControlType.Hyperlink 1247,19,47,54 81 会员
+[518] ControlType.Hyperlink 1311,19,47,54 82 会员
+[520] ControlType.Hyperlink 1375,19,47,54 83 会员
+[522] ControlType.Hyperlink 1439,19,47,54 84 会员
+[524] ControlType.Hyperlink 1503,19,47,54 85 会员
+[526] ControlType.Hyperlink 1247,83,47,54 86 会员
+[528] ControlType.Hyperlink 1311,83,47,54 87 会员
+[530] ControlType.Hyperlink 1375,83,47,54 88 会员
+[532] ControlType.Hyperlink 1439,83,47,54 89 会员
+[534] ControlType.Hyperlink 1503,83,47,54 90 会员
+[536] ControlType.Hyperlink 1247,147,47,54 91 会员
+[538] ControlType.Hyperlink 1311,147,47,54 92 会员
+[540] ControlType.Hyperlink 1375,147,47,54 93 会员
+[542] ControlType.Hyperlink 1439,147,47,54 94 会员
+[544] ControlType.Hyperlink 1503,147,47,54 95 会员
+[546] ControlType.Hyperlink 1247,211,47,54 96 会员
+[548] ControlType.Hyperlink 1311,211,47,54 97 会员
+[550] ControlType.Hyperlink 1375,211,47,54 98 会员
+[552] ControlType.Hyperlink 1439,211,47,54 99 会员
+[554] ControlType.Hyperlink 1503,211,47,54 100 会员
+[1] ControlType.Pane 346,233,1278,1024 凡人修仙传-国创-高清独家在线观看-bilibili-哔哩哔哩 - 正在播放音频 - Google Chrome - xin
+[1256] ControlType.TabItem 374,233,128,41 ChatGPT - 闲置标签页 - 已释放 175 MB
+[1258] ControlType.TabItem 484,233,128,41 ChatGPT - 闲置标签页 - 已释放 184 MB
+[1260] ControlType.TabItem 594,233,128,41 方向盘预测修正方案 - 闲置标签页 - 已释放 300 MB
+[1262] ControlType.TabItem 704,233,128,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[1264] ControlType.TabItem 814,233,128,41 凡人修仙传-哔哩哔哩_bilibili
+[1266] ControlType.TabItem 924,233,128,41 凡人修仙传-国创-高清独家在线观看-bilibili-哔哩哔哩 - 正在播放音频 - 内存用量 - 341 MB
+[1269] ControlType.TabItem 1034,233,128,41 第318版门控优化方案 - 内存用量 - 298 MB
+[1271] ControlType.TabItem 1144,233,127,41 第319版修正建议 - 内存用量 - 290 MB
+[1274] ControlType.Button 1265,233,28,41 新标签页
+[1277] ControlType.Button 1347,233,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1487,234,45,39 最小化
+[6] ControlType.Button 1532,234,46,39 最大化
+[7] ControlType.Button 1578,234,46,39 关闭
+[1253] ControlType.Button 352,239,28,28 标签页搜索
+[1257] ControlType.Button 460,239,28,28 关闭
+[1259] ControlType.Button 570,239,28,28 关闭
+[1261] ControlType.Button 680,239,28,28 关闭
+[1263] ControlType.Button 790,239,28,28 关闭
+[1265] ControlType.Button 900,239,28,28 关闭
+[1268] ControlType.Button 1010,239,28,28 关闭
+[1270] ControlType.Button 1120,239,28,28 关闭
+[1272] ControlType.Button 1229,239,28,28 关闭
+[1267] ControlType.Button 992,245,16,16 将此标签页静音
+[556] ControlType.Hyperlink 1247,275,47,54 101 会员
+[558] ControlType.Hyperlink 1311,275,47,54 102 会员
+[560] ControlType.Hyperlink 1375,275,47,54 103 会员
+[562] ControlType.Hyperlink 1439,275,47,54 104 会员
+[564] ControlType.Hyperlink 1503,275,47,54 105 会员
+[11] ControlType.Button 352,279,34,34 返回
+[12] ControlType.Button 388,279,34,34 前进
+[13] ControlType.Button 424,279,34,34 重新加载
+[20] ControlType.Button 1512,279,34,34 控制您的音乐、视频等媒体内容
+[21] ControlType.Button 1548,279,34,34 xin
+[22] ControlType.Button 1584,279,34,34 Chrome
+[15] ControlType.Button 472,284,24,24 查看网站信息
+[16] ControlType.Edit 504,284,955,24 地址和搜索栏
+[19] ControlType.Button 1467,284,24,24 为此标签页添加书签
+[23] ControlType.ToolBar 346,319,1278,34 书签
+[24] ControlType.ToolBar 352,319,36,28 已保存的标签页分组
+[25] ControlType.Button 352,319,28,28 标签页分组
+[26] ControlType.Button 1530,319,86,28 所有书签
+[27] ControlType.Separator 1512,325,18,16 分隔符
+[566] ControlType.Hyperlink 1247,339,47,54 106 会员
+[568] ControlType.Hyperlink 1311,339,47,54 107 会员
+[570] ControlType.Hyperlink 1375,339,47,54 108 会员
+[572] ControlType.Hyperlink 1439,339,47,54 109 会员
+[574] ControlType.Hyperlink 1503,339,47,54 110 会员
+[31] ControlType.Document 346,354,1278,903 凡人修仙传-国创-高清独家在线观看-bilibili-哔哩哔哩
+[39] ControlType.ListItem 493,354,38,64 番剧
+[40] ControlType.Hyperlink 493,354,28,64 番剧
+[41] ControlType.ListItem 531,354,38,64 直播
+[42] ControlType.Hyperlink 531,354,28,64 直播
+[43] ControlType.ListItem 569,354,66,64 游戏中心
+[44] ControlType.Hyperlink 569,354,56,64 游戏中心
+[45] ControlType.ListItem 635,354,52,64 会员购
+[46] ControlType.Hyperlink 635,354,42,64 会员购
+[47] ControlType.ListItem 687,354,38,64 漫画
+[48] ControlType.Hyperlink 687,354,28,64 漫画
+[49] ControlType.ListItem 725,354,38,64 赛事
+[50] ControlType.Hyperlink 725,354,28,64 赛事
+[35] ControlType.ListItem 370,358,123,56 首页
+[36] ControlType.Hyperlink 370,358,113,56 首页
+[68] ControlType.Text 1415,368,14,15 38
+[64] ControlType.Text 1374,369,14,14 29
+[67] ControlType.ListItem 1391,374,35,24 38
+[63] ControlType.ListItem 1351,375,35,22 29
+[54] ControlType.Edit 808,377,338,20 凡人修仙传178
+[576] ControlType.Hyperlink 1247,403,47,54 111 会员
+[578] ControlType.Hyperlink 1311,403,47,54 112 会员
+[580] ControlType.Hyperlink 1375,403,47,54 113 会员
+[582] ControlType.Hyperlink 1439,403,47,54 114 会员
+[584] ControlType.Hyperlink 1503,403,47,54 115 会员
+[84] ControlType.Group 378,448,819,507 哔哩哔哩播放器
+[92] ControlType.Text 368,450,198,40 帅啊  师姐
+[110] ControlType.Text 368,450,159,40 我来了！
+[112] ControlType.Text 368,450,435,40 话都不说，纯打瘾上来了
+[116] ControlType.Text 368,450,988,40 认真看完一遍，回来发个弹幕，带劲带劲带劲啊！！！！
+[118] ControlType.Text 368,450,356,40 师姐一打二，太强了
+[134] ControlType.Text 368,450,198,40 花篮古宝呢
+[136] ControlType.Text 368,450,3951,40 师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！师姐加油！
+[142] ControlType.Text 368,450,593,40 师姐加油，杀了这天南双魔！！！
+[146] ControlType.Text 368,450,317,40 不愧是师姐！！！
+[204] ControlType.Text 368,450,712,40 师姐加油，暴打黄毛，让掩月总再次伟大
+[206] ControlType.Text 368,450,534,40 打倒天南双魔，扬我正道威名!
+[212] ControlType.Text 368,450,356,40 诛马良的两仪微尘阵
+[196] ControlType.Text 2984,454,159,40 师姐加油
+[198] ControlType.Text 2984,454,159,40 师姐加油
+[168] ControlType.Text 2985,454,159,40 师姐加油
+[188] ControlType.Text 2986,454,159,40 师姐加油
+[178] ControlType.Text 2996,454,159,40 师姐加油
+[228] ControlType.Text 3010,454,80,40 无敌
+[126] ControlType.Text 3022,454,80,40 来了
+[138] ControlType.Text 3023,454,159,40 师姐加油
+[90] ControlType.Text 3024,454,159,40 师姐加油
+[124] ControlType.Text 3024,454,159,40 搞这么帅
+[222] ControlType.Text 3044,454,159,40 师姐加油
+[343] ControlType.Text 1283,460,237,17 您有未使用的大会员礼包，戳我查看 >
+[586] ControlType.Hyperlink 1247,467,47,54 116 会员
+[588] ControlType.Hyperlink 1311,467,47,54 117 会员
+[590] ControlType.Hyperlink 1375,467,47,54 118 会员
+[592] ControlType.Hyperlink 1439,467,47,54 119 会员
+[594] ControlType.Hyperlink 1503,467,47,54 120 会员
+[94] ControlType.Text 2985,500,159,40 师姐加油
+[144] ControlType.Text 2986,500,120,40 太帅了
+[174] ControlType.Text 2986,500,80,40 加油
+[208] ControlType.Text 2986,500,159,40 师姐加油
+[132] ControlType.Text 2988,500,41,40 帅
+[160] ControlType.Text 2988,500,159,40 师姐加油
+[102] ControlType.Text 2993,500,159,40 师姐加油
+[140] ControlType.Text 3027,500,159,40 师姐加油
+[192] ControlType.Text 3027,500,159,40 师姐加油
+[346] ControlType.Text 1242,516,61,18 弹幕列表
+[596] ControlType.Hyperlink 1247,531,47,54 121 会员
+[598] ControlType.Hyperlink 1311,531,47,54 122 会员
+[600] ControlType.Hyperlink 1375,531,47,54 123 会员
+[602] ControlType.Hyperlink 1439,531,47,54 124 会员
+[604] ControlType.Hyperlink 1503,531,47,54 125 限免
+[98] ControlType.Text 2985,546,159,40 师姐加油
+[182] ControlType.Text 2986,546,159,40 师姐加油
+[164] ControlType.Text 2987,546,198,40 师姐加油！
+[150] ControlType.Text 2988,546,159,40 师姐加油
+[180] ControlType.Text 2997,546,159,40 师姐加油
+[108] ControlType.Text 3008,546,159,40 师姐加油
+[88] ControlType.Text 3017,546,317,40 师姐技能启动好快
+[224] ControlType.Text 3024,546,159,40 师姐加油
+[349] ControlType.Text 1242,571,33,22 正片
+[350] ControlType.Text 1283,575,52,14 (181/182)
+[218] ControlType.Text 2986,592,159,40 师姐加油
+[202] ControlType.Text 2988,592,41,40 爽
+[226] ControlType.Text 2989,592,159,40 师姐加油
+[184] ControlType.Text 2993,592,159,40 师姐加油
+[114] ControlType.Text 2995,592,317,40 让掩月宗再次伟大
+[122] ControlType.Text 3001,592,159,40 师姐加油
+[230] ControlType.Text 3013,592,159,40 师姐加油
+[96] ControlType.Text 3018,592,159,40 师姐加油
+[606] ControlType.Hyperlink 1247,595,47,54 126 限免
+[608] ControlType.Hyperlink 1311,595,47,54 127 限免
+[610] ControlType.Hyperlink 1375,595,47,54 128 限免
+[612] ControlType.Hyperlink 1439,595,47,54 129 会员
+[614] ControlType.Hyperlink 1503,595,47,54 130 会员
+[216] ControlType.Text 2987,638,159,40 师姐加油
+[220] ControlType.Text 2988,638,159,40 师姐加油
+[156] ControlType.Text 2992,638,159,40 师姐加油
+[170] ControlType.Text 3002,638,159,40 师姐加油
+[120] ControlType.Text 3003,638,159,40 师姐加油
+[232] ControlType.Text 3015,638,159,40 师姐加油
+[152] ControlType.Text 3018,638,159,40 师姐加油
+[106] ControlType.Text 3027,638,159,40 师姐加油
+[130] ControlType.Text 3031,638,159,40 师姐加油
+[616] ControlType.Hyperlink 1247,659,47,54 131 会员
+[618] ControlType.Hyperlink 1311,659,47,54 132 会员
+[620] ControlType.Hyperlink 1375,659,47,54 133 会员
+[622] ControlType.Hyperlink 1439,659,47,54 134 会员
+[624] ControlType.Hyperlink 1503,659,47,54 135 会员
+[128] ControlType.Text 2984,684,277,40 这就元婴斗法吗
+[190] ControlType.Text 2990,684,159,40 师姐加油
+[162] ControlType.Text 2992,684,159,40 师姐加油
+[104] ControlType.Text 2994,684,238,40 世界干死他们
+[172] ControlType.Text 3005,684,159,40 师姐加油
+[158] ControlType.Text 3006,684,159,40 师姐加油
+[210] ControlType.Text 3009,684,159,40 师姐加油
+[154] ControlType.Text 3030,684,238,40 夫妻混合双打
+[626] ControlType.Hyperlink 1247,723,47,54 136 会员
+[628] ControlType.Hyperlink 1311,723,47,54 137 会员
+[630] ControlType.Hyperlink 1375,723,47,54 138 会员
+[632] ControlType.Hyperlink 1439,723,47,54 139 会员
+[634] ControlType.Hyperlink 1503,723,47,54 140 会员
+[214] ControlType.Text 2993,730,159,40 韩立加油
+[194] ControlType.Text 2994,730,159,40 师姐加油
+[200] ControlType.Text 2996,730,317,40 蛙趣师姐这么厉害
+[100] ControlType.Text 2999,730,159,40 师姐加油
+[166] ControlType.Text 3005,730,159,40 师姐加油
+[186] ControlType.Text 3011,730,159,40 师姐加油
+[176] ControlType.Text 3019,730,159,40 师姐加油
+[148] ControlType.Text 3033,730,159,40 师姐加油
+[636] ControlType.Hyperlink 1247,787,47,54 141 会员
+[638] ControlType.Hyperlink 1311,787,47,54 142 会员
+[640] ControlType.Hyperlink 1375,787,47,54 143 会员
+[642] ControlType.Hyperlink 1439,787,47,54 144 会员
+[644] ControlType.Hyperlink 1503,787,47,54 145 会员
+[646] ControlType.Hyperlink 1247,851,47,54 146 会员
+[648] ControlType.Hyperlink 1311,851,47,54 147 会员
+[650] ControlType.Hyperlink 1375,851,47,54 148 会员
+[652] ControlType.Hyperlink 1439,851,47,54 149 会员
+[654] ControlType.Hyperlink 1503,851,47,54 150 会员
+[233] ControlType.Button 390,873,37,23 上一个
+[235] ControlType.Button 426,873,37,23 播放/暂停
+[237] ControlType.Button 462,873,37,23 下一个
+[245] ControlType.Button 822,873,87,23 清晰度
+[246] ControlType.Button 918,873,51,23 倍速
+[247] ControlType.Button 968,873,37,23 音量
+[250] ControlType.Button 1004,873,37,23 设置
+[252] ControlType.Button 1040,873,37,23 画中画
+[254] ControlType.Button 1076,873,37,23 宽屏
+[256] ControlType.Button 1112,873,37,23 网页全屏
+[258] ControlType.Button 1148,873,37,23 全屏
+[242] ControlType.Text 541,877,5,15 /
+[244] ControlType.Text 550,877,31,15 19:51
+[656] ControlType.Hyperlink 1247,915,47,54 151 会员
+[658] ControlType.Hyperlink 1311,915,47,54 152 会员
+[660] ControlType.Hyperlink 1375,915,47,54 153 会员
+[662] ControlType.Hyperlink 1439,915,47,54 154 会员
+[664] ControlType.Hyperlink 1503,915,47,54 155 会员
+[276] ControlType.Hyperlink 1049,917,69,29 弹幕礼仪
+[270] ControlType.Group 632,919,25,25 弹幕显示隐藏
+[264] ControlType.Text 390,923,40,16 1.9万+
+[265] ControlType.Text 429,923,53,16 人正在看
+[266] ControlType.Text 481,923,14,16 ，
+[267] ControlType.Text 494,923,43,16 已装填 
+[268] ControlType.Text 536,923,30,16 6000
+[269] ControlType.Text 565,923,44,16  条弹幕
+[275] ControlType.Text 710,923,66,16 已关闭弹幕
+[279] ControlType.Text 1140,924,27,16 发送
+[282] ControlType.Text 414,976,39,16 21.4万
+[286] ControlType.Text 516,976,40,16 29.4万
+[290] ControlType.Text 619,976,32,16 4.3万
+[293] ControlType.Text 714,976,30,16 4123
+[297] ControlType.Text 807,976,40,16 一起看
+[666] ControlType.Hyperlink 1247,979,47,54 156 会员
+[668] ControlType.Hyperlink 1311,979,47,54 157 会员
+[670] ControlType.Hyperlink 1375,979,47,54 158 会员
+[672] ControlType.Hyperlink 1439,979,47,54 159 会员
+[674] ControlType.Hyperlink 1503,979,47,54 160 会员
+[719] ControlType.Text 1242,991,65,22 特别花絮
+[294] ControlType.Text 714,1012,79,16 点击复制链接
+[299] ControlType.Hyperlink 378,1031,166,222 凡人修仙传
+[300] ControlType.Image 378,1031,166,222 凡人修仙传
+[301] ControlType.Hyperlink 559,1031,638,26 凡人修仙传
+[333] ControlType.Hyperlink 990,1031,109,35 国创频道
+[723] ControlType.Text 1254,1035,57,16 特别花絮
+[725] ControlType.Text 1336,1035,29,16 预告
+[727] ControlType.Text 1390,1035,48,16 UP论道
+[729] ControlType.Text 1463,1035,57,16 虚天战纪
+[731] ControlType.Text 1545,1035,47,16 2020版
+[733] ControlType.Text 1617,1035,57,16 修仙之旅
+[337] ControlType.Text 1148,1040,29,17 追番
+[676] ControlType.Hyperlink 1247,1043,47,54 161 会员
+[678] ControlType.Hyperlink 1311,1043,47,54 162 会员
+[680] ControlType.Hyperlink 1375,1043,47,54 163 会员
+[682] ControlType.Hyperlink 1439,1043,47,54 164 会员
+[684] ControlType.Hyperlink 1503,1043,47,54 165 会员
+[302] ControlType.Text 559,1067,59,17 68亿播放
+[303] ControlType.Text 617,1067,21,17   ·  
+[304] ControlType.Text 637,1067,86,17 3985.4万弹幕
+[305] ControlType.Text 722,1067,21,17   ·  
+[306] ControlType.Text 742,1067,86,17 1731.2万追番
+[737] ControlType.Image 1242,1073,107,61 导视PV
+[736] ControlType.Hyperlink 1242,1074,321,59 导视PV 导视PV 慕兰之战篇精彩继续
+[307] ControlType.Text 559,1097,162,17 小说改 / 玄幻 / 热血 / 励志
+[308] ControlType.Text 720,1097,13,17  · 
+[309] ControlType.Text 732,1097,33,17 2020
+[310] ControlType.Text 764,1097,13,17  · 
+[311] ControlType.Text 776,1097,196,17 连载中, 6月13日起 每周六11:00
+[312] ControlType.Text 971,1097,14,17  · 
+[313] ControlType.Hyperlink 984,1097,95,17 BV14qTo6fExY
+[686] ControlType.Hyperlink 1247,1107,47,54 166 会员
+[688] ControlType.Hyperlink 1311,1107,47,54 167 会员
+[690] ControlType.Hyperlink 1375,1107,47,54 168 会员
+[692] ControlType.Hyperlink 1439,1107,47,54 169 会员
+[694] ControlType.Hyperlink 1503,1107,47,54 170 会员
+[315] ControlType.Text 559,1121,29,17 配音
+[317] ControlType.Text 559,1121,626,71 配音导演：欧阳萱 统筹：吴晞 韩立：钱文青 温天仁：故里 金魁：王秋明 甲辰：栾立胜 凌玉灵：张予佟 风希：刘思岑 公孙云：张树斌 妙鹤：傅晨阳 极阴：赵铭洲 绿袍：贺文潇 双圣女：黎筱濛 于修士：区卬 今霞：凃雄飞 易道友：温健 星宫护法：王语 其他配音演员：沈倩、吴晞、董灿、邢子皓、白雨松 范掌柜：李楠
+[316] ControlType.Text 587,1121,15,17 ：
+[318] ControlType.Hyperlink 559,1144,638,41 简介：看机智的凡人小子韩立如何稳健发展、步步为营，战魔道、夺至宝、驰骋星海、快意恩仇，成为纵横三界的强者。他日仙界重相逢，一声道友尽沧桑。 展开 看机智的凡人小子韩立如何稳健发展、步步为营，战魔道、夺至宝、驰骋星海、快意恩仇，成为纵横三界的强者。他日仙界重相逢，一声道友尽沧桑。
+[741] ControlType.Image 1242,1144,107,61 慕兰之战倒计时1天
+[740] ControlType.Hyperlink 1242,1145,321,59 慕兰之战倒计时1天 慕兰之战倒计时1天 韩立CV钱文青及主创邀你一起追番
+[696] ControlType.Hyperlink 1247,1171,47,54 171 会员
+[698] ControlType.Hyperlink 1311,1171,47,54 172 会员
+[700] ControlType.Hyperlink 1375,1171,47,54 173 会员
+[702] ControlType.Hyperlink 1439,1171,47,54 174 会员
+[704] ControlType.Hyperlink 1503,1171,47,54 175 会员
+[320] ControlType.Text 559,1209,31,25 9.7
+[745] ControlType.Image 1242,1215,107,61 慕兰之战开播倒计时2天
+[321] ControlType.Text 589,1216,14,16 分
+[744] ControlType.Hyperlink 1242,1216,321,59 慕兰之战开播倒计时2天 慕兰之战开播倒计时2天 南宫婉CV李诗萌邀你一起追番
+[323] ControlType.Hyperlink 647,1220,128,25 哔哩哔哩国创
+[325] ControlType.Text 785,1225,29,17 关注
+[327] ControlType.Text 1083,1226,25,15 评分
+[706] ControlType.Hyperlink 1247,1235,47,54 176 会员
+[708] ControlType.Hyperlink 1311,1235,47,54 177 限免
+[710] ControlType.Hyperlink 1375,1235,47,54 178 限免
+[712] ControlType.Hyperlink 1439,1235,47,54 179 限免
+[714] ControlType.Hyperlink 1503,1235,47,54 180 限免
+[1284] ControlType.Text 351,1236,297,21 https://www.bilibili.com/bangumi/play/ep1231546/
+[322] ControlType.Text 559,1236,62,15 44万人评分
+[338] ControlType.Text 378,1283,41,23 评论
+[749] ControlType.Image 1242,1286,107,61 慕兰之战开播倒计时3天
+[748] ControlType.Hyperlink 1242,1287,321,59 慕兰之战开播倒计时3天 慕兰之战开播倒计时3天 银月CV青泯邑邀你一起追番
+[716] ControlType.Hyperlink 1247,1299,47,54 181 会员
+[718] ControlType.Hyperlink 1311,1299,47,54 182 预告
+[341] ControlType.Text 756,1353,99,17 正在玩命加载…
+[753] ControlType.Image 1242,1357,107,61 慕兰之战开播倒计时4天
+[752] ControlType.Hyperlink 1242,1358,321,59 慕兰之战开播倒计时4天 慕兰之战开播倒计时4天 仲神师CV轩zone邀你一起追番
+[757] ControlType.Image 1242,1428,107,61 慕兰之战开播倒计时5天
+[756] ControlType.Hyperlink 1242,1429,321,59 慕兰之战开播倒计时5天 慕兰之战开播倒计时5天 乐上师CV张惠霖邀你一起追番
+[1147] ControlType.Text 1226,1456,65,17 相关推荐
+[1149] ControlType.Hyperlink 1226,1488,351,80 将夜 将夜 更新至第12话 4573.3万 10.8万
+[1150] ControlType.Image 1226,1488,142,80 将夜
+[761] ControlType.Image 1242,1499,107,61 慕兰之战开播倒计时6天
+[760] ControlType.Hyperlink 1242,1500,321,59 慕兰之战开播倒计时6天 慕兰之战开播倒计时6天 南宫阙CV谢轶辉邀你一起追番
+[765] ControlType.Image 1242,1570,107,61 慕兰之战开播倒计时7天
+[764] ControlType.Hyperlink 1242,1571,321,59 慕兰之战开播倒计时7天 慕兰之战开播倒计时7天 覃上师CV张铎邀你一起追番
+[1154] ControlType.Hyperlink 1226,1580,351,80 大道独行之蝶龙变 大道独行之蝶龙变 更新至第14话 1224.1万 1.9万
+[1155] ControlType.Image 1226,1580,142,80 大道独行之蝶龙变
+[769] ControlType.Image 1242,1641,107,61 慕兰之战高燃PV
+[768] ControlType.Hyperlink 1242,1642,321,59 慕兰之战高燃PV 慕兰之战高燃PV 6月13日高能归来！
+[1159] ControlType.Hyperlink 1226,1672,351,80 牧神记 牧神记 更新至第90话 19.1亿 366.1万
+[1160] ControlType.Image 1226,1672,142,80 牧神记
+[773] ControlType.Image 1242,1712,107,61 慕兰之战战斗PV
+[772] ControlType.Hyperlink 1242,1713,321,59 慕兰之战战斗PV 慕兰之战战斗PV 更多精彩6月13日敬请期待！
+[1164] ControlType.Hyperlink 1226,1764,351,80 灵笼 第二季 灵笼 第二季 全12话 3.9亿 311.3万
+[1165] ControlType.Image 1226,1764,142,80 灵笼 第二季
+[777] ControlType.Image 1242,1783,107,61 韩立新宝物
+[776] ControlType.Hyperlink 1242,1784,321,59 韩立新宝物 韩立新宝物 古修洞府奇遇，夺得秘宝竟是。。
+[781] ControlType.Image 1242,1854,107,61 慕兰之战动捕花絮第一弹抢先看
+[780] ControlType.Hyperlink 1242,1855,321,59 慕兰之战动捕花絮第一弹抢先看 慕兰之战动捕花絮第一弹抢先看 6月13日一起见证！
+[1169] ControlType.Hyperlink 1226,1856,351,80 深空彼岸 深空彼岸 全26话 7407.8万 10.3万
+[1170] ControlType.Image 1226,1856,142,80 深空彼岸
+[785] ControlType.Image 1242,1925,107,61 慕兰之战场景PV上线
+[784] ControlType.Hyperlink 1242,1926,321,59 慕兰之战场景PV上线 慕兰之战场景PV上线 6月13日敬请期待！
+[1174] ControlType.Hyperlink 1226,1948,351,80 非人哉 第三季 非人哉 第三季 更新至第22话 1.4亿 23.3万
+[1175] ControlType.Image 1226,1948,142,80 非人哉 第三季
+[789] ControlType.Image 1242,1996,107,61 双时空破壁
+[788] ControlType.Hyperlink 1242,1997,321,59 双时空破壁 双时空破壁 能量穿越次元！
+[1179] ControlType.Hyperlink 1226,2040,351,80 永生 永生 全82话 8.5亿 228.7万
+[1180] ControlType.Image 1226,2040,142,80 永生
+[793] ControlType.Image 1242,2067,107,61 新年番定档6月13日
+[792] ControlType.Hyperlink 1242,2068,321,59 新年番定档6月13日 新年番定档6月13日 共赴仙途
+[1184] ControlType.Hyperlink 1226,2132,351,80 盗妖行 盗妖行 更新至第41话 3744万 2.4万
+[1185] ControlType.Image 1226,2132,142,80 盗妖行
+[797] ControlType.Image 1242,2138,107,61 幕后微纪录08
+[796] ControlType.Hyperlink 1242,2139,321,59 幕后微纪录08 幕后微纪录08 王裕仁导演篇：丹心铸凡
+[801] ControlType.Image 1242,2209,107,61 幕后微纪录07
+[800] ControlType.Hyperlink 1242,2210,321,59 幕后微纪录07 幕后微纪录07 林宇昂导演篇：匠心入镜
+[1189] ControlType.Hyperlink 1226,2224,351,80 乐宝之奇妙的世界 乐宝之奇妙的世界 全10话 7785 -
+[1190] ControlType.Image 1226,2224,142,80 乐宝之奇妙的世界
+[805] ControlType.Image 1242,2280,107,61 幕后微纪录06
+[804] ControlType.Hyperlink 1242,2281,321,59 幕后微纪录06 幕后微纪录06 技术引擎篇：光影逐真
+[1194] ControlType.Hyperlink 1226,2316,351,80 玄界之门 玄界之门 全26话 8774.1万 16.9万
+[1195] ControlType.Image 1226,2316,142,80 玄界之门
+[809] ControlType.Image 1242,2351,107,61 幕后微纪录05
+[808] ControlType.Hyperlink 1242,2352,321,59 幕后微纪录05 幕后微纪录05 动作捕捉篇：以式传神
+[1199] ControlType.Hyperlink 1226,2408,351,80 彭祖传奇之少年奇缘 彭祖传奇之少年奇缘 全26话 3.9万 7
+[1200] ControlType.Image 1226,2408,142,80 彭祖传奇之少年奇缘
+[813] ControlType.Image 1242,2422,107,61 幕后微纪录04
+[812] ControlType.Hyperlink 1242,2423,321,59 幕后微纪录04 幕后微纪录04 更新前夜篇：以爱为炬
+[817] ControlType.Image 1242,2493,107,61 幕后微纪录03
+[816] ControlType.Hyperlink 1242,2494,321,59 幕后微纪录03 幕后微纪录03 人物建模篇：模塑仙形
+[1204] ControlType.Hyperlink 1226,2500,351,80 宗门里除了我都是卧底 宗门里除了我都是卧底 全152话 4.6亿 26.3万
+[1205] ControlType.Image 1226,2500,142,80 宗门里除了我都是卧底
+[821] ControlType.Image 1242,2564,107,61 幕后微纪录02
+[820] ControlType.Hyperlink 1242,2565,321,59 幕后微纪录02 幕后微纪录02 人物设计篇：笔绘仙姿
+[1209] ControlType.Hyperlink 1226,2592,351,80 镇魂街 第四季 镇魂街 第四季 全26话 2.4亿 90.1万
+[1210] ControlType.Image 1226,2592,142,80 镇魂街 第四季
+[825] ControlType.Image 1242,2635,107,61 幕后微纪录01
+[824] ControlType.Hyperlink 1242,2636,321,59 幕后微纪录01 幕后微纪录01 声音制作篇：声入凡心
+[1214] ControlType.Hyperlink 1226,2684,351,80 和圆圆学诗歌 第1季 和圆圆学诗歌 第1季 全54话 1.6万 2
+[1215] ControlType.Image 1226,2684,142,80 和圆圆学诗歌 第1季
+[829] ControlType.Image 1242,2706,107,61 凡人动画导演编剧王裕仁
+[828] ControlType.Hyperlink 1242,2707,321,59 凡人动画导演编剧王裕仁 凡人动画导演编剧王裕仁 接受CMG动漫盛典采访
+[1219] ControlType.Hyperlink 1226,2776,351,80 驭灵师 驭灵师 全18话 723.6万 1.9万
+[1220] ControlType.Image 1226,2776,142,80 驭灵师
+[833] ControlType.Image 1242,2777,107,61 《不凡》唱响央视CMG动漫盛典
+[832] ControlType.Hyperlink 1242,2778,321,59 《不凡》唱响央视CMG动漫盛典 《不凡》唱响央视CMG动漫盛典
+[836] ControlType.Image 1242,2848,107,61 元婴大战动捕花絮
+[835] ControlType.Hyperlink 1242,2849,321,59 元婴大战动捕花絮 元婴大战动捕花絮
+[1224] ControlType.Hyperlink 1226,2868,351,80 长夜开拓者 长夜开拓者 全16话 3853.2万 6.3万
+[1225] ControlType.Image 1226,2868,142,80 长夜开拓者
+[839] ControlType.Image 1242,2919,107,61 感谢万名道友与凡人同行！
+[838] ControlType.Hyperlink 1242,2920,321,59 感谢万名道友与凡人同行！ 感谢万名道友与凡人同行！
+[1229] ControlType.Hyperlink 1226,2960,351,80 月魁传 动态漫画 月魁传 动态漫画 全60话 4691.2万 7万
+[1230] ControlType.Image 1226,2960,142,80 月魁传 动态漫画
+[842] ControlType.Image 1242,2990,107,61 凡人动画视听音乐会南京站现场回顾
+[841] ControlType.Hyperlink 1242,2991,321,59 凡人动画视听音乐会南京站现场回顾 凡人动画视听音乐会南京站现场回顾
+[1234] ControlType.Hyperlink 1226,3052,351,80 布袋和尚云游记之抗洪风云 布袋和尚云游记之抗洪风云 全36话 2.2万 5
+[1235] ControlType.Image 1226,3052,142,80 布袋和尚云游记之抗洪风云
+[845] ControlType.Image 1242,3061,107,61 2026年. 要获取缺失的图片说明，请打开上下文菜单。
+[844] ControlType.Hyperlink 1242,3062,321,59 2026年 2026年 第二季度与诸君重逢
+[849] ControlType.Image 1242,3132,107,61 从凡人到强者，从困境到希望
+[848] ControlType.Hyperlink 1242,3133,321,59 从凡人到强者，从困境到希望 从凡人到强者，从困境到希望
+[1239] ControlType.Hyperlink 1226,3144,351,80 我的师兄太强了 我的师兄太强了 全48话 8495.3万 4.2万
+[1240] ControlType.Image 1226,3144,142,80 我的师兄太强了
+[852] ControlType.Image 1242,3203,107,61 韩立结婴问道曲《旅人》
+[851] ControlType.Hyperlink 1242,3204,321,59 韩立结婴问道曲《旅人》 韩立结婴问道曲《旅人》
+[1244] ControlType.Hyperlink 1226,3236,351,80 保卫者传奇 保卫者传奇 全50话 2.1万 9
+[1245] ControlType.Image 1226,3236,142,80 保卫者传奇
+[855] ControlType.Image 1242,3274,107,61 【凡人×伊利】
+[854] ControlType.Hyperlink 1242,3275,321,59 【凡人×伊利】 【凡人×伊利】 韩立的修仙好搭子是？
+[859] ControlType.Image 1242,3345,107,61 豫园x凡人动画
+[858] ControlType.Hyperlink 1242,3346,321,59 豫园x凡人动画 豫园x凡人动画 者来女全新演绎主题曲《凡人》
+[863] ControlType.Image 1242,3416,107,61 凡人修仙传动画五周年回顾
+[862] ControlType.Hyperlink 1242,3417,321,59 凡人修仙传动画五周年回顾 凡人修仙传动画五周年回顾
+[866] ControlType.Image 1242,3487,107,61 凡人动画燃战动捕花絮放送
+[865] ControlType.Hyperlink 1242,3488,321,59 凡人动画燃战动捕花絮放送 凡人动画燃战动捕花絮放送
+[869] ControlType.Image 1242,3558,107,61 今日一别
+[868] ControlType.Hyperlink 1242,3559,321,59 今日一别 今日一别 紫灵后会有期
+[873] ControlType.Image 1242,3629,107,61 元瑶剧情曲
+[872] ControlType.Hyperlink 1242,3630,321,59 元瑶剧情曲 元瑶剧情曲 《归潮》
+[877] ControlType.Image 1242,3700,107,61 万盏灯火间
+[876] ControlType.Hyperlink 1242,3701,321,59 万盏灯火间 万盏灯火间 重现经典
+[881] ControlType.Image 1242,3771,107,61 2025新春舞蹈秀
+[880] ControlType.Hyperlink 1242,3772,321,59 2025新春舞蹈秀 2025新春舞蹈秀
+[884] ControlType.Image 1242,3842,107,61 凡人不凡
+[883] ControlType.Hyperlink 1242,3843,321,59 凡人不凡 凡人不凡 自贡灯会御剑之旅
+[888] ControlType.Image 1242,3913,107,61 凡人不凡
+[887] ControlType.Hyperlink 1242,3914,321,59 凡人不凡 凡人不凡 自贡灯会
+[892] ControlType.Image 1242,3984,107,61 片头曲《不凡》
+[891] ControlType.Hyperlink 1242,3985,321,59 片头曲《不凡》 片头曲《不凡》 外海风云篇全新画面来袭！
+[896] ControlType.Image 1242,4055,107,61 片尾曲《凡人》
+[895] ControlType.Hyperlink 1242,4056,321,59 片尾曲《凡人》 片尾曲《凡人》 外海风云篇全新画面来袭！
+[900] ControlType.Image 1242,4126,107,61 插曲MV2
+[899] ControlType.Hyperlink 1242,4127,321,59 插曲MV2 插曲MV2 归期
+[904] ControlType.Image 1242,4197,107,61 插曲MV
+[903] ControlType.Hyperlink 1242,4198,321,59 插曲MV 插曲MV 落英
+[908] ControlType.Image 1242,4268,107,61 魔道争锋OP
+[907] ControlType.Hyperlink 1242,4269,321,59 魔道争锋OP 魔道争锋OP 《天地行》公开，戴荃倾情演唱
+[912] ControlType.Image 1242,4339,107,61 插曲
+[911] ControlType.Hyperlink 1242,4340,321,59 插曲 插曲 《少年不凡》完整版MV
+[916] ControlType.Image 1242,4410,107,61 韩立温天仁决战花絮
+[915] ControlType.Hyperlink 1242,4411,321,59 韩立温天仁决战花絮 韩立温天仁决战花絮
+[919] ControlType.Image 1242,4481,107,61 韩立对阵温天仁
+[918] ControlType.Hyperlink 1242,4482,321,59 韩立对阵温天仁 韩立对阵温天仁 决战清明
+[923] ControlType.Image 1242,4552,107,61 凡人外海风云角色来电7
+[922] ControlType.Hyperlink 1242,4553,321,59 凡人外海风云角色来电7 凡人外海风云角色来电7 韩立传音问候诸位道友！
+[927] ControlType.Image 1242,4623,107,61 凡人外海风云角色来电6
+[926] ControlType.Hyperlink 1242,4624,321,59 凡人外海风云角色来电6 凡人外海风云角色来电6 元瑶传音问候诸位道友！
+[931] ControlType.Image 1242,4694,107,61 凡人外海风云角色来电5
+[930] ControlType.Hyperlink 1242,4695,321,59 凡人外海风云角色来电5 凡人外海风云角色来电5 紫灵传音问候诸位道友！
+[935] ControlType.Image 1242,4765,107,61 凡人外海风云角色来电4
+[934] ControlType.Hyperlink 1242,4766,321,59 凡人外海风云角色来电4 凡人外海风云角色来电4 温天仁传音问候诸位道友！
+[939] ControlType.Image 1242,4836,107,61 凡人外海风云角色来电3
+[938] ControlType.Hyperlink 1242,4837,321,59 凡人外海风云角色来电3 凡人外海风云角色来电3 风希来电问候诸位道友！
+[943] ControlType.Image 1242,4907,107,61 凡人外海风云角色来电2
+[942] ControlType.Hyperlink 1242,4908,321,59 凡人外海风云角色来电2 凡人外海风云角色来电2 文思月来电问候诸位道友！
+[947] ControlType.Image 1242,4978,107,61 凡人外海风云角色来电1
+[946] ControlType.Hyperlink 1242,4979,321,59 凡人外海风云角色来电1 凡人外海风云角色来电1 公孙杏来电问候诸位道友！
+[951] ControlType.Image 1242,5049,107,61 外海风云韩立角色PV
+[950] ControlType.Hyperlink 1242,5050,321,59 外海风云韩立角色PV 外海风云韩立角色PV 且看韩天尊驰骋外海！
+[955] ControlType.Image 1242,5120,107,61 外海风云风希角色PV
+[954] ControlType.Hyperlink 1242,5121,321,59 外海风云风希角色PV 外海风云风希角色PV 妖族，就该有妖族的样子！
+[959] ControlType.Image 1242,5191,107,61 韩立玄骨巅峰生死决战
+[958] ControlType.Hyperlink 1242,5192,321,59 韩立玄骨巅峰生死决战 韩立玄骨巅峰生死决战
+[962] ControlType.Image 1242,5262,107,61 百集纪念点映回顾
+[961] ControlType.Hyperlink 1242,5263,321,59 百集纪念点映回顾 百集纪念点映回顾 修仙路长历风霜，百集相伴意未央
+[966] ControlType.Image 1242,5333,107,61 连载百集里程碑达成！
+[965] ControlType.Hyperlink 1242,5334,321,59 连载百集里程碑达成！ 连载百集里程碑达成！
+[969] ControlType.Image 1242,5404,107,61 小说作者忘语献上
+[968] ControlType.Hyperlink 1242,5405,321,59 小说作者忘语献上 小说作者忘语献上 动画百集祝福！
+[973] ControlType.Image 1242,5475,107,61 星海飞驰年番片头曲《不凡》
+[972] ControlType.Hyperlink 1242,5476,321,59 星海飞驰年番片头曲《不凡》 星海飞驰年番片头曲《不凡》 全新画面来袭
+[977] ControlType.Image 1242,5546,107,61 星海飞驰年番片尾曲《凡人》
+[976] ControlType.Hyperlink 1242,5547,321,59 星海飞驰年番片尾曲《凡人》 星海飞驰年番片尾曲《凡人》 全新画面来袭
+[981] ControlType.Image 1242,5617,107,61 念头通达！
+[980] ControlType.Hyperlink 1242,5618,321,59 念头通达！ 念头通达！ 凡人动画主题日活动回顾，各位道友请了~
+[985] ControlType.Image 1242,5688,107,61 凡人星海飞驰片头曲《不凡》发布！
+[984] ControlType.Hyperlink 1242,5689,321,59 凡人星海飞驰片头曲《不凡》发布！ 凡人星海飞驰片头曲《不凡》发布！ 修炼尘世中，终究平凡不平庸！
+[989] ControlType.Image 1242,5759,107,61 凡人星海飞驰片尾曲《凡人》发布！
+[988] ControlType.Hyperlink 1242,5760,321,59 凡人星海飞驰片尾曲《凡人》发布！ 凡人星海飞驰片尾曲《凡人》发布！ 聚散离合，一笑而过，你我皆凡人！
+[993] ControlType.Image 1242,5830,107,61 风起天南重制版OP《不凡》
+[992] ControlType.Hyperlink 1242,5831,321,59 风起天南重制版OP《不凡》 风起天南重制版OP《不凡》 有朝再相逢，平凡不平庸
+[997] ControlType.Image 1242,5901,107,61 风起天南重制版ED《凡人》
+[996] ControlType.Hyperlink 1242,5902,321,59 风起天南重制版ED《凡人》 风起天南重制版ED《凡人》 遁出红尘，你我皆凡人
+[1001] ControlType.Image 1242,5972,107,61 《凡人修仙传》重制版花絮：
+[1000] ControlType.Hyperlink 1242,5973,321,59 《凡人修仙传》重制版花絮： 《凡人修仙传》重制版花絮： 来自制作组的寄语
+[1005] ControlType.Image 1242,6043,107,61 凡人重制版韩立个人PV：
+[1004] ControlType.Hyperlink 1242,6044,321,59 凡人重制版韩立个人PV： 凡人重制版韩立个人PV： 谋定而动，厚积薄发
+[1009] ControlType.Image 1242,6114,107,61 凡人再别天南花絮
+[1008] ControlType.Hyperlink 1242,6115,321,59 凡人再别天南花絮 凡人再别天南花絮 落英演唱者银临ID
+[1013] ControlType.Image 1242,6185,107,61 魔道争锋花絮
+[1012] ControlType.Hyperlink 1242,6186,321,59 魔道争锋花絮 魔道争锋花絮 作者忘语官推点赞凡人京城篇！
+[1017] ControlType.Image 1242,6256,107,61 魔道争锋幕后花絮
+[1016] ControlType.Hyperlink 1242,6257,321,59 魔道争锋幕后花絮 魔道争锋幕后花絮 冯提莫探班动捕现场
+[1021] ControlType.Image 1242,6327,107,61 魔道争锋花絮
+[1020] ControlType.Hyperlink 1242,6328,321,59 魔道争锋花絮 魔道争锋花絮 修行人士放飞自我
+[1025] ControlType.Image 1242,6398,107,61 魔道争锋武打花絮
+[1024] ControlType.Hyperlink 1242,6399,321,59 魔道争锋武打花絮 魔道争锋武打花絮 前方高燃！《凡人》武术打戏测拍集锦
+[1029] ControlType.Image 1242,6469,107,61 魔道争锋花絮
+[1028] ControlType.Hyperlink 1242,6470,321,59 魔道争锋花絮 魔道争锋花絮 作者忘语助力
+[1033] ControlType.Image 1242,6540,107,61 魔道争锋幕后制作之动捕PV
+[1032] ControlType.Hyperlink 1242,6541,321,59 魔道争锋幕后制作之动捕PV 魔道争锋幕后制作之动捕PV 捕风又捉影，一幕一雕琢
+[1037] ControlType.Image 1242,6611,107,61 魔道争锋服装设计
+[1036] ControlType.Hyperlink 1242,6612,321,59 魔道争锋服装设计 魔道争锋服装设计 道友们快来一饱眼福~
+[1041] ControlType.Image 1242,6682,107,61 魔道争锋角色PV
+[1040] ControlType.Hyperlink 1242,6683,321,59 魔道争锋角色PV 魔道争锋角色PV 沦为弃子，韩立该如何逆转命运之轮？
+[1045] ControlType.Image 1242,6753,107,61 魔道争锋法器展示PV
+[1044] ControlType.Hyperlink 1242,6754,321,59 魔道争锋法器展示PV 魔道争锋法器展示PV 各路道友速来品鉴一番
+[1049] ControlType.Image 1242,6824,107,61 魔道争锋篇场景pv
+[1048] ControlType.Hyperlink 1242,6825,321,59 魔道争锋篇场景pv 魔道争锋篇场景pv 正魔两道之战一触即发
+[1053] ControlType.Image 1242,6895,107,61 燕家堡之战花絮4
+[1052] ControlType.Hyperlink 1242,6896,321,59 燕家堡之战花絮4 燕家堡之战花絮4 管云鹏客串凡人修仙传年番
+[1057] ControlType.Image 1242,6966,107,61 燕家堡之战花絮3
+[1056] ControlType.Hyperlink 1242,6967,321,59 燕家堡之战花絮3 燕家堡之战花絮3 柳岩给道友们拜年啦
+[1061] ControlType.Image 1242,7037,107,61 燕家堡之战花絮2
+[1060] ControlType.Hyperlink 1242,7038,321,59 燕家堡之战花絮2 燕家堡之战花絮2 动捕表情演员小姐姐们给各位道友拜年
+[1065] ControlType.Image 1242,7108,107,61 燕家堡之战花絮
+[1064] ControlType.Hyperlink 1242,7109,321,59 燕家堡之战花絮 燕家堡之战花絮 王蝉动捕演员刘珂君助力凡人修仙传特别篇
+[1069] ControlType.Image 1242,7179,107,61 凡人风起天南花絮12
+[1068] ControlType.Hyperlink 1242,7180,321,59 凡人风起天南花絮12 凡人风起天南花絮12 演员余梦寒 助力《凡人风起天南贰》
+[1073] ControlType.Image 1242,7250,107,61 凡人风起天南花絮11
+[1072] ControlType.Hyperlink 1242,7251,321,59 凡人风起天南花絮11 凡人风起天南花絮11 网文大神耳根梦幻联动 助力《凡人风起天南贰》
+[1077] ControlType.Image 1242,7321,107,61 凡人风起天南花絮10
+[1076] ControlType.Hyperlink 1242,7322,321,59 凡人风起天南花絮10 凡人风起天南花絮10 作者忘语助力《凡人风起天南贰》
+[1081] ControlType.Image 1242,7392,107,61 凡人风起天南花絮9
+[1080] ControlType.Hyperlink 1242,7393,321,59 凡人风起天南花絮9 凡人风起天南花絮9 【七夕】莫笑前尘多辜负，更待今生有情天！
+[1085] ControlType.Image 1242,7463,107,61 凡人风起天南花絮8
+[1084] ControlType.Hyperlink 1242,7464,321,59 凡人风起天南花絮8 凡人风起天南花絮8 《凡人修仙传》ED演唱者段奥娟空降B站
+[1089] ControlType.Image 1242,7534,107,61 凡人风起天南花絮7
+[1088] ControlType.Hyperlink 1242,7535,321,59 凡人风起天南花絮7 凡人风起天南花絮7 演员林琳奇助力《凡人风起天南》
+[1093] ControlType.Image 1242,7605,107,61 凡人风起天南花絮6
+[1092] ControlType.Hyperlink 1242,7606,321,59 凡人风起天南花絮6 凡人风起天南花絮6 演员杨采盈应援《凡人风起天南》
+[1097] ControlType.Image 1242,7676,107,61 凡人风起天南花絮5
+[1096] ControlType.Hyperlink 1242,7677,321,59 凡人风起天南花絮5 凡人风起天南花絮5 幕后故事：我们仍未知道那天厉飞羽是怎么掉下去的
+[1101] ControlType.Image 1242,7747,107,61 凡人风起天南花絮4
+[1100] ControlType.Hyperlink 1242,7748,321,59 凡人风起天南花絮4 凡人风起天南花絮4 原著作者忘语庆开播
+[1105] ControlType.Image 1242,7818,107,61 凡人风起天南花絮3
+[1104] ControlType.Hyperlink 1242,7819,321,59 凡人风起天南花絮3 凡人风起天南花絮3 厉飞雨表情演员郭品超庆开播
+[1109] ControlType.Image 1242,7889,107,61 凡人风起天南花絮2
+[1108] ControlType.Hyperlink 1242,7890,321,59 凡人风起天南花絮2 凡人风起天南花絮2 涵云芝表情演员宋伊人庆开播
+[1113] ControlType.Image 1242,7960,107,61 凡人风起天南花絮1
+[1112] ControlType.Hyperlink 1242,7961,321,59 凡人风起天南花絮1 凡人风起天南花絮1 众道友、配音演员共庆开播
+[1117] ControlType.Image 1242,8031,107,61 完整版ED
+[1116] ControlType.Hyperlink 1242,8032,321,59 完整版ED 完整版ED 《凡人》MV：你我皆凡人
+[1121] ControlType.Image 1242,8102,107,61 凡人风起天南ED
+[1120] ControlType.Hyperlink 1242,8103,321,59 凡人风起天南ED 凡人风起天南ED 《凡人》公开，段奥娟倾情演唱
+[1125] ControlType.Image 1242,8173,107,61 段奥娟演唱ED
+[1124] ControlType.Hyperlink 1242,8174,321,59 段奥娟演唱ED 段奥娟演唱ED 精彩看点02
+[1129] ControlType.Image 1242,8244,107,61 段奥娟ED
+[1128] ControlType.Hyperlink 1242,8245,321,59 段奥娟ED 段奥娟ED 段奥娟来到B站
+[1133] ControlType.Image 1242,8315,107,61 凡人风起天南角色PV
+[1132] ControlType.Hyperlink 1242,8316,321,59 凡人风起天南角色PV 凡人风起天南角色PV 韩立篇
+[1137] ControlType.Image 1242,8386,107,61 完整版OP
+[1136] ControlType.Hyperlink 1242,8387,321,59 完整版OP 完整版OP 《不凡》MV：重要的是，我还是我
+[1141] ControlType.Image 1242,8457,107,61 凡人风起天南OP
+[1140] ControlType.Hyperlink 1242,8458,321,59 凡人风起天南OP 凡人风起天南OP 《不凡》公开，终究平凡不平庸
+[1145] ControlType.Image 1242,8528,107,61 凡人风起天南特效展示PV
+[1144] ControlType.Hyperlink 1242,8529,321,59 凡人风起天南特效展示PV 凡人风起天南特效展示PV 男主韩立形象首曝

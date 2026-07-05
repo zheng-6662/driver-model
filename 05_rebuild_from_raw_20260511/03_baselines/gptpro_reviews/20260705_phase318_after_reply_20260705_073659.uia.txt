@@ -1,0 +1,1826 @@
+﻿[1] ControlType.Pane 346,233,1278,1024 第318版门控优化方案 - Google Chrome - xin
+[2437] ControlType.TabItem 374,233,194,41 ChatGPT - 闲置标签页 - 已释放 175 MB
+[2439] ControlType.TabItem 550,233,194,41 ChatGPT - 闲置标签页 - 已释放 184 MB
+[2441] ControlType.TabItem 726,233,194,41 方向盘预测修正方案 - 闲置标签页 - 已释放 300 MB
+[2443] ControlType.TabItem 902,233,194,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[2445] ControlType.TabItem 1078,233,193,41 第318版门控优化方案 - 内存用量 - 298 MB
+[2448] ControlType.Button 1265,233,28,41 新标签页
+[2451] ControlType.Button 1347,233,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1487,234,45,39 最小化
+[6] ControlType.Button 1532,234,46,39 最大化
+[7] ControlType.Button 1578,234,46,39 关闭
+[2434] ControlType.Button 352,239,28,28 标签页搜索
+[2438] ControlType.Button 526,239,28,28 关闭
+[2440] ControlType.Button 702,239,28,28 关闭
+[2442] ControlType.Button 878,239,28,28 关闭
+[2444] ControlType.Button 1054,239,28,28 关闭
+[2446] ControlType.Button 1229,239,28,28 关闭
+[11] ControlType.Button 352,279,34,34 返回
+[12] ControlType.Button 388,279,34,34 前进
+[13] ControlType.Button 424,279,34,34 重新加载
+[20] ControlType.Button 1548,279,34,34 xin
+[21] ControlType.Button 1584,279,34,34 Chrome
+[15] ControlType.Button 472,284,24,24 查看网站信息
+[16] ControlType.Edit 504,284,991,24 地址和搜索栏
+[19] ControlType.Button 1503,284,24,24 为此标签页添加书签
+[127] ControlType.Text 1003,316,420,3500 # 给本地高级模型的追问：第317版门控失败后，第318版应如何修正
+
+请你继续作为机器学习实验顾问，基于第317版最新失败结果，给出下一版第318版的可执行修正方案。请用中文回答，重点给出能在当前代码库里快速实现的方案，不要泛泛建议。
+
+## 任务边界
+
+我们做的是车辆方向盘变化曲线预测。模型要预测锚点后 0 到 2 秒内的方向盘变化曲线。用户强调：样本必须由当前窗口方向盘快速转动引起，不能把后续 2 到 6 秒才发生的大动作错当成当前任务。
+
+固定约束：
+
+1. 不使用测试集误差做特征、调参、选模或阈值选择。
+2. 不把锚点后真实曲线作为部署输入。
+3. 可以在训练阶段用真实 0 到 2 秒曲线构造监督目标，例如最优候选、峰值、相位误差，但预测时不能输入这些未来信息。
+4. 第315版已经固定当前窗口保留清单，训练、验证、测试保留事件分别为 650、211、222，84 个隔离事件不参与训练、验证选模或主测试统计。
+5. 第316版是基础预测模型。
+6. 第317版已经跑完，但验证失败，没有报告测试集。
+
+## 第317版方法
+
+第317版固定第316版基础预测，构造 20 条候选曲线：
+
+1. 原预测不改。
+2. 幅值缩放：0.85、1.15、1.30、1.50、1.75。
+3. 时间平移：提前 0.40 秒、提前 0.25 秒、提前 0.10 秒、延后 0.10 秒、延后 0.25 秒、延后 0.40 秒。
+4. 幅值加时间组合：1.30 配提前 0.25 秒、1.30 配延后 0.25 秒、1.50 配提前 0.25 秒、1.50 配延后 0.25 秒。
+5. 4 个训练集残差原型候选。
+
+门控输入只包含：
+
+1. 锚点前车辆信号统计特征。
+2. 第316版预测曲线摘要。
+3. 可部署的粗场景标签。
+
+门控模型训练后比较候选加权输出和候选单选输出。
+
+## 第317版验证结果
+
+第317版守卫通过，但验证门槛全部未通过，固定方案为“随机森林加候选单选”，因此没有报告测试集。
+
+关键验证结果：
+
+| 方法 | 分组 | 数量 | 平均误差 | 相对第316版变化 | 大退化比例 | 严重低估比例 | 原预测保持率 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 第316版基础预测 | 全部样本 | 211 | 0.531658 | 0 | 0 | 0.157635 | 空 |
+| 第316版基础预测 | 普通样本 | 89 | 0.405874 | 0 | 0 | 0.132530 | 空 |
+| 第316版基础预测 | 强方向盘样本 | 112 | 0.624528 | 0 | 0 | 0.169643 | 空 |
+| 第316版基础预测 | 困难前20 | 45 | 0.810938 | 0 | 0 | 0.232558 | 空 |
+| 第316版基础预测 | 困难前10 | 24 | 1.002263 | 0 | 0 | 0.363636 | 空 |
+| 候选最优上限 | 全部样本 | 211 | 0.375611 | -0.156047 | 0 | 0.064039 | 0.033175 |
+| 候选最优上限 | 普通样本 | 89 | 0.276733 | -0.129140 | 0 | 0.036145 | 0.044944 |
+| 候选最优上限 | 强方向盘样本 | 112 | 0.446074 | -0.178454 | 0 | 0.080357 | 0.026786 |
+| 候选最优上限 | 困难前20 | 45 | 0.625778 | -0.185160 | 0 | 0.116279 | 0 |
+| 候选最优上限 | 困难前10 | 24 | 0.766937 | -0.235327 | 0 | 0.181818 | 0 |
+| 实际门控方案 | 全部样本 | 211 | 0.586667 | +0.055009 | 0.511848 | 0.113300 | 0.028436 |
+| 实际门控方案 | 普通样本 | 89 | 0.490111 | +0.084238 | 0.629213 | 0.096386 | 0.011236 |
+| 实际门控方案 | 强方向盘样本 | 112 | 0.652488 | +0.027960 | 0.410714 | 0.125000 | 0.044643 |
+| 实际门控方案 | 困难前20 | 45 | 0.831892 | +0.020954 | 0.333333 | 0.139535 | 0.022222 |
+| 实际门控方案 | 困难前10 | 24 | 1.033731 | +0.031468 | 0.375000 | 0.227273 | 0.041667 |
+
+验证门槛情况：
+
+1. 全部样本退化不超过 0.5%：失败。
+2. 普通样本退化不超过 1.0%：失败。
+3. 强方向盘改善至少 3.0%：失败。
+4. 困难前20改善至少 5.0%：失败。
+5. 困难前10改善至少 8.0%：失败。
+6. 幅值严重低估比例下降至少 20%：只有部分单选模型通过。
+7. 全部样本大退化比例不超过 15%：失败。
+8. 普通样本大退化比例不超过 10%：失败。
+
+候选使用情况说明：
+
+- 候选最优上限明显优于第316版，说明候选库本身有价值。
+- 实际门控方案原预测保持率极低，全部样本只有 2.84%，普通样本只有 1.12%。
+- 门控过度修改普通样本，造成普通样本大退化比例达到 62.9%。
+- 实际门控选择和候选最优明显不一致。例如残差原型4在验证集最优次数为 25，但实际只选 1 次；原预测不改最优次数为 7，实际只选 6 次，且普通样本保持率很低。
+
+## 当前失败分型
+
+我们认为第317版属于：
+
+候选库有上限，但门控选不准；同时门控过度修改普通样本。
+
+也就是说，下一步不应该优先扩大候选库，也不应该报告测试集，而应该先修门控机制。
+
+## 想请你回答的问题
+
+请给出第318版可执行方案，重点回答：
+
+1. 第318版应该如何把“是否需要校正”和“选哪个候选”拆成两段式？
+2. 如何设计一个保守门控，让普通样本默认保持第316版原预测不改？
+3. 在只看训练和验证、不碰测试集的前提下，如何选择校正阈值？
+4. 是否应该把第317版的候选最优上限转成“可校正性判别器”，先预测某个样本是否值得校正？如果应该，输入、标签和损失怎么定义？
+5. 如何避免门控把每个样本都强行分到某个候选，导致普通样本大面积退化？
+6. 第318版应该保留候选单选、候选加权，还是采用“原预测加小幅残差”的保守融合？
+7. 请给出一个最小可执行第318版实验方案，包括训练目标、验证门槛、候选使用规则、失败分流和必须输出的表格。
+
+请注意：第318版最好是第317版脚本的增量修改，不要建议大规模重写主模型，也不要建议人工逐个复核。
+[22] ControlType.ToolBar 346,319,1278,34 书签
+[23] ControlType.ToolBar 352,319,36,28 已保存的标签页分组
+[24] ControlType.Button 352,319,28,28 标签页分组
+[25] ControlType.Button 1530,319,86,28 所有书签
+[26] ControlType.Separator 1512,325,18,16 分隔符
+[31] ControlType.Hyperlink 297,353,97,16 跳至内容
+[32] ControlType.Text 345,353,1,1 历史聊天记录
+[30] ControlType.Document 346,354,1278,903 第318版门控优化方案
+[33] ControlType.Group 346,354,260,837 历史聊天记录
+[35] ControlType.Hyperlink 354,362,129,36 主页
+[36] ControlType.Button 547,362,36,36 关闭边栏
+[122] ControlType.Button 1487,362,78,36 分享
+[125] ControlType.Button 1565,362,36,36 打开对话选项
+[38] ControlType.ListItem 346,414,245,36 新聊天
+[39] ControlType.Hyperlink 352,414,233,36 新聊天
+[41] ControlType.ListItem 346,450,245,36 搜索聊天
+[42] ControlType.Button 352,450,233,36 搜索聊天
+[43] ControlType.Hyperlink 352,486,233,36 文件库
+[45] ControlType.Button 347,519,35,36 新项目
+[44] ControlType.Hyperlink 352,522,233,36 项目 新项目
+[46] ControlType.Hyperlink 352,558,233,36 已安排
+[128] ControlType.Button 1003,586,48,24 展开
+[47] ControlType.Hyperlink 352,594,233,36 应用
+[129] ControlType.Group 1367,620,72,40 你的消息操作
+[130] ControlType.Button 1371,624,32,32 复制消息
+[131] ControlType.Button 1403,624,32,32 编辑消息
+[48] ControlType.Hyperlink 352,630,233,36 Codex
+[132] ControlType.Text 795,663,625,46 我会按“第317版脚本的增量修改”来设计第318版，不动第316主模型，也不扩候选库。核心是把门控从“强制选候选”改成“先判定是否值得校正，再在小集合内保守应用”。
+[50] ControlType.Text 388,674,28,19 更多
+[53] ControlType.Hyperlink 527,712,34,36 新聊天
+[54] ControlType.Button 551,712,34,36 整理聊天
+[51] ControlType.Button 346,714,185,32 最近
+[52] ControlType.Text 362,720,28,20 最近
+[58] ControlType.Button 335,733,35,37 置顶 第318版门控优化方案
+[59] ControlType.Button 359,733,35,37 打开“第318版门控优化方案”的对话选项
+[133] ControlType.Text 795,739,640,46 重点会落到可直接写成训练标签、阈值搜索、候选规则和输出表格；默认保持原预测，只在高置信、低退化风险样本上校正。
+[56] ControlType.ListItem 346,746,245,36 第318版门控优化方案
+[57] ControlType.Hyperlink 352,746,233,36 第318版门控优化方案
+[62] ControlType.Button 335,769,35,37 置顶 科研流程图设计
+[63] ControlType.Button 359,769,35,37 打开“科研流程图设计”的对话选项
+[60] ControlType.ListItem 346,782,245,36 科研流程图设计lu-文档
+[61] ControlType.Hyperlink 352,782,233,36 科研流程图设计 — 项目 lu-文档 中的聊天
+[66] ControlType.Button 335,805,35,37 置顶 保护结构优化设计
+[67] ControlType.Button 359,805,35,37 打开“保护结构优化设计”的对话选项
+[134] ControlType.Button 795,808,132,24 已思考 11m 39s
+[64] ControlType.ListItem 346,818,245,36 保护结构优化设计Liu-文档
+[65] ControlType.Hyperlink 352,818,233,36 保护结构优化设计 — 项目 Liu-文档 中的聊天
+[70] ControlType.Button 335,841,35,37 置顶 方向盘预测修正方案
+[71] ControlType.Button 359,841,35,37 打开“方向盘预测修正方案”的对话选项
+[136] ControlType.Text 795,848,640,28 结论
+[68] ControlType.ListItem 346,854,245,36 方向盘预测修正方案
+[69] ControlType.Hyperlink 352,854,233,36 方向盘预测修正方案
+[74] ControlType.Button 335,877,35,37 置顶 项目操作与研究
+[75] ControlType.Button 359,877,35,37 打开“项目操作与研究”的对话选项
+[137] ControlType.Text 795,887,568,20 第318版不要再做“20候选强制分类”。第317版失败的核心不是候选库无效，而是
+[138] ControlType.Text 795,887,632,46 缺少拒绝机制
+[72] ControlType.ListItem 346,890,245,36 项目操作与研究Liu-文档
+[73] ControlType.Hyperlink 352,890,233,36 项目操作与研究 — 项目 Liu-文档 中的聊天
+[78] ControlType.Button 335,913,35,37 置顶 报告撰写需求补充
+[79] ControlType.Button 359,913,35,37 打开“报告撰写需求补充”的对话选项
+[139] ControlType.Text 827,913,256,20 ，导致普通样本被大面积强行修改。
+[76] ControlType.ListItem 346,926,245,36 报告撰写需求补充
+[77] ControlType.Hyperlink 352,926,233,36 报告撰写需求补充
+[82] ControlType.Button 335,949,35,37 置顶 每日简报定制
+[83] ControlType.Button 359,949,35,37 打开“每日简报定制”的对话选项
+[140] ControlType.Text 795,955,141,20 第318版应固定为：
+[80] ControlType.ListItem 346,962,245,36 每日简报定制
+[81] ControlType.Hyperlink 352,962,233,36 每日简报定制
+[86] ControlType.Button 335,985,35,37 置顶 人民币估算结果
+[87] ControlType.Button 359,985,35,37 打开“人民币估算结果”的对话选项
+[84] ControlType.ListItem 346,998,245,36 人民币估算结果
+[85] ControlType.Hyperlink 352,998,233,36 人民币估算结果
+[142] ControlType.Text 819,1004,590,44 第316版原预测作为默认输出；只有样本被判定为“高置信可校正”时，才进入候选选择；候选选择后也不直接全量替换，而是采用“原预测 + 小幅残差融合”。
+[90] ControlType.Button 335,1021,35,37 置顶 403 Forbidden 错误分析
+[91] ControlType.Button 359,1021,35,37 打开“403 Forbidden 错误分析”的对话选项
+[88] ControlType.ListItem 346,1034,245,36 403 Forbidden 错误分析
+[89] ControlType.Hyperlink 352,1034,233,36 403 Forbidden 错误分析
+[94] ControlType.Button 335,1057,35,37 置顶 问候交流
+[95] ControlType.Button 359,1057,35,37 打开“问候交流”的对话选项
+[92] ControlType.ListItem 346,1070,245,36 问候交流
+[93] ControlType.Hyperlink 352,1070,233,36 问候交流
+[143] ControlType.Text 795,1073,96,20 建议命名为：
+[98] ControlType.Button 335,1093,35,37 置顶 研究建议讨论
+[99] ControlType.Button 359,1093,35,37 打开“研究建议讨论”的对话选项
+[96] ControlType.ListItem 346,1106,245,36 研究建议讨论
+[97] ControlType.Hyperlink 352,1106,233,36 研究建议讨论
+[144] ControlType.Button 1391,1116,36,36 复制
+[145] ControlType.Text 816,1128,216,14 v318_conservative_two_stage_gate
+[102] ControlType.Button 335,1129,35,37 置顶 Claude 更新失败解决
+[103] ControlType.Button 359,1129,35,37 打开“Claude 更新失败解决”的对话选项
+[100] ControlType.ListItem 346,1142,245,36 Claude 更新失败解决
+[101] ControlType.Hyperlink 352,1142,233,36 Claude 更新失败解决
+[106] ControlType.Button 335,1165,35,37 置顶 模型任务分析
+[107] ControlType.Button 359,1165,35,37 打开“模型任务分析”的对话选项
+[146] ControlType.Text 795,1169,80,20 核心结构：
+[2420] ControlType.Button 803,1176,36,37 添加文件等
+[2423] ControlType.Button 1236,1176,107,37 Pro 扩展
+[2424] ControlType.Button 1347,1176,36,37 开始听写
+[2427] ControlType.Button 1391,1176,36,37 启动语音功能
+[104] ControlType.ListItem 346,1178,245,36 模型任务分析
+[105] ControlType.Hyperlink 352,1178,233,36 模型任务分析
+[2421] ControlType.Edit 846,1181,381,43 与 ChatGPT 聊天
+[2422] ControlType.Text 847,1184,112,21 有问题，尽管问
+[116] ControlType.Button 354,1198,246,53 xin zheng Pro，打开“个人资料”菜单
+[110] ControlType.Button 335,1201,35,37 置顶 instoment拼写错误解析
+[111] ControlType.Button 359,1201,35,37 打开“instoment拼写错误解析”的对话选项
+[118] ControlType.Text 394,1205,65,19 xin zheng
+[120] ControlType.Button 556,1206,36,37 下载应用
+[117] ControlType.Image 362,1212,24,25 个人资料图片
+[147] ControlType.Button 1391,1212,36,36 复制
+[108] ControlType.ListItem 346,1214,245,36 instoment拼写错误解析
+[109] ControlType.Hyperlink 352,1214,233,36 instoment拼写错误解析
+[148] ControlType.Text 816,1224,69,14 第316原预测
+[119] ControlType.Text 394,1225,20,16 Pro
+[2428] ControlType.Text 998,1229,234,15 ChatGPT 也可能会犯错。请核查重要信息。
+[114] ControlType.Button 335,1237,35,37 置顶 问候交流
+[115] ControlType.Button 359,1237,35,37 打开“问候交流”的对话选项
+[150] ControlType.Text 816,1244,27,14    ↓
+[112] ControlType.ListItem 346,1250,245,36 问候交流
+[113] ControlType.Hyperlink 352,1250,233,36 问候交流
+[152] ControlType.Text 816,1264,262,14 阶段1：是否值得校正？ correctability gate
+[154] ControlType.Text 816,1284,46,14    ↓ 否
+[156] ControlType.Text 816,1304,93,14 保持第316原预测
+[158] ControlType.Text 816,1324,46,14    ↓ 是
+[160] ControlType.Text 816,1344,223,14 阶段2：哪个候选最安全、预期收益最大？
+[162] ControlType.Text 816,1364,27,14    ↓
+[164] ControlType.Text 816,1384,201,14 原预测 + α × (候选曲线 - 原预测)
+[166] ControlType.Text 795,1471,640,32 1. 第318版如何拆成“是否校正”和“选哪个候选”
+[167] ControlType.Text 795,1514,173,20 第317版相当于直接做：
+[168] ControlType.Button 1391,1557,36,36 复制
+[169] ControlType.Text 816,1569,130,14 输入特征 → 20候选之一
+[170] ControlType.Text 795,1610,448,20 这会天然导致每个样本都被分到某个候选，普通样本也被修改。
+[171] ControlType.Text 795,1652,141,20 第318版改成两段：
+[172] ControlType.Text 795,1691,640,28 阶段A：可校正性判别器
+[173] ControlType.Text 795,1730,128,20 只回答一个问题：
+[174] ControlType.Button 1391,1773,36,36 复制
+[175] ControlType.Text 816,1785,201,14 这个样本是否值得离开第316原预测？
+[176] ControlType.Text 795,1826,48,20 输出：
+[177] ControlType.Button 1391,1869,36,36 复制
+[178] ControlType.Text 816,1881,165,14 p_corr = P(该样本值得校正)
+[180] ControlType.Text 816,1901,193,14 g_hat  = 预测可获得的误差下降量
+[181] ControlType.Text 795,1942,37,20 其中 
+[183] ControlType.Text 887,1942,102,20  是分类概率，
+[185] ControlType.Text 1036,1942,102,20  是预测收益。
+[182] ControlType.Text 836,1945,47,17 p_corr
+[184] ControlType.Text 993,1945,39,17 g_hat
+[186] ControlType.Text 795,1983,640,28 阶段B：候选收益/风险选择器
+[187] ControlType.Text 795,2022,172,20 只在阶段A通过时运行。
+[188] ControlType.Text 795,2064,133,20 对每个非原始候选 
+[190] ControlType.Text 998,2064,54,20  预测：
+[189] ControlType.Text 932,2067,63,17 k=1...19
+[191] ControlType.Button 1391,2109,36,36 复制
+[192] ControlType.Text 816,2121,307,14 d_hat[k]   = 预测候选k相对第316原预测的误差下降量
+[194] ControlType.Text 816,2141,215,14 bad_hat[k] = 候选k导致大退化的概率
+[195] ControlType.Text 795,2182,80,20 然后选择：
+[196] ControlType.Button 1391,2225,36,36 复制
+[197] ControlType.Text 816,2237,135,14 k* = argmax d_hat[k]
+[198] ControlType.Text 795,2278,96,20 但必须满足：
+[199] ControlType.Button 1391,2321,36,36 复制
+[200] ControlType.Text 816,2333,104,14 d_hat[k*] 足够大
+[202] ControlType.Text 816,2353,117,14 bad_hat[k*] 足够低
+[204] ControlType.Text 816,2373,271,14 d_hat[k*] 相比原预测和第二候选有足够 margin
+[205] ControlType.Text 795,2414,160,20 否则仍然保持原预测。
+[206] ControlType.Text 795,2456,80,20 关键点是：
+[207] ControlType.Text 875,2456,395,20 阶段B没有资格强制输出非原始候选。原预测是吸收态。
+[209] ControlType.Text 795,2536,640,32 2. 如何设计保守门控，让普通样本默认保持第316版
+[210] ControlType.Text 795,2579,237,20 第318版的默认规则应非常明确：
+[212] ControlType.Button 1304,2625,36,36 复制
+[213] ControlType.Button 1350,2625,78,36 运行代码
+[211] ControlType.Text 842,2634,48,18 Python
+[215] ControlType.Text 816,2670,68,14 final_pred
+[217] ControlType.Text 890,2670,7,14 =
+[219] ControlType.Text 903,2670,62,14 pred_v316
+[220] ControlType.Text 795,2711,240,20 只有满足所有条件时才允许修改。
+[221] ControlType.Text 795,2750,640,28 推荐门控规则
+[222] ControlType.Text 795,2789,85,20 对每个样本 
+[224] ControlType.Text 897,2789,17,20 ：
+[223] ControlType.Text 884,2792,9,17 i
+[226] ControlType.Button 1304,2837,36,36 复制
+[227] ControlType.Button 1350,2837,78,36 运行代码
+[225] ControlType.Text 842,2846,48,18 Python
+[229] ControlType.Text 816,2882,88,14 allow_correct
+[231] ControlType.Text 910,2882,8,14 =
+[232] ControlType.Text 917,2882,14,14  (
+[235] ControlType.Text 842,2902,42,14 p_corr
+[236] ControlType.Text 883,2902,8,14 [
+[237] ControlType.Text 890,2902,7,14 i
+[238] ControlType.Text 896,2902,15,14 ] 
+[239] ControlType.Text 910,2902,14,14 >=
+[241] ControlType.Text 930,2902,48,14 theta_p
+[242] ControlType.Text 977,2902,8,14 [
+[243] ControlType.Text 984,2902,35,14 group
+[244] ControlType.Text 1018,2902,7,14 ]
+[247] ControlType.Text 842,2922,22,14 and
+[249] ControlType.Text 869,2922,35,14 g_hat
+[250] ControlType.Text 903,2922,8,14 [
+[251] ControlType.Text 910,2922,8,14 i
+[252] ControlType.Text 917,2922,14,14 ] 
+[253] ControlType.Text 930,2922,15,14 >=
+[255] ControlType.Text 950,2922,48,14 theta_g
+[256] ControlType.Text 997,2922,8,14 [
+[257] ControlType.Text 1004,2922,35,14 group
+[258] ControlType.Text 1038,2922,8,14 ]
+[261] ControlType.Text 842,2942,22,14 and
+[263] ControlType.Text 869,2942,62,14 max_d_hat
+[264] ControlType.Text 930,2942,8,14 [
+[265] ControlType.Text 937,2942,8,14 i
+[266] ControlType.Text 944,2942,14,14 ] 
+[267] ControlType.Text 957,2942,15,14 >=
+[269] ControlType.Text 977,2942,48,14 theta_d
+[270] ControlType.Text 1024,2942,8,14 [
+[271] ControlType.Text 1031,2942,35,14 group
+[272] ControlType.Text 1065,2942,8,14 ]
+[275] ControlType.Text 842,2962,22,14 and
+[277] ControlType.Text 869,2962,49,14 bad_hat
+[278] ControlType.Text 917,2962,7,14 [
+[279] ControlType.Text 923,2962,8,14 i
+[280] ControlType.Text 930,2962,15,14 , 
+[281] ControlType.Text 944,2962,41,14 best_k
+[282] ControlType.Text 984,2962,14,14 ] 
+[283] ControlType.Text 997,2962,15,14 <=
+[285] ControlType.Text 1018,2962,61,14 theta_bad
+[286] ControlType.Text 1078,2962,8,14 [
+[287] ControlType.Text 1085,2962,35,14 group
+[288] ControlType.Text 1119,2962,8,14 ]
+[291] ControlType.Text 842,2982,22,14 and
+[293] ControlType.Text 869,2982,123,14 margin_to_original
+[294] ControlType.Text 991,2982,7,14 [
+[295] ControlType.Text 997,2982,8,14 i
+[296] ControlType.Text 1004,2982,15,14 ] 
+[297] ControlType.Text 1018,2982,14,14 >=
+[299] ControlType.Text 1038,2982,82,14 theta_margin
+[300] ControlType.Text 1119,2982,7,14 [
+[301] ControlType.Text 1125,2982,35,14 group
+[302] ControlType.Text 1159,2982,8,14 ]
+[304] ControlType.Text 816,3002,7,14 )
+[305] ControlType.Text 795,3043,37,20 其中 
+[307] ControlType.Text 879,3043,326,20  只能使用部署时可获得的粗场景标签，例如：
+[306] ControlType.Text 836,3046,40,17 group
+[308] ControlType.Button 1391,3088,36,36 复制
+[309] ControlType.Text 816,3100,54,14 ordinary
+[311] ControlType.Text 816,3120,102,14 strong_steering
+[312] ControlType.Text 795,3161,638,46 不能使用“困难前20”“困难前10”作为部署输入，因为它们通常依赖真实误差，只能用于验证统计。
+[313] ControlType.Text 795,3226,640,28 普通样本使用更严格阈值
+[314] ControlType.Text 795,3265,112,20 建议初始网格：
+[318] ControlType.DataItem 795,3292,172,33 参数
+[319] ControlType.DataItem 966,3292,230,33 普通样本 ordinary
+[320] ControlType.DataItem 1195,3292,240,33 强方向盘样本 strong
+[346] ControlType.Button 1407,3293,28,28 复制表格
+[322] ControlType.DataItem 795,3325,172,45 theta_p
+[323] ControlType.DataItem 966,3325,230,45 0.80 / 0.85 / 0.90
+[324] ControlType.DataItem 1195,3325,240,45 0.55 / 0.65 / 0.75
+[326] ControlType.DataItem 795,3370,172,45 theta_g
+[327] ControlType.DataItem 966,3370,230,45 0.05 / 0.07 / 0.09
+[328] ControlType.DataItem 1195,3370,240,45 0.03 / 0.05 / 0.07
+[330] ControlType.DataItem 795,3415,172,45 theta_d
+[331] ControlType.DataItem 966,3415,230,45 0.04 / 0.06 / 0.08
+[332] ControlType.DataItem 1195,3415,240,45 0.02 / 0.04 / 0.06
+[334] ControlType.DataItem 795,3460,172,45 theta_bad
+[335] ControlType.DataItem 966,3460,230,45 0.05 / 0.08 / 0.10
+[336] ControlType.DataItem 1195,3460,240,45 0.10 / 0.15
+[338] ControlType.DataItem 795,3505,172,45 theta_margin
+[339] ControlType.DataItem 966,3505,230,45 0.02 / 0.03
+[340] ControlType.DataItem 1195,3505,240,45 0.01 / 0.02
+[342] ControlType.DataItem 795,3550,172,58 alpha
+[343] ControlType.DataItem 966,3550,230,58 0.25 / 0.50
+[344] ControlType.DataItem 1195,3550,240,58 0.25 / 0.50 / 0.75
+[347] ControlType.Text 795,3619,128,20 同时增加硬约束：
+[348] ControlType.Button 1391,3662,36,36 复制
+[349] ControlType.Text 816,3674,285,14 普通样本原预测保持率 ≥ 80%，建议优先尝试 ≥ 85%
+[351] ControlType.Text 816,3694,224,14 普通样本校正率 ≤ 15%，最多不超过 20%
+[353] ControlType.Text 816,3714,125,14 全部样本校正率 ≤ 45%
+[354] ControlType.Text 795,3755,237,20 这一步直接针对第317版失败点：
+[355] ControlType.Button 1391,3798,36,36 复制
+[356] ControlType.Text 816,3810,217,14 第317普通样本原预测保持率只有 1.12%
+[358] ControlType.Text 816,3830,205,14 第317普通样本大退化比例达到 62.9%
+[359] ControlType.Text 795,3871,301,20 第318版必须把普通样本的默认行为改成：
+[360] ControlType.Button 1391,3914,36,36 复制
+[361] ControlType.Text 816,3926,105,14 没有强证据 → 不动
+[362] ControlType.Text 795,3967,64,20 而不是：
+[363] ControlType.Button 1391,4010,36,36 复制
+[364] ControlType.Text 816,4022,84,14 一定选一个候选
+[366] ControlType.Text 795,4109,640,32 3. 不碰测试集时，如何选择校正阈值
+[367] ControlType.Text 795,4152,80,20 推荐使用：
+[368] ControlType.Button 1391,4195,36,36 复制
+[369] ControlType.Text 816,4207,334,14 训练集 OOF 选阈值，验证集只做一次最终判定，测试集不碰。
+[370] ControlType.Text 795,4248,445,20 不要直接在验证集上反复调阈值，否则验证集会被“调参污染”。
+[371] ControlType.Text 795,4287,640,28 具体流程
+[372] ControlType.Text 795,4326,198,20 训练集有 650 个保留事件。
+[373] ControlType.Text 795,4368,359,20 对这 650 个训练事件做 event-wise 5-fold OOF：
+[374] ControlType.Button 1391,4411,36,36 复制
+[375] ControlType.Text 816,4423,177,14 fold1: 训练4折 → 预测剩余1折
+[377] ControlType.Text 816,4443,177,14 fold2: 训练4折 → 预测剩余1折
+[379] ControlType.Text 816,4463,21,14 ...
+[380] ControlType.Text 795,4504,253,20 得到训练集每个样本的 OOF 输出：
+[381] ControlType.Button 1391,4547,36,36 复制
+[382] ControlType.Text 816,4559,68,14 p_corr_oof
+[384] ControlType.Text 816,4579,61,14 g_hat_oof
+[386] ControlType.Text 816,4599,81,14 d_hat_oof[k]
+[388] ControlType.Text 816,4619,95,14 bad_hat_oof[k]
+[389] ControlType.Text 795,4660,269,20 然后只在这些 OOF 结果上搜索阈值。
+[390] ControlType.Text 795,4699,640,28 阈值选择目标
+[391] ControlType.Text 795,4738,96,20 先设硬约束：
+[392] ControlType.Button 1391,4781,36,36 复制
+[393] ControlType.Text 816,4793,236,14 全部样本平均误差相对第316版退化 ≤ 0.5%
+[395] ControlType.Text 816,4813,236,14 普通样本平均误差相对第316版退化 ≤ 1.0%
+[397] ControlType.Text 816,4833,149,14 全部样本大退化比例 ≤ 15%
+[399] ControlType.Text 816,4853,149,14 普通样本大退化比例 ≤ 10%
+[401] ControlType.Text 816,4873,207,14 普通样本原预测保持率 ≥ 80% 或 85%
+[403] ControlType.Text 816,4893,171,14 普通样本校正率 ≤ 15% 或 20%
+[404] ControlType.Text 795,4934,240,20 在满足硬约束的阈值中，最大化：
+[405] ControlType.Button 1391,4977,36,36 复制
+[406] ControlType.Text 816,4989,96,14 强方向盘样本改善
+[408] ControlType.Text 816,5009,74,14 困难前20改善
+[410] ControlType.Text 816,5029,74,14 困难前10改善
+[412] ControlType.Text 816,5049,96,14 严重低估比例下降
+[413] ControlType.Text 795,5090,176,20 可以定义一个简单评分：
+[415] ControlType.Button 1304,5136,36,36 复制
+[416] ControlType.Button 1350,5136,78,36 运行代码
+[414] ControlType.Text 842,5145,48,18 Python
+[418] ControlType.Text 816,5181,34,14 score
+[420] ControlType.Text 856,5181,8,14 =
+[421] ControlType.Text 863,5181,14,14  (
+[424] ControlType.Text 842,5201,22,14 1.0
+[426] ControlType.Text 869,5201,8,14 *
+[428] ControlType.Text 883,5201,95,14 improve_strong
+[431] ControlType.Text 842,5221,8,14 +
+[433] ControlType.Text 856,5221,21,14 1.0
+[435] ControlType.Text 883,5221,8,14 *
+[437] ControlType.Text 896,5221,96,14 improve_hard20
+[440] ControlType.Text 842,5241,8,14 +
+[442] ControlType.Text 856,5241,21,14 1.0
+[444] ControlType.Text 883,5241,8,14 *
+[446] ControlType.Text 896,5241,96,14 improve_hard10
+[449] ControlType.Text 842,5261,8,14 +
+[451] ControlType.Text 856,5261,21,14 0.5
+[453] ControlType.Text 883,5261,8,14 *
+[455] ControlType.Text 896,5261,170,14 severe_underestimate_drop
+[457] ControlType.Text 816,5281,7,14 )
+[458] ControlType.Text 795,5322,144,20 阈值选定后，冻结：
+[459] ControlType.Button 1391,5365,36,36 复制
+[460] ControlType.Text 816,5377,48,14 theta_p
+[462] ControlType.Text 816,5397,48,14 theta_g
+[464] ControlType.Text 816,5417,48,14 theta_d
+[466] ControlType.Text 816,5437,61,14 theta_bad
+[468] ControlType.Text 816,5457,81,14 theta_margin
+[470] ControlType.Text 816,5477,34,14 alpha
+[472] ControlType.Text 816,5497,128,14 correction_rate_cap
+[473] ControlType.Text 795,5538,632,46 然后重新在完整训练集上训练阶段A和阶段B模型，或者直接使用 5-fold ensemble，对验证集做一次评估。
+[474] ControlType.Text 795,5603,640,28 验证集规则
+[475] ControlType.Text 795,5642,214,20 验证集 211 个事件只允许做：
+[476] ControlType.Button 1391,5685,36,36 复制
+[477] ControlType.Text 816,5697,105,14 pass / fail 判定
+[478] ControlType.Text 795,5738,112,20 如果验证失败：
+[479] ControlType.Button 1391,5781,36,36 复制
+[480] ControlType.Text 816,5793,72,14 不报告测试集
+[482] ControlType.Text 816,5813,108,14 不根据测试集改阈值
+[484] ControlType.Text 816,5833,98,14 不碰84个隔离事件
+[486] ControlType.Text 795,5920,640,32 4. 是否应该把候选最优上限转成“可校正性判别器”
+[487] ControlType.Text 795,5963,48,20 应该。
+[488] ControlType.Text 795,6005,173,20 第317版结果已经说明：
+[489] ControlType.Button 1391,6048,36,36 复制
+[490] ControlType.Text 816,6060,165,14 候选最优上限明显优于第316版
+[492] ControlType.Text 816,6080,141,14 实际门控明显劣于第316版
+[493] ControlType.Text 795,6121,553,20 所以问题不是“有没有候选能救”，而是“能不能提前判断这个样本是否值得救”。
+[494] ControlType.Text 795,6160,640,28 训练标签定义
+[495] ControlType.Text 795,6199,32,20 设：
+[497] ControlType.Button 1304,6245,36,36 复制
+[498] ControlType.Button 1350,6245,78,36 运行代码
+[496] ControlType.Text 842,6254,48,18 Python
+[500] ControlType.Text 816,6290,14,14 e0
+[501] ControlType.Text 829,6290,8,14 [
+[502] ControlType.Text 836,6290,7,14 i
+[503] ControlType.Text 842,6290,15,14 ] 
+[504] ControlType.Text 856,6290,8,14 =
+[506] ControlType.Text 869,6290,94,14 第316原预测误差
+[508] ControlType.Text 816,6310,14,14 ek
+[509] ControlType.Text 829,6310,8,14 [
+[510] ControlType.Text 836,6310,7,14 i
+[511] ControlType.Text 842,6310,15,14 , 
+[512] ControlType.Text 856,6310,8,14 k
+[513] ControlType.Text 863,6310,14,14 ] 
+[514] ControlType.Text 876,6310,8,14 =
+[516] ControlType.Text 890,6310,98,14 第k个候选误差，k
+[517] ControlType.Text 987,6310,8,14 =
+[518] ControlType.Text 994,6310,8,14 1
+[519] ControlType.Text 1001,6310,21,14 ...
+[520] ControlType.Text 1021,6310,14,14 19
+[521] ControlType.Text 795,6351,556,20 注意，这里的误差只允许使用锚点后 0 到 2 秒真实曲线，不能使用 2 到 6 秒。
+[522] ControlType.Text 795,6393,192,20 定义非原始候选最优误差：
+[524] ControlType.Button 1304,6439,36,36 复制
+[525] ControlType.Button 1350,6439,78,36 运行代码
+[523] ControlType.Text 842,6448,48,18 Python
+[527] ControlType.Text 816,6484,88,14 best_non0_err
+[528] ControlType.Text 903,6484,8,14 [
+[529] ControlType.Text 910,6484,8,14 i
+[530] ControlType.Text 917,6484,14,14 ] 
+[531] ControlType.Text 930,6484,8,14 =
+[533] ControlType.Text 944,6484,21,14 min
+[534] ControlType.Text 964,6484,8,14 (
+[535] ControlType.Text 971,6484,14,14 ek
+[536] ControlType.Text 984,6484,8,14 [
+[537] ControlType.Text 991,6484,7,14 i
+[538] ControlType.Text 998,6484,14,14 , 
+[539] ControlType.Text 1011,6484,8,14 1
+[540] ControlType.Text 1018,6484,7,14 :
+[541] ControlType.Text 1024,6484,15,14 20
+[542] ControlType.Text 1038,6484,14,14 ])
+[544] ControlType.Text 816,6504,75,14 best_non0_k
+[545] ControlType.Text 890,6504,7,14 [
+[546] ControlType.Text 896,6504,8,14 i
+[547] ControlType.Text 903,6504,28,14 ]   
+[548] ControlType.Text 930,6504,8,14 =
+[550] ControlType.Text 944,6504,41,14 argmin
+[551] ControlType.Text 984,6504,8,14 (
+[552] ControlType.Text 991,6504,14,14 ek
+[553] ControlType.Text 1004,6504,8,14 [
+[554] ControlType.Text 1011,6504,8,14 i
+[555] ControlType.Text 1018,6504,14,14 , 
+[556] ControlType.Text 1031,6504,8,14 1
+[557] ControlType.Text 1038,6504,8,14 :
+[558] ControlType.Text 1045,6504,14,14 20
+[559] ControlType.Text 1058,6504,15,14 ])
+[561] ControlType.Text 816,6524,75,14 oracle_gain
+[562] ControlType.Text 890,6524,7,14 [
+[563] ControlType.Text 896,6524,8,14 i
+[564] ControlType.Text 903,6524,28,14 ]   
+[565] ControlType.Text 930,6524,8,14 =
+[567] ControlType.Text 944,6524,14,14 e0
+[568] ControlType.Text 957,6524,8,14 [
+[569] ControlType.Text 964,6524,8,14 i
+[570] ControlType.Text 971,6524,14,14 ] 
+[571] ControlType.Text 984,6524,8,14 -
+[573] ControlType.Text 998,6524,88,14 best_non0_err
+[574] ControlType.Text 1085,6524,8,14 [
+[575] ControlType.Text 1092,6524,8,14 i
+[576] ControlType.Text 1099,6524,7,14 ]
+[577] ControlType.Text 795,6565,128,20 定义可校正标签：
+[579] ControlType.Button 1304,6611,36,36 复制
+[580] ControlType.Button 1350,6611,78,36 运行代码
+[578] ControlType.Text 842,6620,48,18 Python
+[582] ControlType.Text 816,6656,41,14 y_corr
+[583] ControlType.Text 856,6656,8,14 [
+[584] ControlType.Text 863,6656,7,14 i
+[585] ControlType.Text 869,6656,15,14 ] 
+[586] ControlType.Text 883,6656,8,14 =
+[588] ControlType.Text 896,6656,8,14 1
+[590] ControlType.Text 910,6656,14,14 if
+[592] ControlType.Text 930,6656,75,14 oracle_gain
+[593] ControlType.Text 1004,6656,8,14 [
+[594] ControlType.Text 1011,6656,8,14 i
+[595] ControlType.Text 1018,6656,14,14 ] 
+[596] ControlType.Text 1031,6656,15,14 >=
+[598] ControlType.Text 1051,6656,22,14 max
+[599] ControlType.Text 1072,6656,7,14 (
+[600] ControlType.Text 1078,6656,62,14 delta_abs
+[601] ControlType.Text 1139,6656,15,14 , 
+[602] ControlType.Text 1153,6656,61,14 delta_rel
+[604] ControlType.Text 1220,6656,8,14 *
+[606] ControlType.Text 1233,6656,15,14 e0
+[607] ControlType.Text 1247,6656,8,14 [
+[608] ControlType.Text 1254,6656,7,14 i
+[609] ControlType.Text 1260,6656,22,14 ]) 
+[610] ControlType.Text 1281,6656,28,14 else
+[612] ControlType.Text 1314,6656,8,14 0
+[613] ControlType.Text 795,6697,80,20 建议初始：
+[614] ControlType.Button 1391,6740,36,36 复制
+[615] ControlType.Text 816,6752,108,14 delta_abs = 0.03
+[617] ControlType.Text 816,6772,108,14 delta_rel = 0.05
+[618] ControlType.Text 795,6813,176,20 对普通样本可以更严格：
+[619] ControlType.Button 1391,6856,36,36 复制
+[620] ControlType.Text 816,6868,169,14 ordinary_delta_abs = 0.05
+[622] ControlType.Text 816,6888,169,14 ordinary_delta_rel = 0.08
+[623] ControlType.Text 795,6929,240,20 也可以设置灰区，减少标签噪声：
+[625] ControlType.Button 1304,6975,36,36 复制
+[626] ControlType.Button 1350,6975,78,36 运行代码
+[624] ControlType.Text 842,6984,48,18 Python
+[628] ControlType.Text 816,7020,54,14 positive
+[629] ControlType.Text 869,7020,15,14 : 
+[630] ControlType.Text 883,7020,75,14 oracle_gain
+[632] ControlType.Text 964,7020,14,14 >=
+[634] ControlType.Text 984,7020,21,14 max
+[635] ControlType.Text 1004,7020,8,14 (
+[636] ControlType.Text 1011,7020,28,14 0.03
+[637] ControlType.Text 1038,7020,14,14 , 
+[638] ControlType.Text 1051,7020,28,14 0.05
+[640] ControlType.Text 1085,7020,8,14 *
+[642] ControlType.Text 1099,7020,14,14 e0
+[643] ControlType.Text 1112,7020,8,14 )
+[645] ControlType.Text 816,7040,54,14 negative
+[646] ControlType.Text 869,7040,15,14 : 
+[647] ControlType.Text 883,7040,75,14 oracle_gain
+[649] ControlType.Text 964,7040,14,14 <=
+[651] ControlType.Text 984,7040,21,14 max
+[652] ControlType.Text 1004,7040,8,14 (
+[653] ControlType.Text 1011,7040,28,14 0.01
+[654] ControlType.Text 1038,7040,14,14 , 
+[655] ControlType.Text 1051,7040,28,14 0.02
+[657] ControlType.Text 1085,7040,8,14 *
+[659] ControlType.Text 1099,7040,14,14 e0
+[660] ControlType.Text 1112,7040,8,14 )
+[662] ControlType.Text 816,7060,27,14 gray
+[664] ControlType.Text 849,7060,28,14 zone
+[665] ControlType.Text 876,7060,15,14 : 
+[666] ControlType.Text 890,7060,157,14 降低权重或不参与分类器训练
+[667] ControlType.Text 795,7106,640,28 阶段A输入
+[668] ControlType.Text 795,7145,208,20 只能用部署时可获得的信息：
+[669] ControlType.Button 1391,7188,36,36 复制
+[670] ControlType.Text 816,7200,153,14 1. 锚点前车辆信号统计特征
+[672] ControlType.Text 816,7220,137,14 2. 第316版预测曲线摘要
+[674] ControlType.Text 816,7240,117,14 3. 可部署粗场景标签
+[676] ControlType.Text 816,7260,221,14 4. 候选曲线相对第316预测的确定性摘要
+[677] ControlType.Text 795,7301,454,20 第4类不是未来信息，因为候选曲线由第316预测确定变换得到。
+[678] ControlType.Text 795,7343,176,20 可以快速加入这些摘要：
+[679] ControlType.Button 1391,7386,36,36 复制
+[680] ControlType.Text 816,7398,180,14 候选最大幅值与原预测最大幅值差
+[682] ControlType.Text 816,7418,180,14 候选峰值时刻与原预测峰值时刻差
+[684] ControlType.Text 816,7438,84,14 候选曲线面积差
+[686] ControlType.Text 816,7458,84,14 候选最大斜率差
+[688] ControlType.Text 816,7478,122,14 候选与原预测的L2距离
+[690] ControlType.Text 816,7498,272,14 候选类型：缩放 / 平移 / 缩放+平移 / 残差原型
+[691] ControlType.Text 795,7539,380,20 但阶段A最好先用样本级摘要，不一定展开成候选级。
+[692] ControlType.Text 795,7578,640,28 阶段A损失
+[693] ControlType.Text 795,7617,523,20 如果当前代码库用 sklearn，推荐先用随机森林或梯度提升，不需要大改。
+[694] ControlType.Text 795,7659,96,20 逻辑目标为：
+[695] ControlType.Button 1391,7702,36,36 复制
+[696] ControlType.Text 816,7714,108,14 分类：预测 y_corr
+[698] ControlType.Text 816,7734,141,14 回归：预测 oracle_gain
+[699] ControlType.Text 795,7775,80,20 等价损失：
+[700] ControlType.Button 1391,7818,36,36 复制
+[701] ControlType.Text 816,7830,229,14 L_A = weighted_BCE(y_corr, p_corr)
+[703] ControlType.Text 816,7850,236,14     + λ * Huber(oracle_gain, g_hat)
+[704] ControlType.Text 795,7891,224,20 实际代码中可以拆成两个模型：
+[706] ControlType.Button 1304,7937,36,36 复制
+[707] ControlType.Button 1350,7937,78,36 运行代码
+[705] ControlType.Text 842,7946,48,18 Python
+[709] ControlType.Text 816,7982,54,14 corr_clf
+[711] ControlType.Text 876,7982,8,14 =
+[713] ControlType.Text 890,7982,149,14 RandomForestClassifier
+[714] ControlType.Text 1038,7982,35,14 (...)
+[716] ControlType.Text 816,8002,54,14 gain_reg
+[718] ControlType.Text 876,8002,8,14 =
+[720] ControlType.Text 890,8002,142,14 RandomForestRegressor
+[721] ControlType.Text 1031,8002,35,14 (...)
+[722] ControlType.Text 795,8043,192,20 普通样本负例要加大权重：
+[724] ControlType.Button 1304,8089,36,36 复制
+[725] ControlType.Button 1350,8089,78,36 运行代码
+[723] ControlType.Text 842,8098,48,18 Python
+[727] ControlType.Text 816,8134,88,14 sample_weight
+[729] ControlType.Text 910,8134,8,14 =
+[731] ControlType.Text 923,8134,22,14 1.0
+[734] ControlType.Text 816,8174,14,14 if
+[736] ControlType.Text 836,8174,34,14 group
+[738] ControlType.Text 876,8174,15,14 ==
+[740] ControlType.Text 896,8174,69,14 "ordinary"
+[742] ControlType.Text 971,8174,21,14 and
+[744] ControlType.Text 997,8174,42,14 y_corr
+[746] ControlType.Text 1045,8174,14,14 ==
+[748] ControlType.Text 1065,8174,8,14 0
+[749] ControlType.Text 1072,8174,7,14 :
+[752] ControlType.Text 842,8194,89,14 sample_weight
+[754] ControlType.Text 937,8194,8,14 =
+[756] ControlType.Text 950,8194,21,14 3.0
+[759] ControlType.Text 816,8234,14,14 if
+[761] ControlType.Text 836,8234,34,14 group
+[763] ControlType.Text 876,8234,15,14 ==
+[765] ControlType.Text 896,8234,116,14 "strong_steering"
+[767] ControlType.Text 1018,8234,21,14 and
+[769] ControlType.Text 1045,8234,41,14 y_corr
+[771] ControlType.Text 1092,8234,14,14 ==
+[773] ControlType.Text 1112,8234,8,14 1
+[774] ControlType.Text 1119,8234,8,14 :
+[777] ControlType.Text 842,8254,89,14 sample_weight
+[779] ControlType.Text 937,8254,8,14 =
+[781] ControlType.Text 950,8254,21,14 2.0
+[784] ControlType.Text 816,8294,14,14 if
+[786] ControlType.Text 836,8294,189,14 base_is_severe_underestimate
+[787] ControlType.Text 1024,8294,8,14 :
+[790] ControlType.Text 842,8314,89,14 sample_weight
+[792] ControlType.Text 937,8314,14,14 *=
+[794] ControlType.Text 957,8314,21,14 1.5
+[795] ControlType.Text 795,8355,96,20 目的很明确：
+[796] ControlType.Text 891,8355,400,20 宁可少改普通样本，也不要把普通样本误判为需要校正。
+[798] ControlType.Text 795,8435,640,32 5. 如何避免每个样本被强行分到某个候选
+[799] ControlType.Text 795,8478,205,20 第318版必须加入三个机制。
+[800] ControlType.Text 795,8517,640,28 机制1：显式 no-action 类
+[801] ControlType.Text 795,8556,304,20 原预测不再只是候选之一，而是默认动作：
+[802] ControlType.Button 1391,8599,36,36 复制
+[803] ControlType.Text 816,8611,149,14 action = keep_original
+[804] ControlType.Text 795,8652,352,20 非原始候选只有在通过门控时才能覆盖默认动作。
+[805] ControlType.Text 795,8691,640,28 机制2：候选收益必须大于原预测
+[806] ControlType.Text 795,8730,569,20 第317版的问题是候选分类器会在 20 个候选中选一个，即使所有候选都不可靠。
+[807] ControlType.Text 795,8772,141,20 第318版应该改成：
+[809] ControlType.Button 1304,8818,36,36 复制
+[810] ControlType.Button 1350,8818,78,36 运行代码
+[808] ControlType.Text 842,8827,48,18 Python
+[812] ControlType.Text 816,8863,14,14 if
+[814] ControlType.Text 836,8863,21,14 max
+[815] ControlType.Text 856,8863,8,14 (
+[816] ControlType.Text 863,8863,34,14 d_hat
+[817] ControlType.Text 896,8863,15,14 ) 
+[818] ControlType.Text 910,8863,14,14 <=
+[820] ControlType.Text 930,8863,8,14 0
+[821] ControlType.Text 937,8863,8,14 :
+[824] ControlType.Text 842,8883,28,14 keep
+[826] ControlType.Text 876,8883,55,14 original
+[827] ControlType.Text 795,8924,64,20 更保守：
+[829] ControlType.Button 1304,8970,36,36 复制
+[830] ControlType.Button 1350,8970,78,36 运行代码
+[828] ControlType.Text 842,8979,48,18 Python
+[832] ControlType.Text 816,9015,14,14 if
+[834] ControlType.Text 836,9015,21,14 max
+[835] ControlType.Text 856,9015,8,14 (
+[836] ControlType.Text 863,9015,34,14 d_hat
+[837] ControlType.Text 896,9015,15,14 ) 
+[838] ControlType.Text 910,9015,8,14 <
+[840] ControlType.Text 923,9015,49,14 theta_d
+[841] ControlType.Text 971,9015,7,14 :
+[844] ControlType.Text 842,9035,28,14 keep
+[846] ControlType.Text 876,9035,55,14 original
+[847] ControlType.Text 795,9076,48,20 其中：
+[849] ControlType.Button 1304,9122,36,36 复制
+[850] ControlType.Button 1350,9122,78,36 运行代码
+[848] ControlType.Text 842,9131,48,18 Python
+[852] ControlType.Text 816,9167,34,14 d_hat
+[853] ControlType.Text 849,9167,8,14 [
+[854] ControlType.Text 856,9167,8,14 k
+[855] ControlType.Text 863,9167,14,14 ] 
+[856] ControlType.Text 876,9167,8,14 =
+[858] ControlType.Text 890,9167,187,14 预测候选k相对原预测的误差下降量
+[859] ControlType.Text 795,9213,640,28 机制3：大退化风险过滤
+[860] ControlType.Text 795,9252,224,20 对每个候选训练一个风险判断：
+[862] ControlType.Button 1304,9298,36,36 复制
+[863] ControlType.Button 1350,9298,78,36 运行代码
+[861] ControlType.Text 842,9307,48,18 Python
+[865] ControlType.Text 816,9343,61,14 bad_label
+[866] ControlType.Text 876,9343,8,14 [
+[867] ControlType.Text 883,9343,8,14 i
+[868] ControlType.Text 890,9343,14,14 , 
+[869] ControlType.Text 903,9343,8,14 k
+[870] ControlType.Text 910,9343,14,14 ] 
+[871] ControlType.Text 923,9343,8,14 =
+[873] ControlType.Text 937,9343,8,14 1
+[875] ControlType.Text 950,9343,15,14 if
+[877] ControlType.Text 971,9343,75,14 candidate_k
+[879] ControlType.Text 1051,9343,42,14 causes
+[881] ControlType.Text 1099,9343,88,14 large_degrade
+[883] ControlType.Text 1193,9343,55,14 relative
+[885] ControlType.Text 1254,9343,14,14 to
+[887] ControlType.Text 1274,9343,28,14 v316
+[889] ControlType.Text 1307,9343,28,14 else
+[891] ControlType.Text 1341,9343,8,14 0
+[892] ControlType.Text 795,9384,397,20 使用第317版已有的大退化定义，不要重新造一个指标。
+[893] ControlType.Text 795,9426,112,20 候选必须满足：
+[895] ControlType.Button 1304,9472,36,36 复制
+[896] ControlType.Button 1350,9472,78,36 运行代码
+[894] ControlType.Text 842,9481,48,18 Python
+[898] ControlType.Text 816,9517,48,14 bad_hat
+[899] ControlType.Text 863,9517,7,14 [
+[900] ControlType.Text 869,9517,8,14 k
+[901] ControlType.Text 876,9517,15,14 ] 
+[902] ControlType.Text 890,9517,14,14 <=
+[904] ControlType.Text 910,9517,61,14 theta_bad
+[905] ControlType.Text 795,9558,128,20 否则不允许选择。
+[907] ControlType.Text 795,9638,640,64 6. 第318版应该保留候选单选、候选加权，还是保守残差融合
+[908] ControlType.Text 795,9713,112,20 固定方案建议：
+[909] ControlType.Button 1391,9756,36,36 复制
+[910] ControlType.Text 816,9768,108,14 候选单选决定方向；
+[912] ControlType.Text 816,9788,180,14 原预测加小幅残差决定最终输出；
+[914] ControlType.Text 816,9808,249,14 候选加权只作为消融，不作为第318固定方案。
+[915] ControlType.Text 795,9849,32,20 即：
+[917] ControlType.Button 1304,9895,36,36 复制
+[918] ControlType.Button 1350,9895,78,36 运行代码
+[916] ControlType.Text 842,9904,48,18 Python
+[920] ControlType.Text 816,9940,122,14 selected_candidate
+[922] ControlType.Text 943,9940,8,14 =
+[924] ControlType.Text 957,9940,62,14 candidate
+[925] ControlType.Text 1018,9940,7,14 [
+[926] ControlType.Text 1024,9940,8,14 k
+[927] ControlType.Text 1031,9940,8,14 ]
+[929] ControlType.Text 816,9960,68,14 final_pred
+[931] ControlType.Text 890,9960,7,14 =
+[933] ControlType.Text 903,9960,62,14 pred_v316
+[935] ControlType.Text 970,9960,8,14 +
+[937] ControlType.Text 984,9960,35,14 alpha
+[939] ControlType.Text 1024,9960,8,14 *
+[940] ControlType.Text 1031,9960,15,14  (
+[941] ControlType.Text 1045,9960,122,14 selected_candidate
+[943] ControlType.Text 1173,9960,7,14 -
+[945] ControlType.Text 1186,9960,62,14 pred_v316
+[946] ControlType.Text 1247,9960,8,14 )
+[947] ControlType.Text 795,10001,48,20 其中：
+[948] ControlType.Button 1391,10044,36,36 复制
+[949] ControlType.Text 816,10056,176,14 alpha = 0.25 / 0.50 / 0.75
+[950] ControlType.Text 795,10097,237,20 由训练集 OOF 选，不用测试集。
+[951] ControlType.Text 795,10136,640,28 为什么不建议直接候选加权作为主方案
+[952] ControlType.Text 795,10175,221,20 第317版已经暴露出一个问题：
+[953] ControlType.Button 1391,10218,36,36 复制
+[954] ControlType.Text 816,10230,252,14 门控不准时，加权输出会让大量样本偏离原预测
+[955] ControlType.Text 795,10271,429,20 候选加权如果没有强约束，本质上还是“每个样本都被修改”。
+[956] ControlType.Text 795,10313,480,20 如果一定保留加权，只能作为对照实验，并且要加原预测权重下限：
+[957] ControlType.Button 1391,10356,36,36 复制
+[958] ControlType.Text 816,10368,175,14 普通样本：w_original ≥ 0.80
+[960] ControlType.Text 816,10388,199,14 强方向盘样本：w_original ≥ 0.50
+[961] ControlType.Text 795,10429,221,20 但第318版主方案不建议用它。
+[962] ControlType.Text 795,10468,640,28 推荐主方案
+[963] ControlType.Button 1391,10516,36,36 复制
+[964] ControlType.Text 816,10528,437,14 v318_fixed = 两段式门控 + 候选收益选择 + 大退化风险过滤 + 小幅残差融合
+[965] ControlType.Text 795,10569,48,20 其中：
+[966] ControlType.Button 1391,10612,36,36 复制
+[967] ControlType.Text 816,10624,220,14 不是 pure candidate single-select
+[969] ControlType.Text 816,10644,198,14 也不是 free candidate weighted
+[971] ControlType.Text 816,10664,280,14 而是 selected-candidate residual shrinkage
+[973] ControlType.Text 795,10751,640,32 7. 最小可执行第318版实验方案
+[974] ControlType.Text 795,10794,365,20 下面是可以直接在第317版脚本上增量修改的方案。
+[976] ControlType.Text 795,10874,640,28 7.1 保留第317版候选库
+[977] ControlType.Text 795,10913,80,20 不扩候选。
+[978] ControlType.Text 795,10955,157,20 继续使用 20 条候选：
+[979] ControlType.Button 1391,10998,36,36 复制
+[980] ControlType.Text 816,11010,81,14 0. 原预测不改
+[982] ControlType.Text 816,11030,82,14 1-5. 幅值缩放
+[984] ControlType.Text 816,11050,89,14 6-11. 时间平移
+[986] ControlType.Text 816,11070,126,14 12-15. 幅值+时间组合
+[988] ControlType.Text 816,11090,120,14 16-19. 残差原型候选
+[989] ControlType.Text 795,11131,237,20 第318版重点不在候选库，而在：
+[990] ControlType.Button 1391,11174,36,36 复制
+[991] ControlType.Text 816,11186,103,14 是否允许离开候选0
+[993] ControlType.Text 795,11273,640,28 7.2 新增训练标签
+[994] ControlType.Text 795,11312,128,20 在训练集上计算：
+[996] ControlType.Button 1304,11358,36,36 复制
+[997] ControlType.Button 1350,11358,78,36 运行代码
+[995] ControlType.Text 842,11367,48,18 Python
+[999] ControlType.Text 816,11403,21,14 err
+[1000] ControlType.Text 836,11403,28,14 [:, 
+[1001] ControlType.Text 863,11403,7,14 0
+[1002] ControlType.Text 869,11403,49,14 ]      
+[1003] ControlType.Text 917,11403,106,14 # 第316原预测误差
+[1005] ControlType.Text 816,11423,21,14 err
+[1006] ControlType.Text 836,11423,28,14 [:, 
+[1007] ControlType.Text 863,11423,7,14 1
+[1008] ControlType.Text 869,11423,8,14 :
+[1009] ControlType.Text 876,11423,15,14 20
+[1010] ControlType.Text 890,11423,28,14 ]   
+[1011] ControlType.Text 917,11423,124,14 # 19个非原始候选误差
+[1012] ControlType.Text 795,11464,48,20 生成：
+[1014] ControlType.Button 1304,11510,36,36 复制
+[1015] ControlType.Button 1350,11510,78,36 运行代码
+[1013] ControlType.Text 842,11519,48,18 Python
+[1017] ControlType.Text 816,11555,75,14 best_non0_k
+[1019] ControlType.Text 816,11575,88,14 best_non0_err
+[1021] ControlType.Text 816,11595,75,14 oracle_gain
+[1023] ControlType.Text 816,11615,41,14 y_corr
+[1025] ControlType.Text 816,11635,95,14 candidate_gain
+[1026] ControlType.Text 910,11635,8,14 [
+[1027] ControlType.Text 917,11635,7,14 k
+[1028] ControlType.Text 923,11635,8,14 ]
+[1030] ControlType.Text 816,11655,88,14 candidate_bad
+[1031] ControlType.Text 903,11655,8,14 [
+[1032] ControlType.Text 910,11655,8,14 k
+[1033] ControlType.Text 917,11655,7,14 ]
+[1034] ControlType.Text 795,11696,64,20 伪代码：
+[1036] ControlType.Button 1304,11742,36,36 复制
+[1037] ControlType.Button 1350,11742,78,36 运行代码
+[1035] ControlType.Text 842,11751,48,18 Python
+[1039] ControlType.Text 816,11787,54,14 base_err
+[1041] ControlType.Text 876,11787,8,14 =
+[1043] ControlType.Text 890,11787,21,14 err
+[1044] ControlType.Text 910,11787,28,14 [:, 
+[1045] ControlType.Text 937,11787,8,14 0
+[1046] ControlType.Text 944,11787,7,14 ]
+[1048] ControlType.Text 816,11807,54,14 cand_err
+[1050] ControlType.Text 876,11807,8,14 =
+[1052] ControlType.Text 890,11807,21,14 err
+[1053] ControlType.Text 910,11807,28,14 [:, 
+[1054] ControlType.Text 937,11807,8,14 1
+[1055] ControlType.Text 944,11807,14,14 :]
+[1058] ControlType.Text 816,11847,88,14 best_non0_idx
+[1060] ControlType.Text 910,11847,8,14 =
+[1062] ControlType.Text 923,11847,15,14 np
+[1063] ControlType.Text 937,11847,8,14 .
+[1064] ControlType.Text 944,11847,48,14 argmin(
+[1065] ControlType.Text 991,11847,55,14 cand_err
+[1066] ControlType.Text 1045,11847,14,14 , 
+[1067] ControlType.Text 1058,11847,28,14 axis
+[1068] ControlType.Text 1085,11847,8,14 =
+[1069] ControlType.Text 1092,11847,8,14 1
+[1070] ControlType.Text 1099,11847,14,14 ) 
+[1071] ControlType.Text 1112,11847,8,14 +
+[1073] ControlType.Text 1126,11847,7,14 1
+[1075] ControlType.Text 816,11867,88,14 best_non0_err
+[1077] ControlType.Text 910,11867,8,14 =
+[1079] ControlType.Text 923,11867,55,14 cand_err
+[1080] ControlType.Text 977,11867,8,14 [
+[1081] ControlType.Text 984,11867,14,14 np
+[1082] ControlType.Text 997,11867,8,14 .
+[1083] ControlType.Text 1004,11867,48,14 arange(
+[1084] ControlType.Text 1051,11867,22,14 len
+[1085] ControlType.Text 1072,11867,7,14 (
+[1086] ControlType.Text 1078,11867,22,14 err
+[1087] ControlType.Text 1099,11867,27,14 )), 
+[1088] ControlType.Text 1125,11867,89,14 best_non0_idx
+[1090] ControlType.Text 1220,11867,8,14 -
+[1092] ControlType.Text 1233,11867,8,14 1
+[1093] ControlType.Text 1240,11867,8,14 ]
+[1096] ControlType.Text 816,11907,75,14 oracle_gain
+[1098] ControlType.Text 896,11907,8,14 =
+[1100] ControlType.Text 910,11907,55,14 base_err
+[1102] ControlType.Text 970,11907,8,14 -
+[1104] ControlType.Text 984,11907,89,14 best_non0_err
+[1107] ControlType.Text 816,11947,61,14 delta_abs
+[1109] ControlType.Text 883,11947,8,14 =
+[1111] ControlType.Text 896,11947,28,14 0.03
+[1113] ControlType.Text 816,11967,61,14 delta_rel
+[1115] ControlType.Text 883,11967,8,14 =
+[1117] ControlType.Text 896,11967,28,14 0.05
+[1120] ControlType.Text 816,12007,41,14 y_corr
+[1122] ControlType.Text 863,12007,7,14 =
+[1123] ControlType.Text 869,12007,15,14  (
+[1126] ControlType.Text 842,12027,76,14 oracle_gain
+[1128] ControlType.Text 923,12027,15,14 >=
+[1130] ControlType.Text 944,12027,14,14 np
+[1131] ControlType.Text 957,12027,8,14 .
+[1132] ControlType.Text 964,12027,55,14 maximum(
+[1133] ControlType.Text 1018,12027,61,14 delta_abs
+[1134] ControlType.Text 1078,12027,15,14 , 
+[1135] ControlType.Text 1092,12027,61,14 delta_rel
+[1137] ControlType.Text 1159,12027,8,14 *
+[1139] ControlType.Text 1173,12027,55,14 base_err
+[1140] ControlType.Text 1227,12027,7,14 )
+[1142] ControlType.Text 816,12047,7,14 )
+[1143] ControlType.Text 822,12047,8,14 .
+[1144] ControlType.Text 829,12047,48,14 astype(
+[1145] ControlType.Text 876,12047,21,14 int
+[1146] ControlType.Text 896,12047,8,14 )
+[1149] ControlType.Text 816,12087,95,14 candidate_gain
+[1151] ControlType.Text 917,12087,7,14 =
+[1153] ControlType.Text 930,12087,55,14 base_err
+[1154] ControlType.Text 984,12087,28,14 [:, 
+[1155] ControlType.Text 1011,12087,28,14 None
+[1156] ControlType.Text 1038,12087,14,14 ] 
+[1157] ControlType.Text 1051,12087,8,14 -
+[1159] ControlType.Text 1065,12087,21,14 err
+[1160] ControlType.Text 1085,12087,28,14 [:, 
+[1161] ControlType.Text 1112,12087,8,14 1
+[1162] ControlType.Text 1119,12087,14,14 :]
+[1165] ControlType.Text 816,12127,88,14 candidate_bad
+[1167] ControlType.Text 910,12127,8,14 =
+[1169] ControlType.Text 923,12127,15,14 np
+[1170] ControlType.Text 937,12127,8,14 .
+[1171] ControlType.Text 944,12127,75,14 zeros_like(
+[1172] ControlType.Text 1018,12127,95,14 candidate_gain
+[1173] ControlType.Text 1112,12127,14,14 , 
+[1174] ControlType.Text 1125,12127,35,14 dtype
+[1175] ControlType.Text 1159,12127,8,14 =
+[1176] ControlType.Text 1166,12127,21,14 int
+[1177] ControlType.Text 1186,12127,8,14 )
+[1179] ControlType.Text 816,12147,21,14 for
+[1181] ControlType.Text 842,12147,8,14 k
+[1183] ControlType.Text 856,12147,14,14 in
+[1185] ControlType.Text 876,12147,35,14 range
+[1186] ControlType.Text 910,12147,8,14 (
+[1187] ControlType.Text 917,12147,7,14 1
+[1188] ControlType.Text 923,12147,15,14 , 
+[1189] ControlType.Text 937,12147,14,14 20
+[1190] ControlType.Text 950,12147,15,14 ):
+[1193] ControlType.Text 842,12167,89,14 candidate_bad
+[1194] ControlType.Text 930,12167,28,14 [:, 
+[1195] ControlType.Text 957,12167,8,14 k
+[1197] ControlType.Text 970,12167,8,14 -
+[1199] ControlType.Text 984,12167,8,14 1
+[1200] ControlType.Text 991,12167,14,14 ] 
+[1201] ControlType.Text 1004,12167,8,14 =
+[1203] ControlType.Text 1018,12167,108,14 is_large_degrade
+[1204] ControlType.Text 1125,12167,8,14 (
+[1207] ControlType.Text 869,12187,89,14 candidate_err
+[1208] ControlType.Text 957,12187,8,14 =
+[1209] ControlType.Text 964,12187,21,14 err
+[1210] ControlType.Text 984,12187,28,14 [:, 
+[1211] ControlType.Text 1011,12187,8,14 k
+[1212] ControlType.Text 1018,12187,14,14 ],
+[1215] ControlType.Text 869,12207,55,14 base_err
+[1216] ControlType.Text 923,12207,8,14 =
+[1217] ControlType.Text 930,12207,55,14 base_err
+[1219] ControlType.Text 816,12227,34,14     )
+[1220] ControlType.Text 795,12268,37,20 其中 
+[1222] ControlType.Text 964,12268,242,20  直接复用第317版的大退化定义。
+[1221] ControlType.Text 836,12271,124,17 is_large_degrade
+[1224] ControlType.Text 795,12350,640,28 7.3 训练阶段A：可校正性模型
+[1225] ControlType.Text 795,12389,48,20 输入：
+[1227] ControlType.Button 1304,12435,36,36 复制
+[1228] ControlType.Button 1350,12435,78,36 运行代码
+[1226] ControlType.Text 842,12444,48,18 Python
+[1230] ControlType.Text 816,12480,54,14 X_sample
+[1231] ControlType.Text 795,12521,173,20 包含第317版门控输入：
+[1232] ControlType.Button 1391,12564,36,36 复制
+[1233] ControlType.Text 816,12576,132,14 锚点前车辆信号统计特征
+[1235] ControlType.Text 816,12596,105,14 第316预测曲线摘要
+[1237] ControlType.Text 816,12616,96,14 可部署粗场景标签
+[1238] ControlType.Text 795,12657,112,20 训练两个模型：
+[1240] ControlType.Button 1304,12703,36,36 复制
+[1241] ControlType.Button 1350,12703,78,36 运行代码
+[1239] ControlType.Text 842,12712,48,18 Python
+[1243] ControlType.Text 816,12748,54,14 corr_clf
+[1244] ControlType.Text 869,12748,8,14 .
+[1245] ControlType.Text 876,12748,28,14 fit(
+[1246] ControlType.Text 903,12748,55,14 X_sample
+[1247] ControlType.Text 957,12748,14,14 , 
+[1248] ControlType.Text 970,12748,42,14 y_corr
+[1249] ControlType.Text 1011,12748,14,14 , 
+[1250] ControlType.Text 1024,12748,89,14 sample_weight
+[1251] ControlType.Text 1112,12748,8,14 =
+[1252] ControlType.Text 1119,12748,7,14 w
+[1253] ControlType.Text 1125,12748,8,14 )
+[1255] ControlType.Text 816,12768,54,14 gain_reg
+[1256] ControlType.Text 869,12768,8,14 .
+[1257] ControlType.Text 876,12768,28,14 fit(
+[1258] ControlType.Text 903,12768,55,14 X_sample
+[1259] ControlType.Text 957,12768,14,14 , 
+[1260] ControlType.Text 970,12768,76,14 oracle_gain
+[1261] ControlType.Text 1045,12768,14,14 , 
+[1262] ControlType.Text 1058,12768,89,14 sample_weight
+[1263] ControlType.Text 1146,12768,7,14 =
+[1264] ControlType.Text 1152,12768,8,14 w
+[1265] ControlType.Text 1159,12768,8,14 )
+[1266] ControlType.Text 795,12809,128,20 建议参数先保守：
+[1268] ControlType.Button 1304,12855,36,36 复制
+[1269] ControlType.Button 1350,12855,78,36 运行代码
+[1267] ControlType.Text 842,12864,48,18 Python
+[1271] ControlType.Text 816,12900,149,14 RandomForestClassifier
+[1272] ControlType.Text 964,12900,7,14 (
+[1275] ControlType.Text 842,12920,82,14 n_estimators
+[1276] ControlType.Text 923,12920,8,14 =
+[1277] ControlType.Text 930,12920,21,14 500
+[1278] ControlType.Text 950,12920,8,14 ,
+[1281] ControlType.Text 842,12940,62,14 max_depth
+[1282] ControlType.Text 903,12940,8,14 =
+[1283] ControlType.Text 910,12940,8,14 4
+[1284] ControlType.Text 917,12940,7,14 ,
+[1287] ControlType.Text 842,12960,109,14 min_samples_leaf
+[1288] ControlType.Text 950,12960,8,14 =
+[1289] ControlType.Text 957,12960,14,14 20
+[1290] ControlType.Text 970,12960,8,14 ,
+[1293] ControlType.Text 842,12980,82,14 class_weight
+[1294] ControlType.Text 923,12980,8,14 =
+[1295] ControlType.Text 930,12980,28,14 None
+[1296] ControlType.Text 957,12980,8,14 ,
+[1299] ControlType.Text 842,13000,82,14 random_state
+[1300] ControlType.Text 923,13000,8,14 =
+[1301] ControlType.Text 930,13000,28,14 seed
+[1302] ControlType.Text 957,13000,8,14 ,
+[1304] ControlType.Text 816,13020,7,14 )
+[1307] ControlType.Text 816,13060,142,14 RandomForestRegressor
+[1308] ControlType.Text 957,13060,8,14 (
+[1311] ControlType.Text 842,13080,82,14 n_estimators
+[1312] ControlType.Text 923,13080,8,14 =
+[1313] ControlType.Text 930,13080,21,14 500
+[1314] ControlType.Text 950,13080,8,14 ,
+[1317] ControlType.Text 842,13100,62,14 max_depth
+[1318] ControlType.Text 903,13100,8,14 =
+[1319] ControlType.Text 910,13100,8,14 4
+[1320] ControlType.Text 917,13100,7,14 ,
+[1323] ControlType.Text 842,13120,109,14 min_samples_leaf
+[1324] ControlType.Text 950,13120,8,14 =
+[1325] ControlType.Text 957,13120,14,14 20
+[1326] ControlType.Text 970,13120,8,14 ,
+[1329] ControlType.Text 842,13140,82,14 random_state
+[1330] ControlType.Text 923,13140,8,14 =
+[1331] ControlType.Text 930,13140,28,14 seed
+[1332] ControlType.Text 957,13140,8,14 ,
+[1334] ControlType.Text 816,13160,7,14 )
+[1335] ControlType.Text 795,13201,112,20 再加概率校准：
+[1337] ControlType.Button 1304,13247,36,36 复制
+[1338] ControlType.Button 1350,13247,78,36 运行代码
+[1336] ControlType.Text 842,13256,48,18 Python
+[1340] ControlType.Text 816,13292,149,14 CalibratedClassifierCV
+[1341] ControlType.Text 964,13292,7,14 (
+[1344] ControlType.Text 842,13312,55,14 corr_clf
+[1345] ControlType.Text 896,13312,8,14 ,
+[1348] ControlType.Text 842,13332,42,14 method
+[1349] ControlType.Text 883,13332,8,14 =
+[1350] ControlType.Text 890,13332,61,14 "sigmoid"
+[1351] ControlType.Text 950,13332,8,14 ,
+[1354] ControlType.Text 842,13352,15,14 cv
+[1355] ControlType.Text 856,13352,8,14 =
+[1356] ControlType.Text 863,13352,7,14 5
+[1358] ControlType.Text 816,13372,7,14 )
+[1359] ControlType.Text 795,13413,339,20 小样本下不建议先用 isotonic，sigmoid 更稳。
+[1361] ControlType.Text 795,13493,640,28 7.4 训练阶段B：候选收益/风险模型
+[1362] ControlType.Text 795,13532,176,20 把训练数据展开成长表：
+[1363] ControlType.Button 1391,13575,36,36 复制
+[1364] ControlType.Text 816,13587,188,14 一行 = 一个样本 i + 一个候选 k
+[1365] ControlType.Text 795,13628,48,20 输入：
+[1367] ControlType.Button 1304,13674,36,36 复制
+[1368] ControlType.Button 1350,13674,78,36 运行代码
+[1366] ControlType.Text 842,13683,48,18 Python
+[1370] ControlType.Text 816,13719,41,14 X_long
+[1372] ControlType.Text 863,13719,7,14 =
+[1373] ControlType.Text 869,13719,15,14  [
+[1376] ControlType.Text 842,13739,69,14 X_sample_i
+[1377] ControlType.Text 910,13739,8,14 ,
+[1380] ControlType.Text 842,13759,109,14 candidate_type_k
+[1381] ControlType.Text 950,13759,8,14 ,
+[1384] ControlType.Text 842,13779,116,14 candidate_scale_k
+[1385] ControlType.Text 957,13779,8,14 ,
+[1388] ControlType.Text 842,13799,116,14 candidate_shift_k
+[1389] ControlType.Text 957,13799,8,14 ,
+[1392] ControlType.Text 842,13819,136,14 candidate_proto_id_k
+[1393] ControlType.Text 977,13819,8,14 ,
+[1396] ControlType.Text 842,13839,183,14 candidate_summary_delta_i_k
+[1398] ControlType.Text 816,13859,7,14 ]
+[1399] ControlType.Text 795,13900,48,20 目标：
+[1401] ControlType.Button 1304,13946,36,36 复制
+[1402] ControlType.Button 1350,13946,78,36 运行代码
+[1400] ControlType.Text 842,13955,48,18 Python
+[1404] ControlType.Text 816,13991,102,14 target_gain_i_k
+[1406] ControlType.Text 923,13991,8,14 =
+[1408] ControlType.Text 937,13991,68,14 base_err_i
+[1410] ControlType.Text 1011,13991,8,14 -
+[1412] ControlType.Text 1024,13991,49,14 err_i_k
+[1414] ControlType.Text 816,14011,95,14 target_bad_i_k
+[1416] ControlType.Text 923,14011,8,14 =
+[1418] ControlType.Text 937,14011,8,14 1
+[1420] ControlType.Text 950,14011,15,14 if
+[1422] ControlType.Text 971,14011,61,14 candidate
+[1424] ControlType.Text 1038,14011,8,14 k
+[1426] ControlType.Text 1051,14011,42,14 causes
+[1428] ControlType.Text 1099,14011,34,14 large
+[1430] ControlType.Text 1139,14011,75,14 degradation
+[1432] ControlType.Text 1220,14011,28,14 else
+[1434] ControlType.Text 1254,14011,7,14 0
+[1435] ControlType.Text 795,14052,48,20 训练：
+[1437] ControlType.Button 1304,14098,36,36 复制
+[1438] ControlType.Button 1350,14098,78,36 运行代码
+[1436] ControlType.Text 842,14107,48,18 Python
+[1440] ControlType.Text 816,14143,88,14 cand_gain_reg
+[1441] ControlType.Text 903,14143,8,14 .
+[1442] ControlType.Text 910,14143,28,14 fit(
+[1443] ControlType.Text 937,14143,41,14 X_long
+[1444] ControlType.Text 977,14143,15,14 , 
+[1445] ControlType.Text 991,14143,75,14 target_gain
+[1446] ControlType.Text 1065,14143,8,14 )
+[1448] ControlType.Text 816,14163,81,14 cand_bad_clf
+[1449] ControlType.Text 896,14163,8,14 .
+[1450] ControlType.Text 903,14163,28,14 fit(
+[1451] ControlType.Text 930,14163,41,14 X_long
+[1452] ControlType.Text 970,14163,15,14 , 
+[1453] ControlType.Text 984,14163,68,14 target_bad
+[1454] ControlType.Text 1051,14163,8,14 )
+[1455] ControlType.Text 795,14204,48,20 建议：
+[1457] ControlType.Button 1304,14250,36,36 复制
+[1458] ControlType.Button 1350,14250,78,36 运行代码
+[1456] ControlType.Text 842,14259,48,18 Python
+[1460] ControlType.Text 816,14295,88,14 cand_gain_reg
+[1462] ControlType.Text 910,14295,8,14 =
+[1464] ControlType.Text 923,14295,143,14 RandomForestRegressor
+[1465] ControlType.Text 1065,14295,7,14 (
+[1468] ControlType.Text 842,14315,82,14 n_estimators
+[1469] ControlType.Text 923,14315,8,14 =
+[1470] ControlType.Text 930,14315,21,14 500
+[1471] ControlType.Text 950,14315,8,14 ,
+[1474] ControlType.Text 842,14335,62,14 max_depth
+[1475] ControlType.Text 903,14335,8,14 =
+[1476] ControlType.Text 910,14335,8,14 5
+[1477] ControlType.Text 917,14335,7,14 ,
+[1480] ControlType.Text 842,14355,109,14 min_samples_leaf
+[1481] ControlType.Text 950,14355,8,14 =
+[1482] ControlType.Text 957,14355,14,14 30
+[1483] ControlType.Text 970,14355,8,14 ,
+[1486] ControlType.Text 842,14375,82,14 random_state
+[1487] ControlType.Text 923,14375,8,14 =
+[1488] ControlType.Text 930,14375,28,14 seed
+[1489] ControlType.Text 957,14375,8,14 ,
+[1491] ControlType.Text 816,14395,7,14 )
+[1494] ControlType.Text 816,14435,81,14 cand_bad_clf
+[1496] ControlType.Text 903,14435,8,14 =
+[1498] ControlType.Text 917,14435,149,14 RandomForestClassifier
+[1499] ControlType.Text 1065,14435,8,14 (
+[1502] ControlType.Text 842,14455,82,14 n_estimators
+[1503] ControlType.Text 923,14455,8,14 =
+[1504] ControlType.Text 930,14455,21,14 500
+[1505] ControlType.Text 950,14455,8,14 ,
+[1508] ControlType.Text 842,14475,62,14 max_depth
+[1509] ControlType.Text 903,14475,8,14 =
+[1510] ControlType.Text 910,14475,8,14 5
+[1511] ControlType.Text 917,14475,7,14 ,
+[1514] ControlType.Text 842,14495,109,14 min_samples_leaf
+[1515] ControlType.Text 950,14495,8,14 =
+[1516] ControlType.Text 957,14495,14,14 30
+[1517] ControlType.Text 970,14495,8,14 ,
+[1520] ControlType.Text 842,14515,82,14 class_weight
+[1521] ControlType.Text 923,14515,8,14 =
+[1522] ControlType.Text 930,14515,136,14 "balanced_subsample"
+[1523] ControlType.Text 1065,14515,7,14 ,
+[1526] ControlType.Text 842,14535,82,14 random_state
+[1527] ControlType.Text 923,14535,8,14 =
+[1528] ControlType.Text 930,14535,28,14 seed
+[1529] ControlType.Text 957,14535,8,14 ,
+[1531] ControlType.Text 816,14555,7,14 )
+[1532] ControlType.Text 795,14596,320,20 大退化风险模型里，大退化样本权重要更高：
+[1534] ControlType.Button 1304,14642,36,36 复制
+[1535] ControlType.Button 1350,14642,78,36 运行代码
+[1533] ControlType.Text 842,14651,48,18 Python
+[1537] ControlType.Text 816,14687,14,14 if
+[1539] ControlType.Text 836,14687,68,14 target_bad
+[1541] ControlType.Text 910,14687,14,14 ==
+[1543] ControlType.Text 930,14687,8,14 1
+[1544] ControlType.Text 937,14687,8,14 :
+[1547] ControlType.Text 842,14707,89,14 sample_weight
+[1549] ControlType.Text 937,14707,14,14 *=
+[1551] ControlType.Text 957,14707,21,14 5.0
+[1552] ControlType.Text 795,14748,473,20 因为第318版的首要任务是避免第317版那种普通样本大面积退化。
+[1554] ControlType.Text 795,14828,640,28 7.5 第318版候选使用规则
+[1555] ControlType.Text 795,14867,96,20 伪代码如下：
+[1557] ControlType.Button 1304,14913,36,36 复制
+[1558] ControlType.Button 1350,14913,78,36 运行代码
+[1556] ControlType.Text 842,14922,48,18 Python
+[1560] ControlType.Text 816,14958,21,14 def
+[1562] ControlType.Text 842,14958,116,14 apply_v318_policy
+[1563] ControlType.Text 957,14958,8,14 (
+[2165] ControlType.DataItem 795,14969,107,49 分组
+[2166] ControlType.DataItem 901,14969,108,49 数量
+[2167] ControlType.DataItem 1008,14969,107,49 第316误差
+[2168] ControlType.DataItem 1114,14969,116,49 候选最优误差
+[2169] ControlType.DataItem 1229,14969,113,49 oracle_gain
+[2170] ControlType.DataItem 1341,14969,108,49 y_corr比例
+[2171] ControlType.DataItem 1448,14969,142,49 原预测最优比例
+[1566] ControlType.Text 842,14978,62,14 pred_v316
+[1567] ControlType.Text 903,14978,8,14 ,
+[1570] ControlType.Text 842,14998,69,14 candidates
+[1571] ControlType.Text 910,14998,8,14 ,
+[1574] ControlType.Text 842,15018,55,14 X_sample
+[1575] ControlType.Text 896,15018,8,14 ,
+[1578] ControlType.Text 842,15038,76,14 scene_group
+[1579] ControlType.Text 917,15038,7,14 ,
+[1582] ControlType.Text 842,15058,42,14 p_corr
+[1583] ControlType.Text 883,15058,8,14 ,
+[1586] ControlType.Text 842,15078,35,14 g_hat
+[1587] ControlType.Text 876,15078,8,14 ,
+[1590] ControlType.Text 842,15098,35,14 d_hat
+[1591] ControlType.Text 876,15098,8,14 ,
+[1594] ControlType.Text 842,15118,49,14 bad_hat
+[1595] ControlType.Text 890,15118,7,14 ,
+[1598] ControlType.Text 842,15138,35,14 theta
+[1599] ControlType.Text 876,15138,8,14 ,
+[1601] ControlType.Text 816,15158,14,14 ):
+[1604] ControlType.Text 842,15178,69,14 final_pred
+[1606] ControlType.Text 917,15178,7,14 =
+[1608] ControlType.Text 930,15178,62,14 pred_v316
+[1609] ControlType.Text 991,15178,7,14 .
+[1610] ControlType.Text 997,15178,42,14 copy()
+[1613] ControlType.Text 842,15198,69,14 selected_k
+[1615] ControlType.Text 917,15198,7,14 =
+[1617] ControlType.Text 930,15198,15,14 np
+[1618] ControlType.Text 944,15198,7,14 .
+[1619] ControlType.Text 950,15198,42,14 zeros(
+[1620] ControlType.Text 991,15198,21,14 len
+[1621] ControlType.Text 1011,15198,8,14 (
+[1622] ControlType.Text 1018,15198,61,14 pred_v316
+[1623] ControlType.Text 1078,15198,22,14 ), 
+[1624] ControlType.Text 1099,15198,34,14 dtype
+[1625] ControlType.Text 1132,15198,8,14 =
+[1626] ControlType.Text 1139,15198,21,14 int
+[1627] ControlType.Text 1159,15198,8,14 )
+[1630] ControlType.Text 842,15218,69,14 alpha_used
+[1632] ControlType.Text 917,15218,7,14 =
+[1634] ControlType.Text 930,15218,15,14 np
+[1635] ControlType.Text 944,15218,7,14 .
+[1636] ControlType.Text 950,15218,42,14 zeros(
+[1637] ControlType.Text 991,15218,21,14 len
+[1638] ControlType.Text 1011,15218,8,14 (
+[1639] ControlType.Text 1018,15218,61,14 pred_v316
+[1640] ControlType.Text 1078,15218,15,14 ))
+[1644] ControlType.Text 842,15258,22,14 for
+[1646] ControlType.Text 869,15258,8,14 i
+[1648] ControlType.Text 883,15258,14,14 in
+[1650] ControlType.Text 903,15258,35,14 range
+[1651] ControlType.Text 937,15258,8,14 (
+[1652] ControlType.Text 944,15258,21,14 len
+[1653] ControlType.Text 964,15258,8,14 (
+[1654] ControlType.Text 971,15258,61,14 pred_v316
+[1655] ControlType.Text 1031,15258,21,14 )):
+[1658] ControlType.Text 869,15278,35,14 group
+[1660] ControlType.Text 910,15278,8,14 =
+[1662] ControlType.Text 923,15278,75,14 scene_group
+[1663] ControlType.Text 997,15278,8,14 [
+[1664] ControlType.Text 1004,15278,8,14 i
+[1665] ControlType.Text 1011,15278,21,14 ]  
+[1666] ControlType.Text 1031,15278,196,14 # ordinary or strong_steering
+[1670] ControlType.Text 869,15318,99,14 # 默认保持原预测
+[1673] ControlType.Text 869,15338,49,14 k_final
+[1675] ControlType.Text 923,15338,8,14 =
+[1677] ControlType.Text 937,15338,8,14 0
+[1681] ControlType.Text 869,15378,130,14 # 阶段A：是否允许校正
+[1684] ControlType.Text 869,15398,15,14 if
+[1686] ControlType.Text 890,15398,41,14 p_corr
+[1687] ControlType.Text 930,15398,8,14 [
+[1688] ControlType.Text 937,15398,8,14 i
+[1689] ControlType.Text 944,15398,14,14 ] 
+[1690] ControlType.Text 957,15398,8,14 <
+[1692] ControlType.Text 971,15398,34,14 theta
+[1693] ControlType.Text 1004,15398,8,14 [
+[1694] ControlType.Text 1011,15398,28,14 f"p_
+[1695] ControlType.Text 1038,15398,8,14 {
+[1696] ControlType.Text 1045,15398,34,14 group
+[1697] ControlType.Text 1078,15398,8,14 }
+[1698] ControlType.Text 1085,15398,8,14 "
+[1699] ControlType.Text 1092,15398,14,14 ]:
+[1702] ControlType.Text 896,15418,55,14 continue
+[1706] ControlType.Text 869,15458,15,14 if
+[1708] ControlType.Text 890,15458,34,14 g_hat
+[1709] ControlType.Text 923,15458,8,14 [
+[1710] ControlType.Text 930,15458,8,14 i
+[1711] ControlType.Text 937,15458,14,14 ] 
+[1712] ControlType.Text 950,15458,8,14 <
+[1714] ControlType.Text 964,15458,34,14 theta
+[1715] ControlType.Text 997,15458,8,14 [
+[1716] ControlType.Text 1004,15458,28,14 f"g_
+[1717] ControlType.Text 1031,15458,8,14 {
+[1718] ControlType.Text 1038,15458,35,14 group
+[1719] ControlType.Text 1072,15458,7,14 }
+[1720] ControlType.Text 1078,15458,8,14 "
+[1721] ControlType.Text 1085,15458,15,14 ]:
+[1724] ControlType.Text 896,15478,55,14 continue
+[1728] ControlType.Text 869,15518,106,14 # 阶段B：候选选择
+[1731] ControlType.Text 869,15538,35,14 valid
+[1733] ControlType.Text 910,15538,8,14 =
+[1734] ControlType.Text 917,15538,21,14  []
+[1738] ControlType.Text 869,15578,22,14 for
+[1740] ControlType.Text 896,15578,8,14 k
+[1742] ControlType.Text 910,15578,14,14 in
+[1744] ControlType.Text 930,15578,35,14 range
+[1745] ControlType.Text 964,15578,8,14 (
+[1746] ControlType.Text 971,15578,7,14 1
+[1747] ControlType.Text 977,15578,15,14 , 
+[1748] ControlType.Text 991,15578,14,14 20
+[1749] ControlType.Text 1004,15578,15,14 ):
+[1752] ControlType.Text 896,15598,15,14 if
+[1754] ControlType.Text 917,15598,34,14 d_hat
+[1755] ControlType.Text 950,15598,8,14 [
+[1756] ControlType.Text 957,15598,8,14 i
+[1757] ControlType.Text 964,15598,14,14 , 
+[1758] ControlType.Text 977,15598,8,14 k
+[1759] ControlType.Text 984,15598,14,14 ] 
+[1760] ControlType.Text 997,15598,8,14 <
+[1762] ControlType.Text 1011,15598,35,14 theta
+[1763] ControlType.Text 1045,15598,7,14 [
+[1764] ControlType.Text 1051,15598,28,14 f"d_
+[1765] ControlType.Text 1078,15598,8,14 {
+[1766] ControlType.Text 1085,15598,35,14 group
+[1767] ControlType.Text 1119,15598,8,14 }
+[1768] ControlType.Text 1126,15598,7,14 "
+[1769] ControlType.Text 1132,15598,15,14 ]:
+[1772] ControlType.Text 923,15618,55,14 continue
+[1776] ControlType.Text 896,15658,15,14 if
+[1778] ControlType.Text 917,15658,48,14 bad_hat
+[1779] ControlType.Text 964,15658,7,14 [
+[1780] ControlType.Text 970,15658,8,14 i
+[1781] ControlType.Text 977,15658,15,14 , 
+[1782] ControlType.Text 991,15658,7,14 k
+[1783] ControlType.Text 997,15658,15,14 ] 
+[1784] ControlType.Text 1011,15658,8,14 >
+[1786] ControlType.Text 1024,15658,35,14 theta
+[1787] ControlType.Text 1058,15658,8,14 [
+[1788] ControlType.Text 1065,15658,41,14 f"bad_
+[1789] ControlType.Text 1105,15658,8,14 {
+[1790] ControlType.Text 1112,15658,35,14 group
+[1791] ControlType.Text 1146,15658,7,14 }
+[1792] ControlType.Text 1152,15658,8,14 "
+[1793] ControlType.Text 1159,15658,15,14 ]:
+[1796] ControlType.Text 923,15678,55,14 continue
+[1800] ControlType.Text 896,15718,35,14 valid
+[1801] ControlType.Text 930,15718,8,14 .
+[1802] ControlType.Text 937,15718,48,14 append(
+[1803] ControlType.Text 984,15718,8,14 k
+[1804] ControlType.Text 991,15718,7,14 )
+[1808] ControlType.Text 869,15758,15,14 if
+[1810] ControlType.Text 890,15758,21,14 len
+[1811] ControlType.Text 910,15758,8,14 (
+[1812] ControlType.Text 917,15758,34,14 valid
+[1813] ControlType.Text 950,15758,15,14 ) 
+[1814] ControlType.Text 964,15758,14,14 ==
+[1816] ControlType.Text 984,15758,8,14 0
+[1817] ControlType.Text 991,15758,7,14 :
+[1820] ControlType.Text 896,15778,55,14 continue
+[1824] ControlType.Text 869,15818,42,14 best_k
+[1826] ControlType.Text 917,15818,7,14 =
+[1828] ControlType.Text 930,15818,21,14 max
+[1829] ControlType.Text 950,15818,8,14 (
+[1830] ControlType.Text 957,15818,35,14 valid
+[1831] ControlType.Text 991,15818,14,14 , 
+[1832] ControlType.Text 1004,15818,21,14 key
+[1833] ControlType.Text 1024,15818,49,14 =lambda
+[1835] ControlType.Text 1078,15818,8,14 k
+[1836] ControlType.Text 1085,15818,15,14 : 
+[1837] ControlType.Text 1099,15818,34,14 d_hat
+[1838] ControlType.Text 1132,15818,8,14 [
+[1839] ControlType.Text 1139,15818,8,14 i
+[1840] ControlType.Text 1146,15818,14,14 , 
+[1841] ControlType.Text 1159,15818,8,14 k
+[1842] ControlType.Text 1166,15818,14,14 ])
+[1846] ControlType.Text 869,15858,158,14 # 相比原预测必须有 margin
+[1849] ControlType.Text 869,15878,15,14 if
+[1851] ControlType.Text 890,15878,34,14 d_hat
+[1852] ControlType.Text 923,15878,8,14 [
+[1853] ControlType.Text 930,15878,8,14 i
+[1854] ControlType.Text 937,15878,14,14 , 
+[1855] ControlType.Text 950,15878,42,14 best_k
+[1856] ControlType.Text 991,15878,14,14 ] 
+[1857] ControlType.Text 1004,15878,8,14 <
+[1859] ControlType.Text 1018,15878,34,14 theta
+[1860] ControlType.Text 1051,15878,8,14 [
+[1861] ControlType.Text 1058,15878,62,14 f"margin_
+[1862] ControlType.Text 1119,15878,8,14 {
+[1863] ControlType.Text 1126,15878,34,14 group
+[1864] ControlType.Text 1159,15878,8,14 }
+[1865] ControlType.Text 1166,15878,8,14 "
+[1866] ControlType.Text 1173,15878,14,14 ]:
+[1869] ControlType.Text 896,15898,55,14 continue
+[1873] ControlType.Text 869,15938,159,14 # 通过所有门控，才允许修改
+[1876] ControlType.Text 869,15958,35,14 alpha
+[1878] ControlType.Text 910,15958,8,14 =
+[1880] ControlType.Text 923,15958,35,14 theta
+[1881] ControlType.Text 957,15958,8,14 [
+[1882] ControlType.Text 964,15958,55,14 f"alpha_
+[1883] ControlType.Text 1018,15958,7,14 {
+[1884] ControlType.Text 1024,15958,35,14 group
+[1885] ControlType.Text 1058,15958,8,14 }
+[1886] ControlType.Text 1065,15958,8,14 "
+[1887] ControlType.Text 1072,15958,7,14 ]
+[1890] ControlType.Text 869,15978,69,14 final_pred
+[1891] ControlType.Text 937,15978,7,14 [
+[1892] ControlType.Text 944,15978,7,14 i
+[1893] ControlType.Text 950,15978,15,14 ] 
+[1894] ControlType.Text 964,15978,7,14 =
+[1896] ControlType.Text 977,15978,62,14 pred_v316
+[1897] ControlType.Text 1038,15978,8,14 [
+[1898] ControlType.Text 1045,15978,7,14 i
+[1899] ControlType.Text 1051,15978,15,14 ] 
+[1900] ControlType.Text 1065,15978,8,14 +
+[1902] ControlType.Text 1078,15978,35,14 alpha
+[1904] ControlType.Text 1119,15978,8,14 *
+[1905] ControlType.Text 1126,15978,14,14  (
+[1908] ControlType.Text 896,15998,69,14 candidates
+[1909] ControlType.Text 964,15998,7,14 [
+[1910] ControlType.Text 970,15998,8,14 i
+[1911] ControlType.Text 977,15998,15,14 , 
+[1912] ControlType.Text 991,15998,41,14 best_k
+[1913] ControlType.Text 1031,15998,15,14 ] 
+[1914] ControlType.Text 1045,15998,7,14 -
+[1916] ControlType.Text 1058,15998,62,14 pred_v316
+[1917] ControlType.Text 1119,15998,7,14 [
+[1918] ControlType.Text 1125,15998,8,14 i
+[1919] ControlType.Text 1132,15998,8,14 ]
+[1921] ControlType.Text 816,16018,61,14         )
+[1925] ControlType.Text 869,16058,69,14 selected_k
+[1926] ControlType.Text 937,16058,7,14 [
+[1927] ControlType.Text 944,16058,7,14 i
+[1928] ControlType.Text 950,16058,15,14 ] 
+[1929] ControlType.Text 964,16058,7,14 =
+[1931] ControlType.Text 977,16058,42,14 best_k
+[1934] ControlType.Text 869,16078,69,14 alpha_used
+[1935] ControlType.Text 937,16078,7,14 [
+[1936] ControlType.Text 944,16078,7,14 i
+[1937] ControlType.Text 950,16078,15,14 ] 
+[1938] ControlType.Text 964,16078,7,14 =
+[1940] ControlType.Text 977,16078,35,14 alpha
+[1944] ControlType.Text 842,16118,42,14 return
+[1946] ControlType.Text 890,16118,68,14 final_pred
+[1947] ControlType.Text 957,16118,14,14 , 
+[1948] ControlType.Text 970,16118,69,14 selected_k
+[1949] ControlType.Text 1038,16118,14,14 , 
+[1950] ControlType.Text 1051,16118,69,14 alpha_used
+[1951] ControlType.Text 795,16159,48,20 注意：
+[1952] ControlType.Button 1391,16202,36,36 复制
+[1953] ControlType.Text 816,16214,230,14 selected_k = 0 表示保持第316原预测。
+[1954] ControlType.Text 795,16255,129,20 第318版必须统计 
+[1956] ControlType.Text 1025,16255,198,20  的比例，尤其是普通样本。
+[1955] ControlType.Text 928,16258,94,17 selected_k=0
+[1958] ControlType.Text 795,16337,640,32 8. 阈值网格建议
+[1959] ControlType.Text 795,16380,224,20 建议先用小网格，不要搞太大。
+[1961] ControlType.Button 1304,16426,36,36 复制
+[1962] ControlType.Button 1350,16426,78,36 运行代码
+[1960] ControlType.Text 842,16435,48,18 Python
+[1964] ControlType.Text 816,16471,27,14 grid
+[1966] ControlType.Text 849,16471,8,14 =
+[1967] ControlType.Text 856,16471,14,14  {
+[1970] ControlType.Text 842,16491,82,14 "p_ordinary"
+[1971] ControlType.Text 923,16491,55,14 :      [
+[1972] ControlType.Text 977,16491,28,14 0.80
+[1973] ControlType.Text 1004,16491,15,14 , 
+[1974] ControlType.Text 1018,16491,28,14 0.85
+[1975] ControlType.Text 1045,16491,14,14 , 
+[1976] ControlType.Text 1058,16491,28,14 0.90
+[1977] ControlType.Text 1085,16491,14,14 ],
+[1980] ControlType.Text 842,16511,69,14 "p_strong"
+[1981] ControlType.Text 910,16511,68,14 :        [
+[1982] ControlType.Text 977,16511,28,14 0.55
+[1983] ControlType.Text 1004,16511,15,14 , 
+[1984] ControlType.Text 1018,16511,28,14 0.65
+[1985] ControlType.Text 1045,16511,14,14 , 
+[1986] ControlType.Text 1058,16511,28,14 0.75
+[1987] ControlType.Text 1085,16511,14,14 ],
+[1991] ControlType.Text 842,16551,82,14 "g_ordinary"
+[1992] ControlType.Text 923,16551,55,14 :      [
+[1993] ControlType.Text 977,16551,28,14 0.05
+[1994] ControlType.Text 1004,16551,15,14 , 
+[1995] ControlType.Text 1018,16551,28,14 0.07
+[1996] ControlType.Text 1045,16551,14,14 , 
+[1997] ControlType.Text 1058,16551,28,14 0.09
+[1998] ControlType.Text 1085,16551,14,14 ],
+[2001] ControlType.Text 842,16571,69,14 "g_strong"
+[2002] ControlType.Text 910,16571,68,14 :        [
+[2003] ControlType.Text 977,16571,28,14 0.03
+[2004] ControlType.Text 1004,16571,15,14 , 
+[2005] ControlType.Text 1018,16571,28,14 0.05
+[2006] ControlType.Text 1045,16571,14,14 , 
+[2007] ControlType.Text 1058,16571,28,14 0.07
+[2008] ControlType.Text 1085,16571,14,14 ],
+[2012] ControlType.Text 842,16611,82,14 "d_ordinary"
+[2013] ControlType.Text 923,16611,55,14 :      [
+[2014] ControlType.Text 977,16611,28,14 0.04
+[2015] ControlType.Text 1004,16611,15,14 , 
+[2016] ControlType.Text 1018,16611,28,14 0.06
+[2017] ControlType.Text 1045,16611,14,14 , 
+[2018] ControlType.Text 1058,16611,28,14 0.08
+[2019] ControlType.Text 1085,16611,14,14 ],
+[2022] ControlType.Text 842,16631,69,14 "d_strong"
+[2023] ControlType.Text 910,16631,68,14 :        [
+[2024] ControlType.Text 977,16631,28,14 0.02
+[2025] ControlType.Text 1004,16631,15,14 , 
+[2026] ControlType.Text 1018,16631,28,14 0.04
+[2027] ControlType.Text 1045,16631,14,14 , 
+[2028] ControlType.Text 1058,16631,28,14 0.06
+[2029] ControlType.Text 1085,16631,14,14 ],
+[2033] ControlType.Text 842,16671,96,14 "bad_ordinary"
+[2034] ControlType.Text 937,16671,41,14 :    [
+[2035] ControlType.Text 977,16671,28,14 0.05
+[2036] ControlType.Text 1004,16671,15,14 , 
+[2037] ControlType.Text 1018,16671,28,14 0.08
+[2038] ControlType.Text 1045,16671,14,14 , 
+[2039] ControlType.Text 1058,16671,28,14 0.10
+[2040] ControlType.Text 1085,16671,14,14 ],
+[2043] ControlType.Text 842,16691,82,14 "bad_strong"
+[2044] ControlType.Text 923,16691,55,14 :      [
+[2045] ControlType.Text 977,16691,28,14 0.10
+[2046] ControlType.Text 1004,16691,15,14 , 
+[2047] ControlType.Text 1018,16691,28,14 0.15
+[2048] ControlType.Text 1045,16691,14,14 ],
+[2052] ControlType.Text 842,16731,116,14 "margin_ordinary"
+[2053] ControlType.Text 957,16731,21,14 : [
+[2054] ControlType.Text 977,16731,28,14 0.02
+[2055] ControlType.Text 1004,16731,15,14 , 
+[2056] ControlType.Text 1018,16731,28,14 0.03
+[2057] ControlType.Text 1045,16731,14,14 ],
+[2060] ControlType.Text 842,16751,102,14 "margin_strong"
+[2061] ControlType.Text 943,16751,35,14 :   [
+[2062] ControlType.Text 977,16751,28,14 0.01
+[2063] ControlType.Text 1004,16751,15,14 , 
+[2064] ControlType.Text 1018,16751,28,14 0.02
+[2065] ControlType.Text 1045,16751,14,14 ],
+[2069] ControlType.Text 842,16791,109,14 "alpha_ordinary"
+[2070] ControlType.Text 950,16791,28,14 :  [
+[2071] ControlType.Text 977,16791,28,14 0.25
+[2072] ControlType.Text 1004,16791,15,14 , 
+[2073] ControlType.Text 1018,16791,28,14 0.50
+[2074] ControlType.Text 1045,16791,14,14 ],
+[2077] ControlType.Text 842,16811,96,14 "alpha_strong"
+[2078] ControlType.Text 937,16811,41,14 :    [
+[2079] ControlType.Text 977,16811,28,14 0.25
+[2080] ControlType.Text 1004,16811,15,14 , 
+[2081] ControlType.Text 1018,16811,28,14 0.50
+[2082] ControlType.Text 1045,16811,14,14 , 
+[2083] ControlType.Text 1058,16811,28,14 0.75
+[2084] ControlType.Text 1085,16811,14,14 ],
+[2086] ControlType.Text 816,16831,7,14 }
+[2087] ControlType.Text 795,16872,176,20 再加两个校正率硬约束：
+[2089] ControlType.Button 1304,16918,36,36 复制
+[2090] ControlType.Button 1350,16918,78,36 运行代码
+[2088] ControlType.Text 842,16927,48,18 Python
+[2092] ControlType.Text 816,16963,162,14 ordinary_correction_rate
+[2094] ControlType.Text 984,16963,14,14 <=
+[2096] ControlType.Text 1004,16963,28,14 0.15
+[2098] ControlType.Text 816,16983,128,14 all_correction_rate
+[2100] ControlType.Text 950,16983,15,14 <=
+[2102] ControlType.Text 970,16983,28,14 0.45
+[2103] ControlType.Text 795,17024,304,20 如果没有任何阈值组合通过，可以放宽为：
+[2104] ControlType.Button 1391,17067,36,36 复制
+[2105] ControlType.Text 816,17079,209,14 ordinary_correction_rate ≤ 0.20
+[2107] ControlType.Text 816,17099,169,14 ordinary_keep_rate ≥ 0.80
+[2108] ControlType.Text 795,17140,272,20 但不建议再放宽普通样本大退化比例。
+[2110] ControlType.Text 795,17220,640,32 9. 第318版验证门槛
+[2111] ControlType.Text 795,17263,441,20 第318版继续沿用第317版验证门槛，不通过就不报告测试集。
+[2115] ControlType.DataItem 795,17290,310,33 门槛
+[2116] ControlType.DataItem 1104,17290,331,33 要求
+[2142] ControlType.Button 1407,17291,28,28 复制表格
+[2118] ControlType.DataItem 795,17323,310,45 全部样本平均误差
+[2119] ControlType.DataItem 1104,17323,331,45 相对第316版退化 ≤ 0.5%
+[2121] ControlType.DataItem 795,17368,310,45 普通样本平均误差
+[2122] ControlType.DataItem 1104,17368,331,45 相对第316版退化 ≤ 1.0%
+[2124] ControlType.DataItem 795,17413,310,45 强方向盘样本
+[2125] ControlType.DataItem 1104,17413,331,45 改善 ≥ 3.0%
+[2127] ControlType.DataItem 795,17458,310,45 困难前20
+[2128] ControlType.DataItem 1104,17458,331,45 改善 ≥ 5.0%
+[2130] ControlType.DataItem 795,17503,310,45 困难前10
+[2131] ControlType.DataItem 1104,17503,331,45 改善 ≥ 8.0%
+[2133] ControlType.DataItem 795,17548,310,45 严重低估比例
+[2134] ControlType.DataItem 1104,17548,331,45 下降 ≥ 20%
+[2136] ControlType.DataItem 795,17593,310,45 全部样本大退化比例
+[2137] ControlType.DataItem 1104,17593,331,45 ≤ 15%
+[2139] ControlType.DataItem 795,17638,310,58 普通样本大退化比例
+[2140] ControlType.DataItem 1104,17638,331,58 ≤ 10%
+[2143] ControlType.Text 795,17707,205,20 第318版额外增加两个门槛：
+[2147] ControlType.DataItem 795,17734,341,33 新增门槛
+[2148] ControlType.DataItem 1135,17734,300,33 建议要求
+[2156] ControlType.Button 1407,17735,28,28 复制表格
+[2150] ControlType.DataItem 795,17767,341,45 普通样本原预测保持率
+[2151] ControlType.DataItem 1135,17767,300,45 ≥ 80%，优先 ≥ 85%
+[2153] ControlType.DataItem 795,17812,341,58 普通样本校正率
+[2154] ControlType.DataItem 1135,17812,300,58 ≤ 20%，优先 ≤ 15%
+[2157] ControlType.Text 795,17881,349,20 这两个新增门槛是针对第317版失败原因设计的。
+[2159] ControlType.Text 795,17961,640,32 10. 必须输出的表格
+[2160] ControlType.Text 795,18004,237,20 第318版脚本至少输出以下表格。
+[2161] ControlType.Text 795,18043,640,28 表1：候选最优上限与可校正标签分布
+[2173] ControlType.Button 1562,18092,28,28 复制表格
+[2174] ControlType.Text 795,18135,576,20 目的：确认候选库仍然有价值，并检查普通样本中到底有多少是真正值得校正的。
+[2176] ControlType.Text 795,18215,640,28 表2：阶段A可校正性判别器表现
+[2180] ControlType.DataItem 795,18247,107,49 分组
+[2181] ControlType.DataItem 901,18247,108,49 AUC
+[2182] ControlType.DataItem 1008,18247,107,49 PR-AUC
+[2183] ControlType.DataItem 1114,18247,108,49 Brier
+[2184] ControlType.DataItem 1221,18247,108,49 p_corr均值
+[2185] ControlType.DataItem 1328,18247,107,49 y_corr比例
+[2186] ControlType.DataItem 1434,18247,108,49 通过门控比例
+[2187] ControlType.DataItem 1541,18247,108,49 普通负例误触发率
+[2189] ControlType.Button 1620,18264,29,28 复制表格
+[2190] ControlType.Text 795,18317,64,20 重点看：
+[2191] ControlType.Button 1391,18360,36,36 复制
+[2192] ControlType.Text 816,18372,96,14 普通负例误触发率
+[2193] ControlType.Text 795,18413,345,20 如果这个值高，第318版仍会重蹈第317版覆辙。
+[2195] ControlType.Text 795,18493,640,28 表3：阶段B候选选择表现
+[2199] ControlType.DataItem 795,18525,107,49 分组
+[2200] ControlType.DataItem 901,18525,108,49 进入阶段B数量
+[2201] ControlType.DataItem 1008,18525,107,49 候选top1一致率
+[2202] ControlType.DataItem 1114,18525,108,49 候选top3一致率
+[2203] ControlType.DataItem 1221,18525,108,49 预测gain均值
+[2204] ControlType.DataItem 1328,18525,107,49 真实gain均值
+[2205] ControlType.DataItem 1434,18525,108,49 bad风险均值
+[2206] ControlType.DataItem 1541,18525,108,49 实际大退化比例
+[2208] ControlType.Button 1620,18542,29,28 复制表格
+[2209] ControlType.Text 795,18595,48,20 其中：
+[2210] ControlType.Button 1391,18638,36,36 复制
+[2211] ControlType.Text 816,18650,328,14 top1一致率 = 预测候选是否等于 oracle best candidate
+[2213] ControlType.Text 816,18670,376,14 top3一致率 = oracle best candidate 是否在预测收益前三候选中
+[2214] ControlType.Text 795,18711,520,20 如果 top1 很差但 top3 尚可，可以考虑下一版做 family-level selector。
+[2216] ControlType.Text 795,18791,640,28 表4：最终验证主结果
+[2217] ControlType.Text 795,18830,173,20 格式保持第317版一致：
+[2221] ControlType.DataItem 795,18857,107,49 方法
+[2222] ControlType.DataItem 901,18857,108,49 分组
+[2223] ControlType.DataItem 1008,18857,107,49 数量
+[2224] ControlType.DataItem 1114,18857,108,49 平均误差
+[2225] ControlType.DataItem 1221,18857,108,49 相对第316版变化
+[2226] ControlType.DataItem 1328,18857,107,49 大退化比例
+[2227] ControlType.DataItem 1434,18857,108,49 严重低估比例
+[2228] ControlType.DataItem 1541,18857,108,49 原预测保持率
+[2229] ControlType.DataItem 1648,18857,107,49 校正率
+[2231] ControlType.Button 1726,18874,29,28 复制表格
+[2232] ControlType.Text 795,18927,80,20 至少包括：
+[2233] ControlType.Button 1391,18970,36,36 复制
+[2234] ControlType.Text 816,18982,93,14 第316版基础预测
+[2236] ControlType.Text 816,19002,72,14 候选最优上限
+[2238] ControlType.Text 816,19022,117,14 第317版实际门控方案
+[2240] ControlType.Text 816,19042,129,14 第318版两段式保守门控
+[2242] ControlType.Text 795,19129,640,28 表5：候选使用分布
+[2246] ControlType.DataItem 795,19161,107,65 候选编号
+[2247] ControlType.DataItem 901,19161,108,65 候选类型
+[2248] ControlType.DataItem 1008,19161,114,65 oracle最优次数
+[2249] ControlType.DataItem 1121,19161,120,65 第317实际选择次数
+[2250] ControlType.DataItem 1240,19161,120,65 第318实际选择次数
+[2251] ControlType.DataItem 1359,19161,121,65 第318选择后平均真实gain
+[2252] ControlType.DataItem 1479,19161,121,65 第318选择后大退化比例
+[2254] ControlType.Button 1572,19194,28,28 复制表格
+[2255] ControlType.Text 795,19237,138,20 重点看残差原型4。
+[2256] ControlType.Text 795,19279,93,20 第317版中：
+[2257] ControlType.Button 1391,19322,36,36 复制
+[2258] ControlType.Text 816,19334,231,14 残差原型4验证集最优25次，但实际只选1次
+[2259] ControlType.Text 795,19375,301,20 第318版需要确认它是否被合理恢复使用。
+[2261] ControlType.Text 795,19455,640,28 表6：失败分流表
+[2265] ControlType.DataItem 795,19487,192,33 失败现象
+[2266] ControlType.DataItem 987,19487,192,33 判断条件
+[2267] ControlType.DataItem 1179,19487,256,33 下一步处理
+[2297] ControlType.Button 1407,19488,28,28 复制表格
+[2269] ControlType.DataItem 795,19520,192,69 普通样本仍大退化
+[2270] ControlType.DataItem 987,19520,192,69 普通大退化 > 10%
+[2271] ControlType.DataItem 1179,19520,256,69 提高 p_ordinary、降低普通校正率上限、降低 alpha_ordinary
+[2273] ControlType.DataItem 795,19589,192,69 普通样本平均误差退化
+[2274] ControlType.DataItem 987,19589,192,69 普通误差退化 > 1%
+[2275] ControlType.DataItem 1179,19589,256,69 普通样本只允许 p_corr 极高且 bad_hat 极低的候选
+[2277] ControlType.DataItem 795,19658,192,69 强方向盘无改善
+[2278] ControlType.DataItem 987,19658,192,69 强方向盘改善 < 3% 且校正率低
+[2279] ControlType.DataItem 1179,19658,256,69 降低 p_strong 或 g_strong，但不动普通阈值
+[2281] ControlType.DataItem 795,19727,192,69 困难前20/10无改善
+[2282] ControlType.DataItem 987,19727,192,69 hard20/hard10改善不足
+[2283] ControlType.DataItem 1179,19727,256,69 检查这些样本是否被阶段A拒绝，若被拒绝说明可校正性判别器召回不足
+[2285] ControlType.DataItem 795,19796,192,69 进入阶段B后候选错选
+[2286] ControlType.DataItem 987,19796,192,69 top1一致率低，真实gain低
+[2287] ControlType.DataItem 1179,19796,256,69 改成候选族选择：缩放类 / 平移类 / 组合类 / 残差原型类
+[2289] ControlType.DataItem 795,19865,192,45 大退化比例超标
+[2290] ControlType.DataItem 987,19865,192,45 all大退化 > 15%
+[2291] ControlType.DataItem 1179,19865,256,45 加严 bad_hat 阈值，降低全局 alpha
+[2293] ControlType.DataItem 795,19910,192,82 严重低估比例下降不足
+[2294] ControlType.DataItem 987,19910,192,82 严重低估下降 < 20%
+[2295] ControlType.DataItem 1179,19910,256,82 增加 underestimation 专用可校正标签，但仍不使用未来输入
+[2299] ControlType.Text 795,20049,640,32 11. 第318版的最小实验矩阵
+[2300] ControlType.Text 795,20092,240,20 不要一次跑太多。建议固定三组：
+[2301] ControlType.Text 795,20131,640,28 v318-A：只加可校正门控
+[2302] ControlType.Button 1391,20179,36,36 复制
+[2303] ControlType.Text 816,20191,228,14 阶段A通过 → 使用第317版原来的候选单选
+[2305] ControlType.Text 816,20211,144,14 阶段A不通过 → 保持第316
+[2306] ControlType.Text 795,20252,377,20 目的：判断第317失败主要是不是“普通样本误触发”。
+[2307] ControlType.Text 795,20291,640,28 v318-B：可校正门控 + 候选收益选择
+[2308] ControlType.Button 1391,20339,36,36 复制
+[2309] ControlType.Text 816,20351,183,14 阶段A通过 → 用 d_hat 选择候选
+[2311] ControlType.Text 816,20371,144,14 阶段A不通过 → 保持第316
+[2312] ControlType.Text 795,20412,383,20 目的：验证候选选择器是否比第317的20类分类更稳。
+[2313] ControlType.Text 795,20451,640,28 v318-C：可校正门控 + 候选收益选择 + 残差融合
+[2314] ControlType.Button 1391,20499,36,36 复制
+[2315] ControlType.Text 816,20511,344,14 final = pred_v316 + alpha * (candidate - pred_v316)
+[2316] ControlType.Text 795,20552,221,20 这是建议的第318版固定候选。
+[2317] ControlType.Text 795,20594,80,20 优先顺序：
+[2318] ControlType.Button 1391,20637,36,36 复制
+[2319] ControlType.Text 816,20649,72,14 先看 v318-C
+[2321] ControlType.Text 816,20669,175,14 再用 v318-A / v318-B 做归因
+[2322] ControlType.Text 795,20710,637,46 不要从验证集里挑一个看起来最好的版本作为最终版本。版本选择规则应在训练 OOF 上确定。
+[2324] ControlType.Text 795,20816,640,32 12. 第318版通过/失败后的处理
+[2325] ControlType.Text 795,20864,640,28 如果第318-C通过全部验证门槛
+[2326] ControlType.Text 795,20903,176,20 才允许进入测试集报告。
+[2327] ControlType.Text 795,20945,400,20 并且测试集只报告一次，不允许根据测试结果回改阈值。
+[2328] ControlType.Text 795,20984,640,28 如果第318-C失败但普通样本安全
+[2329] ControlType.Text 795,21023,48,20 例如：
+[2330] ControlType.Button 1391,21066,36,36 复制
+[2331] ControlType.Text 816,21078,84,14 普通样本不退化
+[2333] ControlType.Text 816,21098,84,14 普通大退化合格
+[2335] ControlType.Text 816,21118,163,14 但强方向盘/困难样本改善不足
+[2336] ControlType.Text 795,21159,240,20 说明保守门控有效，但召回不足。
+[2337] ControlType.Text 795,21201,448,20 下一版应该只放宽强方向盘样本阈值，不要放宽普通样本阈值。
+[2338] ControlType.Text 795,21240,640,28 如果第318-C普通样本仍失败
+[2339] ControlType.Text 795,21279,408,20 说明阶段A的可校正性判别器还没学会“不要动普通样本”。
+[2340] ControlType.Text 795,21321,272,20 下一版不应该继续改候选库，而应该：
+[2341] ControlType.Button 1391,21364,36,36 复制
+[2342] ControlType.Text 816,21376,96,14 提高普通负例权重
+[2344] ControlType.Text 816,21396,99,14 提高 p_ordinary
+[2346] ControlType.Text 816,21416,186,14 降低 ordinary correction cap
+[2348] ControlType.Text 816,21436,126,14 降低 alpha_ordinary
+[2349] ControlType.Text 795,21482,640,28 如果阶段A通过但阶段B选错
+[2350] ControlType.Text 795,21521,99,20 看表3和表5。
+[2351] ControlType.Text 795,21563,48,20 如果：
+[2352] ControlType.Button 1391,21606,36,36 复制
+[2353] ControlType.Text 816,21618,75,14 top1一致率低
+[2355] ControlType.Text 816,21638,87,14 top3一致率尚可
+[2356] ControlType.Text 795,21679,176,20 下一版改成候选族选择：
+[2357] ControlType.Button 1391,21722,36,36 复制
+[2358] ControlType.Text 816,21734,36,14 原预测
+[2360] ControlType.Text 816,21754,60,14 幅值缩放类
+[2362] ControlType.Text 816,21774,60,14 时间提前类
+[2364] ControlType.Text 816,21794,60,14 时间延后类
+[2366] ControlType.Text 816,21814,67,14 缩放+时间类
+[2368] ControlType.Text 816,21834,60,14 残差原型类
+[2369] ControlType.Text 795,21875,371,20 先选族，再在族内选候选。这样比直接20类分类稳。
+[2371] ControlType.Text 795,21955,640,32 13. 第318版最关键的实现原则
+[2372] ControlType.Text 795,21998,597,20 第318版只需要在第317版候选评估脚本后面加一层策略，不需要重写第316主模型。
+[2373] ControlType.Text 795,22040,144,20 必须坚持以下原则：
+[2374] ControlType.Button 1391,22083,36,36 复制
+[2375] ControlType.Text 816,22095,161,14 1. 第316原预测是默认输出。
+[2377] ControlType.Text 816,22115,105,14 2. 候选库不扩展。
+[2379] ControlType.Text 816,22135,201,14 3. 先判定是否值得校正，再选候选。
+[2381] ControlType.Text 816,22155,211,14 4. 候选选择必须有 reject option。
+[2383] ControlType.Text 816,22175,237,14 5. 普通样本使用更严格阈值和校正率上限。
+[2385] ControlType.Text 816,22195,285,14 6. 最终输出采用原预测到候选之间的小幅残差融合。
+[2387] ControlType.Text 816,22215,302,14 7. 阈值用训练集 OOF 选择，验证集只做 pass/fail。
+[2389] ControlType.Text 816,22235,153,14 8. 验证失败不报告测试集。
+[2390] ControlType.Text 795,22276,553,20 第318版的目标不是追求候选最优上限，而是先把第317版的灾难性问题消掉：
+[2391] ControlType.Button 1391,22319,36,36 复制
+[2392] ControlType.Text 816,22331,96,14 普通样本过度修改
+[2394] ControlType.Text 816,22351,84,14 大退化比例过高
+[2396] ControlType.Text 816,22371,96,14 原预测保持率过低
+[2397] ControlType.Text 795,22412,157,20 只要第318版能做到：
+[2398] ControlType.Button 1391,22455,36,36 复制
+[2399] ControlType.Text 816,22467,108,14 普通样本基本不退化
+[2401] ControlType.Text 816,22487,120,14 大退化比例降回门槛内
+[2403] ControlType.Text 816,22507,168,14 强方向盘和困难样本有稳定改善
+[2404] ControlType.Text 795,22548,221,20 它就是比第317版正确的方向。
+[2405] ControlType.Group 785,22571,650,50 回复操作
+[2406] ControlType.Button 789,22580,32,32 复制回复
+[2407] ControlType.Button 821,22580,32,32 喜欢
+[2408] ControlType.Button 853,22580,32,32 不喜欢
+[2409] ControlType.Button 885,22580,32,32 Pro 反馈
+[2410] ControlType.Button 917,22580,32,32 分享
+[2412] ControlType.Button 949,22580,32,31 切换模型
+[2413] ControlType.Button 981,22580,32,32 更多操作
+[2417] ControlType.Button 1266,22634,45,44 关闭评分提示
+[2415] ControlType.Button 1189,22646,21,20 是的，这很有帮助
+[2416] ControlType.Button 1229,22646,21,20 没有，这没有帮助
+[2414] ControlType.Text 935,22647,239,18 到目前为止，这段对话对你有帮助吗？

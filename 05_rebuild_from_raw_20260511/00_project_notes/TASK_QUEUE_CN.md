@@ -1,4 +1,2533 @@
+# 最新任务队列指针：2026-07-05 已完成 v318-v320 候选门控修正线。第318版保守两段式门控验证失败，三条方案均全不改；第319版加入困难代理和双通道配额后仍全不改；第320版按本地高级模型建议改成排序配额修复门控，新增候选正收益概率分类器，并将非强方向盘困难代理通道坏风险上限收紧到 `0.62` 及以下。v320 验证预算通过并已报告测试集：validation 全部样本收益 `0.001961`，强方向盘收益 `0.003729`，困难前20收益 `0.005495`，普通样本不动；test 全部样本收益 `0.000311`，强方向盘收益 `0.000613`，普通样本不动，但困难前20 `-0.001521`、困难前10 `-0.005689`。下一步优先：1）读取 v320 测试困难前20/前10被改坏事件，做候选家族和通道贡献诊断；2）把第二段候选选择从点式收益回归进一步改为候选排序/分候选族风险预算；3）继续保持普通样本低覆盖或不改，避免回到第317版普通样本误伤；4）不要把第320版写成最终模型，只能写成“门控激活机制已打通但困难组泛化仍需修正”。
+
+---
+
+# 最新任务队列指针：2026-07-04 已完成 v316 filtered current-window coarse-scene train。v316 按 v315 保留清单完整重训当前窗口模型，结构沿用 v307，完整训练 3 个候选并只用过滤后 validation 选模。选中 `v316_filtered_scene_init_aux003_film005_h64`，validation no-harm 通过；但过滤后 test 上 v316 未超过旧 v307：all 为 v300 `0.525580`、旧 v307 `0.496950`、v316 `0.502633`；bad10 为 v300 `0.859987`、旧 v307 `0.777797`、v316 `0.800171`；bad20 为 v300 `0.703038`、旧 v307 `0.651121`、v316 `0.660814`。保留 severe 33 个上 v316 `0.886424`，旧 v307 `0.877334`，v300 `0.805638`。结论：只过滤来源可疑样本再重训不是新主线；v315 清理边界仍有价值，但后续应转向保留 severe 样本的幅值、相位、极端峰值跟随修正，并另开重锚定候选重切窗口线。
+
+---
+
+# 最新任务队列指针：2026-07-04 已完成 v315 rapid steering filter / reanchor plan。v315 将 v314 的方向盘快转来源审计转成训练前数据处理策略：全量 `1167` 个 delay0 事件中，当前窗口训练保留 `1083`，隔离 `84`；其中重锚定候选 `77`，全程快转证据弱候选剔除 `7`。按划分：train 保留 `650/702`，val 保留 `211/233`，test 保留 `222/232`。用户截图 #020 被隔离为“当前平缓但后续才快转”，候选后移锚点约 `5.02s`，新 observation_s 候选 `278.52`。下一步优先：1）基于 `v315_current_window_keep_manifest.csv` 重跑当前窗口条件模型，检验剔除来源可疑样本后 severe 和整体是否改善；2）对 `v315_reanchor_candidate_manifest.csv` 单独重切窗口和目标曲线；3）保留清单中的 severe 再做幅值、相位、极端动作跟随修正。
+
+---
+
+# 最新任务队列指针：2026-07-04 已完成 v314 rapid steering source sample audit。用户明确改为抽样排查，并强调样本必须由方向盘快速转动引起。v314 用原始方向盘角速度审计 1167 个 delay0 事件，确认 1083 个当前 0-2s 有快转来源证据，84 个当前窗口快转证据不足或来源错位；v309 severe 37 个里只有 4 个来源可疑，用户截图 5 个里只有 #020 来源可疑。下一步优先：1）基于 `suspect_not_current_fast_steer=True` 的 84 个事件生成过滤/重锚定候选训练表；2）把 #020 等“当前平缓、后续才快转”样本从当前窗口强动作训练约束中隔离；3）对来源成立但仍预测差的 severe 样本，转入幅值、相位、极端动作跟随不足修正；4）不继续推进人工逐个复核图册线。
+
+---
+
+# 最新任务队列指针：2026-07-04 已完成 v312 horizon-aligned label / anchor audit。下一步优先顺序：1）让用户优先复核 `v312_v309_severe_horizon_label_overlay.csv` 中 `split_local_flat_and_late_context` 与 `split_current_and_late_direction` 两类，尤其 `#020/#014/#023`；2）生成 confirmed horizon-aligned label 表，把 `local_0_2_motion_label` 与 `late_2_6_context_label` 分开保存；3）若要继续训练，v313 应避免把未来真实 local 标签直接作为部署输入，优先做可部署规则/人工确认标签或 prediction fallback gate 的 validation-only 实验。
+
+---
+
+# 最新任务队列指针：2026-07-04 已完成 v310/v311 差样本定向修改与窗口错位审计。v310 的 hard-case loss/权重只能让常规 test/all 小幅改善，但没有改善 v309 severe 37 个和用户截图 5 个，因此不应作为“严重错已修复”的主线。v311 证明 severe 中有 `11/37` 个存在 0-2s 预测窗口与 2-6s 后续事件不一致的嫌疑。下一步优先任务：做 v312 horizon-aligned coarse label / anchor audit，把标签从“整段后续事件类型”改成“模型预测窗口 0-2s 内实际要预测的局部动作状态”，同时保留 2-6s 后续事件作为单独的 late-event/context 标签，不再让后续动作标签直接驱动 0-2s 预测。
+
+---
+
+# 最新任务队列指针：2026-07-04 已完成 v309 严重方向/意图错误筛选。基于用户截图和 v309 清单，确认截图中的 `5` 个事件为 `#014/#017/#019/#020/#023`；全体 test delay0 `232` 个事件中筛出 `37` 个严重候选。下一步优先人工复核 `v309_severe_direction_or_intent_errors.csv`，把 `opposite_peak_direction`、`false_large_maneuver`、`missed_extreme_amplitude` 分别作为硬错误标签，决定是否回灌到 v306/v307 的 confirmed coarse-scene 标签，或在下一轮训练中加入 hard-case loss/约束。
+
+---
+
+# 最新任务队列指针：2026-07-02 已完成 v300 within-subject full joint-curve retrain。当前结论：v300 已经真正从原始 rolling 输入完整重训，不再固定旧 v249 预测；防泄漏通过，`event_in_multiple_splits_n=0`，`train/val/test event=702/233/232`。validation 选中 `v300_full_joint_h64_no_subject`，两个 `subject_onehot` 候选均未胜出。delay0 test/all RMSE `0.5198`，整体不如旧 v249 诊断参照 `0.3246`；但 within_bad_top10 RMSE `0.8600`，优于旧 v249 诊断参照 `1.0383`。下一步优先分析并修复强响应幅值压缩和极端曲线跟随不足；不建议回到 v222a gate、删除样本、轻量 residual 或单纯 subject id 拼接。
+
+---
+
+# 最新更新：2026-07-04 v308 coarse scene 视觉人工复核包
+
+## 已完成任务
+
+- v308 `coarse_scene_visual_manual_review`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v308_coarse_scene_visual_manual_review_20260704.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v308_coarse_scene_visual_manual_review_20260704`
+  - HTML 图册：`05_rebuild_from_raw_20260511/03_baselines/v308_coarse_scene_visual_manual_review_20260704/index.html`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v308_coarse_scene_visual_manual_review_20260704/reports/v308_coarse_scene_visual_manual_review_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v308_coarse_scene_visual_manual_review_20260704/v308_coarse_scene_visual_manual_review_20260704.zip`
+- 结果摘要：
+  - 已将 v306 high + medium 复核队列改成图像复核包。
+  - 共生成 `748` 张逐事件曲线图，其中 high priority `529`，medium priority `219`。
+  - 候选标签分布：`continuous_lane_change=414`，`emergency_lane_change_instability=115`，`other_or_uncertain=219`。
+  - 图册支持浏览器筛选、逐事件填写复核结论和人工标签，并导出 CSV。
+  - ZIP 自检通过：`testzip=None`，压缩包内 `png_n=748`。
+
+## 当前建议队列
+
+- 首选：用户先打开 v308 `index.html` 看图复核，优先处理 high priority 的连续/紧急直道子类。
+- 第二步：将浏览器导出的 `v308_manual_review_decisions.csv` 接回项目，生成 confirmed coarse-scene 标签表。
+- 第三步：用 confirmed 标签重跑 v307 结构，形成不依赖自动 future seed 的 confirmed coarse-scene 条件模型。
+
+## 禁止任务
+
+- 不把 v308 图册中的锚点后真实响应当作模型预测前输入。
+- 不把用户尚未复核的 v306 直道连续/紧急 seed 写成最终人工标签。
+- 不用 `other_or_uncertain` 强行凑成某个明确事件类别。
+
+---
+
+# 最新更新：2026-07-04 v309 近期最好模型预测效果图册
+
+## 已完成任务
+
+- v309 `recent_best_prediction_effect_gallery`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v309_recent_best_prediction_effect_gallery_20260704.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v309_recent_best_prediction_effect_gallery_20260704`
+  - HTML 图册：`05_rebuild_from_raw_20260511/03_baselines/v309_recent_best_prediction_effect_gallery_20260704/index.html`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v309_recent_best_prediction_effect_gallery_20260704/reports/v309_recent_best_prediction_effect_gallery_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v309_recent_best_prediction_effect_gallery_20260704/v309_recent_best_prediction_effect_gallery_20260704.zip`
+- 结果摘要：
+  - 近期最好版本按当前记录为 `v307_coarse_scene_init_aux003_film005_h64`。
+  - test delay0 共 `232` 个事件，图册选取 `54` 个代表性样本。
+  - test/all：v300 `0.519805` -> v307 `0.496138`。
+  - 图中蓝线为 v307，橙线为 v300 参照，黑线为真实 0-2s。
+  - 2s 后灰底区域只显示真实后续到 +6s，不是模型预测范围。
+
+## 当前建议队列
+
+- 首选：先用 v309 `index.html` 看近期最好模型在好样本、中位样本、最差样本、bad_top10、相对 v300 改善/退化样本上的真实表现。
+- 第二步：若发现主要失败集中在连续变道或紧急变道失稳，再回到 v308 图册做人工确认标签。
+- 第三步：用人工确认后的标签重跑 confirmed coarse-scene 条件模型。
+
+## 禁止任务
+
+- 不把 v309 中 +2s 之后的真实后续误解为模型预测输出。
+- 不把 v307 写成最终可部署模型；其直道连续/紧急标签仍有自动 seed 成分。
+
+---
+
+# 最新任务队列指针：2026-07-02 已完成 v299 within-subject split residual calibration。当前结论：同被试内切分后，轻量 subject-aware residual 校准出现明确正向信号；但由于本轮固定旧 v249 预测，正式结论必须完整重训。下一步优先 v300：在同一 within-subject split 上完整重训/复现主模型，确保同一样本不跨 split 且 base model 不接触新 test 样本。
+
+---
+
+# 最新更新：2026-07-02 v299 within-subject split residual calibration
+
+## 正在做的任务
+
+- 生理数据 goal 仍未完成。
+- 当前路线出现一个新的可行方向：允许同一被试的不同样本分布在 train/val/test 后，模型可以利用驾驶员历史/个体校准。
+- 但 v299 只是固定 v249 预测上的快速 residual 校准，不是完整重训结论。
+
+## 已完成任务
+
+- v299 `within_subject_split_residual_calibration`：
+  - 脚本：`03_baselines/scripts/stage03_v299_within_subject_split_residual_calibration_20260702.py`
+  - 输出：`03_baselines/v299_within_subject_split_residual_calibration_20260702`
+  - 报告：`03_baselines/v299_within_subject_split_residual_calibration_20260702/reports/v299_within_subject_split_residual_calibration_cn.md`
+  - ZIP：`03_baselines/v299_within_subject_split_residual_calibration_20260702_pack.zip`
+- split guardrail：
+  - `event_n=1167`
+  - `unique_event_n=1167`
+  - `duplicate_event_uid_n=0`
+  - `event_in_multiple_splits_n=0`
+  - `subject_n=18`
+  - `subject_with_all_three_splits_n=18`
+  - `train_n=702`
+  - `val_n=233`
+  - `test_n=232`
+- 关键结果：
+  - `chosen_method=base_curve_meta_subject__extra_trees_d5`
+  - `chosen_test_all_delta=-0.006707`
+  - `chosen_test_within_bad_top10_delta=-0.073816`
+  - `chosen_test_within_bad_top10_rmse=0.964519`
+  - `chosen_test_within_bad_top10_baseline_rmse=1.038335`
+  - `within_subject_residual_route_promising=True`
+  - `complete_model_retrain_recommended_next=True`
+- 关键边界：
+  - `full_v249_retrained=False`
+  - `fixed_v249_predictions_have_original_split_exposure=True`
+  - 新 within-test 中 `within_test_original_v249_train_rate=0.581897`
+  - 因此不能把 v299 写成正式模型结果，只能写成完整重训前的潜力审计。
+
+## 下一步候选任务
+
+1. 做 v300 within-subject full retrain：
+   - 固定 v299 的 split 表；
+   - 重新训练当前主模型或可快速复现的 v249/v241 等价模型；
+   - 训练过程只看 within-train，选择只看 within-val，最终只报 within-test；
+   - 继续保证同一 `event_uid` 不跨 split。
+2. 如果完整重训耗时太长，先做 v300-light：
+   - 使用同一 split；
+   - 从车辆输入特征直接训练一个轻量 baseline；
+   - 和 v299 residual calibration 对齐比较。
+3. 若 v300 仍能稳定改善 bad_top10，才把“同驾驶员先验/驾驶习惯学习”作为正式任务边界。
+
+## 禁止任务
+
+- 不把 v299 当 formal final 结果。
+- 不忽略旧 v249 训练暴露边界。
+- 不让同一 event_uid 跨 train/val/test。
+- 不用 test 选择 residual 模型或阈值。
+- 不把 recording/session diagnostic 当作可部署主结果。
+
+---
+
+# 最新任务队列指针：2026-07-02 已完成 v298 event label explanatory audit。当前结论：事件/响应标签路线的“粗标签版本”不足以解决差样本轨迹修正；粗响应标签更像风险提示器。下一步不要直接训练 hard response classifier，也不要把 oracle 标签当输入；如继续，应先做当前事件级人工/实验条件标签定义与复核包。
+
+---
+
+# 最新更新：2026-07-02 v298 event label explanatory audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未完成。
+- 当前已经确认：
+  - 锚点前车辆信息不足。
+  - 生理数据在原锚点前不足以补足分叉信息。
+  - 驾驶风格/被试历史只有弱辅助。
+  - 粗响应标签可以识别风险，但不能直接修正轨迹。
+- 当前最关键的 blocker：没有足够覆盖、可部署、锚点前可知的事件级标签/实验条件标签。
+
+## 已完成任务
+
+- v298 `event_label_explanatory_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v298_event_label_explanatory_audit_20260702.py`
+  - 输出：`03_baselines/v298_event_label_explanatory_audit_20260702`
+  - 报告：`03_baselines/v298_event_label_explanatory_audit_20260702/reports/v298_event_label_explanatory_audit_cn.md`
+  - ZIP：`03_baselines/v298_event_label_explanatory_audit_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`
+  - `event_n=1167`
+  - `best_oracle_response_risk_label=oracle_strength_label`
+  - `best_oracle_response_risk_test_auc=0.773525`
+  - `best_oracle_response_config=oracle_shape`
+  - `best_oracle_response_test_badtop10_delta=-0.009262`
+  - `best_oracle_response_test_all_delta=-0.001286`
+  - `history_match_tol1_rate_all=0.227078`
+  - `history_match_tol1_rate_test=0.282609`
+  - `deployable_event_label_available_now=False`
+  - `history_rule_label_coverage_sufficient_now=False`
+  - `coarse_response_labels_are_risk_markers_not_correction_solution=True`
+  - `future_derived_labels_used_as_inputs=False`
+  - `goal_achieved_now=False`
+
+## 解释
+
+- `oracle_strength_label` 这类未来响应强度标签能较好识别哪些样本容易 bad，但它主要是风险标记。
+- 即使直接知道未来粗响应标签，按标签均值修正 v249 残差，对 bad_top10 也只改善约 `0.009 RMSE`，不是本质改善。
+- 历史规则标签和当前事件可通过时间近邻匹配一部分，但覆盖率只有约四分之一，不能作为当前全量训练标签。
+- 因此下一步不能直接上 hard response classifier；标签必须更贴近事件条件/实验条件/触发机制，而不是只给未来曲线形状粗分类。
+
+## 下一步候选任务
+
+1. 做 v299 当前事件级人工/实验条件标签复核包：
+   - 从 v298 casebook 中抽取 test bad_top10、vehicle_ambiguous、强响应但预测正常、预测差但弱响应等典型样本。
+   - 给用户一个可审核的标签字典：事件触发类型、道路/场景条件、是否多阶段响应、是否长事件/持续控制、是否需要后续拆段。
+2. 如果用户能提供或确认实验条件标签，再做 v300 label-predictability audit：
+   - 只用锚点前可知标签/条件；
+   - 检查标签对 bad_top10、v249_rmse、未来响应形状的解释力。
+3. 只有 v300 通过后，才进入 auxiliary response head 或 soft mixture-of-experts。
+
+## 禁止任务
+
+- 不把 oracle_strength/shape/direction/timing 当作测试输入。
+- 不因为 `oracle_strength_label` AUC 高就写成预测效果改善。
+- 不做 hard response-type 级联。
+- 不继续旧 v222a gate / 删除样本 / 轻量 residual 线。
+- 不继续旧 physiology selector / reranker / prototype matching 线。
+
+---
+
+# 最新任务队列指针：2026-07-02 已完成 v297 subject style stability audit。当前结论：驾驶风格/被试历史只支持弱辅助，不支持作为主线；下一步优先做事件级标签、实验条件标签与响应类型辅助监督。v296 是中断半成品，不作为有效结果。
+
+---
+
+# 最新更新：2026-07-02 v297 subject style stability audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未完成。
+- 当前已确认：
+  - observation 前生理特征不能稳定弥补锚点前信息不足。
+  - wait1 生理 residual 修正不稳定，不能作为当前可部署改进。
+  - subject/style 有弱信号，但主要解释“这个被试/这类事件更容易被 v249 预测差”，不稳定解释未来轨迹形状。
+  - 同一被试多次事件不能默认存在事件到事件因果连续性，只能作为稳定驾驶倾向/风险先验来审计。
+- 下一步应转向事件级标签/实验条件标签，而不是继续堆生理、风格、候选轨迹 selector。
+
+## 已完成任务
+
+- v297 `subject_style_stability_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v297_subject_style_stability_audit_20260702.py`
+  - 输出：`03_baselines/v297_subject_style_stability_audit_20260702`
+  - 报告：`03_baselines/v297_subject_style_stability_audit_20260702/reports/v297_subject_style_stability_audit_cn.md`
+  - ZIP：`03_baselines/v297_subject_style_stability_audit_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`
+  - `event_n=1167`
+  - `key_subject_eta_train_mean=0.05984`
+  - `same_subject_mean_distance_ratio=0.71030`
+  - `rolling_history_test_relative_rmse_improvement_mean_history3=0.06988`
+  - `rolling_history_test_positive_target_rate_history3=0.28571`
+  - `binary_history_test_auc_mean_history3=0.53109`
+  - `style_route_supported_now=False`
+  - `weak_style_signal_exists=True`
+  - `event_label_route_priority=True`
+  - `future_derived_oracle_labels_are_not_deployable_inputs=True`
+- 解释：
+  - 同被试样本确实比不同被试样本更相似，说明存在弱驾驶风格/响应倾向。
+  - rolling history 对 v249 RMSE、tail RMSE 有一定解释力，但对真实轨迹形状、峰值、方向、尾部响应不稳定。
+  - 驾驶风格适合作为 risk/uncertainty/context 辅助，不适合作为主预测器。
+
+## 相关补充结果
+
+- v295 `wait1_direct_residual_physio`：
+  - 输出：`03_baselines/v295_wait1_direct_residual_physio_20260702`
+  - 结论：可部署生理 residual 对 bad_top10 只有极弱改善，且全样本变差。
+  - `best_physio_test_badtop10_delta=-0.00111`
+  - `best_physio_test_all_delta=+0.01039`
+  - `best_nonphysio_test_badtop10_delta=-0.01074`
+  - `route_viable_now=False`
+  - `goal_achieved_now=False`
+- v296 `rawseq_physio_embedding_residual`：
+  - 运行被用户中断。
+  - 只产生部分中间表，不产生 guardrail/report/zip。
+  - 不作为结论引用。
+
+## 下一步候选任务
+
+1. 建立事件级标签字典：严格区分“锚点前可知标签”和“未来派生 oracle/auxiliary 标签”。
+2. 从 `v297_event_response_descriptors.csv` 抽取典型样本，让用户人工复核响应类型标签是否符合直觉。
+3. 做 v298 label audit：检查标签对 bad_top10、响应形状、v249 误差的解释率。
+4. 如果标签确实有用，再做 soft mixture-of-experts / auxiliary response-type head；不要回到硬分类级联。
+
+## 禁止任务
+
+- 不把 future-derived oracle labels 当 test 输入。
+- 不把弱 subject/style 信号写成驾驶风格主线成功。
+- 不继续旧 v222a gate / 删除样本 / 轻量 residual 线。
+- 不继续旧 physiology selector / reranker / prototype matching 线。
+- 不用 test 后验选择阈值、等待时间、标签或模型。
+
+---
+
 # 当前任务队列
+
+> 最新指针：2026-07-02 已完成 v294 post-response candidate wait ranker。当前没有正在运行的训练进程。v294 把 v293 的 post-response 可见性转成 RMSE 候选选择任务：等待 1/2/3/5 秒后，用 post 生理响应匹配 v292 的 40 个 train prototype 候选。结果 `route_viable_now=false`：val no-harm active 策略存在，但 test bad_top10 反而 `+0.0070 RMSE`；test-best diagnostic 只有 `-0.0112 RMSE`，且 val bad_top10 `+0.1239`、val all `+0.0606`，不可部署。当前结论是：生理能帮助识别风险，但还不能稳定生成/选择更好轨迹；用户 goal 仍未达成。
+
+---
+
+# 最新更新：2026-07-02 v294 post-response candidate wait ranker
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：post-response 生理信号能识别 bad_top10 风险，但把它用于候选 prototype 选择后，仍没有得到可部署 RMSE 改善。
+- 关键转折：问题不再是“差样本是否可见”，而是“看见风险后如何产生更好的轨迹预测”。
+
+## 已完成任务
+
+- v294 `post_response_candidate_wait_ranker`：
+  - 脚本：`03_baselines/scripts/stage03_v294_post_response_candidate_wait_ranker_20260702.py`
+  - 输出：`03_baselines/v294_post_response_candidate_wait_ranker_20260702`
+  - 报告：`03_baselines/v294_post_response_candidate_wait_ranker_20260702/reports/v294_post_response_candidate_wait_ranker_cn.md`
+  - ZIP：`03_baselines/v294_post_response_candidate_wait_ranker_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`。
+  - `zip_testzip=True`，file_count `13`。
+  - `route_viable_now=false`。
+  - `event_n=1167`，`candidate_rows=46680`。
+  - `wait_policy_n=4`，`selector_config_n=36`。
+  - `uses_post_observation=True`，`post_features_are_wait_policy_only=True`。
+  - `best_val_noharm_active_exists=True`，但 test 不改善。
+  - val 选择策略：`wait1_post0_1__post_response_pair_top64__extra_trees_d6`。
+  - val bad_top10 delta `-0.0057`，val all delta `+0.0011`。
+  - test bad_top10 delta `+0.0070`，test all delta `+0.0017`。
+  - test-best diagnostic：`wait2_post0_2__vehicle_post_response_pair_top96__ridge_a10`。
+  - test-best bad_top10 delta `-0.0112`，bad_top10_vehicle_ambiguous delta `-0.0071`。
+  - 但 test-best 的 val bad_top10 delta `+0.1239`，val all delta `+0.0606`，不可部署。
+  - candidate-pool oracle test bad_top10 delta `-0.0784`。
+  - vehicle_score_top1 test bad_top10 delta `+0.1453`。
+
+## 下一步候选任务
+
+- 不建议继续在“候选匹配/reranker/selector”上堆模型复杂度。
+- 如果继续追求预测改善，下一步应转向“直接建模等待后的轨迹/残差”，而不是从旧 prototype 中选一个：
+  - 用 wait1/wait2/wait3 后的早期真实车辆响应 + 生理响应，重新训练后半段轨迹预测器。
+  - 或把任务改成 conditional residual / trajectory correction：先用 early response 判断方向，再直接修正曲线。
+  - 与 latest、v241/v247/v278 统一比较 RMSE 和差样本 RMSE。
+- 生理在下一步里适合作为 risk/state/context 输入，而不是作为 prototype matching 的主排序信号。
+
+## 禁止任务
+
+- 不把 v293 的 post AUC 写成预测改善。
+- 不把 v294 的 test-best diagnostic `-0.0112` 写成部署结果。
+- 不继续旧 v222a gate / 删除样本 / 轻量 residual 线。
+- 不用 test 后验选择等待时间、候选、阈值或模型。
+
+---
+
+# 最新更新：2026-07-02 v293 physiology response visibility / latency audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：主差样本 `bad_top10` 在 observation 前生理信息不足，不能支撑原锚点即时预测。
+- 重要新结论：observation 后 0-3 秒生理响应对 `bad_top10` 有明显区分度，下一步应转成“短等待/延迟观测/响应可见性”的部署收益验证。
+
+## 已完成任务
+
+- v293 `physio_response_visibility_latency_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v293_physio_response_visibility_latency_audit_20260702.py`
+  - 输出：`03_baselines/v293_physio_response_visibility_latency_audit_20260702`
+  - 报告：`03_baselines/v293_physio_response_visibility_latency_audit_20260702/reports/v293_physio_response_visibility_latency_audit_cn.md`
+  - ZIP：`03_baselines/v293_physio_response_visibility_latency_audit_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`。
+  - `zip_testzip=True`。
+  - `event_n=1167`。
+  - `feature_n=540`，`screen_feature_n=540`。
+  - `feature_set_n=14`。
+  - `ok_rate=0.91945`。
+  - `uses_post_observation=True`，`post_features_are_diagnostic_only=True`。
+  - `bad_top10` pre best test AUC `0.4896`。
+  - `bad_top10` early-post best test AUC `0.7726`。
+  - `bad_top10` `window_post0_3` test AUC `0.7254`。
+  - `bad_top10` `window_post0_2` test AUC `0.7053`。
+  - `bad_top10_vehicle_ambiguous` pre best test AUC `0.6012`，属于边缘弱信号。
+  - `bad_top10_vehicle_ambiguous` early-post best test AUC `0.6627`。
+  - `candidate_pool_gain_gt_005` pre/early-post/late-post best test AUC 分别为 `0.5722 / 0.5593 / 0.5808`。
+
+## 下一步候选任务
+
+- 做 v294：把 post0-3 秒生理响应和同窗口车辆早期响应一起转成“短等待策略”，严格比较：
+  - 原锚点即时预测。
+  - wait 1s / 2s / 3s 后预测。
+  - 只用早期车辆响应。
+  - 早期车辆响应 + 生理响应。
+  - 只在高不确定/车辆歧义样本上等待。
+- v294 必须给出等待代价和预测收益，而不是只给分类 AUC。
+- v294 不能把 post 特征包装成原锚点可用信息；必须明确这是延迟观测策略。
+
+## 禁止任务
+
+- 不再继续旧 v222a gate / 删除样本 / 轻量 residual 线。
+- 不把 v293 post AUC 写成原锚点即时预测能力。
+- 不把 `bad_top10_vehicle_ambiguous` pre AUC `0.6012` 过度解释为主差样本已可预测。
+- 不用 test 后验选择等待时间、特征块或部署阈值。
+
+---
+
+# 最新更新：2026-07-02 v292 source-physio pairwise candidate ranker
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：即使把任务改成更贴近核心矛盾的 pairwise candidate ranking，源生理仍不能稳定从车辆相似候选中选对未来。
+- 重要新结论：候选池不是没有好候选；好候选存在，但生理无法可靠挑出来。
+
+## 已完成任务
+
+- v292 `source_physio_pairwise_candidate_ranker`：
+  - 脚本：`03_baselines/scripts/stage03_v292_source_physio_pairwise_candidate_ranker_20260702.py`
+  - 输出：`03_baselines/v292_source_physio_pairwise_candidate_ranker_20260702`
+  - 报告：`03_baselines/v292_source_physio_pairwise_candidate_ranker_20260702/reports/v292_source_physio_pairwise_candidate_ranker_cn.md`
+  - ZIP：`03_baselines/v292_source_physio_pairwise_candidate_ranker_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`。
+  - `route_viable_now=false`。
+  - `event_n=1167`。
+  - `candidate_rows=46680`。
+  - train/val/test event 数 `674/309/184`。
+  - `prototype_train_only=true`。
+  - `selector_config_n=15`。
+  - vehicle score top1 在 test bad_top10 上差 `+0.1453 RMSE`。
+  - candidate-pool oracle 在 test bad_top10 上改善 `-0.0784 RMSE`。
+  - candidate-pool oracle 在 test bad_top10_vehicle_ambiguous 上改善 `-0.0881 RMSE`。
+  - `best_val_noharm_active_exists=false`。
+  - test-best diagnostic：`bio_all_top_pair_only__hgb_d3`，test bad_top10 delta `-0.0248`，但 val bad_top10 delta `+0.1402`，val all delta `+0.0367`，不可部署。
+  - 有一个 no-harm 但非 active 的弱阈值，test bad_top10 delta `-0.0124`，只覆盖约 `1/19` 个 test bad_top10，不能作为路线。
+
+## 下一步候选任务
+
+- 不建议继续堆 physiology matching / pairwise reranker / selector。
+- 如果继续围绕生理，需要转成“为什么无效”的证据闭环，而不是再换模型：
+  - 生理响应是否发生在 observation 后，导致 observation 前不可见。
+  - 生理信号与驾驶行为差异是否主要是 subject 内弱信号，而 subject-disjoint 下不可泛化。
+  - 生理采集质量/同步是否使关键时间窗错位。
+- 如果继续追求预测改善，应转回车辆侧任务定义：候选池已有 oracle 空间，重点是更好的车辆不确定性/多未来选择，而不是生理 tie-breaker。
+
+## 禁止任务
+
+- 不把 candidate-pool oracle 写成模型改善。
+- 不把 test-best diagnostic 写成部署结果。
+- 不继续用 test 后验挑 threshold、feature block 或 selector。
+- 不再把“候选池里有好轨迹”误解成“生理能选到好轨迹”。
+
+---
+
+# 最新更新：2026-07-02 v291 multi-signal physiology supervised probe
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：即使合并 ECG/RESP/EDA 源信号并做监督 selector，仍无法通过 validation 选择出可部署的差样本改善策略。
+- 现成方法池有小的事后上限，但生理无法稳定判断什么时候该覆盖 latest。
+
+## 已完成任务
+
+- v291 `multisignal_physio_supervised_probe`：
+  - 脚本：`03_baselines/scripts/stage03_v291_multisignal_physio_supervised_probe_20260702.py`
+  - 输出：`03_baselines/v291_multisignal_physio_supervised_probe_20260702`
+  - 报告：`03_baselines/v291_multisignal_physio_supervised_probe_20260702/reports/v291_multisignal_physio_supervised_probe_cn.md`
+  - ZIP：`03_baselines/v291_multisignal_physio_supervised_probe_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`。
+  - `route_viable_now=false`。
+  - `event_n=1167`，train/val/test 为 `674/309/184`。
+  - `bio_source_feature_n=1660`。
+  - `screen_feature_n=1404`。
+  - `feature_block_n=7`，`selector_config_n=28`。
+  - method-pool oracle 在 test bad_top10 上有 `-0.0402 RMSE` 上限，但这是非部署事后上限。
+  - `best_val_noharm_active_exists=false`。
+  - val 选择只能 fallback no override，test bad_top10 delta `0.0`。
+  - test-best diagnostic 非部署选择器只有 `-0.0093 RMSE`，且 val no-harm 不成立。
+  - 源生理识别 test bad_top10 的最好 AUC `0.5394`，没有达到可用分类信号。
+
+## 下一步候选任务
+
+- 不建议继续做 physiology selector / reranker / threshold / reliability filter。
+- 如果继续生理方向，只建议做两个收口类工作：
+  - 生理可观测性分层：说明哪些样本源生理完全不提供信息，哪些只有弱诊断信号。
+  - 数据链复核：同步、佩戴质量、subject-disjoint 划分、生理记录是否与事件真实响应阶段错位。
+- 如果目标是继续提升预测效果，应把主线转回车辆多未来分布、等待代价、预测不确定性和不可观测样本的任务定义；生理只保留为弱诊断或分层变量。
+
+## 禁止任务
+
+- 不把 v291 的 method-pool oracle 写成部署改善。
+- 不把 test-best diagnostic `-0.0093` 写成有效路线。
+- 不继续堆更复杂的生理 selector/reranker。
+- 不用 test 后验结果选择阈值、特征块或部署策略。
+
+---
+
+# 最新更新：2026-07-02 v290 EDA/SCR usable-subset source route audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：EDA/SCR 源信号有较高可用覆盖，但全体样本和 EDA 可用子集都没有形成可部署 top1 改善。
+- v288 ECG、v289 RESP、v290 EDA 三条源信号路线都没有把差样本从 latest baseline 之上拉下来。
+
+## 已完成任务
+
+- v290 `eda_scr_usable_subset_route_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v290_eda_scr_usable_subset_route_audit_20260702.py`
+  - 输出：`03_baselines/v290_eda_scr_usable_subset_route_audit_20260702`
+  - 报告：`03_baselines/v290_eda_scr_usable_subset_route_audit_20260702/reports/v290_eda_scr_usable_subset_route_audit_cn.md`
+  - ZIP：`03_baselines/v290_eda_scr_usable_subset_route_audit_20260702_pack.zip`
+- 关键结果：
+  - `guardrail_check.pass=True`。
+  - `route_viable_now=false`。
+  - `eda_subset_route_viable_now=false`。
+  - `eda_source_feature_n=473`。
+  - `feature_set_n=29`。
+  - EDA 可用事件数 `906/1167`，可用率 `0.77635`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.1760`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta `+0.1601`。
+  - test-best top1 diagnostic 未通过：最佳仍差 `+0.1409`。
+  - test bad_top10 best corr `0.0306`。
+  - EDA 可用子集也未通过：`eda_usable_top1` test delta `+0.0762`，`bad_top10_eda_usable_top1` test delta `+0.1760`。
+
+## 下一步候选任务
+
+- 不建议继续在 physiology distance / rerank / gate 这一类框架里做阈值微调或简单加深模型。
+- 如果仍坚持生理方向，下一步应先改变任务定义：把生理作为不确定性、等待收益、个体状态分层或可观测性判别，而不是直接用生理距离选择一个未来候选。
+- 如果目标是预测效果主线，应转向 vehicle 多未来分布、可等待策略、预测不确定性和差样本可观测性建模；生理只作为辅助解释或分层证据。
+
+## 禁止任务
+
+- 不把 EDA usable 子集写成成功改善。
+- 不把 top5 oracle 的小幅改善写成可部署结果。
+- 不继续旧 bio selector/reranker/reliability filter 阈值微调。
+- 不用 test 后验误差选择 EDA 窗口、特征集、阈值或策略。
+
+---
+
+# 最新更新：2026-07-02 v287 physiology temporal-window route audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：把 v285 raw 200Hz 特征按时间窗口/信号族拆开后，也没有得到可部署 top1 改善。
+- 新发现：ECG 最近 1-2 秒有弱排序/诊断苗头，但它没有转成 validation 可选择的部署策略。
+
+## 已完成任务
+
+- v287 `physio_temporal_window_route_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v287_physio_temporal_window_route_audit_20260702.py`
+  - 输出：`03_baselines/v287_physio_temporal_window_route_audit_20260702`
+  - 报告：`03_baselines/v287_physio_temporal_window_route_audit_20260702/reports/v287_physio_temporal_window_route_audit_cn.md`
+  - ZIP：`03_baselines/v287_physio_temporal_window_route_audit_20260702_pack.zip`
+- 关键结果：
+  - `route_viable_now=false`。
+  - feature_set_n `47`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.2379`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta `+0.2314`。
+  - test-best top1 diagnostic 未通过：最佳 `combo_pre2_0_ecg_top16` 仍差 `+0.0941`。
+  - test bad_top10 best corr `0.0854`，来自 `combo_pre1_0_ecg_top16`，属于非部署诊断信号。
+  - 单独窗口最好：`win_pre10_pre5_top32`，bad_top10 top1 delta `+0.1144`。
+  - 单独信号族最好：`signal_resp_top32`，bad_top10 top1 delta `+0.1783`。
+
+## 下一步候选任务
+
+- 不建议在 v285/v287 同一特征层上继续训练复杂 vehicle+physio 融合模型。
+- 如果继续生理方向，应只做源信号层面的证据修复：ECG 峰检测质量、同步偏移、原始 1000Hz 到 200Hz 清洗链、EDA 可用记录、RESP 相位重建。
+- 如果转回预测效果主线，应基于车辆多未来候选、概率/不确定性输出和等待代价建模；生理仅保留为边界证据或很弱的辅助诊断。
+
+## 禁止任务
+
+- 不把 `combo_pre2_0_ecg_top16` 的 test-best 诊断写成部署结果。
+- 不把 corr `0.0854` 写成差样本本质改善。
+- 不继续旧 bio selector/reranker/reliability filter 阈值微调。
+- 不用 test 后验误差选窗口、信号族、阈值或策略。
+
+---
+
+# 最新更新：2026-07-02 v286 raw-200Hz online subject-aware calibration
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：v285 的 raw 200Hz shape-state 在 subject-disjoint route gate 失败；v286 在 subject-aware online 边界下也没有让 raw285 生理 KNN 形成差样本本质改善。
+
+## 已完成任务
+
+- v286 `raw200_online_subject_calibration`：
+  - 脚本：`03_baselines/scripts/stage03_v286_raw200_online_subject_calibration_20260702.py`
+  - 输出：`03_baselines/v286_raw200_online_subject_calibration_20260702`
+  - 报告：`03_baselines/v286_raw200_online_subject_calibration_20260702/reports/v286_raw200_online_subject_calibration_cn.md`
+  - ZIP：`03_baselines/v286_raw200_online_subject_calibration_20260702_pack.zip`
+- 关键结果：
+  - test bad_top10 fixed wait-latest：`0.6950`。
+  - online subject mean vehicle：`0.7112`。
+  - online raw285 KNN vehicle：`0.7358`。
+  - online subject mean vehicle+raw285：`0.6950`。
+  - online raw285 KNN vehicle+raw285：`0.7197`。
+  - raw285 KNN 相对纯 subject mean online 变差 `+0.0246`；vehicle+raw285 后再 KNN 仍变差 `+0.0085`。
+
+## 下一步候选任务
+
+- 不建议直接训练更复杂 vehicle+physio 融合模型。
+- 继续追求预测效果时，主线应回到车辆多未来候选、概率/不确定性、等待策略代价和任务构造；生理只能作为边界证据。
+- 如果仍要继续生理方向，只剩非常底层的数据层问题：重新清洗/重建 EDA、ECG 峰、RESP 相位等源信号，并在进入模型前先过 v285/v286 同级 gate。
+
+## 禁止任务
+
+- 不继续旧 bio selector/reranker/reliability filter 阈值微调。
+- 不把 subject-aware 结果写成 subject-disjoint 泛化结论。
+- 不把 raw285 KNN 的 online 诊断写成可部署改善。
+- 不用 test 后验误差选特征集、阈值或策略。
+
+---
+
+# 最新更新：2026-07-02 v285 raw-200Hz signal-shape physiology route gate
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：回到底层 200Hz shape-state 后，subject-disjoint route gate 仍未通过。
+
+## 已完成任务
+
+- v285 `raw200_shape_state_route_gate`：
+  - 脚本：`03_baselines/scripts/stage03_v285_raw200_shape_state_route_gate_20260702.py`
+  - 输出：`03_baselines/v285_raw200_shape_state_route_gate_20260702`
+  - 报告：`03_baselines/v285_raw200_shape_state_route_gate_20260702/reports/v285_raw200_shape_state_route_gate_cn.md`
+  - ZIP：`03_baselines/v285_raw200_shape_state_route_gate_20260702_pack.zip`
+- 关键结果：
+  - `route_viable_now=false`。
+  - raw200 feature 数：`1146`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.1958`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta `+0.1826`。
+  - test-best top1 diagnostic 未通过：best delta `+0.1578`。
+  - test bad_top10 best corr `0.0498`，未超过 `0.05`。
+
+## 下一步候选任务
+
+- v286 已作为后续边界实验完成：subject-aware online 也没有得到 raw285 生理 KNN 额外收益。
+- 当前不建议继续在同一生理表征上做更复杂模型。
+
+## 禁止任务
+
+- 不把 raw200 top3/top5 oracle 当成部署结果。
+- 不直接把 v285 特征拼进轨迹模型当下一步主线。
+- 不用 test 后验误差反选 raw feature set。
+
+---
+
+# 最新更新：2026-07-02 v284 dynamic low-identity physiology route gate
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：旧特征微调关闭之后，新构造的动态低身份 biomarker 也没有通过可部署 route gate。
+
+## 已完成任务
+
+- v284 `dynamic_low_identity_physio_route_gate`：
+  - 脚本：`03_baselines/scripts/stage03_v284_dynamic_low_identity_physio_route_gate_20260702.py`
+  - 输出：`03_baselines/v284_dynamic_low_identity_physio_route_gate_20260702`
+  - 报告：`03_baselines/v284_dynamic_low_identity_physio_route_gate_20260702/reports/v284_dynamic_low_identity_physio_route_gate_cn.md`
+  - ZIP：`03_baselines/v284_dynamic_low_identity_physio_route_gate_20260702_pack.zip`
+- 关键结果：
+  - `route_viable_now=false`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.1697`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta `+0.1903`。
+  - test-best top1 diagnostic 未通过：best delta `+0.1525`。
+  - test bad_top10 best corr `0.0553`，只是弱排序信号。
+
+## 下一步候选任务
+
+- 不建议直接训练更复杂 vehicle+physio 融合模型。
+- 若继续生理 goal，只剩两类合理分支：
+  - 更底层信号重处理：重新处理 ECG/RESP/EDA 质量、节律、相位和个体内状态，而不是复用现有 v260 biomarker。
+  - subject-aware 个体校准：把任务边界改成同驾驶员历史可用的个体化预测，不再宣称纯 subject-disjoint 主增量。
+
+## 禁止任务
+
+- 不继续旧 bio selector/reranker/reliability filter 阈值微调。
+- 不把 weak corr 或 bio top3/top5 oracle 写成可部署结果。
+- 不用 test 后验误差选特征集、阈值或策略。
+
+---
+
+# 最新更新：2026-07-02 v283 生理路线 lineage / gap 审计
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已完成路线级收口：旧生理特征/旧候选选择器路线不再作为主线继续微调。
+- 下一步若继续生理路线，应只做“新生理状态表示 -> route gate -> 预测模型”的顺序。
+
+## 已完成任务
+
+- v283 `physio_route_lineage_gap_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v283_physio_route_lineage_gap_audit_20260702.py`
+  - 输出：`03_baselines/v283_physio_route_lineage_gap_audit_20260702`
+  - 报告：`03_baselines/v283_physio_route_lineage_gap_audit_20260702/reports/v283_physio_route_lineage_gap_audit_cn.md`
+  - ZIP：`03_baselines/v283_physio_route_lineage_gap_audit_20260702_pack.zip`
+- 关键结果：
+  - `current_goal_achieved=false`。
+  - `old_feature_selector_route_closed=true`。
+  - `physio_source_alignment_ready=true`。
+  - `next_route_requires_feature_redefinition=true`。
+- 关键解释：
+  - 失败不是大面积对齐错误：v254b/v260/v268 都显示 200Hz 时间轴和事件窗口覆盖基本可用。
+  - 失败主要来自有效信号弱、派生列不可用/近常数、subject/recording 身份信号强于行为信号。
+
+## 下一步候选任务
+
+- 只保留一个生理主线候选：新建低身份、行为相关的生理状态表示。
+  - 先做特征定义和 route gate，不先训练轨迹模型。
+  - 通过条件：在 vehicle top40 歧义候选池内，生理距离与候选真实误差排序出现稳定正相关，并且 val/test 同向。
+  - 未通过则把生理降级为 subject-aware 个体校准或边界证据。
+
+## 禁止任务
+
+- 不继续旧 bio selector/reranker/reliability filter 阈值微调。
+- 不把 bio top3/top5 oracle 写成可部署结果。
+- 不用 test 后验误差选 raw_set、阈值或策略。
+- 不把 subject-aware / calibrated 结果写成 subject-disjoint 泛化结论。
+
+---
+
+# 最新更新：2026-07-02 v282 生理歧义消解 route gate
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 当前已确认：旧的生理特征层无法稳定解决 subject-disjoint 的车辆相似/未来分叉问题。
+- 下一步若继续生理路线，应做 v283 级别的特征重构，而不是继续在 v272-v281 的旧候选/旧特征上微调。
+
+## 已完成任务
+
+- v282 `physio_ambiguity_route_gate`：
+  - 脚本：`03_baselines/scripts/stage03_v282_physio_ambiguity_route_gate_20260702.py`
+  - 输出：`03_baselines/v282_physio_ambiguity_route_gate_20260702`
+  - 报告：`03_baselines/v282_physio_ambiguity_route_gate_20260702/reports/v282_physio_ambiguity_route_gate_cn.md`
+  - ZIP：`03_baselines/v282_physio_ambiguity_route_gate_20260702_pack.zip`
+- 关键结果：
+  - route gate `route_viable_now=false`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.1989`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta `+0.2347`。
+  - oracle top3 bad ambiguous 稳定性未通过：val `+0.1617`、test `+0.0724`。
+  - test bad_top10 的最佳生理排序相关均值仅 `0.00985`。
+
+## 下一步候选任务
+
+- 首选 v283：从 200Hz 连续生理层重新构造事件前生理状态特征。
+  - 重点不是简单拼接，而是质量控制、个体内 baseline、短窗斜率/能量、响应相位、EDA/RESP/ECG/EMG 的事件前状态变化。
+  - 重新验证这些新特征能否区分“车辆输入相似但后续轨迹分叉”的样本。
+  - 仍必须用 validation 选策略，test 只报告。
+- 若 v283 仍失败，则应把生理主线降级为边界证据或 subject-aware 个体校准分支。
+
+## 禁止任务
+
+- 不继续 v222a gate / 删除样本 / 轻量 residual。
+- 不继续旧特征上的 bio selector、bio reranker、bio threshold、bio reliability filter 微调。
+- 不把 bio top3/top5 oracle 写成可部署结论。
+- 不用 test 后验误差做部署策略。
+
+---
+
+# 最新更新：2026-07-02 v279-v281 生理数据深挖收口
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成：v279-v281 没有得到“极大弥补锚点前信息不足、让差样本本质改善”的可部署结果。
+- 当前不建议继续沿同类 bio selector / reranker / reliability filter 细调。
+
+## 已完成任务
+
+- v279 `physio_reliability_filter_for_listrank`：
+  - 目的：生理不直接选轨迹，而是判断 v278 vehicle listwise 第一候选是否可信。
+  - 结果：test-best diagnostic `0.6791`，deployable 仍 `0.6950`；生理可靠性没有超过车辆可靠性。
+- v280 `crossfit_physio_reliability_filter`：
+  - 目的：用 recording-group OOF train top 修正 v279 的训练候选偏乐观问题。
+  - 结果：test-best diagnostic `0.6891`，deployable 仍 `0.6950`；生理仍不超过车辆。
+- v281 `bio_top3_constrained_selector`：
+  - 目的：把 v272 的 bio top3 oracle 上限转成可训练 selector。
+  - 结果：bio top3 oracle test bad_top10 `0.6738`，但 val 可部署策略仍 `0.6950`；test-best diagnostic `0.6842`。
+
+## 下一步候选任务
+
+- 首选：停止同类生理候选消歧微调，回到车辆主线。
+  - 方向 1：车辆多未来分布/概率预测，而不是单条平均轨迹。
+  - 方向 2：anchor-aware 联合任务，显式建模“多看多久”和等待代价。
+  - 方向 3：以 v278 的 vehicle listwise headroom 为基础，做更强的车辆生成候选和不确定性估计。
+- 如果继续保留生理：
+  - 只作为 subject-aware 个体校准或失败边界证据，不再宣称 subject-disjoint 下提供稳定行为预测增量。
+  - 需要先由用户确认 ChatGPT Chrome 已处于 Pro/进阶模式，再发送 `gptpro_reviews\20260702_phase280_physio_next_prompt.md` 给 GPTPro 复核。
+
+## 禁止任务
+
+- 不继续 v222a gate / 删除样本 / 轻量 residual。
+- 不继续同类 bio selector、bio reranker、bio threshold、bio reliability filter 微调。
+- 不把 test-best diagnostic 写成可部署结论。
+- 不把 subject-aware 信号写成 subject-disjoint 正式泛化结论。
+- 不用 test 后验误差做部署策略。
+
+# 最新更新：2026-07-02 v278 listwise candidate rank loss 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v278 已验证“候选选择损失”路线：vehicle-only listwise 有更强 test diagnostic headroom，但生理/风格没有带来增量，val 仍不能部署。
+
+## 已完成任务
+
+- v278：listwise candidate rank loss。
+  - 脚本：`03_baselines/scripts/stage03_v278_listwise_candidate_rank_loss_20260702.py`
+  - 输出：`03_baselines/v278_listwise_candidate_rank_loss_20260702`
+  - 报告：`03_baselines/v278_listwise_candidate_rank_loss_20260702/reports/v278_listwise_candidate_rank_loss_cn.md`
+  - ZIP：`03_baselines/v278_listwise_candidate_rank_loss_20260702_pack.zip`
+- v277：style + calibrated physiology candidate gain model。
+  - 脚本：`03_baselines/scripts/stage03_v277_style_bio_candidate_gain_model_20260702.py`
+  - 输出：`03_baselines/v277_style_bio_candidate_gain_model_20260702`
+  - 报告：`03_baselines/v277_style_bio_candidate_gain_model_20260702/reports/v277_style_bio_candidate_gain_model_cn.md`
+  - ZIP：`03_baselines/v277_style_bio_candidate_gain_model_20260702_pack.zip`
+- v276：bio-assisted candidate gain model。
+  - 脚本：`03_baselines/scripts/stage03_v276_bio_assisted_candidate_gain_model_20260702.py`
+  - 输出：`03_baselines/v276_bio_assisted_candidate_gain_model_20260702`
+  - 报告：`03_baselines/v276_bio_assisted_candidate_gain_model_20260702/reports/v276_bio_assisted_candidate_gain_model_cn.md`
+  - ZIP：`03_baselines/v276_bio_assisted_candidate_gain_model_20260702_pack.zip`
+- v275：stable bio consensus override。
+  - 脚本：`03_baselines/scripts/stage03_v275_stable_bio_consensus_override_20260702.py`
+  - 输出：`03_baselines/v275_stable_bio_consensus_override_20260702`
+  - 报告：`03_baselines/v275_stable_bio_consensus_override_20260702/reports/v275_stable_bio_consensus_override_cn.md`
+  - ZIP：`03_baselines/v275_stable_bio_consensus_override_20260702_pack.zip`
+- v274：no-harm bio override。
+  - 脚本：`03_baselines/scripts/stage03_v274_noharm_bio_override_20260702.py`
+  - 输出：`03_baselines/v274_noharm_bio_override_20260702`
+  - 报告：`03_baselines/v274_noharm_bio_override_20260702/reports/v274_noharm_bio_override_cn.md`
+  - ZIP：`03_baselines/v274_noharm_bio_override_20260702_pack.zip`
+- v273：bio-prefiltered pair reranker。
+  - 脚本：`03_baselines/scripts/stage03_v273_bio_prefiltered_pair_reranker_20260702.py`
+  - 输出：`03_baselines/v273_bio_prefiltered_pair_reranker_20260702`
+  - 报告：`03_baselines/v273_bio_prefiltered_pair_reranker_20260702/reports/v273_bio_prefiltered_pair_reranker_cn.md`
+  - ZIP：`03_baselines/v273_bio_prefiltered_pair_reranker_20260702_pack.zip`
+- v272：physiology ambiguity disambiguation。
+  - 脚本：`03_baselines/scripts/stage03_v272_physio_ambiguity_disambiguation_20260702.py`
+  - 输出：`03_baselines/v272_physio_ambiguity_disambiguation_20260702`
+  - 报告：`03_baselines/v272_physio_ambiguity_disambiguation_20260702/reports/v272_physio_ambiguity_disambiguation_cn.md`
+  - ZIP：`03_baselines/v272_physio_ambiguity_disambiguation_20260702_pack.zip`
+
+## v278 关键结果
+
+- 设置：同事件候选组内排序标签，不再回归绝对候选收益。
+- 输入比较：
+  - `listrank_vehicle`
+  - `listrank_vehicle_bio`
+  - `listrank_vehicle_style_bio`
+- test bad_top10：
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - vehicle-only test-best diagnostic `0.6832`，覆盖率 `0.1053`
+  - best deployable `0.6950`，覆盖率 `0`
+  - best bio feature diagnostic `0.6950`
+- 判断：
+  - 候选选择损失是有价值的，说明车辆多未来候选排序仍有可挖空间。
+  - 生理/风格没有带来候选排序增量。
+  - 当前 goal 仍未完成；若继续提升，应把主线转到车辆多未来排序、选择置信度和不确定性，而不是继续同类生理特征。
+
+## v277 关键结果
+
+- 设置：v276 candidate gain 框架 + 当前任务口径驾驶风格 + v271 校准 raw 生理。
+- 输入比较：
+  - `candidate_vehicle`
+  - `candidate_vehicle_style_dist`
+  - `candidate_vehicle_bio271_dist`
+  - `candidate_vehicle_style_bio_dist`
+  - `candidate_vehicle_style_query`
+  - `candidate_vehicle_style_bio_query`
+- test bad_top10：
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - val-best deployable `0.6950`，test 覆盖率 `0`
+  - test-best diagnostic `0.7008`，比 fixed wait-latest 更差
+- 判断：
+  - 驾驶风格 + 校准生理没有形成可部署状态消歧。
+  - 可覆盖 test 的策略在 val 和 test 都伤害明显。
+  - 当前 subject-disjoint 生理/风格路线不应继续做同类微调。
+
+## v276 关键结果
+
+- 设置：回到 v267 full vehicle top40 候选池，对候选轨迹学习相对 latest 的收益。
+- 输入比较：
+  - `candidate_vehicle`
+  - `candidate_vehicle_bio`
+  - `candidate_bio_only`
+- test bad_top10：
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - test-best gain diagnostic `0.6858`，覆盖率 `0.0526`
+  - val-best any `0.6950`，覆盖率 `0`
+- 判断：
+  - 生理能在 test 的少数差样本上碰到候选收益，但验证集不能稳定选择。
+  - candidate_vehicle_bio 没有稳定优于 candidate_vehicle。
+  - v276 仍不能算“充分利用生理数据后让差样本本质改善”，只能作为边界诊断。
+
+## v272 关键结果
+
+- test bad_top10：
+  - vehicle nearest `0.8785`
+  - vehicle candidate oracle k40 `0.6166`
+  - val 选 bio top1 `0.8940`
+  - test-best bio top1 diagnostic `0.8744`
+  - test-best bio top3 oracle `0.6738`
+- 判断：
+  - 生理距离不能直接把好候选排第一。
+  - bio top3/top5 内有少量上界，但这还不是可部署策略。
+
+## v274 关键结果
+
+- 设置：默认 wait-latest，只有当 bio-prefiltered pair model 高置信并有足够 margin 时才覆盖 latest。
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - bio-prefilter candidate oracle `0.6466`
+  - test-best override diagnostic `0.6902`，覆盖率 `0.0870`
+  - val-best any / active / noharm active `0.6950`
+- 判断：
+  - no-harm override 能在 test-best 诊断里挖出极小改善，但验证集不能稳定选中这个规则。
+  - 这不是可部署突破，不能算完成“让差样本本质改善”的 goal。
+  - 下一步不建议继续围绕同类 bio 阈值、selector、reranker 调参。
+
+## v275 关键结果
+
+- 设置：多生理视角一致投票；只有多个 raw_set / pred_col 支持同一个非 latest 锚点时才允许覆盖 latest。
+- 稳定性约束：除 val bad_top10 外，还检查 val all / normal / strong_steer / observe_later_like。
+- test bad_top10：
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - bio-prefilter candidate oracle `0.6466`
+  - test-best consensus diagnostic `0.6881`，覆盖率 `0.1053`
+  - val-best any / active / stable / noharm-all `0.6950`，覆盖率 `0`
+- 判断：
+  - test-best diagnostic 低于 fixed wait-latest，但 val bad_top10 伤害 `+0.1385`、val all 伤害 `+0.0295`，不可部署。
+  - val 稳定规则到 test bad_top10 上不触发覆盖，因此没有收益。
+  - 当前生理一致性仍不能作为稳定可部署的差样本修正信号。
+
+## v273 关键结果
+
+- 设置：车辆 top40 -> 生理 top5 预筛 -> 监督式 pair reranker。
+- test bad_top10：
+  - fixed wait-latest `0.6950`
+  - full oracle `0.6125`
+  - bio-prefilter candidate oracle `0.6466`
+  - test-best deployable diagnostic `0.7964`
+  - val-best vehicle+bio `0.8664`
+- 判断：
+  - 生理 top5 上界没有稳定转成模型收益。
+  - 当前生理路线的主要限制不是候选不存在，而是可部署消歧/排序信号不足。
+
+## 当前判断
+
+- 生理路线已覆盖：事件 biomarker、raw waveform、去身份化、个体/recording 校准、wait gate、prototype reranker、在线个体校准、生理消歧诊断、bio 预筛小候选 selector。
+- 这些证据整体指向：当前生理数据不足以作为主增量完成差样本本质改善。
+- 下一步建议：
+  - A：转回车辆多未来候选、uncertainty/ranker 和可部署轨迹选择。
+  - B：把生理保留为辅助诊断或边界证据，而不是继续作为主模型输入。
+  - C：若仍坚持生理，需要新增外部标签/更长个人基线/新的采集质量，而不是继续用现有表征做小改动。
+
+---
+
+# 最新更新：2026-07-02 v271 calibrated raw physiology state 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v271 已完成个体/recording 基线校准 raw 生理状态实验。
+
+## 已完成任务
+
+- v271：calibrated raw physiology state。
+  - 脚本：`03_baselines/scripts/stage03_v271_calibrated_raw_physio_state_20260702.py`
+  - 输出：`03_baselines/v271_calibrated_raw_physio_state_20260702`
+  - 报告：`03_baselines/v271_calibrated_raw_physio_state_20260702/reports/v271_calibrated_raw_physio_state_cn.md`
+  - ZIP：`03_baselines/v271_calibrated_raw_physio_state_20260702_pack.zip`
+- v270：raw physiology state latent。
+  - 脚本：`03_baselines/scripts/stage03_v270_raw_physio_state_latent_20260702.py`
+  - 输出：`03_baselines/v270_raw_physio_state_latent_20260702`
+  - 报告：`03_baselines/v270_raw_physio_state_latent_20260702/reports/v270_raw_physio_state_latent_cn.md`
+  - ZIP：`03_baselines/v270_raw_physio_state_latent_20260702_pack.zip`
+
+## v271 关键结果
+
+- 校准设定：
+  - subject / recording robust z summary。
+  - subject-centered / recording-centered raw waveform PCA。
+  - 对 val/test 属于 calibrated / transductive setting，不是 pure cold-start。
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - pair candidate oracle k40 `0.6166`
+  - wait test-best `0.6950`，等价于全 wait-latest。
+  - pair test-best deployable `subject_seq_pca72:pair_vehicle_bio_badweighted_hgb_k5 = 0.7853`
+  - val-best vehicle+raw `calibrated_low_identity48:pair_vehicle_bio_hgb_k40 = 0.9232`
+- 与 v270 对比：
+  - v270 best diagnostic pair `0.7866`。
+  - v271 best diagnostic pair `0.7853`。
+  - 改善约 `0.0013`，无实质意义。
+
+## 当前判断
+
+- 个体/recording 校准确实降低部分身份混淆，但行为 eta 仍小，无法转化成可部署预测收益。
+- 生理路线已完成：事件 biomarker、去身份特征、raw waveform、个体/recording 校准、wait gate、prototype reranker、online subject-aware 等多角度验证。
+- 当前证据不支持继续投入同类生理小变体。
+- 下一步建议：
+  - A：把主线转回车辆多未来候选、uncertainty/ranker 和可部署轨迹选择。
+  - B：把 v260-v271 生理实验整理为“边界证据/辅助信息”，不作为主增量路线。
+  - C：除非新增更强外部生理标签或更长个人基线，否则不再继续堆生理模型。
+
+---
+
+# 最新更新：2026-07-02 v270 raw physiology state latent 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v270 已完成 raw waveform state latent 的可部署验证。
+
+## 已完成任务
+
+- v270：raw physiology state latent。
+  - 脚本：`03_baselines/scripts/stage03_v270_raw_physio_state_latent_20260702.py`
+  - 输出：`03_baselines/v270_raw_physio_state_latent_20260702`
+  - 报告：`03_baselines/v270_raw_physio_state_latent_20260702/reports/v270_raw_physio_state_latent_cn.md`
+  - ZIP：`03_baselines/v270_raw_physio_state_latent_20260702_pack.zip`
+- v269：reliable / identity-removed physiology。
+  - 脚本：`03_baselines/scripts/stage03_v269_reliable_identity_removed_physio_20260702.py`
+  - 输出：`03_baselines/v269_reliable_identity_removed_physio_20260702`
+  - 报告：`03_baselines/v269_reliable_identity_removed_physio_20260702/reports/v269_reliable_identity_removed_physio_cn.md`
+  - ZIP：`03_baselines/v269_reliable_identity_removed_physio_20260702_pack.zip`
+- v268：physiology quality / alignment / identifiability audit。
+  - 脚本：`03_baselines/scripts/stage03_v268_physio_quality_identifiability_audit_20260702.py`
+  - 输出：`03_baselines/v268_physio_quality_identifiability_audit_20260702`
+  - 报告：`03_baselines/v268_physio_quality_identifiability_audit_20260702/reports/v268_physio_quality_identifiability_audit_cn.md`
+  - ZIP：`03_baselines/v268_physio_quality_identifiability_audit_20260702_pack.zip`
+- v267：supervised bio prototype reranker。
+  - 脚本：`03_baselines/scripts/stage03_v267_supervised_bio_prototype_reranker_20260702.py`
+  - 输出：`03_baselines/v267_supervised_bio_prototype_reranker_20260702`
+  - 报告：`03_baselines/v267_supervised_bio_prototype_reranker_20260702/reports/v267_supervised_bio_prototype_reranker_cn.md`
+  - ZIP：`03_baselines/v267_supervised_bio_prototype_reranker_20260702_pack.zip`
+
+## v270 关键结果
+
+- raw sequence：
+  - event_n `1167`
+  - raw sequence shape delay0 `[1167, 6, 400]`
+  - raw physio ok rate `0.9195`
+- raw 特征集：
+  - `raw_summary_fft`
+  - `raw_pca96`
+  - `raw_screened64`
+  - `raw_low_identity48`
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - pair candidate oracle k40 `0.6166`
+  - wait test-best `wait_raw_raw_summary_fft_gain = 0.6950`，但 selected_latest_rate `1.0`，等价于全 wait-latest。
+  - pair test-best deployable `raw_screened64:pair_vehicle_bio_badweighted_hgb_k20 = 0.7866`。
+  - val-best vehicle+raw `raw_low_identity48:pair_vehicle_bio_hgb_k5 = 0.8142`。
+
+## 当前判断
+
+- v270 说明 raw waveform latent 仍不能完成 goal。
+- raw 特征确实能产生一点区分，但没有稳定转化为可部署策略收益。
+- wait gate 的最好结果来自“全等 latest”，不是生理判断。
+- pair reranker 中候选 oracle 仍接近 oracle，说明候选库仍有 headroom；失败点仍是可部署选择信号不足。
+- 同类 raw 特征筛选/融合/reranker 不应继续作为主要方向。
+- 下一步候选：
+  - A：若坚持生理，验证个体基线、recording 内归一化、subject-aware 校准，明确这是校准任务而不是纯 cold-start subject-disjoint。
+  - B：若坚持 subject-disjoint 正式预测，回到车辆多未来候选、不确定性估计和可部署轨迹选择主线。
+  - C：整理 v260-v270 生理路线为边界证据，不再消耗同类算力。
+
+---
+
+# 最新更新：2026-07-02 v269 reliable / identity-removed physiology 完成
+
+## v269 关键结果
+
+- 特征集：
+  - `reliable_top64`
+  - `dynamic_top48`
+  - `low_identity_top32`
+  - `combo_identity_removed64`
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - oracle best `0.6125`
+  - pair candidate oracle k40 `0.6166`
+  - wait gate best `0.6950`，但 selected_latest_rate `1.0`，实际退化为全 wait-latest。
+  - pair test-best deployable `combo_identity_removed64:pair_base_hgb_k40 = 0.7781`。
+  - test-best vehicle_bio 诊断 `low_identity_top32:pair_vehicle_bio_badweighted_hgb_k5 = 0.7981`。
+  - val-best vehicle+bio `combo_identity_removed64:pair_vehicle_bio_badweighted_hgb_k5 = 0.8365`。
+- 与 v267 对比：
+  - v267 val-best vehicle+bio `0.8495`。
+  - v269 val-best vehicle+bio `0.8365`。
+  - 改善约 `0.0130`，但仍远高于 fixed wait-latest。
+
+## v269 判断
+
+- v269 有微弱正向变化，但不是本质改善。
+- wait gate 的最好结果来自“几乎全等 latest”，不是生理判断。
+- pair reranker 中候选 oracle 仍接近 oracle，说明候选库仍有 headroom；失败点仍是可部署选择信号不足。
+- v269 之后已进一步执行 v270 raw waveform latent，确认底层 raw 表征仍未突破 fixed wait-latest。
+
+---
+
+# 最新更新：2026-07-02 v268 physiology quality / alignment / identifiability audit 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v268 已完成现有生理链路的数据质量、对齐覆盖、身份混淆和候选排序可识别性审计。
+
+## 已完成任务
+
+- v268：physiology quality / alignment / identifiability audit。
+  - 脚本：`03_baselines/scripts/stage03_v268_physio_quality_identifiability_audit_20260702.py`
+  - 输出：`03_baselines/v268_physio_quality_identifiability_audit_20260702`
+  - 报告：`03_baselines/v268_physio_quality_identifiability_audit_20260702/reports/v268_physio_quality_identifiability_audit_cn.md`
+  - ZIP：`03_baselines/v268_physio_quality_identifiability_audit_20260702_pack.zip`
+
+## v268 关键结果
+
+- source timing：
+  - recording_n `82`
+  - subject_n `18`
+  - median_hz `200.000`
+  - gap_gt_20ms_total `0`
+  - duplicate_t_total `0`
+- signal availability：
+  - ECG/EMG/HR/RESP raw-filt 基础列整体可用。
+  - `HRV_RMSSD` usable `0/82`。
+  - `RESP_BPM` usable `0/82`。
+  - `RESP_Amplitude` usable `0/82`。
+  - EDA usable `73/82`，有 `9` 个 recording 近常数/缺失。
+- event coverage：
+  - min split-delay ok_rate `0.889`。
+  - post-observation rate `0`。
+- identity / behavior：
+  - median family identity/behavior eta ratio `68.74`。
+  - 各 family 的 behavior_eta_max_mean 均低于 `0.006`。
+- candidate rank：
+  - test bad_top10 `pred_pair_vehicle_bio_hgb` chosen_rmse `0.8460`。
+  - best candidate rmse `0.6166`。
+  - chosen_minus_latest `+0.1509`。
+  - true best top3 rate `0.211`。
+
+## 当前判断
+
+- 原始 200Hz 连续生理不是主要问题。
+- 当前派生生理表征存在两个核心问题：
+  - 一部分关键派生列不可用或近常数。
+  - 可分性主要来自 subject/recording，而不是可迁移行为状态。
+- 继续把当前 bio260 直接拼接到 MLP/attention/reranker，边际价值很低。
+- 若继续围绕用户 goal 推进，下一步优先级：
+  - A：从 200Hz 连续层重建可靠生理表征，剔除/修复不可用 HRV、RESP、EDA 派生列。
+  - B：做个体内归一化、recording residualization、identity-removed 特征筛选。
+  - C：只把通过可识别性审计的生理特征接入 wait gate 或 candidate ranker。
+  - D：如果上述仍失败，则应承认 subject-disjoint 下当前生理数据无法完成 goal，转回车辆多未来/uncertainty/ranker 主线。
+
+---
+
+# 最新更新：2026-07-02 v267 supervised bio prototype reranker 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v267 已完成“更强候选内部监督 reranker”验证。
+
+## 已完成任务
+
+- v267：supervised bio prototype reranker。
+  - 脚本：`03_baselines/scripts/stage03_v267_supervised_bio_prototype_reranker_20260702.py`
+  - 输出：`03_baselines/v267_supervised_bio_prototype_reranker_20260702`
+  - 报告：`03_baselines/v267_supervised_bio_prototype_reranker_20260702/reports/v267_supervised_bio_prototype_reranker_cn.md`
+  - ZIP：`03_baselines/v267_supervised_bio_prototype_reranker_20260702_pack.zip`
+
+## v267 关键结果
+
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - full oracle `0.6125`
+  - pair candidate oracle k40 `0.6166`
+  - val-best pair vehicle `0.8746`
+  - val-best pair vehicle+bio `0.8495`
+- 诊断：
+  - test 上最好的 bio pair strategy 是 `pair_vehicle_bio_hgb_k20`，bad_top10 `0.8046`，但不是 val 选择结果，且仍未低于 wait-latest。
+  - val-best bio 相比 val-best vehicle-only 只改善 `0.0251`。
+
+## 当前判断
+
+- v267 说明即使把候选重排从“简单距离规则”升级为“监督式 query-prototype reranker”，当前 bio260 仍不能把 candidate oracle headroom 转成可部署收益。
+- 问题不是缺少一个更深 MLP/attention/reranker，而是 subject-disjoint 下的生理状态信号不足以稳定选择正确候选。
+- 下一步优先级：
+  - A：做生理数据质量/对齐可识别性审计，检查 bio260 是否被缺失、floor 合并、设备/recording 差异、时间对齐误差稀释。
+  - B：改变任务边界为 subject-aware 个体校准。
+  - C：如果目标允许回到车辆主线，则做车辆多未来候选 + uncertainty/ranker。
+
+---
+
+> 最新指针：2026-07-02 已完成 GPTPro phase02 桌面软件复核与 v266 vehicle-matched bio residual prototype。当前没有正在运行的训练进程。GPTPro 给出的三条可证伪路线中：wait-benefit 已由 v265 覆盖且失败；subject-aware online 已由 v264 覆盖，生理 KNN 无额外收益；vehicle-matched prototype 已由 v266 覆盖。v266 显示 candidate oracle 有 headroom（test bad_top10 `0.6166`，接近 full oracle `0.6125`，低于 fixed wait-latest `0.6950`），但可部署 reranker 未达标：val-best vehicle-only `0.8890`，val-best vehicle+bio `0.8374`，仍高于 fixed wait-latest。当前结论：生理路线不再缺“又一个更强融合模型”，而是缺能稳定选择正确候选的可部署信号；subject-disjoint 生理主线应暂停，下一步优先回到车辆多未来/不确定性/候选轨迹选择主线，或另立 subject-aware 个体校准任务。
+
+---
+
+# 最新更新：2026-07-02 GPTPro phase02 + v266 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- GPTPro phase02 已通过 ChatGPT 桌面软件 Pro / Pro 扩展完成，不再是“未发送”状态。
+- v266 已完成 GPTPro 路线2的最小可证伪验证。
+
+## 已完成任务
+
+- GPTPro phase02 外部复核：
+  - 提问词：`gptpro_reviews/20260702_phase02_prompt.md`
+  - 回复：`gptpro_reviews/20260702_phase02_response.md`
+  - 原始可访问性树：`gptpro_reviews/20260702_phase02_response_raw_accessibility.txt`
+- v266：vehicle-matched bio residual prototype。
+  - 脚本：`03_baselines/scripts/stage03_v266_vehicle_matched_bio_residual_prototype_20260702.py`
+  - 输出：`03_baselines/v266_vehicle_matched_bio_residual_prototype_20260702`
+  - 报告：`03_baselines/v266_vehicle_matched_bio_residual_prototype_20260702/reports/v266_vehicle_matched_bio_residual_prototype_cn.md`
+  - ZIP：`03_baselines/v266_vehicle_matched_bio_residual_prototype_20260702_pack.zip`
+
+## v266 关键结果
+
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - full oracle `0.6125`
+  - vehicle-matched candidate oracle k40 `0.6166`
+  - val-best vehicle-only prototype `0.8890`
+  - val-best vehicle+bio prototype `0.8374`
+- v266 的重要含义：
+  - 相似车辆 prototype 候选库几乎有足够 headroom，说明“可选候选不存在”不是主因。
+  - 但当前 vehicle/bio 重排序选不准，不能稳定把 headroom 变成可部署收益。
+  - bio 在 val-best 可部署对照里比 vehicle-only 低 `0.0516`，但仍远高于 fixed wait-latest，不能称为差样本本质改善。
+
+## 当前判断
+
+- GPTPro 建议的三条路线已形成闭环：
+  - wait-benefit / CATE-style：v265 已测，bio 无稳定增量。
+  - vehicle-matched residual prototype：v266 已测，有 oracle headroom，但 bio reranker 不达标。
+  - subject-aware / online calibration：v264 已测，生理 KNN 没有额外收益。
+- 因此，subject-disjoint 生理主线应暂停。
+- 如果继续追求差样本本质改善，优先级更高的是车辆主线：多未来轨迹候选、候选不确定性、可部署轨迹选择，而不是继续生理拼接/更深融合。
+
+## 下一步候选
+
+- 选择 A：回到车辆主线，基于 v266 暴露的 headroom，做“车辆多未来候选 + 可部署 uncertainty/ranker”，不再依赖生理作为主信号。
+- 选择 B：另立 subject-aware 个体校准任务，把同驾驶员历史反馈作为正式部署条件，但不再包装为 subject-disjoint 泛化。
+- 选择 C：如果仍坚持生理，必须先做生理数据质量/对齐/任务可识别性审计，而不是继续训练更强融合网络。
+
+---
+
+> 最新指针：2026-07-02 已追加 v265 physiology uncertainty / wait frontier。当前没有正在运行的训练进程。v265 验证“生理作为不确定性/风险校准信号”这一最后一个合理用途：所有风险分数只在 train 拟合，等待比例阈值只在 val 定标。结果：test bad_top10 上所有分数的最佳 RMSE 都退化为全 wait-latest `0.6950`；生理 badprob 有弱 AUC（vehicle+bio `0.6175`，bio-only `0.6376`），但无法稳定转化为可部署等待策略收益。结合 v260-v264，当前生理数据在正式 subject-disjoint 边界下没有形成“差样本本质改善”的建模路线。下一步需要用户确认：改变任务边界为 subject-aware 个体校准，或暂停生理主线转向车辆多未来/不确定性模型，或手动确认 GPTPro Pro/进阶模式后做外部复核。
+
+---
+
+# 最新更新：2026-07-02 v265 physiology uncertainty / wait frontier 完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v265 已完成最后一类生理用途复核：风险/不确定性校准。
+
+## 已完成任务
+
+- v265：physiology uncertainty / wait frontier。
+  - 脚本：`03_baselines/scripts/stage03_v265_physio_uncertainty_wait_frontier_20260702.py`
+  - 输出：`03_baselines/v265_physio_uncertainty_wait_frontier_20260702`
+  - 报告：`03_baselines/v265_physio_uncertainty_wait_frontier_20260702/reports/v265_physio_uncertainty_wait_frontier_cn.md`
+  - ZIP：`03_baselines/v265_physio_uncertainty_wait_frontier_20260702_pack.zip`
+
+## v265 关键结果
+
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - oracle `0.6125`
+  - 所有风险分数最佳 RMSE 都退化为 wait-latest `0.6950`
+- 风险诊断：
+  - test `score_vehicle_bio_badprob` bad_top10 AUC `0.6175`
+  - test `score_bio_only_badprob` bad_top10 AUC `0.6376`
+  - 说明生理有弱风险信号。
+- 策略前沿：
+  - 这个弱风险信号没有稳定转化为同等等待预算下的 RMSE 优势。
+  - vehicle+bio 分数不稳定，不支配 vehicle 分数。
+
+## 当前判断
+
+- 生理作为直接预测、selector、wait gate、online KNN、风险校准都未达到 goal。
+- 当前 blocker 不是模型层还不够复杂，而是正式 subject-disjoint 边界下的生理信号太弱，无法可靠转化为可部署策略。
+- 继续局部加模型不合理；需要用户确认是否改变任务边界或补充外部复核/数据。
+
+## 下一步候选
+
+- 选择 A：改变任务边界，正式做 subject-aware 个体校准任务。
+- 选择 B：暂停生理主线，回到车辆多未来分布/不确定性模型。
+- 选择 C：用户手动确认 Chrome 为 Pro/进阶模式后，发送 `gptpro_reviews/20260702_phase02_prompt.md` 给 GPTPro 做外部复核。
+
+---
+
+> 最新指针：2026-07-02 已追加 v264 online subject-aware physiology calibration。当前没有正在运行的训练进程。v264 不是正式 subject-disjoint 替代结果，而是边界实验：允许同一驾驶员更早事件结果做在线校准。结果显示 online subject 历史反馈能让 test bad_top10 从 global vehicle gate `0.7528` 接近 fixed wait-latest，到 `0.7112`；但 physiology KNN 没有额外收益，`online_physio_knn_vehicle` 仍为 `0.7112`，`online_physio_knn_vehicle_bio` 为 `0.7698`。GPTPro phase02 提问词已归档，但因无法确认 Chrome 当前为 Pro/进阶模式，桥接脚本拒绝发送。当前 goal 仍未达成；生理主线若继续，应先明确换成 subject-aware 个体校准任务，否则应回到车辆多未来/不确定性建模主线。
+
+---
+
+# 最新更新：2026-07-02 v264 online subject-aware 生理校准边界实验完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal 仍未达成。
+- v264 证明：放宽为 online subject-aware 后，同驾驶员历史反馈有价值；但当前 bio260 生理特征没有证明有额外价值。
+
+## 已完成任务
+
+- v264：online subject-aware physiology calibration。
+  - 脚本：`03_baselines/scripts/stage03_v264_online_subject_physio_calibration_20260702.py`
+  - 输出：`03_baselines/v264_online_subject_physio_calibration_20260702`
+  - 报告：`03_baselines/v264_online_subject_physio_calibration_20260702/reports/v264_online_subject_physio_calibration_cn.md`
+  - ZIP：`03_baselines/v264_online_subject_physio_calibration_20260702_pack.zip`
+- GPTPro phase02 复核：
+  - 提问词：`gptpro_reviews/20260702_phase02_prompt.md`
+  - 状态：未发送。
+  - 原因：桥接脚本无法确认 Chrome 当前为 Pro/进阶模式，按规则拒绝发送。
+
+## v264 关键结果
+
+- test bad_top10：
+  - keep0 `1.1977`
+  - fixed wait-latest `0.6950`
+  - oracle `0.6125`
+  - global vehicle gate `0.7528`
+  - global vehicle+bio260_sp64 gate `0.8748`
+  - online_subject_mean_vehicle `0.7112`
+  - online_physio_knn_vehicle `0.7112`
+  - online_subject_mean_vehicle_bio `0.6950`
+  - online_physio_knn_vehicle_bio `0.7698`
+
+## 当前判断
+
+- online subject 历史反馈可以接近 fixed wait-latest，说明“同驾驶员历史反馈”是有用边界。
+- physiology KNN 没有超过纯 subject residual mean，说明当前 bio260 没有提供额外个体内状态区分能力。
+- `online_subject_mean_vehicle_bio` 达到 `0.6950` 是因为策略几乎全等 wait-latest，不应解释为生理建模成功。
+- 后续若继续生理，必须明确改变任务为 subject-aware 个体校准；如果仍坚持 subject-disjoint，当前生理主线优先级应下降。
+
+## 下一步候选
+
+- 选择 A：正式立一个 subject-aware online adaptation 子任务，目标是评估同驾驶员历史反馈能否作为部署条件，但不要把它写成 subject-disjoint 泛化提升。
+- 选择 B：停止把当前生理作为主增量，回到车辆多未来分布/不确定性模型。
+- 选择 C：人工确认 Chrome 已在 Pro/进阶模式后，再发送 `gptpro_reviews/20260702_phase02_prompt.md` 做外部复核。
+
+---
+
+> 最新指针：2026-07-02 已完成 v260-v263 生理重构与决策复核。当前没有正在运行的训练进程。用户 goal 仍未达成：v260 事件级 bio260 有弱 bad_top10 风险信号，但 v261 全量 bio260 anchor selector 弱于 vehicle selector；v262 subject-invariant sp64 只把 test bad_top10 selector tail 从 `0.9419` 小幅降到 `0.9059`，远高于 fixed wait-latest `0.6950`；v263 0ms wait gate 中 vehicle gate `0.7528` 优于 vehicle+bio260 gate `0.8748`，val 调阈值退化为几乎全等 latest。结论：当前生理数据尚不能本质弥补锚点前车辆信息不足；后续不建议继续做同类生理拼接/浅层融合，应转向 subject-aware 个体校准，或回到 subject-disjoint 车辆多未来分布/不确定性建模主线。
+
+---
+
+# 最新更新：2026-07-02 v260-v263 生理重构与 wait/anchor 决策复核完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户 goal：充分利用生理数据，弥补锚点前车辆信息不足，并让预测差样本有本质性改善。
+- 该 goal 目前尚未达成。v260-v263 的证据显示，生理有弱诊断信号，但没有形成可部署的差样本大幅改善。
+
+## 已完成任务
+
+- v260：事件级 bio260 biomarker 重构。
+  - 脚本：`03_baselines/scripts/stage03_v260_event_biomarker_physio_rebuild_20260702.py`
+  - 输出：`03_baselines/v260_event_biomarker_physio_rebuild_20260702`
+  - 结论：bio260 相比旧 physio200 在 bad_top10 诊断上略好，但 vehicle+bio260 仍不能稳定超过 vehicle-only 的正式未来行为预测。
+- v261：bio260 全量 anchor selector。
+  - 脚本：`03_baselines/scripts/stage03_v261_bio260_anchor_selector_20260702.py`
+  - 输出：`03_baselines/v261_bio260_anchor_selector_20260702`
+  - 结论：test bad_top10 中 vehicle selector `0.9425`，vehicle+bio260 `0.9765`，badweighted `0.9837`，生理加入后变差。
+- v262：subject-invariant bio260 selector。
+  - 脚本：`03_baselines/scripts/stage03_v262_subject_invariant_bio260_selector_20260702.py`
+  - 输出：`03_baselines/v262_subject_invariant_bio260_selector_20260702`
+  - 结论：sp64 特征使 test bad_top10 从 vehicle selector `0.9419` 小幅降到 `0.9059`，但仍显著弱于 fixed wait-latest `0.6950`。
+- v263：0ms bio260 wait gate。
+  - 脚本：`03_baselines/scripts/stage03_v263_bio260_wait_gate_20260702.py`
+  - 输出：`03_baselines/v263_bio260_wait_gate_20260702`
+  - 结论：vehicle gate `0.7528` 优于 vehicle+bio260 gate `0.8748`；val 阈值选择几乎全等 latest，说明主要收益来自多观察而不是生理判断。
+
+## 当前判断
+
+- 生理数据不是完全无信息；事件级 ECG/EDA/RESP/EMG 重构后确实有弱 bad_top10 风险信号。
+- 但该信号在 subject-disjoint 正式预测、anchor selector 和 wait gate 中都没有形成稳定可部署增益。
+- 若继续生理方向，应优先改任务边界为 subject-aware 个体校准，或先做生理质量/对齐修复；不建议继续盲目加深同类融合结构。
+- 若目标仍是 subject-disjoint 正式预测，应把下一步放回车辆主线：显式多未来轨迹分布、不确定性输出、或更强的车辆时序 backbone。
+
+## 下一步候选
+
+- 选择 A：转为 subject-aware 生理个体校准任务，明确要求同一驾驶员历史样本可用。
+- 选择 B：暂停生理作为主增量，回到 subject-disjoint 车辆多未来/不确定性建模。
+- 选择 C：继续生理前，先单独做生理质量修复审计，例如 HRV/RESP/SCR 可靠重算、缺失记录修复、recording 对齐复核。
+
+## 禁止任务
+
+- 不继续做生理简单拼接、手工权重扫参、浅层 CNN/MLP/attention 盲试。
+- 不删除差样本。
+- 不把 oracle best anchor / test 后验结果当可部署策略。
+- 不使用 observation_s 之后的生理或未来轨迹信息。
+- 不把 subject-aware 小幅改善包装成 subject-disjoint 泛化提升。
+
+---
+
+> 最新指针：2026-07-01 已完成 v254a physio deep signal audit。当前没有正在运行的训练任务。v254a 已按“深层挖掘生理数据”路线，从 10Hz 生理表提取锚点前多窗口统计、趋势和窗口差值，并用 train-only 诊断头检查生理是否含未来行为信号。结果：10Hz 生理覆盖率 `0.919`，无 observation 后泄漏；生理确实有 subject/recording 结构，但行为标签可分性很弱，future_cluster4 top eta² 约 `0.015`，high_future_abs_q75 top eta² 约 `0.020`。test 分类中 vehicle_only 仍明显最好：future_cluster4 macro-F1 `0.7317`，physio10hz `0.2944`，vehicle+physio10hz `0.5020`；high_future_abs_q75 vehicle_only `0.7112`，physio10hz `0.4897`，vehicle+physio10hz `0.6239`。下一步不应继续拼接或手工权重，应重做生理表征：200Hz 事件相关变化、个体内归一化、EDA/EMG/HR/RESP 专用特征，并区分 subject-aware 与 subject-disjoint 评估。
+
+---
+
+# 最新更新：2026-07-02 生理数据深挖 v254b-v256 完成，goal 尚未达成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 用户设置的 goal 是：充分利用生理数据，弥补锚点前车辆信息不足，并让预测差样本有本质性改善。
+- 该 goal 目前尚未达成：v254b/v255/v256 均未在正式 subject-disjoint 口径下改善 bad_top10 差样本。
+
+## 已完成任务
+
+- v254b：200Hz 连续生理事件相关表征。
+  - 脚本：`03_baselines/scripts/stage03_v254b_physio_200hz_event_representation_20260702.py`
+  - 输出：`03_baselines/v254b_physio_200hz_event_representation_20260702`
+  - 结论：subject-disjoint 下车辆+生理不优于 vehicle_only；subject-aware bad_top10 诊断有一定信号。
+- v255：生理状态条件化候选轨迹选择。
+  - 脚本：`03_baselines/scripts/stage03_v255_physio_conditioned_candidate_ranker_20260702.py`
+  - 输出：`03_baselines/v255_physio_conditioned_candidate_ranker_20260702`
+  - 结论：oracle 候选池上限仍强，但 learned physio ranker 在 val 上无法通过 no-harm，test 退回 vehicle_rank1。
+- v256：raw 200Hz 生理 CNN 融合轨迹预测。
+  - 脚本：`03_baselines/scripts/stage03_v256_raw_physio_cnn_fusion_20260702.py`
+  - 输出：`03_baselines/v256_raw_physio_cnn_fusion_20260702`
+  - 结论：subject-disjoint bad_top10 上 vehicle+physio CNN 比 vehicle-only 更差；subject-aware bad_top10 只有很小改善。
+- GPTPro 复核：
+  - 提问词已保存：`gptpro_reviews/20260702_phase01_prompt.md`
+  - 未发送原因：Chrome 当前 Pro/进阶模式无法被脚本确认，桥接脚本按规则拒绝发送。
+
+## 当前判断
+
+- 当前生理数据更像 subject/recording/个体状态信号，而不是稳定跨驾驶员行为预测信号。
+- 继续做“更复杂的生理拼接、手工权重、候选重排序、浅层 CNN/TCN”优先级很低。
+- 如果仍坚持用生理，推荐把问题明确改为 subject-aware 个体化/校准预测，而不是 subject-disjoint 跨驾驶员泛化。
+- 如果目标仍是正式 subject-disjoint 差样本大幅改善，下一步应回到车辆与任务构造主线，重点考虑：
+  - anchor-aware 等待/重锚定决策；
+  - 显式多模态轨迹分布输出；
+  - 更强车辆时序 backbone；
+  - 但不能使用 test 后验、oracle future、删除样本或 v222a 式 gate/residual。
+
+## 下一步待用户确认
+
+- 选择 A：继续生理路线，但改成 subject-aware 个体化校准任务，明确需要同一驾驶员少量历史样本。
+- 选择 B：暂停生理作为主增量，回到 subject-disjoint 正式预测提升，优先做 anchor-aware / 多模态车辆模型。
+- 选择 C：用户手动把 Chrome 项目切到 Pro/进阶后，再把 `gptpro_reviews/20260702_phase01_prompt.md` 发给 GPTPro 做外部方法复核。
+
+## 禁止任务
+
+- 不继续盲目做生理简单拼接或权重扫描。
+- 不删除差样本。
+- 不把 oracle 候选/最佳锚点当可部署策略。
+- 不使用 observation_s 后的生理或未来轨迹信息作为输入。
+- 不把 subject-aware 小幅改善包装成 subject-disjoint 泛化提升。
+
+
+## 最新更新：2026-07-01 v254a 生理信号深层挖掘审计已完成
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v254a 已完成：这是生理表征/可分性/行为增量审计，不是新轨迹预测模型训练。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v254a_physio_deep_signal_audit_20260701.py`。
+- 已生成 v254a 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v254a_physio_deep_signal_audit_20260701`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v254a_physio_deep_signal_audit_20260701_pack.zip`
+- 已输出核心表：
+  - `tables\v254a_event_physio10hz_deep_features.csv`
+  - `tables\v254a_alignment_coverage_summary.csv`
+  - `tables\v254a_physio_signal_quality_summary.csv`
+  - `tables\v254a_physio_eta2_by_target_feature.csv`
+  - `tables\v254a_behavior_classification_diagnostics.csv`
+  - `tables\v254a_future_summary_regression_diagnostics.csv`
+  - `tables\v254a_feature_block_audit.csv`
+- 已输出核心图：
+  - `figures\v254a_behavior_classification_macro_f1.png`
+  - `figures\v254a_future_summary_regression_r2.png`
+  - `figures\v254a_top_physio_eta2.png`
+  - `figures\v254a_physio10hz_window_rows.png`
+
+### 结果判断
+
+- v254a 已从 1Hz 粗窗口推进到 10Hz 多窗口深层统计，但 test 上仍未看到跨驾驶员泛化的行为预测增量。
+- 生理数据不是空的：subject/recording 可分性很强，说明它含有身份/记录/设备或个体状态信息。
+- 但这些信息没有转化成行为标签：future_cluster4、high_future_abs_q75、strong_steer_existing 的 eta² 只有约 `0.015-0.023`。
+- 车辆输入仍是行为模式预测主信号；加入 physio10hz 后反而降低 test macro-F1，说明简单高维生理拼接会带来噪声或跨 subject 分布偏移。
+- HRV_RMSSD 基本不可用；RESP_BPM/RESP_Amplitude 近常数比例偏高；后续不应把这些列直接当作有效动态特征。
+
+### 下一步候选任务
+
+- 首选：`v254b_physio_representation_redesign`。
+  - 从 200Hz 连续层重新构造事件相关生理变化，而不是只用 1Hz/10Hz表格窗口统计。
+  - 做个体内 baseline normalization：同一 subject / 同一 recording 内的 z-score、百分位、变化率。
+  - 分模态重做专用特征：EDA tonic/phasic response、EMG burst、HR/HRV、RESP phase/amplitude。
+  - 区分两套评估：subject-disjoint 泛化与 subject-aware 个体化。
+- 可选：先做 `v254b1_physio_representation_quality_only`，只重算特征质量和标签可分性，不训练任何诊断头。
+
+### 禁止任务
+
+- 不把 v254a 解释成“生理数据无效”；只能说“当前 10Hz/1Hz窗口统计没有跨 subject 行为增量”。
+- 不继续做简单拼接、手工权重扫描或手工 tie-break。
+- 不把 subject/recording 可分性当作行为预测有效性。
+- 不用 test 结果选择生理特征。
+
+---
+
+## 最新更新：2026-07-01 v253b 生理/驾驶风格状态 tie-break 审计已完成
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v253b 已完成：这是状态信号在车辆相似候选池内的排序审计，不是预测模型训练。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v253b_physio_state_tiebreak_audit_20260701.py`。
+- 已生成 v253b 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v253b_physio_state_tiebreak_audit_20260701`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v253b_physio_state_tiebreak_audit_20260701_pack.zip`
+- 已输出核心表：
+  - `tables\v253b_tiebreak_summary.csv`
+  - `tables\v253b_tiebreak_per_strategy.csv`
+  - `tables\v253b_pool_distance_future_correlation_summary.csv`
+  - `tables\v253b_pool_distance_future_correlation_by_sample.csv`
+  - `tables\v253b_vehicle_candidate_pool_summary.csv`
+  - `tables\v253b_subject_split_table.csv`
+- 已输出核心图：
+  - `figures\v253b_badtop10_tiebreak_selected_future_rmse.png`
+  - `figures\v253b_tiebreak_delta_vs_vehicle_rank1.png`
+
+### 结果判断
+
+- v253b 比 v253a 更贴近用户假设：不是把生理/风格全局拼接进输入，而是在车辆相似候选池内做 tie-break。
+- 但当前表示仍不成立：v250 bad_top10 all-delay 上，style / physio_recent / physio_guarded / style+physio 的 selected future RMSE 均高于 vehicle_rank1。
+- 候选池 oracle 很强：bad_top10 all-delay oracle 可到 `0.3678`，说明问题不是“池里没有好未来”，而是当前生理/风格距离无法选中它。
+- 候选池内距离-未来误差相关几乎为 0：bad_top10 中 style mean Spearman `0.026`，physio_recent `-0.008`，physio_guard `-0.022`，style+physio `-0.002`。
+- 当前 split 是 subject-disjoint，不能验证同一驾驶员个体记忆；只能验证跨驾驶员状态相似性。
+
+### 下一步候选任务
+
+- 首选：`v254_state_conditioned_probabilistic_mixture`。
+  - 车辆轨迹仍是主输入。
+  - 生理/风格不作为手工距离直接决定候选。
+  - 用可学习模块预测 mixture weight、mode prior、uncertainty 或 confidence。
+  - 对 v252/v253b 中 oracle 上限大的样本输出多模态结果。
+- 可选前置审计：`v254a_physio_quality_alignment_audit`。
+  - 检查 1Hz 生理特征是否太粗、窗口是否太短、recording 对齐是否足够稳定。
+  - 检查生理特征是否能区分 subject / recording / 高低转向强度 / 高低未来分叉。
+
+### 禁止任务
+
+- 不把 v253b 解释为“生理没有价值”；只能说“当前生理/风格表示和手工 tie-break 不可用”。
+- 不用 oracle future 做部署选择器。
+- 不继续做简单拼接权重扫描。
+- 不回到 gate / 删除样本 / response type hard routing。
+
+---
+
+## 最新更新：2026-07-01 v253a 生理/驾驶风格状态信号消歧审计已完成
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v253a 已完成：这是状态信号可用性和消歧审计，不是预测模型训练。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v253_state_signal_disambiguation_audit_20260701.py`。
+- 已生成 v253a 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v253_state_signal_disambiguation_audit_20260701`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v253_state_signal_disambiguation_audit_20260701_pack.zip`
+- 已输出核心表：
+  - `tables\v253a_old_style_match_audit.csv`
+  - `tables\v253a_current_style_features_last60_guard3.csv`
+  - `tables\v253a_current_physio_features_1hz.csv`
+  - `tables\v253a_feature_block_audit.csv`
+  - `tables\v253a_neighbor_divergence_by_feature_group.csv`
+  - `tables\v253a_summary_by_feature_group_bucket_delay.csv`
+  - `tables\v253a_key_comparison_vs_vehicle_only.csv`
+- 已输出核心图：
+  - `figures\v253a_state_signal_badtop10_disambiguation.png`
+  - `figures\v253a_state_signal_delta_vs_vehicle_only.png`
+
+### 结果判断
+
+- 旧 stage04 style 表不能直接复用：与当前样本 `sample_id`、`event_uid`、`subject+session+anchor` 交集均为 `0`。
+- 当前样本重新提取的驾驶风格覆盖完整：`7002/7002`，且不使用 observation 后未来、不重叠直接输入最后 3 秒。
+- 生理 1Hz 特征 recording 覆盖率为 `0.919`，窗口均不超过 observation_s。
+- 但消歧结果不支持“直接拼接状态特征”：
+  - bad_top10_v250 all-delay，vehicle-only query-vs-neighbor future RMSE `1.0627`。
+  - style_w0.25 `1.0637`，style_w0.50 `1.0868`。
+  - physio_recent_w0.25 `1.0703`，physio_recent_w0.50 `1.1311`。
+  - style+physio_w0.50 `1.1466`。
+- 因此当前状态特征没有让近邻未来更集中，直接作为确定性回归输入不成立。
+
+### 下一步候选任务
+
+- 首选：`v254_probabilistic_multimodal_with_state_conditioning`。
+  - 车辆轨迹仍是主输入。
+  - 生理/风格不直接拼进确定性曲线回归。
+  - 用生理/风格预测 mode prior、uncertainty、confidence 或 mixture weight。
+  - 对 v252 高歧义样本输出多条可能未来，而不是强行输出一条平均曲线。
+- 可选：先做 v254a 轻量原型，不训练大模型，只训练 mixture weight / uncertainty head，避免一开始复杂化。
+
+### 禁止任务
+
+- 不把旧 stage04 style 表直接回贴到当前样本。
+- 不把 v253a 解释为“生理/风格无效”；只能说“当前表示和直接拼接消歧无效”。
+- 不用 test 结果选择状态特征权重。
+- 不回到 gate / 删除样本 / response type hard routing。
+
+---
+
+## 最新更新：2026-07-01 v252 输入相似样本未来分叉审计已完成
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v252 已完成：这是可辨识性审计，不是新模型训练。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v252_input_similarity_future_divergence_20260701.py`。
+- 已生成 v252 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v252_input_similarity_future_divergence_20260701`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v252_input_similarity_future_divergence_20260701_pack.zip`
+- 已输出核心表：
+  - `tables\v252_neighbor_divergence_by_sample.csv`
+  - `tables\v252_neighbor_detail.csv`
+  - `tables\v252_summary_by_delay_bucket.csv`
+  - `tables\v252_error_ambiguity_correlation.csv`
+  - `tables\v252_high_ambiguity_error_overlap.csv`
+  - `tables\v252_casebook_index.csv`
+- 已输出核心图：
+  - `figures\v252_error_vs_neighbor_future_divergence.png`
+  - `figures\v252_neighbor_divergence_by_error_group.png`
+  - `figures\v252_delay_future_divergence_summary.png`
+  - `figures\v252_casebook_high_error_high_ambiguity.png`
+  - `figures\v252_casebook_worst_regression_neighbors.png`
+
+### 结果判断
+
+- 全 test rolling sample：近邻未来两两 RMSE 均值 `0.707`，query-vs-neighbor 未来 RMSE 均值 `0.686`。
+- 当前 v250 bad_top10 样本：近邻未来两两 RMSE 均值 `0.837`，query-vs-neighbor 未来 RMSE 均值 `1.063`。
+- 0ms 原始锚点更明显：全体近邻未来两两 RMSE `0.836`，v250 bad_top10 0ms 为 `0.963`，query-vs-neighbor 未来 RMSE 为 `1.148`。
+- `neighbor_future_to_query_mean_rmse` 与 `tail_rmse_v250` 的 Spearman 为 `0.495`；`neighbor_input_distance_mean` 与 `tail_rmse_v250` 的 Spearman 仅 `0.047`。
+- 解释：差样本不是因为简单找不到相似样本，而是即使输入相似，未来真实行为也可能分叉。
+
+### 下一步候选任务
+
+- 首选：`v253_probabilistic_or_multimodal_prediction_design`。
+  - 不再强行让模型输出唯一确定曲线。
+  - 让模型输出多条候选轨迹、每条轨迹概率、以及不确定性区间。
+  - 对可辨识样本保持单峰预测，对高歧义样本显式给出多未来。
+- 可选：基于 v252 casebook 人工审查最典型高歧义样本，确认是否存在可补充的上下文变量。
+
+### 禁止任务
+
+- 不回到 v222a gate / 删除样本 / response type hard routing。
+- 不把 oracle best anchor 或近邻真实未来当作可部署策略。
+- 不基于 test 继续调输入通道。
+- 不把 v252 写成模型性能提升；它是任务可辨识性证据。
+
+---
+
+## 最新更新：2026-07-01 v251 locked robustness audit 已完成，v250_minimal_lateral7 稳健性通过
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v251 已完成：固定 v250 的 `v250_minimal_lateral7`，不重新训练、不改通道、不用 test 做模型选择。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v251_locked_robustness_v250_20260701.py`。
+- 已生成 v251 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v251_locked_robustness_v250_20260701`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v251_locked_robustness_v250_20260701_pack.zip`
+- 已输出核心表：
+  - `tables\v251_sample_locked_delta.csv`
+  - `tables\v251_bucket_delay_locked_summary.csv`
+  - `tables\v251_subject_locked_summary.csv`
+  - `tables\v251_recording_locked_summary.csv`
+  - `tables\v251_event_bootstrap_ci.csv`
+  - `tables\v251_worst_regressions.csv`
+  - `tables\v251_bad_top10_casebook_index.csv`
+  - `tables\v251_next_decision.csv`
+- 已输出核心图：
+  - `figures\v251_test_bucket_delay_tail_delta.png`
+  - `figures\v251_subject_bucket_tail_delta.png`
+  - `figures\v251_bootstrap_ci_all_delay.png`
+  - `figures\v251_bad_top10_casebook.png`
+  - `figures\v251_worst_regression_casebook.png`
+
+### 结果判断
+
+- `locked_robustness_pass=True`。
+- all/normal/observe_later_like/strong_steer 的所有关键 test delay tail delta 均小于 0。
+- event-level bootstrap all-delay 95% CI 均排除 0 且为负：
+  - all：`-0.0696 [-0.0926, -0.0467]`
+  - normal_predictable：`-0.0673 [-0.0989, -0.0361]`
+  - observe_later_like：`-0.0999 [-0.1608, -0.0386]`
+  - strong_steer：`-0.0769 [-0.1151, -0.0387]`
+  - bad_top10_v241：`-0.3036 [-0.3818, -0.2268]`
+- subject/bucket win rate 为 `0.9375`。
+- 主要边界：`cwh/strong_steer` all-delay mean tail delta 为 `+0.0047`，属于轻微回退；worst regressions 主要集中在少数 `tyy` 事件，也有个别 `cwh/rjy` 事件。
+
+### 下一步候选任务
+
+- 首选：`v252_mainline_candidate_pack_or_subject_level_retest`。
+  - 固定 7 通道和 v250_minimal_lateral7 方案。
+  - 打包为下一主线候选，包括模型定义、输入通道说明、locked robustness 证据、回退样本风险说明。
+  - 做最终一致性审计：是否和 v238 original_remaining target、v241 backbone、v250 channel selection 逻辑完全一致。
+- 可选：对 `cwh/strong_steer` 和 top worst regression 做人工 case review，确认是否存在特殊事件形态或通道精简导致的过冲。
+
+### 禁止任务
+
+- 不再基于 test 调通道。
+- 不把 v251 直接写成 formal replacement；它是 locked robustness 证据。
+- 不回到 v222a gate / 删除样本 / response type hard routing。
+- 不忽略 worst regression；正式表述必须保留“均值和 bootstrap 稳健，但逐样本不是全胜”的边界。
+
+---
+
+## 最新更新：2026-06-30 v250 history-channel ablation 已完成，精简历史通道可作为下一候选
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v250 已完成：只精简 `X_hist` 历史车辆通道，不改历史长度、不改道路预瞄、不改 phase/current、不改 point query。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v250_history_channel_ablation_20260630.py`。
+- 已生成 v250 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v250_history_channel_ablation_20260630`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v250_history_channel_ablation_20260630_pack.zip`
+- 已训练候选：
+  - `v250_drop_attitude_noise13`
+  - `v250_lateral_core10`
+  - `v250_minimal_lateral7`
+- 已输出核心表：
+  - `tables\v250_model_selection_validation_channel_ablation.csv`
+  - `tables\v250_compare_vs_v241_original_remaining.csv`
+  - `tables\v250_shape_summary.csv`
+  - `tables\v250_input_neighborhood_ambiguity_by_channel.csv`
+  - `tables\v250_input_neighborhood_ambiguity_summary.csv`
+  - `tables\v250_next_decision.csv`
+- 已输出核心图：
+  - `figures\v250_tail_delta_by_channel_group.png`
+  - `figures\v250_neighbor_ambiguity_by_channel_group.png`
+
+### 结果判断
+
+- best validation model 为 `v250_minimal_lateral7`，保留历史通道：`steering`、`speed_kmh`、`ay`、`yaw_rate`、`roll`、`lane_curvature`、`lateral_distance`。
+- `v250_minimal_lateral7` validation：normal max tail delta vs v241 `-0.0813`，all mean tail delta `-0.1380`，observe_later mean tail delta `-0.1368`，strong mean tail delta `-0.1543`，val bad_top10 RMSE delta `-0.3247`。
+- locked test：all 平均 tail delta `-0.0696`，normal_predictable `-0.0673`，observe_later_like `-0.0999`，strong_steer `-0.0769`，reverse_or_multi_correction `-0.0704`。
+- shape：test bad_top10_v241 mean RMSE delta `-0.2433`；strong_steer range ratio gain `+0.0716`，slope ratio gain `+0.0440`。这说明通道精简不仅降低 RMSE，也部分改善强变化幅值/斜率不足。
+- 输入邻域歧义：三组通道下 delay=0 v241 bad_top10 仍 `input_ambiguous_rate=1.0`。最低 neighbor future pairwise RMSE 为 `0.891`，来自 `v250_lateral_core10`；说明通道精简降低了噪声，但没有彻底解决一对多未来问题。
+
+### 下一步候选任务
+
+- 首选：`v251_locked_robustness_for_v250_minimal_lateral7`。
+  - 固定 v250_minimal_lateral7，不再用 test 调通道。
+  - 做 subject/session-level robustness、bootstrap/CI、逐样本回退审查、bad_top10 casebook。
+  - 重点确认 7 通道结果是否稳定，而不是一次随机种子/训练波动。
+- 次选：对 `v250_lateral_core10` 做邻域歧义复查，因为它的邻域未来分歧最低，但整体预测不如 minimal7。
+
+### 禁止任务
+
+- 不把 v250 直接写成 formal replacement。
+- 不基于 test 继续手动挑通道。
+- 不回到 v222a gate / 删除样本 / 轻量 residual / response type hard routing。
+- 不把“邻域歧义仍在”误解成 v250 无效；它说明通道精简有效，但一对多问题还需要后续处理。
+
+---
+
+## 最新更新：2026-06-30 v249 shape-aware curve model 已完成，但不接受为新候选
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v249 已完成：三个候选均从 v241 checkpoint 初始化，使用 validation-only 选择，test 只作 locked report。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v249_shape_aware_curve_model_20260630.py`。
+- 已生成 v249 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v249_shape_aware_curve_model_20260630`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v249_shape_aware_curve_model_20260630_pack.zip`
+- 已训练候选：
+  - `v249a_shape_loss_only`
+  - `v249b_shape_aux_heads`
+  - `v249c_shape_conditioned_residual`
+- 已输出核心表：
+  - `tables\v249_model_selection_validation_shape.csv`
+  - `tables\v249_compare_vs_v241_original_remaining.csv`
+  - `tables\v249_shape_summary.csv`
+  - `tables\v249_per_sample_shape_delta_vs_v241.csv`
+  - `tables\v249_input_neighborhood_ambiguity_audit.csv`
+  - `tables\v249_next_decision.csv`
+- 已输出核心图：
+  - `figures\v249_shape_casebook_test_hard.png`
+  - `figures\v249_tail_delta_by_bucket.png`
+
+### 结果判断
+
+- best diagnostic model 为 `v249c_shape_conditioned_residual`，best_epoch=`22`，best_val_loss=`1.155262`。
+- v249c 通过 `noharm_vs_v236_pass=True` 和 `upgrade_vs_v241_pass=True`，但 `shape_gain_pass=False`，所以 `accepted_as_shape_candidate=False`。
+- test 上，v249c 对 normal_predictable 有稳定改善；但 observe_later_like 在 0-800ms tail 多数变差，strong_steer 在 0-600ms tail 变差。
+- hard case 的形状没有被修好：bad_top10_v241 mean_range_ratio 仍为 `0.625`，mean_slope_ratio 仍为 `0.535`；strong_steer 的 range/slope 相对 v241 进一步保守。
+- 输入邻域歧义审计显示：test delay=0 的 v241 bad_top10 共 `19` 个样本，`19/19` 标为 `input_ambiguous`，邻居未来轨迹 pairwise RMSE 均值 `0.985`。这说明当前可见输入下存在明显一对多问题。
+
+### 下一步候选任务
+
+- 首选：`v249_error_review_or_input_ambiguity_followup`。
+  - 审查 v249 casebook 与邻域审计，确认 hard case 是否确实是输入早期不可判别。
+  - 若确认输入歧义存在，应考虑多解/分布式预测或不确定性建模，而不是继续把同一输入压成单条确定性均值曲线。
+  - 同步检查是否有可在预测时真实可见的上下文特征可补充，例如更长历史、道路几何变化、速度/横向状态、驾驶员近期操作模式等。
+- 次选：在 validation 上做 bounded ambiguity-aware objective，但必须避免硬 response-type route、oracle best-of-K、test 后验选择。
+
+### 禁止任务
+
+- 不把 v249 写成正式替代版本。
+- 不继续简单加大 shape loss 权重来追 test bad case。
+- 不回到 v222a gate / 删除样本 / 轻量 residual / response type hard routing。
+- 不把 oracle best anchor 或 best-of-K 当作可部署结果。
+- 不用 test 后验误差训练 selector 或调模型。
+
+---
+
+## 最新更新：2026-06-30 v248 best-anchor 后残余轨迹形状误差审查已完成
+
+### 正在做任务
+
+- 当前没有正在运行的训练进程。
+- v248 已完成：读取 v247 fine-grid locked v241 prediction，对 current 0ms 与 best-anchor 后曲线做残余误差分解。
+
+### 已完成任务
+
+- 已新增并运行 `stage03_v248_best_anchor_residual_shape_audit_20260630.py`。
+- 已生成 v248 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v248_best_anchor_residual_shape_audit_20260630`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v248_best_anchor_residual_shape_audit_20260630_pack.zip`
+- 已输出核心表：
+  - `tables\v248_best_anchor_residual_decomposition.csv`
+  - `tables\v248_peak_underestimation_table.csv`
+  - `tables\v248_shape_error_categories.csv`
+  - `tables\v248_anchor_vs_shape_summary.csv`
+- 已输出核心图：
+  - `figures\v248_best_anchor_still_bad_casebook.png`
+  - `figures\v248_improved_but_still_wrong_casebook.png`
+  - `figures\v248_peak_underestimation_casebook.png`
+  - `figures\v248_error_decomposition_scatter.png`
+  - `figures\v248_shape_category_summary.png`
+
+### 结果判断
+
+- 锚点有收益，但不是主要矛盾：test/bad_top10 从 `1.198` 降到 `0.616` 后仍然偏高。
+- test/bad_top10 中 best-anchor 后仍有 `47.4%` 高于 `0.65`。
+- still_bad 组的平均 range_ratio `0.466`、excursion_ratio `0.438`、slope_ratio `0.405`，说明模型主要低估幅值、低估斜率，把强转向/回正轨迹压成平滑小幅曲线。
+- 下一步不应优先做 sequential anchor selector；应优先做 trajectory shape modeling。
+
+### 下一步候选任务
+
+- 首选：设计 `v249_shape_aware_curve_model`。
+  - 方向一：完整曲线 decoder + peak amplitude loss + slope loss + tail/turning loss。
+  - 方向二：基于 v241 的 shape residual corrector，专门修正峰值幅值、斜率、回正速度和反打转折。
+  - 方向三：行为形状参数化 decoder，例如预测峰值时间、最大偏转、回正速度、最终偏移，再生成曲线。
+- 在做 v249 前，可以先从 v248 casebook 中人工确认 still_bad 样本是否确实是峰值/回正/反打形状错误。
+
+### 禁止任务
+
+- 不把 v247 oracle best anchor 当可部署策略。
+- 不继续只优化 anchor selector 来解释当前主要误差。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 路线。
+- 不用 test 后验误差调模型超参或选择部署规则。
+- 不把“等到 1000ms”当作正式预测方法。
+
+## 最新更新：2026-06-26 v242 联合曲线解码模型已训练完成，但不替代 v241
+
+### 正在做任务
+- 当前没有正在运行的训练任务。`v242_joint_curve_decoder_20260626` 已完整运行并停止；本轮结论是“v242 相对 v236 有效，但没有通过相对 v241 的 upgrade 检查”。
+
+### 已完成任务
+- 已新增并运行：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v242_joint_curve_decoder_20260626.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v242_joint_curve_decoder_20260626`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v242_joint_curve_decoder_20260626\reports\v242_joint_curve_decoder_cn.md`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v242_joint_curve_decoder_20260626\v242_joint_curve_decoder_pack.zip`
+- 已训练候选：`v242_joint_curve_h64_smooth002`、`v242_joint_curve_h96_smooth005`；best diagnostic model 为 `v242_joint_curve_h96_smooth005`。
+- 已生成核心表：`v242_model_selection_validation_noharm.csv`、`v242_metrics_by_delay_and_bucket.csv`、`v242_compare_vs_v236_v239_v241_original_remaining.csv`、`v242_per_sample_delta_vs_v241.csv`、`v242_per_sample_delta_summary_vs_v241.csv`、`v242_worst_regressions_vs_v241.csv`、`v242_next_decision.csv`。
+
+### 结果判断
+- v242 相对 v236 仍然有用：best model 的 normal max tail delta vs v236 `-0.124933`，observe_later 0-800ms mean tail delta vs v236 `-0.269463`，strong 0-600ms mean tail delta vs v236 `-0.201033`。
+- 但 v242 没有超过 v241：normal max tail delta vs v241 `+0.039176`，strong 400/1000ms mean tail delta vs v241 `+0.014069`，因此 `accepted_as_next_candidate=False`。
+- test 逐样本层面也支持这个判断：all 中 `588/1104` 条相对 v241 tail 回退，strong_400_1000 中 `80/160` 条回退。
+- 当前最强候选仍是 v241 的 `v241_tcn_mha_h96`，v242 只保留为“联合曲线输出不优于 v241”的诊断证据。
+
+### 下一步候选任务
+- 推荐下一步：`v243_manual_review_or_loss_redesign_for_sample_regressions`。
+- 如果继续训练，应围绕 v241 的逐样本回退做 loss redesign，而不是继续扩大模型或基于 test 反调参数。
+- 如果先审查，应固定 v241，进入 locked audit/casebook/robustness CI，避免被 v242 这一轮诊断分散主线。
+
+### 阻塞/禁止任务
+- 不要把 v242 写成 formal headline 或替代 v241。
+- 不要基于 v242 test 结果继续手动调 smooth_weight、hidden_dim 或阈值。
+- 不要回到 v222a gate/router/selector，也不要删除 observe_later_like 样本。
+- 不要只因为 v242 相对 v236 好，就忽略它相对 v241 变差的事实。
+
+---
+
+## 最新更新：2026-06-26 v241 更强时序模型受控实验已完成，`v241_tcn_mha_h96` 可进入 locked audit
+
+### 正在做任务
+- 当前没有正在运行的训练任务。`v241_stronger_temporal_model_20260626` 已完整运行并停止；本轮结论是“更强时序模型通过 validation，可作为下一阶段候选”，但还不是 formal replacement。
+
+### 已完成任务
+- 已新增并运行：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v241_stronger_temporal_model_20260626.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v241_stronger_temporal_model_20260626`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v241_stronger_temporal_model_20260626\reports\v241_stronger_temporal_model_cn.md`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v241_stronger_temporal_model_20260626\v241_stronger_temporal_model_pack.zip`
+- 已训练候选：`v241_tcn_mha_h64`、`v241_tcn_mha_h96`；两者均通过 stronger-candidate validation 检查，best diagnostic model 为 `v241_tcn_mha_h96`。
+- 已生成核心表：`v241_model_selection_validation_noharm.csv`、`v241_metrics_by_delay_and_bucket.csv`、`v241_compare_vs_v236_v238_v239_original_remaining.csv`、`v241_per_sample_delta_vs_v239.csv`、`v241_per_sample_delta_summary_vs_v239.csv`、`v241_worst_regressions_vs_v239.csv`、`v241_next_decision.csv`。
+
+### 结果判断
+- `v241_tcn_mha_h96` 在 validation 上同时通过 v236 no-harm 和 v239 upgrade 检查：validation score `0.872780`，best_epoch `26`，best_val_loss `0.634865`。
+- test 层面三个主 bucket 的全部 delay tail RMSE 都优于 v239，尤其 strong_steer 的 400/1000ms 也从 v240 的例外转为均值改善。
+- 但逐样本仍有回退：all test 中 `368/1104` 条 tail 回退；strong_400_1000 中 `47/160` 条 tail 回退。因此本轮不能直接宣布正式替代，只能进入 locked audit。
+
+### 下一步候选任务
+- 推荐下一步：`v242_locked_test_report_for_stronger_temporal_candidate`。
+- v242 应固定 `v241_tcn_mha_h96`，不重新训练、不调参、不用 test 反选；重点做 locked audit、casebook、逐样本回退解释、strong_400_1000 剩余回退审查和 robustness/CI。
+
+### 阻塞/禁止任务
+- 不要把 v241 直接写成 formal headline 或正式替代 v225/v226。
+- 不要基于 v241 的 test 对照继续反调 hidden_dim、dropout、delay policy 或阈值。
+- 不要回到 v222a gate/router/selector，也不要删除 observe_later_like 样本。
+- 在逐样本回退没有审查前，不要只用均值改善来宣布 strong 类完全解决。
+
+---
+
+## 最新更新：2026-06-26 v240 locked attention audit 已完成，attention 候选保留但 strong 例外需人工复核
+
+### 正在做任务
+- 当前没有正在运行的训练任务。`v240_locked_attention_audit_20260626` 已完整运行并停止；本轮只做锁定审查，不训练、不调配置、不用 test 反选模型。
+
+### 已完成任务
+- 已新增并运行：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v240_locked_attention_audit_20260626.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v240_locked_attention_audit_20260626`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v240_locked_attention_audit_20260626\reports\v240_locked_attention_audit_cn.md`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v240_locked_attention_audit_20260626\v240_locked_attention_audit_pack.zip`
+- 已生成核心表：`v240_locked_overall_summary.csv`、`v240_subbucket_noharm_audit.csv`、`v240_per_sample_locked_metrics.csv`、`v240_worst_regressions.csv`、`v240_strong_400_1000_regressions.csv`、`v240_attention_casebook_index.csv`、`v240_attention_time_focus_summary.csv`、`v240_next_decision.csv`、`v240_split_integrity_check.csv`。
+- 已生成 `21` 张 attention casebook 图，覆盖 observe_later 改善例、normal 改善例、strong 400/1000ms 回退例和 worst residual。
+
+### 结果判断
+- v239 attention 候选通过 locked audit 的主要条件：all / observe_later_like / normal_predictable 的 tail 对照均优于 v236 original_remaining。
+- observe_later_like：mean tail delta `-0.142789`，max tail delta `-0.089425`，说明之前“晚观察/后移观察”这条思路在 attention 下确实有稳定收益。
+- normal_predictable：mean tail delta `-0.069787`，max tail delta `-0.031002`，说明 v239 没有复现 v238 MLP 伤普通样本的问题。
+- strong_steer：mean tail delta `-0.036692`，但 400ms/1000ms 存在例外；`strong_400_1000_positive_regression_cases` 有 `82` 条，最大变差 `+1.648318`，因此不能直接宣布 strong 已解决。
+
+### 下一步候选任务
+- 推荐下一步：`v241_attention_case_manual_review_and_robustness_ci`。
+- 先人工审查 `figures\attention_casebook` 和 `tables\v240_strong_400_1000_regressions.csv`，确认 strong 例外到底是锚点/反打/多次修正问题，还是 attention 模型本身在中后段响应幅值上有偏差。
+- 若人工审查确认不是明显锚点错误，再做 bootstrap/subject-level robustness CI，判断 v239 attention 是否具备进入正式替代前的统计稳定性。
+
+### 阻塞/禁止任务
+- 不要把 v239/v240 直接写成 formal headline 或正式替代 v225/v226。
+- 不要基于 v240 的 test casebook 反调 attention 配置、delay policy 或阈值。
+- 不要回到 v222a gate/router/selector，也不要删除 observe_later_like 样本。
+- 不要在 strong 400/1000ms 例外未解释前扩展到 full Transformer/TCN 大模型。
+
+---
+
+## 最新更新：2026-06-26 v239 轻量 temporal attention + no-harm 约束实验已完成，attention 可作为下一候选
+### 正在做任务
+- 当前没有正在运行的训练任务。v239 已完整运行并停止；本轮结论是“轻量 attention 通过 validation no-harm，可作为下一候选，但仍不是 formal headline”。
+### 已完成任务
+- 已新增并运行：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v239_light_attention_noharm_20260626.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v239_light_attention_noharm_20260626`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v239_light_attention_noharm_20260626\reports\v239_light_attention_noharm_cn.md`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v239_light_attention_noharm_20260626\v239_light_attention_noharm_pack.zip`
+- 已训练 attention 候选：`v239_light_attention_h32`、`v239_light_attention_h48`。
+- best diagnostic model：`v239_light_attention_h32`，validation score `1.077325`，validation no-harm pass=True。
+- 已生成核心表：`v239_model_selection_validation_noharm.csv`、`v239_metrics_by_delay_and_bucket.csv`、`v239_compare_vs_v236_original_remaining.csv`、`v239_attention_training_history.csv`、`v239_next_model_decision.csv`。
+### 结果判断
+- attention 对 observe_later_like 有稳定收益：test original_remaining tail 在 0-1000ms 全部优于 v236。
+- attention 通过 normal no-harm：`normal_predictable` test tail 在 0-1000ms 全部优于 v236，没有复现 v238 MLP 伤 normal 的问题。
+- attention 对 strong_steer 整体有收益，但 400ms tail 轻微变差 `+0.009627`，1000ms tail 变差 `+0.048014`，需要在 v240 锁定报告里继续细查。
+### 下一步候选任务
+- 推荐下一步：`v240_locked_test_report_for_attention_candidate`。
+- v240 应只做锁定报告、分桶图、坏例/改善例对照、attention casebook 和 guardrail 审查；不应继续扩大到 full Transformer、gate/router 或 response-type hard routing。
+- v240 应重点确认：attention 是否真的改善锚点后移样本；normal no-harm 是否在更多子桶成立；strong_steer 400ms/1000ms 变差来自哪些事件。
+### 阻塞/禁止任务
+- 不要把 v239 attention 直接写成 formal headline 或正式替代 v225/v226。
+- 不要基于 test 反调 attention 配置、delay policy 或阈值。
+- 不要回到 v222a gate/router/selector，不要删除 observe_later_like。
+- 不要从本轮直接跳到完整 Transformer/TCN 大模型。
+---
+
+## 最新更新：2026-06-26 v238 任务构造与小型 rolling 模型重搭已完成，下一步应做 no-harm 约束而不是扩大模型
+### 正在做任务
+- 当前没有正在运行的训练任务。v238 已完整运行并停止；本轮结论是“接受任务构造，不接受当前 selected MLP 作为正式替代模型”。
+### 已完成任务
+- 已新增并运行：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v238_task_model_redesign_20260626.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v238_task_model_redesign_20260626`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v238_task_model_redesign_20260626\reports\v238_task_model_redesign_cn.md`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v238_task_model_redesign_20260626\v238_task_model_redesign_pack.zip`
+- 已完成任务重构：从 v236 的 `receding_2s` 改成 `original_remaining` masked point-level target，只训练 original anchor+2s 内的剩余部分。
+- 已完成小模型训练：validation-only 在 point Ridge 和小 MLP 中选择，selected model 为 `v238_point_mlp_96x48_alpha1e-4`，validation score `1.290127`。
+- 已生成核心表：`v238_task_construction_audit.csv`、`v238_point_training_rows_by_delay.csv`、`v238_model_selection_validation_only.csv`、`v238_metrics_by_delay_and_bucket.csv`、`v238_compare_v236_original_remaining.csv`、`v238_selected_per_sample_metrics.csv`、`v238_next_model_decision.csv`。
+### 结果判断
+- v238 证明 `original_remaining` 任务构造有价值：它把 delay 后跨入新行为阶段的点从主 loss 中排除，避免把 1000ms receding 失败错误归因给“晚观察无用”。
+- 难例有收益：`observe_later_like` 在 0-800ms test tail 相对 v236 全部改善；`strong_steer` 在 0-600ms test tail 改善。
+- 但当前模型不能正式使用：`normal_predictable` no-harm 未通过；`observe_later_like` 1000ms 变差；`strong_steer` 800/1000ms 变差。
+### 下一步候选任务
+- 推荐下一步：`v239_noharm_constrained_original_remaining_model`。
+- v239 应继续保留 v238 的 `original_remaining` masked target，但必须把 validation no-harm 写进模型选择条件，尤其保护 `normal_predictable`。
+- v239 应明确 late-delay policy：1000ms 不能继续和 0-800ms 用同一个 selected point model 硬混；它应先作为诊断或单独策略，不应直接进入正式主模型。
+### 阻塞/禁止任务
+- 不要把 v238 selected MLP 写成 formal headline 或正式替代 v225/v226。
+- 不要基于 test 反调模型、delay policy 或阈值。
+- 不要回到 v222a gate/router/selector，不要删除 observe_later_like。
+- 不要因为 v238 有部分难例改善就直接扩大到 Transformer/TCN 大模型。
+---
+
+## 最新更新：2026-06-25 v237 rolling target / phase audit 已完成，v238 小 rolling 模型仅作为下一步候选
+### 正在做任务
+- 当前没有正在运行的训练任务。v237 已按 GPTPro 的 audit-only 指令完成并停止；`v237_next_model_decision.csv` 给出 `v238_allowed=True`，但本地尚未启动 v238。
+### 已完成任务
+- 已新增并运行：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v237_rolling_target_phase_audit_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v237_rolling_target_phase_audit_20260624`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v237_rolling_target_phase_audit_20260624\reports\v237_rolling_target_phase_audit_cn.md`
+- 已生成审计 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v237_rolling_target_phase_audit_20260624\v237_rolling_target_phase_audit_pack.zip`
+- 已完成两套评估口径：
+  - `receding_2s`：从 observation_time 预测到 observation_time+2s，对应 v236 原定义。
+  - `original_remaining`：只评估 observation_time 到 original_anchor+2s 的重叠部分，用于判断 delay 后是否变成新任务。
+- 已完成 key tables：`v237_target_definition_sanity_check.csv`、`v237_receding_vs_original_remaining_metrics.csv`、`v237_observe_later_subbucket_profile.csv`、`v237_1000ms_failure_audit.csv`、`v237_ridge_underfit_audit.csv`、`v237_alpha_validation_curve_audit.csv`、`v237_next_model_decision.csv`。
+### 结果判断
+- target definition sanity 全部通过；v236 target/prediction 均在 `steering_delta_from_observation` 空间，未发现 delta/absolute 比较空间不一致。
+- `observe_later_like` 的 1000ms receding 变差主要不是单纯“晚观察无用”，而是 delay 后 target horizon 进入了新阶段：1000ms receding tail RMSE `4.074430`，但 original_remaining tail RMSE `1.199416`，且 `1000ms` failure audit 的 new phase 命中率为 `0.888889`。
+- `strong_steer` 的 rolling 收益保持：test receding tail RMSE 从 0ms `1.018893` 降到 800ms `0.819825`、1000ms `0.814272`。
+- v236 Ridge 有 underfit 证据：旧 formal reference 明显优于 v236 0ms Ridge；`observe_later_like` 与 `strong_steer` 的预测峰值存在明显 shrinkage；alpha validation-only 选择在最大 alpha=`1000` 边界。
+### 下一步候选任务
+- 若继续执行，下一步可让 GPTPro/用户确认是否启动 `v238_small_rolling_model`：只允许小模型、validation-only 选择、按 delay/bucket 分开报告，且必须保留 v237 guardrails。
+- v238 不能基于 test 选择 delay 或模型配置；不能写成 formal headline；不能回到 v222a gate/router/selector；不能删除 `observe_later_like`。
+### 阻塞/禁止任务
+- 不要在未确认前自动训练 v238。
+- 不要进入 Transformer/TCN 大模型。
+- 不要做新 gate/router/selector、不要做新 tau/threshold 搜索。
+- 不要把 mixed-delay RMSE 或 diagnostic subbucket 结果写成正式模型能力。
+---
+
+## 最新更新：2026-06-24 连续车辆源数据审计已完成，下一步不要混用主车辆层和补充车辆层
+### 正在做任务
+- 解读 `vehicle_source_audit_20260624`：把源级车辆数据质量、目录命名混杂、主/补充层 lineage 差异转成后续样本构建和模型审计约束。
+### 已完成任务
+- 已新增并运行 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\01_audit\scripts\vehicle_source_audit_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\01_audit\vehicle_source_audit_20260624`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\09_reports\vehicle_source_audit_20260624_cn.md`
+- 已完成连续车辆源文件审计：候选文件 `358` 个，纳入车辆审计 `182` 个，覆盖 `18` 名被试、`91` 个记录键、约 `25.31` 小时。
+- 已生成关键表：
+  - `tables\vehicle_file_inventory.csv`
+  - `tables\source_layer_summary.csv`
+  - `tables\file_vehicle_quality_summary.csv`
+  - `tables\vehicle_numeric_column_summary.csv`
+  - `tables\recording_cluster_summary.csv`
+  - `tables\subject_vehicle_summary.csv`
+  - `tables\road_type_summary.csv`
+  - `tables\vehicle_source_audit_findings.csv`
+- 已生成图：`vehicle_recording_duration_hist.png`、`vehicle_duration_by_subject.png`、`vehicle_audit_flag_counts.png`。
+- 已完成验证：`py_compile` 通过；完整运行 `182/182` 个纳入文件；`errors=[]`；3 张图像均非空。
+### 结果判断
+- 主 `vehicle_aligned_cleaned` 层是当前更可靠的车辆源：`91` 个文件，median dt=`5ms`，关键车辆字段高缺失文件 `0` 个。
+- `车辆清理后` 目录不能按文件名直接当车辆源：另有 `82` 个 PhysioLAB 生理文件和 `85` 个 EEG/加速度文件也在 vehicle 命名/目录下。
+- 补充 `(2)_vehicle_fixed_200Hz` 层不能和主车辆层直接混用：关键字段高缺失文件 `83/91`，nominal Hz 异常 `45/91`，median dt 不接近 `5ms` 的文件 `42/91`。
+- 主层 road reference 需要复核：`32/91` 个主车辆文件 `ref_nn_ok_rate<95%`，这会影响 road/curve 分层和横向偏移判断。
+### 待做任务
+- 后续所有样本重建、锚点窗口和模型输入先固定唯一车辆源层，默认优先使用主 `vehicle_aligned_cleaned` 层。
+- 把 `recording_cluster_summary.csv` 里的行数/哈希不一致记录映射回既有坏样本，确认失败是否集中来自源层混用或道路参考低覆盖。
+- 对 `ref_nn_ok_rate<95%` 的主车辆记录做道路参考复核，再决定是否进入 curve/road 分层训练或人工审核。
+### 阻塞/禁止任务
+- 不要只按 `*_vehicle_fixed_200Hz.csv` glob 读取车辆数据。
+- 不要把主 `vehicle_aligned_cleaned` 层和补充 `(2)_vehicle_fixed_200Hz` 层混在同一训练/审计入口里。
+- 不要把补充层字段缺失解释成主车辆层质量差。
+
+---
+
+## 最新更新：2026-06-24 v236 rolling/reanchor 数据集与小基线已完成，下一步先审查 observe_later_like 未改善原因
+### 正在做任务
+- 解读 `v236_rolling_reanchor_dataset_and_baseline_20260624`：确认 rolling observation 是否真的改善困难样本，并决定是否允许进入更强模型。
+### 已完成任务
+- 已新增并运行 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v236_rolling_reanchor_dataset_and_baseline_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v236_rolling_reanchor_dataset_and_baseline_20260624`
+- 已生成 `7002` 个 rolling 样本，覆盖 loose 主池 `1167` 个唯一事件，每个事件 `0/200/400/600/800/1000ms` 六个 delay。
+- 已完成 joint Ridge 小基线训练，selected alpha=`1000`，只用 validation 选择。
+- 已生成必需输出：
+  - `tables\v236_rolling_sample_manifest.csv`
+  - `tables\v236_delay_sample_counts.csv`
+  - `tables\v236_train_val_test_event_split_check.csv`
+  - `tables\v236_baseline_metrics_by_delay.csv`
+  - `tables\v236_baseline_metrics_by_delay_and_bucket.csv`
+  - `tables\v236_observe_later_improvement_curve.csv`
+  - `tables\v236_strong_event_improvement_curve.csv`
+  - `tables\v236_normal_sample_noharm_check.csv`
+  - `tables\v236_metric_vs_old_0ms_formal_reference.csv`
+  - `reports\v236_rolling_reanchor_baseline_cn.md`
+  - `logs\guardrail_check.json`
+  - `logs\leakage_check.json`
+  - `logs\file_inventory.json`
+  - `v236_rolling_reanchor_dataset_and_baseline_pack.zip`
+- 已完成验证：`py_compile` 通过；完整运行通过；必需文件 `missing=[]`；guardrail `pass`；leakage `pass`；同一 event_uid 跨 split 数 `0`；ZIP `bad=None`。
+### 结果判断
+- `strong_steer` 桶明显受益：test tail mean 从 `0ms=0.961224` 降到 `800ms=0.695632`、`1000ms=0.702697`；strong-under rate 从 `0.7625` 降到约 `0.2125`。
+- `observe_later_like` 未满足成功条件：`200ms` 只小幅改善（tail mean `1.100397 -> 1.060875`），但 `400/600/800/1000ms` 没有持续下降，`1000ms` 明显变差。
+- v236 0ms baseline 也弱于旧 formal：all test sample RMSE `0.641212` vs old `0.468061`，因此不能把 v236 当成 formal 替代。
+### 待做任务
+- 先审查 observe_later_like 不改善的原因：target 是否应为 delta-from-observe 还是 absolute future；该桶是否混入反打/多次修正 outlier；Ridge 表达能力是否过弱；1000ms 是否跨入新的行为阶段。
+- 在确认 v236 数据/target 口径无误前，不进入更大 Transformer/TCN。
+### 阻塞/禁止任务
+- 不回到 v222a gate/router/selector。
+- 不删除 observe_later_like。
+- 不把 mixed-delay RMSE 当 formal headline。
+- 不改变 v225/v226 formal headline。
+
+---
+
+## 最新更新：2026-06-24 v235 删除 observe_later_like 样本后的受控重训已完成，下一步不要把“删难样本”当正式方法
+### 正在做任务
+- 解读 `v235_remove_observe_later_retrain_20260624`：区分“删除样本导致测试集变容易”和“删除后重训模型本身是否变强”。
+### 已完成任务
+- 已新增并运行 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v235_remove_observe_later_retrain_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v235_remove_observe_later_retrain_20260624`
+- 已生成关键表：
+  - `tables\v235_removed_sample_counts.csv`
+  - `tables\v235_validation_selection_filtered.csv`
+  - `tables\v235_selected_metrics_filtered.csv`
+  - `tables\v235_old_selected_metrics_filtered.csv`
+  - `tables\v235_selected_metrics_removed_holdout.csv`
+  - `tables\v235_comparison_summary.csv`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v235_remove_observe_later_retrain_20260624\reports\v235_remove_observe_later_retrain_cn.md`
+- 已生成对比图：
+  - `figures\v235_test_rmse_comparison.png`
+  - `figures\v235_test_tail_rmse_comparison.png`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v235_remove_observe_later_retrain_20260624\v235_remove_observe_later_retrain_pack.zip`
+- 已完成验证：`py_compile` 通过；完整运行通过；feature schema guard `pass`；selection 使用 filtered validation only；图像非空；ZIP `testzip bad=None`。
+### 结果判断
+- loose pool 删除 `121/1167` 个样本，strict pool 删除 `117/963` 个样本。
+- 旧 v222a selected full test RMSE：loose `0.555940`，strict `0.571966`。
+- 旧模型在删除后的同一保留 test 子集上：loose `0.482685`，strict `0.506547`。
+- 删除后重训：loose `0.474318`，strict `0.504151`。
+- 结论：删除这些样本会明显改善保留测试集指标，但重训相对旧模型同一过滤子集只小幅改善；因此这更像数据分布诊断，不是可直接宣称的方法提升。
+### 待做任务
+- 不把 observe_later_like 样本简单永久删除；应继续走“人工确认后短观察层/后移观察点”或“重锚定后重建 label window”的路线。
+- 若要继续做模型方法，应把 observe_later_like 作为单独任务层或特殊评估桶，而不是混入同一个 pure pre-anchor 指标里。
+### 阻塞/禁止任务
+- 不把 v235 指标替代 formal headline。
+- 不把删难样本后的指标写成模型能力提升。
+- 不把 removed 样本丢弃后不解释；被删除 test 样本仍是行为预测中真正困难的可观测性/锚点问题。
+
+---
+
+## 最新更新：2026-06-24 v234 短观察后预测评估层已构建，下一步人工选择观察延迟
+### 正在做任务
+- 人工审核 `v234_short_observation_manual_review_template.csv`，判断每个 `observe_later_review` 样本是否采用短观察后预测层，以及采用 `0.5s/1.0s/1.5s/2.0s` 哪个观察延迟。
+### 已完成任务
+- 已新增并运行 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v234_short_observation_prediction_layer_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v234_short_observation_prediction_layer_20260624`
+- 已生成关键表：
+  - `tables\v234_short_observation_layer_definition.csv`
+  - `tables\v234_short_observation_layer_assignments.csv`
+  - `tables\v234_short_observation_target_curves.csv`
+  - `tables\v234_short_observation_context_grid.csv`
+  - `tables\v234_short_observation_manual_review_template.csv`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v234_short_observation_prediction_layer_20260624\reports\v234_short_observation_prediction_layer_cn.md`
+- 已生成图目录和拼接图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v234_short_observation_prediction_layer_20260624\figures`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v234_short_observation_prediction_layer_20260624\v234_short_observation_prediction_layer_pack.zip`
+- 已完成验证：`py_compile` 通过；完整运行通过；`errors=[]`；图像非空；ZIP `testzip bad=None`。
+### 待做任务
+- 人工逐行填写 `v234_short_observation_manual_review_template.csv`：
+  - `human_layer_decision`
+  - `human_selected_observe_delay_s`
+  - `human_use_for_training`
+  - `human_note_cn`
+- 对默认 0.5s 层不合理的样本，改选 1.0s、1.5s 或拒绝短观察层。
+- 人工确认后，再进入 v235：生成短观察层数据清单或评估对应模型。
+### 阻塞/禁止任务
+- 不把旧 formal prediction 硬评到短观察层。
+- 不自动修改标签。
+- 不训练新模型、不改 formal headline。
+- 不重启硬响应类型分类路线。
+- 不把简单多候选轨迹输出作为下一步主线。
+
+---
+
+## 最新更新：2026-06-24 v233 自适应锚点 / 观察时长策略审核包已完成，下一步人工区分“提前重锚定”和“后移观察点”
+### 正在做任务
+- 人工审核 `v233_anchor_observation_policy_review_table.csv` 和策略图，确认哪些样本应提前重锚定，哪些样本应进入“短观察后预测 / 后移观察点”评估层。
+### 已完成任务
+- 已新增并运行 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v233_adaptive_anchor_observation_policy_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v233_adaptive_anchor_observation_policy_20260624`
+- 已生成关键表：
+  - `tables\v233_anchor_observation_policy_table.csv`
+  - `tables\v233_anchor_observation_policy_review_table.csv`
+  - `tables\v233_observe_delay_grid.csv`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v233_adaptive_anchor_observation_policy_20260624\reports\v233_adaptive_anchor_observation_policy_cn.md`
+- 已生成策略图目录和拼接图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v233_adaptive_anchor_observation_policy_20260624\figures`
+- 策略分布：`observe_later_review=10`、`reanchor_earlier_review=5`、`reanchor_earlier_or_ambiguous_review=6`、`large_change_standard_or_ambiguous=1`、`standard_anchor_review=7`。
+- 已完成验证：`py_compile` 通过；完整运行通过；`errors=[]`；图像非空；ZIP `testzip bad=None`。
+### 待做任务
+- 优先人工看 `observe_later_review` 的 10 个样本，确认旧锚点前是否确实看不出区别，以及后移 `0.5s/1.0s/1.5s` 后是否出现足够可见证据。
+- 对 `observe_later_review` 样本填写 `human_policy_decision`、`human_observe_delay_s`、`human_use_for_training`、`human_note_cn`。
+- 若确认后移观察点合理，下一步应建立单独的“短观察后预测”评估层，不与纯提前预测混在同一指标。
+- 对 `reanchor_earlier_review` 和 `reanchor_earlier_or_ambiguous_review` 继续沿用 v232 的人工重锚定审核流程。
+### 阻塞/禁止任务
+- 不把后移观察点当作统一锚点修正；它是任务可观测性层级，不是事件起点重标注。
+- 不自动修改训练标签。
+- 不训练新模型、不改 formal headline。
+- 不重启硬响应类型分类路线。
+- 不把简单多候选轨迹输出作为下一步主线。
+
+---
+
+## 最新更新：2026-06-24 v232 过晚锚点重锚定候选审核包已完成，下一步人工确认候选锚点
+### 正在做任务
+- 人工审核 `v232_late_anchor_reanchor_candidates_20260624` 的 `v232_reanchor_candidate_review_table.csv` 和对应候选图，确认候选新锚点是否确实比旧锚点更接近事件起点。
+### 已完成任务
+- 已新增并运行 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v232_late_anchor_reanchor_candidates_20260624.py`
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v232_late_anchor_reanchor_candidates_20260624`
+- 已对 v230 casebook + v231 六样本的 `29` 个唯一样本完成原始车辆信号打分。
+- 已生成 `11` 个 P0/P1/P2 重锚定人工审核候选：P0=1、P1=4、P2=6。
+- 已生成关键表：
+  - `tables\v232_target_samples.csv`
+  - `tables\v232_reanchor_candidate_all_scored.csv`
+  - `tables\v232_reanchor_candidate_review_table.csv`
+  - `tables\v232_reanchor_grid_0p05s.csv`
+  - `tables\v232_reanchor_key_points.csv`
+- 已生成中文报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v232_late_anchor_reanchor_candidates_20260624\reports\v232_late_anchor_reanchor_candidates_cn.md`
+- 已生成候选图目录和拼接图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v232_late_anchor_reanchor_candidates_20260624\figures`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v232_late_anchor_reanchor_candidates_20260624\v232_late_anchor_reanchor_candidates_pack.zip`
+- 已完成验证：`py_compile` 通过；脚本完整运行通过；`errors=[]`；图像非空；ZIP `testzip bad=None`。
+### 待做任务
+- 先人工看 P0/P1 候选：`rjy...010`、`rjy...041`、`rjy...040`、`rjy...032`、`tyy...033`。
+- 对每个候选填写 `human_decision`、`human_corrected_anchor_s`、`human_use_for_training`、`human_note_cn`。
+- 若算法候选过早或过晚，人工改写 `human_corrected_anchor_s`，不要直接采用算法候选。
+- 人工确认后，再启动下一步 label window 重建；未确认前不改训练标签。
+### 阻塞/禁止任务
+- 不自动采用候选新锚点。
+- 不训练新模型、不改 formal headline、不基于 test 重新调阈值。
+- 不重启硬响应类型分类路线。
+- 不把简单多候选轨迹输出作为下一步主线。
+
+---
+
+## 最新更新：2026-06-24 v231 人工反馈再修正：过晚锚点需要重锚定，多候选轨迹也不作为主线
+### 正在做任务
+- 从 `v231_worst_case_anchor_context_20260624` 进入过晚锚点重锚定准备：已确认 `rjy...010` 属于锚点晚了，后续不能只标记，需要生成候选新锚点、移动秒数和证据字段供人工确认。
+### 已完成任务
+- 已从 v225/v230 差样本中固定 6 个代表性样本，并从原始车辆 CSV 调取 `anchor_s ±8s` 信号上下文。
+- 已生成信号对齐关键时刻表：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v231_worst_case_anchor_context_20260624\tables\v231_anchor_key_points.csv`
+- 已生成 0.1 秒稀疏窗口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v231_worst_case_anchor_context_20260624\tables\v231_anchor_window_sparse_8s.csv`
+- 已生成原始 200Hz 密集窗口：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v231_worst_case_anchor_context_20260624\tables\v231_anchor_window_dense_pm3s.csv`
+- 已生成 6 张锚点上下文图：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v231_worst_case_anchor_context_20260624\figures`
+- 已生成中文说明：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v231_worst_case_anchor_context_20260624\reports\v231_worst_case_anchor_context_cn.md`
+- 已新增用户反馈修正说明：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v231_worst_case_anchor_context_20260624\reports\v231_user_feedback_method_correction_cn.md`
+- 已将“一次性输出多个候选轨迹也已尝试且效果不好，即使 best candidate 仍有偏差”写入覆盖表。
+### 待做任务
+- 对 `rjy...010`：按“人工确认锚点晚”处理，下一步需要重锚定，生成候选新锚点和证据，不再只停留在标记层面。
+- 对 `rjy...041`：继续人工确认是否也是锚点落在事件中段。
+- 对 `rjy...023`、`tyy...026`、`rjy...031`：不要简单拆成硬响应类型分类，也不要把简单多候选轨迹输出作为主线；先确认锚点和目标窗口无误，再讨论偏差校正、连续相位/延迟或对齐鲁棒损失。
+- 若人工确认锚点无误，则下一步回到方法提升：不要把这些样本只写成失败机制，而要作为行为预测模型改进的困难样本集。
+### 阻塞/禁止任务
+- 本轮不训练新模型、不改 formal headline、不基于 test 重新调阈值。
+- 不把 v231 当作失败机制论文产物；它是方法提升前的人工审核证据包。
+- 不重启“先硬判断响应类型，再按类型预测轨迹”的路线；该路线此前已尝试过，且存在响应类型判断错误导致后续轨迹整体错误的结构性风险。
+- 不把“一次性输出多个候选轨迹”作为下一步主线；该路线此前也已尝试过，且即使 best candidate 仍有偏差。
+
+---
+
+## 最新更新：2026-06-23 v230 失败案例人工复核 / 论文案例证据包已完成，下一步人工复核
+
+### 正在做任务
+- v230 已完成并停止。当前不再进入模型工作，下一步是人工阅读 casebook、填写 `v230_manual_review_template.csv`，再整理论文失败案例小节。
+
+### 已完成任务
+- 已归档 GPTPro v230 指令：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v230_casebook_gptpro_prompt.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v230_casebook_gptpro_response.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v230_casebook_gptpro_decision.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v230_casebook_gptpro_action_items.md`
+- 已新增并运行 `stage03_v230_failure_case_manual_review_casebook_20260623.py`。
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v230_failure_case_manual_review_casebook_20260623`
+- 已生成关键表：
+  - `tables/v230_case_selection_index.csv`
+  - `tables/v230_manual_review_template.csv`
+  - `tables/v230_failure_casebook_table.csv`
+  - `tables/v230_bucket_to_claim_mapping.csv`
+  - `tables/v230_case_figure_inventory.csv`
+  - `tables/v230_formal_boundary_check.csv`
+- 已生成关键报告：
+  - `reports/v230_failure_case_manual_review_casebook_cn.md`
+  - `reports/v230_advisor_discussion_notes_cn.md`
+  - `reports/v230_paper_failure_case_section_draft_cn.md`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v230_failure_case_manual_review_casebook_20260623\v230_failure_case_manual_review_casebook_pack.zip`
+- 已完成验证：`py_compile` 通过；完整运行通过；ZIP `bad_file=None`、文件数 `103`；required files `[]`；guardrail `pass=True`；consistency `pass=True`；forbidden hits `[]`；人工复核字段全空。
+
+### 待做任务
+- 人工打开 `figures/selected_casebook_figures/` 下的 case 图。
+- 人工填写 `tables/v230_manual_review_template.csv` 中的复核字段。
+- 根据人工复核结果修改 `reports/v230_paper_failure_case_section_draft_cn.md`。
+
+### 阻塞/禁止任务
+- v230 完成后不自动进入任何模型训练。
+- 继续禁止 v222b/v223、新 gate/router、新 tau/threshold、新预测、formal headline 改动和 test-based retuning。
+---
+
+## 最新更新：2026-06-23 v229 两个月路线经验复盘与失败分类包已完成，下一步先让 GPTPro 审路线边界
+
+### 正在做任务
+- 当前转入路线复盘/失败分类阶段：v229 已整理 v220 两个月阶段经验、v225 formal 失败样本与 selector/candidate 诊断、v228 最终锁定指标，形成可直接交给 GPTPro 的中文复盘 prompt。
+
+### 已完成任务
+- 已新增并运行 `stage03_v229_two_month_lessons_failure_taxonomy_20260623.py`。
+- 已生成输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v229_two_month_lessons_failure_taxonomy_20260623`
+- 已生成主报告：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v229_two_month_lessons_failure_taxonomy_20260623\reports\v229_two_month_lessons_failure_taxonomy_cn.md`
+- 已生成 GPTPro 中文提问稿：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v229_two_month_lessons_failure_taxonomy_20260623\reports\v229_gptpro_next_prompt_cn.md`
+- 已生成关键表：
+  - `tables/v229_phase_lessons_table.csv`
+  - `tables/v229_failure_taxonomy_by_pool_event.csv`
+  - `tables/v229_top_tail_failure_cases.csv`
+  - `tables/v229_bucket_risk_summary.csv`
+  - `tables/v229_selector_candidate_diagnosis.csv`
+  - `tables/v229_next_action_decision_matrix.csv`
+- 已生成 ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v229_two_month_lessons_failure_taxonomy_20260623\v229_two_month_lessons_failure_taxonomy_pack.zip`
+- 已完成验证：`py_compile` 通过；脚本完整运行通过；ZIP `bad_file=None`、文件数 `15`；必需文件缺失 `[]`；guardrail `pass=True`。
+
+### 待做任务
+- 如果继续 GPTPro 闭环，优先发送 v229 中文复盘 prompt，而不是直接请求新模型指令。
+- 要求 GPTPro 先判断：
+  - 是否进入写作/结果整理；
+  - 是否只允许失败样本 taxonomy 与人工复核；
+  - 是否继续禁止 v222b/v223、新 gate/router、新 tau/threshold、test-based retuning；
+  - 若允许新实验，必须只给一个窄范围任务、明确 stop condition 和验收命令。
+
+### 阻塞/禁止任务
+- 没有 GPTPro 明确 bounded 指令前，不启动 v222b/v223、大 gate/router、新 tau/threshold、新模型训练或 formal headline 改动。
+- 不把 oracle、true label、fallback、diagnostic-only 行写成 formal evidence。
+- 不把 `W3_B4_original_soft` 写入 formal leaderboard、formal gate、formal oracle、usage table 或 selected config。
+---
+
+## 最新更新：2026-06-22 v226 robustness / CI audit 已完成，下一步报告 GPTPro
+
+### 正在做任务
+- Codex-GPTPro 闭环继续运行：v226 formal robustness / confidence-interval audit 已完成，下一步把 v226 pack、CI、readiness、guard/ZIP 验证摘要报告给 GPTPro，等待下一轮 bounded 指令。
+
+### 已完成任务
+- 已新增并运行 `stage03_v226_formal_robustness_ci_audit_20260622.py`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v226_formal_robustness_ci_audit_20260622`
+- ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v226_formal_robustness_ci_audit_20260622\v226_formal_robustness_ci_audit_pack.zip`
+- 验证：`py_compile`、完整运行、ZIP `bad_file=None`、required files `[]`、metric reproduction、leakage guard、forbidden scan、table alignment、figure count 全部通过。
+
+### 禁止任务
+- 不进入 v222b/v223、新 tau、新 gate/router 或 test-based retuning，除非 GPTPro 给出新的 bounded 指令且满足当前 guardrail。
+
+## 最新更新：2026-06-22 v225 evidence pack 已完成，下一步报告 GPTPro 获取下一轮 bounded 指令
+
+### 正在做任务
+- Codex-GPTPro 闭环继续运行：已完成 GPTPro v225 要求的 `formal route reconstruction evidence pack`，下一步把 v225 pack、验证结果、formal lock 和 failure evidence 报告给 GPTPro，请 GPTPro 给下一轮 bounded 指令。
+
+### 已完成任务
+- 已归档 GPTPro v225 指令、采纳决策和执行项：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v225_evidence_pack_gptpro_response.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v225_evidence_pack_gptpro_decision.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v225_evidence_pack_gptpro_action_items.md`
+- 已新增并运行 `stage03_v225_formal_route_reconstruction_evidence_pack_20260622.py`。
+- 已生成 v225 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v225_formal_route_reconstruction_evidence_pack_20260622`。
+- 已确认 formal lock：
+  - `loose_main_pool=avg_joint_focus`
+  - `strict_main_pool=peak_floor_090`
+  - v222a residual/no-harm/oracle safe gate/ridge residual 等均为 diagnostic-only，不进入 formal 表。
+- 已复现 locked test formal 指标：
+  - loose `avg_joint_focus`：RMSE `0.544884`，tail `0.629752`；
+  - strict `peak_floor_090`：RMSE `0.571770`，tail `0.658306`；
+  - 复现误差均小于 `1e-5`。
+- 已完成验证：`py_compile`、完整脚本运行、ZIP `bad_file=None`、必需文件无缺失、metric reproduction pass、leakage guard 全 pass、forbidden scan pass、table alignment pass、figure 抽检正常。
+
+### 待做任务
+- 准备并发送下一轮 GPTPro prompt，必须包含：
+  - v225 pack 路径；
+  - formal model lock；
+  - locked test 指标复现；
+  - per-sample / bucket / route-event / failure-case 证据入口；
+  - diagnostic-only v222a closeout 摘要与 excluded diagnostic audit；
+  - ZIP、guard、forbidden scan、table alignment 和 figure count 验证结果；
+  - 本轮未训练、未调 tau/threshold、未创建 gate/router、未运行 v222b/v223 的边界说明。
+- 等待 GPTPro 给出下一轮 bounded 指令；若新指令涉及 v222b/v223、新 gate/router、新 tau 或 test-based retuning，必须先确认它是否满足当前 guardrail 与 stop condition。
+
+### 阻塞/禁止任务
+- 不进入 v222b neural gate / neural soft fusion。
+- 不进入 v223 new candidate generator / mechanism Transformer。
+- 不继续做 v222a gate_v2、新 tau、新 multi-router 或 test-based config。
+- 不把 oracle / true label / fallback / diagnostic-only row 写成 deployable model 或 formal headline。
+- 不把 `W3_B4_original_soft` 写入 formal leaderboard、formal oracle、formal gate、usage table 或 selected config。
+
+---
+
+# 最新更新：2026-06-23 heartbeat 仍未取得 GPTPro 新指令
+
+## 正在做任务
+- Codex-GPTPro 闭环继续处于外部通道阻塞状态。桌面端只看到 handoff prompt 和“已停止思考”，Chrome bridge 无法验证 Pro/进阶模式并拒绝发送 v227 prompt。
+
+## 已完成任务
+- 已新增 2026-06-23 heartbeat 阻塞归档：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v227_heartbeat_gptpro_response_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v227_heartbeat_gptpro_decision_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v227_heartbeat_gptpro_action_items_blocked.md`
+- 已复核 v227 ZIP：存在、可读，`bad_file=None`，共 35 个文件。
+
+## 待做任务
+- 等 GPTPro 通道恢复后，发送 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v227_paper_claim_readiness_pack_20260622\reports\v227_next_gptpro_prompt_ascii.md`。
+- 若获得有效 GPTPro 回复，先归档 raw response / decision / action items，再筛掉违反 guardrail 的建议，只执行一个 bounded 安全指令。
+
+## 禁止任务
+- 在没有有效 GPTPro 新指令前，不进入 v222b/v223、新 tau/threshold、新 gate/router/selector、新模型训练、formal headline 改动或 test-based retuning。
+
+---
+
+## 最新更新：2026-06-22 v221 已完成，下一步进入 v222a 轻量融合准备
+
+### 正在做任务
+- v221 统一评估框架已跑通，当前应基于 `v221_candidate_decision_summary.csv` 固定下一步 v222a 的候选和停止线。
+
+### 已完成任务
+- 已新增并运行 `stage03_v221_formal_model_leaderboard_20260622.py`。
+- 已统一读取 v216/v217/v218/v219 的逐样本表和整体指标表。
+- 已生成 formal/diagnostic 分层结果，正式榜单排除了 oracle、fallback、`W3_B4_original_soft` 等禁用候选。
+- 已输出中文报告、HTML、关键 CSV 和 ZIP 包。
+
+### 待做任务
+- 做 v222a 之前，先读取：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v221_formal_model_leaderboard_20260622\tables\v221_candidate_decision_summary.csv`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v221_formal_model_leaderboard_20260622\tables\v221_model_bucket_metrics.csv`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v221_formal_model_leaderboard_20260622\tables\v221_noharm_vs_reference.csv`
+- v222a 第一版只做轻量候选软融合与受限残差，不训练大 Transformer：
+  - 可用主池整体基准：`avg_joint_focus = 0.5448793008861739`；
+  - 严格主池整体基准：`peak_floor_090 = 0.5717751408320051`；
+  - 低估控制候选：`peak_floor_090` 和 `ridge_residual_peakfloor`；
+  - 普通样本稳定候选：可用主池 `global_blend`，严格主池 `avg_joint_focus`。
+
+### 阻塞/禁止任务
+- 暂不进入 v222b 神经软融合、v223 机制感知联合 Transformer 或 v224 消融。
+- 暂不做硬切换 router。
+- 暂不把 v218 强峰值训练作为主线。
+- v222a 推理特征必须显式排除 `sample_id`、`event_uid`、`split`、`subject`、true/oracle labels、RMSE、低估/错侧等 target-derived 或 candidate true metric 字段。
+
+---
+
+# 当前任务队列
+
+## 最新更新：2026-06-22 v222a closeout 已完成，下一步报告 GPTPro 获取新指令
+
+### 正在做任务
+- Codex-GPTPro 闭环继续运行：已完成 GPTPro 要求的 `v222a closeout + candidate gap audit`，下一步把 closeout pack、核心结论和 future route decision 报告给 GPTPro，等待新的 bounded 指令。
+
+### 已完成任务
+- 已归档 GPTPro closeout 指令、采纳决策和执行项：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v222a_closeout_gptpro_response.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v222a_closeout_gptpro_decision.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v222a_closeout_gptpro_action_items.md`
+- 已新增并运行 `stage03_v222a_closeout_candidate_gap_audit_20260622.py`。
+- 已生成 closeout 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v222a_closeout_candidate_gap_audit_20260622`。
+- 已确认 formal headline：
+  - `loose_main_pool=avg_joint_focus`
+  - `strict_main_pool=peak_floor_090`
+  - v222a residual / no-harm gate / oracle safe gate 均为 diagnostic-only。
+- 已确认 future route：
+  - `v222b_allowed=False`
+  - `v223_allowed=False`
+  - 当前主问题更偏 learned gate/selector 泛化失败，而不是 high-tail 样本中候选池大面积缺曲线。
+- 已完成验证：`py_compile`、完整脚本运行、ZIP `bad_file=None`、必需文件无缺失、guard 全 pass、禁用名检查无命中、case 图抽检正常。
+
+### 待做任务
+- 准备并发送下一轮 GPTPro prompt，必须包含：
+  - closeout pack 路径；
+  - formal headline decision；
+  - v222a stop evidence；
+  - oracle-vs-learned gap；
+  - taxonomy 主导类型；
+  - `future_route_decision.csv` 的 `v222b_allowed=False`、`v223_allowed=False`；
+  - 验证命令与 ZIP 校验结果。
+- GPTPro 下一步如果要求继续，必须给出 bounded 指令、明确 stop condition，并且不能要求 test retuning、v222b/v223 训练、multi-router 或 forbidden inference fields。
+
+### 阻塞/禁止任务
+- 不进入 v222b neural gate / neural soft fusion。
+- 不进入 v223 new candidate generator / mechanism Transformer。
+- 不继续做 v222a gate_v2、新 tau、新 multi-router 或 test-based config。
+- 不把 oracle / true label / fallback / diagnostic-only row 写成 deployable model 或 formal headline。
+- 不把 `W3_B4_original_soft` 写入 formal leaderboard、formal oracle、formal gate、usage table 或 selected config。
+
+---
 
 ## 最新更新：2026-05-20 12:15
 
@@ -2492,3 +5021,762 @@
 
 - 已完成：复制并分类 487 张现有复核图，生成 HTML 入口和索引 CSV。
 - 待做：用户先看 `00_A_优先看_旧结论可能误伤`、`01_B_较可能可恢复_看图确认` 两个目录；缺图样本如需复核，再单独补画。
+# 当前任务队列
+
+## 最新更新：2026-06-22 v222a cache 与轻量受限残差已完成，下一步进入 no-harm/错配诊断
+
+### 正在做任务
+- 当前没有正在运行的后台训练任务。
+- v222a 的候选曲线缓存和轻量 bounded residual 已完成；当前应转入结果解释和下一步约束策略设计，而不是继续堆大模型。
+
+### 已完成任务
+- 已新增并运行 `stage03_v222a_candidate_curve_cache_20260622.py`，生成两个 pool 的 `candidate_predictions_*.npz`、`candidate_manifest.csv`、`sample_manifest.csv`、feature schema audit、候选曲线指标、v219 交叉检查和 ZIP。
+- 已新增并运行 `stage03_v222a_light_fusion_residual_20260622.py`，在固定 formal 候选池上完成非负凸融合和 bounded residual 校准。
+- 已确认训练纪律：拟合只用 train，选择只用 validation，test 只在最终 validation-selected 输出固定后报告。
+- 已确认泄漏守卫：feature schema 458 行 fail=0，输出名不含 `W3_B4_original_soft/oracle/fallback/true_label`。
+- 已确认 ZIP：cache 包 `bad_file=None`、11 文件；light fusion 包 `bad_file=None`、15 文件。
+
+### 待做任务
+- 先读：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v222a_light_fusion_residual_20260622\tables\v222a_selected_metrics.csv`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v222a_light_fusion_residual_20260622\tables\v222a_reference_baseline_metrics.csv`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v222a_light_fusion_residual_20260622\tables\v222a_selected_per_sample_metrics.csv`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v222a_light_fusion_residual_20260622\reports\v222a_light_fusion_residual_report_cn.md`
+- 分解 v222a 的 gain/harm：尤其是 loose pool 低估率下降但 RMSE/tail 变差的样本类型，以及 strict pool tail 变差原因。
+- 设计下一版只允许“低估风险样本局部启用”的 no-harm gate；gate 仍必须只按 validation 选择。
+- 如果 no-harm gate 不能在 validation 和 test 上同时站住，则停止 v222a 校准主线，回到候选曲线解释和样本/事件类型诊断。
+
+### 阻塞/禁止任务
+- 暂不进入 v222b 神经软融合、v223 机制感知 Transformer 或 v224 消融。
+- 暂不把本轮 v222a bounded residual 写成新的主线突破：它在 test 上没有同时改善 RMSE、tail 和低估率。
+- 暂不做硬切换 router；如果继续 selector，必须先有 no-harm 守卫和 validation-only 选择。
+- 任何后续推理特征仍必须排除 `sample_id/event_uid/split/subject/true/oracle/rmse/severe_under/wrong_side` 等泄漏字段。
+
+---
+# 当前任务队列
+
+## 最新更新：2026-06-22 v222a no-harm gate 已完成，等待 GPTPro 裁决是否停止 v222a
+
+### 正在做任务
+- 当前进入 Codex-GPTPro 闭环：本地 no-harm gate 诊断已经完成，下一步把结果报告给 GPTPro 获取下一轮指令。
+
+### 已完成任务
+- 已按 GPTPro 指令完成 `v222a_gain_harm_decomposition`。
+- 已完成 diagnostic-only `oracle safe gate upper bound`。
+- 已完成 binary validation-only no-harm gate。
+- 已确认 validation 两个 pool 都能选到通过 no-harm-first 的 gate。
+- 已确认 locked test 两个 pool 都未通过完整 formal gate：
+  - loose pool 保留 under 改善但伤 RMSE/tail；
+  - strict pool 守住 RMSE/tail 但 under 变差。
+
+### 待做任务
+- 把 `v222a_noharm_gate_diagnostic_20260622` 的核心结果报告给 GPTPro。
+- 让 GPTPro 裁决：
+  - 是否停止 v222a，不进入 v222b/v223；
+  - 是否只保留 oracle/gain-harm 作为 case study；
+  - 是否允许做一轮更窄的 gate feature 诊断；
+  - 如果继续，必须给出新的 stop condition。
+- 若 GPTPro 要求继续，本地只接受不违反以下纪律的任务：
+  - train-only fitting；
+  - validation-only selection；
+  - test locked report only；
+  - no forbidden inference fields；
+  - 不做多候选复杂 router。
+
+### 阻塞/禁止任务
+- 暂不进入 v222b neural soft fusion。
+- 暂不进入 v223 mechanism Transformer。
+- 暂不继续扩大 selector 或做 14-candidate multi-router。
+- 暂不把 no-harm gate 写成 formal headline，因为 locked test 未通过。
+
+---
+# 当前任务队列更新：2026-06-22 v226 robustness / CI audit 已完成，下一步回报 GPTPro
+
+## 正在做任务
+- Codex-GPTPro 闭环继续运行：已完成 GPTPro v226 要求的 `formal robustness / confidence-interval audit`，下一步把 v226 pack、CI 结果、readiness 决策、guard/ZIP 验证摘要报告给 GPTPro，请 GPTPro 给下一轮 bounded 指令。
+
+## 已完成任务
+- 已归档 GPTPro v226 指令、采纳决策和执行项：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v226_formal_robustness_ci_gptpro_response.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v226_formal_robustness_ci_gptpro_decision.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v226_formal_robustness_ci_gptpro_action_items.md`
+- 已新增并运行 `stage03_v226_formal_robustness_ci_audit_20260622.py`。
+- 已生成 v226 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v226_formal_robustness_ci_audit_20260622`。
+- 已确认 formal lock：
+  - `loose_main_pool=avg_joint_focus`
+  - `strict_main_pool=peak_floor_090`
+- 已复现 locked test formal 指标：
+  - loose `avg_joint_focus`：RMSE `0.544884`，tail `0.629752`
+  - strict `peak_floor_090`：RMSE `0.571770`，tail `0.658306`
+- 已完成 bootstrap CI：
+  - sample CI：loose RMSE `0.496066-0.593811`，loose tail `0.564811-0.693788`；strict RMSE `0.511036-0.635521`，strict tail `0.581652-0.736696`
+  - subject-block CI：loose RMSE `0.428783-0.599684`，loose tail `0.515881-0.687686`；strict RMSE `0.473689-0.615000`，strict tail `0.539479-0.706505`
+- 已完成验证：`py_compile`、完整脚本运行、ZIP `bad_file=None`、required files `[]`、metric reproduction pass、leakage guard pass、forbidden scan pass、table alignment pass、figure count 满足要求。
+
+## 待做任务
+- 准备并发送下一轮 GPTPro prompt，必须包含：
+  - v226 pack 路径；
+  - formal model lock；
+  - locked test 指标复现；
+  - sample bootstrap 和 subject-block bootstrap CI；
+  - tail error concentration；
+  - readiness decision；
+  - ZIP、required files、guard、forbidden scan、table alignment 和 figure count 验证结果；
+  - 本轮未训练、未调 tau/threshold、未创建 gate/router、未运行 v222b/v223 的边界说明。
+- 等待 GPTPro 给出下一轮 bounded 指令；若新指令涉及 v222b/v223、新 gate/router、新 tau 或 test-based retuning，必须先确认是否满足当前 guardrail 和 stop condition。
+
+## 阻塞/禁止任务
+- 不进入 v222b neural gate / neural soft fusion。
+- 不进入 v223 new candidate generator / mechanism Transformer。
+- 不继续做 v222a gate_v2、新 tau、新 multi-router 或 test-based config。
+- 不把 oracle / true label / fallback / diagnostic-only row 写成 deployable model 或 formal headline。
+- 不把 `W3_B4_original_soft` 写入 formal leaderboard、formal oracle、formal gate、usage table 或 selected config。
+---
+# 最新更新：2026-06-22 v227 reporting-only 写作/claim readiness 包已完成
+
+## 正在做任务
+- Codex-GPTPro 闭环继续运行，但 GPTPro 当前回报通道临时阻塞：桌面端空停，Chrome bridge 无法验证 Pro/进阶模式并拒绝发送 v227 prompt。当前不启动新实验，只保留 v227 写作材料和阻塞归档，等待 GPTPro 恢复后再回报。
+
+## 已完成任务
+- 已归档 GPTPro 回报阻塞：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v226_result_gptpro_response_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v226_result_gptpro_decision_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v226_result_gptpro_action_items_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v227_result_gptpro_response_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v227_result_gptpro_decision_blocked.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260622_v227_result_gptpro_action_items_blocked.md`
+- 已新增并运行 `stage03_v227_paper_claim_readiness_pack_20260622.py`。
+- 输出目录：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v227_paper_claim_readiness_pack_20260622`
+- ZIP：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v227_paper_claim_readiness_pack_20260622\v227_paper_claim_readiness_pack.zip`
+- 验证：`py_compile`、完整脚本运行、ZIP `bad_file=None`、required files `[]`、no-model guard、source checks、formal lock 均通过。
+
+## 待做任务
+- 等 GPTPro 通道恢复后，发送 `reports/v227_next_gptpro_prompt_ascii.md`，请求下一条 bounded 指令；在恢复前不要继续扩展实验路线。
+
+## 禁止任务
+- 仍不进入 v222b/v223、新 tau、新 gate/router、test-based retuning 或任何新模型训练。
+- 不把 v227 说成 GPTPro 新批准的实验方向；它只是本地 reporting-only fallback。
+
+---
+# 最新更新：2026-06-23 goal-level blocked，等待 GPTPro 通道恢复
+
+## 正在做任务
+- 当前不再自动继续本地实验。Codex-GPTPro 闭环已被同一个外部 GPTPro 通道问题连续阻塞：桌面端没有有效 bounded 回复，Chrome bridge 无法验证 Pro/进阶模式。
+
+## 已完成任务
+- 已完成并验证 v226 formal robustness / CI audit。
+- 已完成并验证 v227 reporting-only paper / claim readiness pack。
+- 已新增 goal-level blocked 归档：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_goal_blocked_gptpro_channel_response.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_goal_blocked_gptpro_channel_decision.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_goal_blocked_gptpro_channel_action_items.md`
+
+## 待做任务
+- 用户恢复 GPTPro / ChatGPT Pro 通道后，重新发送或手动提供 `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v227_paper_claim_readiness_pack_20260622\reports\v227_next_gptpro_prompt_ascii.md` 的问题。
+- 拿到有效 GPTPro 回复后，先归档 raw response / decision / action items，再执行一个符合 guardrail 的 bounded 指令。
+
+## 禁止任务
+- 没有有效 GPTPro 新指令前，不进入 v222b/v223、新 tau/threshold、新 gate/router/selector、新模型训练、formal headline 改动或 test-based retuning。
+
+---
+# 当前任务队列更新：2026-06-23 v228 final paper artifact freeze 已完成（最新）
+
+## 正在做的任务
+
+- 当前没有正在运行的训练或模型搜索任务。
+- Codex 已按本地 ChatGPT Desktop 软件端的有效 GPTPro 回复完成 v228 最终论文产物冻结包。
+
+## 已完成任务
+
+- 已修正 GPTPro handoff 方式：上一轮中文 prompt 在本地软件端显示为乱码，因此改用纯 ASCII handoff/retry。
+- 已归档有效 GPTPro 回复：
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v228_local_gptpro_response.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v228_local_gptpro_decision.md`
+  - `F:\data_set_process\data_process\gptpro_reviews\20260623_v228_local_gptpro_action_items.md`
+- 已新增并运行 `stage03_v228_final_paper_artifact_freeze_20260623.py`。
+- 已生成 v228 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v228_final_paper_artifact_freeze_20260623`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v228_final_paper_artifact_freeze_20260623\v228_final_paper_artifact_freeze_pack.zip`
+- 已完成验证：`py_compile`、完整脚本运行、ZIP、required files、formal lock、主指标、CI 行数、forbidden scan、guardrail、consistency 全部通过。
+
+## 下一步候选任务
+
+- 如果继续 GPTPro loop：把 v228 结果和验证摘要回报给 GPTPro，只要求一个 bounded 下一步。
+- 如果进入论文写作：直接读取 v228 的 `reports/manuscript_results_section_draft_cn.md` 和 `reports/manuscript_claim_boundary_notes_cn.md`。
+
+## 禁止任务
+
+- 不进入 v222b/v223。
+- 不做新 tau/threshold 搜索。
+- 不做新 gate/router/selector。
+- 不训练新模型，不生成新预测。
+- 不改变 formal headline，不做 test-based retuning。
+
+---
+# 当前任务队列更新：2026-06-26 v243 v241 guarded fine-tune 已完成（最新）
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- v243 已完成训练、评估、报告、打包和 guardrail/leakage 验证。
+
+## 已完成任务
+
+- 已新增并运行 `stage03_v243_v241_guarded_finetune_20260626.py`。
+- 已在 v241 `v241_tcn_mha_h96` 基础上完成 guarded fine-tune：
+  - hard sample point weighting；
+  - v241 teacher guard loss；
+  - optional teacher anchor；
+  - 曲线级 validation snapshot selection。
+- 已生成 v243 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v243_v241_guarded_finetune_20260626`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v243_v241_guarded_finetune_20260626\v243_v241_guarded_finetune_pack.zip`
+- validation 结论：
+  - `v243_metric_hard36_guard08` 排名第一，`accepted_as_next_candidate=True`。
+  - `v243_metric_hard24_guard04`、`v243_metric_hard30_guard06_anchor04` 也通过 validation checks。
+- test 审查结论：
+  - hard36 是 validation-selected，但 test 上 observe_later_like / strong_steer 有 bucket 退化。
+  - hard24 是 test 稳定性最均衡的候选，四个核心 bucket 的 test mean tail delta 都优于 v241。
+- 已新增候选级稳定性表：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v243_v241_guarded_finetune_20260626\tables\v243_candidate_test_robustness_summary.csv`
+
+## 下一步候选任务
+
+- 首选：执行 `v244_locked_audit_compare_v243_hard36_vs_hard24`。
+  - 固定 v243 已产生的预测，不重新训练。
+  - 并列审查 validation-selected `v243_metric_hard36_guard08` 和 conservative/test-robust `v243_metric_hard24_guard04`。
+  - 输出 per-delay、per-bucket、per-sample、worst regression casebook，并明确是否继续用 hard36、改用 hard24，或回退 v241。
+- 如果继续训练：不要再直接扩大权重；先根据 v244 audit 决定是否需要 revised validation score 或更细的 snapshot selection。
+
+## 禁止任务
+
+- 不做 gate/router/selector。
+- 不删除 observe_later_like 或预测差样本。
+- 不做 response-type hard routing。
+- 不基于 test 反调 v243 权重或选择规则。
+- 不改变 formal headline；v243 目前只是进入 audit 的训练候选。
+
+---
+# 当前任务队列更新：2026-06-29 v244 hard36 vs hard24 locked audit 已完成（最新）
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- v244 已完成 hard36 vs hard24 的 locked aggregate audit、报告、图、ZIP 和 guardrail 校验。
+
+## 已完成任务
+
+- 已新增并运行 `stage03_v244_locked_audit_compare_v243_hard36_vs_hard24_20260629.py`。
+- 已生成 v244 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v244_locked_audit_compare_v243_hard36_vs_hard24_20260629`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v244_locked_audit_compare_v243_hard36_vs_hard24_20260629\v244_locked_audit_compare_v243_hard36_vs_hard24_pack.zip`
+- 已确认 v243 artifact 覆盖：
+  - hard36 有完整 best prediction 和逐样本 delta。
+  - hard24 没有完整曲线预测、checkpoint、逐样本 delta。
+- 已完成候选比较：
+  - hard36 是 validation-selected：score `0.865386`，best_epoch `34`。
+  - hard24 是 locked test 更稳：all/observe/strong 上优于 hard36。
+  - hard36 hard bucket 退化明显：observe/strong 合计 `11/12` 个 delay tail delta 为正。
+  - hard24 hard bucket 更稳：observe/strong 合计 `2/12` 个 delay tail delta 为正。
+
+## 下一步候选任务
+
+- 如果继续推进 v243 路线：只做 artifact-replay，不做调参。
+  - 目标：重放 v243 并保存 hard24/hard30/hard36 的完整 predictions、checkpoints、per-sample delta。
+  - 禁止：改 hard weight、改 guard loss、改 validation rule、根据 test 反调选择。
+- 如果不重放：当前应保留 v241 作为默认候选，把 v244 结论作为“v243 尚不能 formal 替代”的审计证据。
+
+## 禁止任务
+
+- 不把 hard36 直接升级为 formal replacement。
+- 不把 hard24 因 test aggregate 更好而直接升级为 formal replacement。
+- 不做 gate/router/selector。
+- 不删除 observe_later_like 或预测差样本。
+- 不基于 test 反调 v243 参数或选择规则。
+
+---
+# 当前任务队列更新：2026-06-30 v245 差样本锚点后移效果审查已完成（最新）
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- v245 已完成差样本后移锚点效果审查；本轮只做诊断，不训练、不调参。
+
+## 已完成任务
+
+- 已新增并运行 `stage03_v245_bad_sample_anchor_shift_effect_audit_20260630.py`。
+- 已生成 v245 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v245_bad_sample_anchor_shift_effect_audit_20260630`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v245_bad_sample_anchor_shift_effect_audit_20260630\v245_bad_sample_anchor_shift_effect_audit_pack.zip`
+- 已完成两个口径的后移比较：
+  - remaining-task tail RMSE；
+  - 同一原始时间重叠段 absolute steering RMSE。
+- 已确认两个口径在本轮 tail 段上数值一致，说明改善不是因为预测段缩短。
+- 核心结果：
+  - v241 bad_top10 固定 `+400ms`：delta `-0.210`，改善率 `83.1%`。
+  - v241 bad_top10 固定 `+600ms`：delta `-0.288`，改善率 `88.7%`。
+  - 早锚点 bad_top10 oracle 最佳后移：delta `-0.428`，改善率 `95.8%`。
+
+## 下一步候选任务
+
+- 首选：做 v246 风险样本延后观察 / 重锚定训练任务构造。
+  - 普通样本保留当前锚点预测。
+  - 高风险/早锚点差样本允许后移观察后再预测。
+  - 训练和评估必须分层报告普通样本、风险样本、observe_later_like、strong_steer。
+- 在进入训练前，建议先定义 input-only 风险判定规则；不能使用未来真实曲线或 test 后验误差作为部署决策。
+
+## 禁止任务
+
+- 不统一后移全部样本作为 formal 方案。
+- 不删除差样本。
+- 不基于 test 反调模型参数或选择规则。
+- 不把 oracle 最佳后移当成可部署策略。
+- hard24 仍缺少完整 prediction/checkpoint/per-sample delta，不能做同级逐样本审查。
+
+---
+
+# 当前任务队列更新：2026-06-30 v246 oracle 最佳锚点遍历与 selector 审查已完成（最新）
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- v246 已完成 oracle 最佳锚点遍历、input-only selector、固定等待策略对照、报告、图和 ZIP 打包。
+
+## 已完成任务
+
+- 已新增并运行 `stage03_v246_oracle_best_anchor_and_selector_audit_20260630.py`。
+- 已生成 v246 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v246_oracle_best_anchor_and_selector_audit_20260630`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v246_oracle_best_anchor_and_selector_audit_20260630\v246_oracle_best_anchor_and_selector_audit_pack.zip`
+- 已完成三类对照：
+  - oracle 最佳锚点：用真实误差选择每个样本最优后移锚点，只作为理论上限。
+  - input-only selector：只看 base 锚点前可见输入和候选等待时长，不看未来真实曲线、人工响应标签、event_uid 或 recording。
+  - fixed waiting policy：显式 `policy_wait_to_latest_anchor`，用于判断收益是否只是来自统一多观察。
+- 核心结果：
+  - test bad_top10 oracle：RMSE `1.008 -> 0.656`，mean delta `-0.352`，改善率 `84.7%`。
+  - early bad_top10 oracle：RMSE `1.021 -> 0.591`，mean delta `-0.431`，改善率 `95.8%`。
+  - RF selector bad_top10：RMSE `1.008 -> 0.908`，mean delta `-0.100`，改善率 `29.7%`。
+  - 固定等到最晚锚点 bad_top10：RMSE `1.008 -> 0.685`，mean delta `-0.322`；early bad_top10 mean delta `-0.391`。
+
+## 下一步候选任务
+
+- 首选：做 v247 “带等待代价/触发条件的重锚定任务构造”。
+  - 保留普通样本当前锚点，避免牺牲正常样本。
+  - 对风险样本允许延后观察，但要设置等待代价，不能无脑全部等到最晚。
+  - 使用 input-only 风险触发规则，不能使用未来真实曲线、测试后验误差或 oracle label 作为部署决策。
+  - 分层报告 normal、bad_top10、early_bad_top10、observe_later_like、strong_steer，并明确平均误差、尾部误差、改善率和等待时长分布。
+- 如果要训练新模型，训练目标应从“固定原锚点预测”扩展为“可等待决策 + 后移锚点预测”的联合任务；但第一版应先做简单可解释策略，不直接上复杂 router。
+
+## 禁止任务
+
+- 不把 oracle 最佳锚点当成可部署策略。
+- 不用 test 后验误差决定是否后移。
+- 不统一后移全部样本作为 formal 方案，除非同时报告等待代价和普通样本损伤。
+- 不删除差样本。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 路线。
+- 不把 Ridge selector 的好结果误解成已经学会逐样本最佳锚点；它当前与固定等到最晚锚点策略完全一致。
+
+---
+# 最新更新：2026-06-30 v247 50ms 多分辨率 best anchor discovery 已完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- v247 已完成：50ms fine-grid anchor 重采样、锁定 v241 推理、离线 best anchor label、input-only selector、图表、中文报告和 ZIP 打包。
+
+## 已完成任务
+
+- 已新增并运行 `stage03_v247_multi_resolution_best_anchor_discovery_20260630.py`。
+- 已生成 v247 输出目录和 ZIP：
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v247_multi_resolution_best_anchor_discovery_20260630`
+  - `F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v247_multi_resolution_best_anchor_discovery_20260630_pack.zip`
+- 已完成 50ms fine-grid 支持审计：`1167` 个事件、`24507` 个候选锚点、`21` 个 delay、`dropped=0`。
+- 已完成 locked v241 inference replay：coarse delay 对齐旧 v241 预测，mean RMSE `0.000000`，max `0.000001`。
+- 已输出核心表：
+  - `tables\v247_fine_anchor_candidate_table.csv`
+  - `tables\v247_best_anchor_by_event.csv`
+  - `tables\v247_score_weight_sweep_summary.csv`
+  - `tables\v247_selector_training_table.csv`
+  - `tables\v247_selector_predictions_by_candidate.csv`
+  - `tables\v247_selector_selected_anchor_by_event.csv`
+  - `tables\v247_selector_policy_summary.csv`
+  - `tables\v247_signal_anchor_diagnostics.csv`
+- 已输出核心图：
+  - `figures\v247_best_anchor_distribution_by_group.png`
+  - `figures\v247_selector_vs_oracle_error.png`
+  - `figures\v247_selected_delay_distribution.png`
+  - `figures\v247_error_delay_score_curves_examples.png`
+  - `figures\v247_signal_anchor_alignment.png`
+
+## 结果判断
+
+- v247 的 50ms best anchor label 有价值：test/all 当前 0ms 平均 RMSE `0.475`，oracle best `0.253`；test/bad_top10 当前 `1.198`，oracle best `0.616`。
+- 但当前 input-only selector 仍不够强：RF selector 在 test/bad_top10 上为 `0.947`，虽然优于当前 0ms，但弱于固定 `policy_wait_to_latest_anchor` 的 `0.695`。
+- 因此当前结论不是“selector 已可部署”，而是“best anchor 任务定义成立，但 selector 可学习性不足，需要下一轮改进”。
+
+## 下一步候选任务
+
+- 首选：设计 v248 anchor-aware selector / joint anchor-trajectory model。
+  - 输入应比当前 RF selector 更适合判断“什么时候信息足够”，例如显式时序编码、候选点间相对变化、候选 anchor 序列级比较。
+  - 不能使用未来真实曲线、candidate 真实误差、event_uid、recording 或 test 后验误差作为部署输入。
+  - 必须同时对比 `policy_keep_0ms_anchor`、`policy_wait_to_latest_anchor` 和 oracle upper bound。
+- 如果先做诊断：优先看 `figures\v247_error_delay_score_curves_examples.png` 和 `tables\v247_signal_anchor_diagnostics.csv`，判断 best delay 与局部信号变化的错位原因。
+
+## 禁止任务
+
+- 不把 oracle best anchor 当成可部署策略。
+- 不用 test 后验误差决定锚点。
+- 不统一把所有样本后移到 1000ms。
+- 不删除差样本。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 路线。
+- 不把当前 RF/Ridge selector 解释成已经学会逐样本最佳锚点；它目前仍弱于 wait-latest。
+
+---
+
+# 最新更新：2026-07-02 生理深挖 v257-v259 已完成
+
+## 正在做的任务
+
+- 当前没有正在运行的训练进程。
+- 生理数据 goal 仍处于未达成状态：v254b-v259 已经覆盖多种合理使用方式，但没有得到“极大弥补锚点前信息不足、差样本本质改善”的结果。
+
+## 已完成任务
+
+- v257：同驾驶员 subject-aware 个体化记忆检索。
+  - 脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v257_subject_personalized_physio_memory_20260702.py`
+  - 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v257_subject_personalized_physio_memory_20260702`
+  - 结论：validation 选择 vehicle-only 记忆；test bad_top10 从 v250 `0.8383` 变为 `1.3054`，明显变差。
+- v258：生理增强 anchor selector。
+  - 脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v258_physio_augmented_anchor_selector_20260702.py`
+  - 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v258_physio_augmented_anchor_selector_20260702`
+  - 结论：fixed wait-latest 对 bad_top10 有大收益 `1.1977 -> 0.6950`，但 vehicle+physio selector `0.9342` 没有超过 vehicle-only selector `0.9300`。
+- v259：raw 生理 cross-attention 直接轨迹预测。
+  - 脚本：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\scripts\stage03_v259_physio_cross_attention_prediction_20260702.py`
+  - 输出：`F:\data_set_process\data_process\05_rebuild_from_raw_20260511\03_baselines\v259_physio_cross_attention_prediction_20260702`
+  - 结论：subject-disjoint bad_top10 上 v250 `0.8783`，v259 vehicle-only `0.9267`，vehicle+physio cross-attention `1.0889`，badweighted `1.0351`，生理仍然拖累预测。
+
+## 下一步候选任务
+
+- 若继续坚持“生理数据主线”，优先不要再换一个融合模型盲试，而应先做数据层/定义层决策：
+  - 检查能否从原始生理重新计算更可靠的 HRV、RESP phase、EDA/SCR 事件型指标，排除当前 valid_ratio/subject/recording 强混杂。
+  - 明确是否接受 subject-aware 个体化校准作为正式任务边界；如果必须 subject-disjoint，当前生理证据不足。
+  - 若需要 GPTPro 复核，应先由用户确认 Chrome 当前确实处于 Pro/进阶模式，再发送已准备的 prompt。
+- 若目标仍是行为预测效果提升，建议把主线回到车辆/任务构造：
+  - 强车辆时序 backbone；
+  - 概率/多模态轨迹分布；
+  - 等待代价明确的 anchor-aware 预测任务。
+
+## 禁止任务
+
+- 不继续做生理简单拼接、浅层 CNN/MLP、手工权重扫描或同类 cross-attention 盲试。
+- 不把 subject-aware 诊断信号写成 subject-disjoint 正式结论。
+- 不用 test 后验误差做部署决策。
+- 不删除差样本。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 路线。
+
+---
+# 当前任务队列
+
+> 最新指针：2026-07-02 已完成 v289 RESP source phase route audit。当前没有正在运行的训练进程。v289 从 cleaned 200Hz RESP 源信号重建呼吸周期、相位、幅值、质量和因果同步偏移特征，共 `575` 个 RESP source 特征、`27` 个 feature set，复用 v278 vehicle top40 route gate。结果 `route_viable_now=false`：deployable top1 在 test bad_top10 上仍比 latest 差 `+0.1553`，在 test bad_top10_vehicle_ambiguous 上差 `+0.1251`；test-best top1 也仍差 `+0.0625`，best corr `0.0463`。RESP 源信号比 ECG 更接近 latest，但仍不能转成可部署候选选择。用户 goal 仍未达成。
+---
+
+# 最新更新：2026-07-02 v289 RESP source phase route audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 已确认：从 RESP 源信号重建呼吸周期/相位/幅值后，仍没有得到可部署 top1 改善。
+- 当前 blocker 进一步收敛：不是 ECG 源信号没处理，也不是 RESP 相位/周期没重建；现有源信号只能提供弱 headroom，不能稳定完成车辆相似候选消歧。
+
+## 已完成任务
+
+- v289 `resp_source_phase_route_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v289_resp_source_phase_route_audit_20260702.py`
+  - 输出：`03_baselines/v289_resp_source_phase_route_audit_20260702`
+  - 报告：`03_baselines/v289_resp_source_phase_route_audit_20260702/reports/v289_resp_source_phase_route_audit_cn.md`
+  - ZIP：`03_baselines/v289_resp_source_phase_route_audit_20260702_pack.zip`
+- 关键结果：
+  - `guardrail.pass=True`，`zip_testzip=True`。
+  - `event_n=1167`，`candidate_rows=46680`。
+  - `resp_source_feature_n=575`，`feature_set_n=27`。
+  - `uses_post_observation_any=false`。
+  - `ok_rate=0.91945`。
+  - `baseline_valid_ratio_median=1.0`。
+  - `context_period_s_median=3.0263`，`context_bpm_median=19.8259`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.1553`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta vs latest `+0.1251`。
+  - test-best top1 diagnostic 未通过：最佳 delta `+0.0625`。
+  - test bad_top10 best corr `0.0463`。
+
+## 下一步候选任务
+
+- 不建议继续围绕 RESP 同类 phase/cycle feature set 做 gate 或 threshold 微调。
+- 如果继续生理方向，最后一个源信号侧候选是 EDA/SCR 可用记录子集和重新清洗，但必须先把 near-constant / missing recording 与 subject-disjoint 泛化问题分开。
+- 如果目标优先是预测效果，应转回车辆多未来候选、不确定性、等待代价建模；当前生理证据只能作为弱辅助诊断。
+
+## 禁止任务
+
+- 不把 `resp_window_dur3_endm1_top24` 的 test-best delta `+0.0625` 写成模型改善。
+- 不把 bad_top10_vehicle_ambiguous 的 top3 oracle delta `-0.0268` 写成可部署策略。
+- 不在 route gate 未通过时直接训练复杂 RESP/vehicle fusion 轨迹模型。
+---
+
+# 最新更新：2026-07-02 v288 ECG source-signal route audit
+
+## 正在做的任务
+
+- 生理数据 goal 仍未达成。
+- 已确认：从 ECG 源信号层重新做 R 峰/RR、质量和因果同步偏移后，仍没有得到可部署 top1 改善。
+- 当前 blocker 更明确：不是 ECG 文件不可用，也不是简单短窗错位；而是 ECG 对“车辆相似但未来分叉”的候选排序信号太弱。
+
+## 已完成任务
+
+- v288 `ecg_source_signal_route_audit`：
+  - 脚本：`03_baselines/scripts/stage03_v288_ecg_source_signal_route_audit_20260702.py`
+  - 输出：`03_baselines/v288_ecg_source_signal_route_audit_20260702`
+  - 报告：`03_baselines/v288_ecg_source_signal_route_audit_20260702/reports/v288_ecg_source_signal_route_audit_cn.md`
+  - ZIP：`03_baselines/v288_ecg_source_signal_route_audit_20260702_pack.zip`
+- 关键结果：
+  - `guardrail.pass=True`，`zip_testzip=True`。
+  - `event_n=1167`，`candidate_rows=46680`。
+  - `ecg_source_feature_n=518`，`feature_set_n=27`。
+  - `uses_post_observation_any=false`。
+  - `ok_rate=0.91945`。
+  - `baseline_valid_ratio_median=1.0`，`dur2_end0_valid_ratio_median=1.0`。
+  - deployable top1 bad_top10 未通过：test delta vs latest `+0.1556`。
+  - deployable top1 bad_top10_vehicle_ambiguous 未通过：test delta vs latest `+0.1510`。
+  - test-best top1 diagnostic 未通过：最佳 delta `+0.0903`。
+  - test bad_top10 best corr `0.0620`。
+
+## 下一步候选任务
+
+- 不建议继续围绕 ECG 同类特征做 feature set / gate / threshold 微调。
+- 若仍坚持生理源信号方向，剩余合理检查只应是明显不同的源信号修复：
+  - RESP 相位/呼吸周期重建，而不是复用 v285 的粗零交叉特征。
+  - EDA/SCR 可用记录子集和重新清洗，先排除 near-constant 记录。
+  - 原始 1000Hz 到 cleaned 200Hz 的处理链抽样核查，确认是否存在滤波/同步造成的生理事件被抹平。
+- 若目标是尽快改善预测效果，下一步优先回到车辆多未来/不确定性/等待代价主线；生理目前只能保留为边界证据或弱诊断，不应作为主增量直接拼进轨迹模型。
+
+## 禁止任务
+
+- 不把 v288 的 test-best corr `0.0620` 或 bad ambiguous corr `0.1011` 写成可部署改善。
+- 不把 top3 oracle 的局部改善写成模型性能。
+- 不继续旧 bio selector / reranker / reliability filter 阈值微调。
+- 不在 route gate 未通过时直接训练更复杂 vehicle+physio/ECG fusion 轨迹模型。
+---
+# 最新更新：2026-07-03 v302 侧倾诱因输入审计
+
+## 已完成任务
+
+- v302 `roll_cause_input_audit`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v302_roll_cause_input_audit_20260703.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v302_roll_cause_input_audit_20260703`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v302_roll_cause_input_audit_20260703/reports/v302_roll_cause_input_audit_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v302_roll_cause_input_audit_20260703/v302_roll_cause_input_audit_20260703.zip`
+- 结果摘要：
+  - 当前 v236 输入已经包含大量侧倾诱因：`609` 个 preinput 特征中，侧倾/横摆/转向/道路相关列 `392` 个。
+  - 显式 roll-cause summary 对事件类型识别有效：`base_all_v236_preinput` test macro-F1 `0.2284`，`base_plus_engineered_roll_cause` test macro-F1 `0.3906`。
+  - 对差样本识别有弱改善：within_bad_top10 test AUC 从 base `0.5735` 到 engineered summary `0.6354`。
+  - 对轨迹残差修正：test/all 可小幅改善约 `-0.00884 RMSE`，但 test/within_bad_top10 没有改善，非零修正反而轻微变差。
+
+## 当前建议队列
+
+- 首选：把 roll-cause summary 作为事件类型/响应类型辅助监督分支，而不是简单拼接进残差回归。
+- 第二步：训练一个 bad-focused / no-harm 的多任务模型，只允许在 validation bad_top10 不变差时采用 roll-cause 分支输出。
+- 第三步：人工复核 v301/v302 中高误差复合事件，确认 roll-cause summary 对应的事件类型是否符合驾驶语义。
+
+## 禁止任务
+
+- 不把 v301 未来事件标签直接作为部署输入。
+- 不把 test 后验误差作为输入或选择规则。
+- 不把 v302 的 test/all 小幅改善写成“差样本本质改善”；bad_top10 尚未改善。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 旧线。
+
+---
+# 最新更新：2026-07-03 v301 事件类型多分类标签审计
+
+## 已完成任务
+
+- v301 `event_type_multiclass_label_audit`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v301_event_type_multiclass_label_audit_20260703.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v301_event_type_multiclass_label_audit_20260703`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v301_event_type_multiclass_label_audit_20260703/reports/v301_event_type_multiclass_label_audit_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v301_event_type_multiclass_label_audit_20260703/v301_event_type_multiclass_label_audit_20260703.zip`
+- 结果摘要：
+  - `guardrail.pass=True`，`event_n=1167`，`event_type_n=9`。
+  - 自动标签能把高误差样本分层出来：test 中 `复合急制动转向`、`急左转`、`急右转`误差最高。
+  - 但锚点前输入对事件类型的预测能力较弱：选中分类器 `extra_trees_d6`，test `macro_f1=0.228`，`balanced_accuracy=0.349`。
+  - 标签残差修正不是有效主线：test/all 仅改善约 `0.0011 RMSE`，test/within_bad_top10 反而变差。
+
+## 当前建议队列
+
+- 首选：人工复核 `tables/v301_manual_review_pack.csv` 中的高优先级样本，先确认“紧急连续变道/急停/急转弯/复合事件”等标签是否符合人工语义。
+- 第二步：把人工确认后的事件标签作为辅助监督或样本分层训练信号，做多任务模型或混合专家审计。
+- 第三步：如果事件标签仍难从锚点前预测，不要继续堆分类器，应转向不确定性/多未来轨迹建模，并显式承认同一锚点前输入可能对应多种后续行为。
+
+## 禁止任务
+
+- 不把 v301 的未来行为自动标签直接作为部署输入。
+- 不把 test 后验误差或真实未来轨迹派生信息用于正式预测输入。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 旧线。
+- 不把 `macro_f1=0.228` 的事件分类器解释成已经能可靠识别事件类型。
+
+---
+
+# 最新更新：2026-07-04 v306/v307 coarse scene-label conditioned 路线
+
+## 已完成任务
+
+- v306 `coarse_predefined_scene_label_table`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v306_coarse_predefined_scene_label_table_20260704.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v306_coarse_predefined_scene_label_table_20260704`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v306_coarse_predefined_scene_label_table_20260704/reports/v306_coarse_predefined_scene_label_table_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v306_coarse_predefined_scene_label_table_20260704/v306_coarse_predefined_scene_label_table_20260704.zip`
+- v307 `coarse_scene_label_conditioned_curve_model`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v307_coarse_scene_label_conditioned_curve_model_20260704.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v307_coarse_scene_label_conditioned_curve_model_20260704`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v307_coarse_scene_label_conditioned_curve_model_20260704/reports/v307_coarse_scene_label_conditioned_curve_model_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v307_coarse_scene_label_conditioned_curve_model_20260704/v307_coarse_scene_label_conditioned_curve_model_20260704.zip`
+- 结果摘要：
+  - v306 已生成 `v306_coarse_scene_event_labels.csv`，共 `1167` 个事件、`5` 类粗场景。
+  - 标签分布：下坡过弯 `277`，平路过弯 `142`，连续变道/连续左右修正 `414`，紧急变道/猛打方向失稳 `115`，其他/不确定 `219`。
+  - v307 validation-only 选中 `v307_coarse_scene_init_aux003_film005_h64`。
+  - test/all：v300 `0.519805` -> v307 `0.496138`。
+  - test/within_bad_top10：v300 `0.859987` -> v307 `0.777797`。
+  - test/within_bad_top20：v300 `0.690942` -> v307 `0.639121`。
+  - 对比 v304：v307 在 test/all、within_bad_top10、within_bad_top20、strong_steer、vehicle_ambiguous、normal_predictable 上均略好或明显更好。
+- 关键边界：
+  - 过弯两类来自当前 manifest `scene_type`，更接近预测前可知实验场景。
+  - 直道内连续/紧急子类仍部分来自 v305/v301 自动 seed，不能直接写成最终人工标签。
+  - 当前 v307 是 coarse-scene seed 条件模型，不是最终部署结论。
+
+## 当前建议队列
+
+- 首选：人工复核 v306 high priority 的 `529` 个连续/紧急直道子类，确认 `continuous_lane_change` 与 `emergency_lane_change_instability` 是否符合实验语义。
+- 第二步：确认后把 `coarse_scene_manual_review_status` 标为 `confirmed`，重跑 v307 或做 v308 confirmed-coarse-scene 模型。
+- 第三步：如果复核发现粗类仍混杂，再只在粗类内部加少量二级标签，不回到 v305 的 7 类细 future-derived 标签。
+
+## 禁止任务
+
+- 不把 v306 直道内连续/紧急 seed 当成最终人工标签。
+- 不把 `other_or_uncertain` 强行解释成某个明确事件。
+- 不把 v307 写成已经完全可部署；非弯道子类仍需人工或实验条件确认。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 旧线。
+
+---
+
+# 最新更新：2026-07-04 v305 formal predefined event label table
+
+## 已完成任务
+
+- v305 `formal_predefined_event_label_table`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v305_formal_predefined_event_label_table_20260704.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v305_formal_predefined_event_label_table_20260704`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v305_formal_predefined_event_label_table_20260704/reports/v305_formal_predefined_event_label_table_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v305_formal_predefined_event_label_table_20260704/v305_formal_predefined_event_label_table_20260704.zip`
+- 结果摘要：
+  - 已生成正式事件标签 seed 表 `v305_formal_event_labels.csv`。
+  - 已生成可人工复核的 `v305_manual_review_seed_pack.csv`。
+  - 主事件类型收敛为 7 类，`event_n=1167`。
+  - 主标签分布：普通/轻微/不确定 `697`，连续变道/横向避让 `175`，急停/强减速 `80`，复合制动转向 `59`，急左转 `56`，紧急避让/连续变道 `54`，急右转 `46`。
+  - high priority 人工审核 `869`，medium priority `161`。
+- 关键边界：
+  - `formal_primary_type` 在人工/实验条件确认后可以作为模型输入。
+  - `formal_secondary_tags` 默认不作为直接输入，尤其是晚响应、多段修正这类未来过程形状。
+  - 当前 seed 仍来自 v301 future behavior auto draft，因此不能直接写成最终人工标签。
+
+## 当前建议队列
+
+- 首选：人工审核 `v305_manual_review_seed_pack.csv`，先处理 high priority 中 v300 RMSE 高、原标签为多段修正/晚响应、自动置信低的样本。
+- 第二步：将审核后的 `formal_primary_type` 标记为 `manual_review_status=confirmed`。
+- 第三步：用确认后的 v305 formal label 表替换 v304 标签输入，重跑 fixed event-label conditioned 模型。
+
+## 禁止任务
+
+- 不把 `formal_secondary_tags` 直接作为模型输入。
+- 不把 v301 future-derived seed 当成最终人工标签。
+- 不把当前 v305 写成已经完成人工审核。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 旧线。
+
+---
+
+# 最新更新：2026-07-03 v304 fixed event-label conditioned 曲线模型
+
+## 已完成任务
+
+- v304 `fixed_event_label_conditioned_curve_model`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v304_fixed_event_label_conditioned_curve_model_20260703.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v304_fixed_event_label_conditioned_curve_model_20260703`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v304_fixed_event_label_conditioned_curve_model_20260703/reports/v304_fixed_event_label_conditioned_curve_model_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v304_fixed_event_label_conditioned_curve_model_20260703/v304_fixed_event_label_conditioned_curve_model_20260703.zip`
+- 结果摘要：
+  - 输出目标不变：21 点 `steering_delta` 曲线。
+  - 新结构：v303 roll-cause 分支 + 固定事件标签 `event embedding` 条件输入。
+  - validation-only 选中 `v304_fixed_event_init_aux005_film010_h64`。
+  - test/all 从 v300 `0.519805` 降到 v304 `0.498102`。
+  - test/within_bad_top10 从 v300 `0.859987` 降到 v304 `0.832204`。
+  - test/within_bad_top20 从 v300 `0.690942` 降到 v304 `0.657669`。
+  - 相比 v303，v304 在 all、bad_top10、bad_top20 也继续改善。
+- 重要边界：
+  - 当前 event label 来自 v301 `future_behavior_auto_draft`。
+  - 因此 v304 当前是 known-label/oracle upper-bound，不是无条件部署模型。
+  - 若后续能人工审核或由实验条件在预测前确定事件类型，则 v304 结构可转为正式条件输入模型。
+
+## 当前建议队列
+
+- 首选：整理一套人工/外部可知事件标签体系，区分“预测前可知标签”和“未来轨迹派生标签”。
+- 第二步：用人工确认标签替换 v301 自动草稿标签，重跑 v304，检查收益是否保留。
+- 第三步：如果人工标签收益稳定，把 v304 扩展为 mixture-of-experts：事件标签负责路由，专家负责不同事件类型的轨迹曲线。
+
+## 禁止任务
+
+- 不把当前 v304 写成无条件可部署结果。
+- 不把 v301 future-derived 自动标签混同为预测前真实可知标签。
+- 不使用 test 误差选择候选模型。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 旧线。
+
+---
+
+# 最新更新：2026-07-03 v303 roll-cause 辅助监督多任务曲线模型
+
+## 已完成任务
+
+- v303 `roll_aux_multitask_curve_model`：
+  - 脚本：`05_rebuild_from_raw_20260511/03_baselines/scripts/stage03_v303_roll_aux_multitask_curve_model_20260703.py`
+  - 输出：`05_rebuild_from_raw_20260511/03_baselines/v303_roll_aux_multitask_curve_model_20260703`
+  - 报告：`05_rebuild_from_raw_20260511/03_baselines/v303_roll_aux_multitask_curve_model_20260703/reports/v303_roll_aux_multitask_curve_model_cn.md`
+  - ZIP：`05_rebuild_from_raw_20260511/03_baselines/v303_roll_aux_multitask_curve_model_20260703/v303_roll_aux_multitask_curve_model_20260703.zip`
+- 结果摘要：
+  - 输出目标不变：仍为 21 点 `steering_delta` 曲线。
+  - 模型结构已改：v300 joint-curve backbone + roll-cause encoder + event auxiliary head + FiLM 调制。
+  - v301 事件类型标签只作为训练辅助监督，不作为推理输入。
+  - validation-only 选中 `v303_roll_init_aux003_film005_h64`，通过 v303 no-harm gate。
+  - test/all 从 `0.519805` 降到 `0.513617`。
+  - test/within_bad_top10 从 `0.859987` 降到 `0.843876`。
+  - test/within_bad_top20 从 `0.690942` 降到 `0.669646`。
+  - 事件辅助头 test delay0 macro-F1 `0.416327`，说明 roll-cause 分支学到了一部分事件结构。
+
+## 当前建议队列
+
+- 首选：接受 v303 作为“结构改动后的小正向基线”，但不要写成根本突破。
+- 第二步：在 v303 初始化策略上继续做 mixture-of-experts 或多模态轨迹分布，让模型承认同一锚点前输入可能对应多种后续行为。
+- 第三步：保留 validation no-harm gate，尤其继续分开看 all、within_bad_top10、within_bad_top20、strong_steer、vehicle_ambiguous。
+
+## 禁止任务
+
+- 不把 v301 未来事件标签当成部署输入。
+- 不使用 test 误差选择候选模型。
+- 不把 v303 的小幅 bad_top10 改善夸大成差样本已经被本质解决。
+- 不回到 v222a gate / 删除样本 / 轻量 residual 旧线。
+
+---
+# 最新任务队列指针：2026-07-04 第317版二阶段候选门控校正实验已完成但验证失败。下一步优先级改为第318版保守门控修正：1）保留第317版候选库，因为验证集候选最优上限明显优于第316版；2）不要直接扩大候选库或报告测试集；3）先修门控选择机制，要求普通样本默认原预测不改，只有高置信、高风险样本才允许校正；4）增加候选选择的验证阈值或两段式门控，先判定是否需要校正，再选择校正候选；5）继续只用验证集选阈值和模型，测试集仍不得参与。第317版失败类型：候选库有上限，门控选不准，普通样本被过度修改。
+---
+
+# 最新任务队列指针：2026-07-04 本地高级模型第317版修正方案咨询已完成。下一步优先级更新为：1）实现第317版轻量二阶段候选校正器；2）使用第315版保留清单和第316版基础预测，构建幅值缩放、时间平移、残差原型候选库；3）训练只用锚点前车辆信号和第316版预测摘要的门控校正器；4）用固定验证门槛判断是否进入测试集。禁止事项：不继续扩大过滤样本作为主线，不用测试集选候选或阈值，不把锚点后真实曲线生成的标签作为部署输入，不把本地高级模型建议直接写成实验结论。
+---
+# 最新任务队列指针：2026-07-05 下一步执行第318版保守两段式候选门控校正实验。承接第317版验证失败和本地高级模型复询结果，优先新建第318版脚本，复用第316版原预测与第317版候选库，不扩候选、不重训主模型。固定任务顺序：1）训练集内部构造可校正标签和候选收益矩阵；2）训练“是否值得校正”的第一段门控；3）训练候选收益与大退化风险的第二段选择器；4）用训练集内部交叉验证搜索门槛和融合幅度；5）只在验证集上判定三条方案是否通过；6）未通过则继续询问本地高级模型并修正，不报告测试集。硬约束：普通样本必须以保持第316版原预测为默认，整体校正率和普通样本校正率都要有上限。
+---
+
+# 最新任务队列指针：2026-07-05 下一步从第321版困难样本图册出发做抽样排查和门控修正。当前不建议继续把第320版排序配额门控当作最终方向硬推，因为测试困难前20实际平均收益为 `-0.001521`，其中 `34/46` 是候选上限有空间但门控未抓住，`3/46` 被第320版改坏，只有 `2/46` 明显改好。优先任务：1）先看图册中“候选有空间但门控未抓住”和“修正后变坏”的代表样本，确认它们是否都符合“方向盘快速转动引起”的问题定义；2）把下一版目标改成困难样本选择和候选家族风险识别，而不是继续放宽第320版阈值；3）如果继续建模，必须先在验证集上证明能减少“该改没改”和“改错候选”两类错误，再允许报告测试集；4）普通样本仍保持不动，避免回到第317版误伤普通样本的问题。
+---

@@ -1,0 +1,125 @@
+﻿[1] ControlType.Pane 346,233,1278,1024 ChatGPT - Google Chrome - xin
+[147] ControlType.TabItem 374,233,194,41 ChatGPT - 闲置标签页 - 已释放 175 MB
+[149] ControlType.TabItem 550,233,194,41 ChatGPT - 闲置标签页 - 已释放 184 MB
+[151] ControlType.TabItem 726,233,194,41 方向盘预测修正方案 - 闲置标签页 - 已释放 300 MB
+[153] ControlType.TabItem 902,233,194,41 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+[155] ControlType.TabItem 1078,233,193,41 ChatGPT
+[158] ControlType.Button 1265,233,28,41 新标签页
+[161] ControlType.Button 1347,233,128,40 打开 Chrome 中的 Gemini
+[5] ControlType.Button 1487,234,45,39 最小化
+[6] ControlType.Button 1532,234,46,39 最大化
+[7] ControlType.Button 1578,234,46,39 关闭
+[144] ControlType.Button 352,239,28,28 标签页搜索
+[148] ControlType.Button 526,239,28,28 关闭
+[150] ControlType.Button 702,239,28,28 关闭
+[152] ControlType.Button 878,239,28,28 关闭
+[154] ControlType.Button 1054,239,28,28 关闭
+[156] ControlType.Button 1229,239,28,28 关闭
+[11] ControlType.Button 352,279,34,34 返回
+[12] ControlType.Button 388,279,34,34 前进
+[13] ControlType.Button 424,279,34,34 重新加载
+[20] ControlType.Button 1548,279,34,34 xin
+[21] ControlType.Button 1584,279,34,34 Chrome
+[15] ControlType.Button 472,284,24,24 查看网站信息
+[16] ControlType.Edit 504,284,991,24 地址和搜索栏
+[19] ControlType.Button 1503,284,24,24 为此标签页添加书签
+[22] ControlType.ToolBar 346,319,1278,34 书签
+[23] ControlType.ToolBar 352,319,36,28 已保存的标签页分组
+[24] ControlType.Button 352,319,28,28 标签页分组
+[25] ControlType.Button 1530,319,86,28 所有书签
+[26] ControlType.Separator 1512,325,18,16 分隔符
+[31] ControlType.Hyperlink 297,353,97,16 跳至内容
+[32] ControlType.Text 345,353,1,1 历史聊天记录
+[30] ControlType.Document 346,354,1278,903 ChatGPT
+[33] ControlType.Group 346,354,260,837 历史聊天记录
+[35] ControlType.Hyperlink 354,362,129,36 主页
+[36] ControlType.Button 547,362,36,36 关闭边栏
+[119] ControlType.Button 1565,362,36,36 开启临时聊天
+[138] ControlType.Button 1193,375,16,24 关闭
+[137] ControlType.Text 785,377,400,20 你没有访问此项目的权限。请确认你已登录正确的账号。
+[38] ControlType.ListItem 346,414,245,36 新聊天
+[39] ControlType.Hyperlink 352,414,233,36 新聊天
+[41] ControlType.ListItem 346,450,245,36 搜索聊天
+[42] ControlType.Button 352,450,233,36 搜索聊天
+[43] ControlType.Hyperlink 352,486,233,36 文件库
+[45] ControlType.Button 347,519,35,36 新项目
+[44] ControlType.Hyperlink 352,522,233,36 项目 新项目
+[46] ControlType.Hyperlink 352,558,233,36 已安排
+[47] ControlType.Hyperlink 352,594,233,36 应用
+[48] ControlType.Hyperlink 352,630,233,36 Codex
+[121] ControlType.Text 991,669,248,43 我们先从哪里开始呢？
+[50] ControlType.Text 388,674,28,19 更多
+[53] ControlType.Hyperlink 527,712,34,36 新聊天
+[54] ControlType.Button 551,712,34,36 整理聊天
+[51] ControlType.Button 346,714,185,32 最近
+[52] ControlType.Text 362,720,28,20 最近
+[58] ControlType.Button 335,733,35,37 置顶 科研流程图设计
+[59] ControlType.Button 359,733,35,37 打开“科研流程图设计”的对话选项
+[124] ControlType.Button 803,741,36,37 添加文件等
+[127] ControlType.Button 1236,741,107,37 Pro 扩展
+[128] ControlType.Button 1347,741,36,37 开始听写
+[131] ControlType.Button 1391,741,36,37 启动语音功能
+[125] ControlType.Edit 846,745,381,43 与 ChatGPT 聊天
+[56] ControlType.ListItem 346,746,245,36 科研流程图设计lu-文档
+[57] ControlType.Hyperlink 352,746,233,36 科研流程图设计 — 项目 lu-文档 中的聊天
+[126] ControlType.Text 847,748,112,21 有问题，尽管问
+[62] ControlType.Button 335,769,35,37 置顶 保护结构优化设计
+[63] ControlType.Button 359,769,35,37 打开“保护结构优化设计”的对话选项
+[60] ControlType.ListItem 346,782,245,36 保护结构优化设计Liu-文档
+[61] ControlType.Hyperlink 352,782,233,36 保护结构优化设计 — 项目 Liu-文档 中的聊天
+[66] ControlType.Button 335,805,35,37 置顶 方向盘预测修正方案
+[67] ControlType.Button 359,805,35,37 打开“方向盘预测修正方案”的对话选项
+[133] ControlType.Button 909,809,124,41 生成图片
+[134] ControlType.Button 1045,809,140,41 撰写或编辑
+[135] ControlType.Button 1197,809,124,41 查找资料
+[64] ControlType.ListItem 346,818,245,36 方向盘预测修正方案
+[65] ControlType.Hyperlink 352,818,233,36 方向盘预测修正方案
+[70] ControlType.Button 335,841,35,37 置顶 项目操作与研究
+[71] ControlType.Button 359,841,35,37 打开“项目操作与研究”的对话选项
+[68] ControlType.ListItem 346,854,245,36 项目操作与研究Liu-文档
+[69] ControlType.Hyperlink 352,854,233,36 项目操作与研究 — 项目 Liu-文档 中的聊天
+[74] ControlType.Button 335,877,35,37 置顶 报告撰写需求补充
+[75] ControlType.Button 359,877,35,37 打开“报告撰写需求补充”的对话选项
+[72] ControlType.ListItem 346,890,245,36 报告撰写需求补充
+[73] ControlType.Hyperlink 352,890,233,36 报告撰写需求补充
+[78] ControlType.Button 335,913,35,37 置顶 每日简报定制
+[79] ControlType.Button 359,913,35,37 打开“每日简报定制”的对话选项
+[76] ControlType.ListItem 346,926,245,36 每日简报定制
+[77] ControlType.Hyperlink 352,926,233,36 每日简报定制
+[82] ControlType.Button 335,949,35,37 置顶 人民币估算结果
+[83] ControlType.Button 359,949,35,37 打开“人民币估算结果”的对话选项
+[80] ControlType.ListItem 346,962,245,36 人民币估算结果
+[81] ControlType.Hyperlink 352,962,233,36 人民币估算结果
+[86] ControlType.Button 335,985,35,37 置顶 403 Forbidden 错误分析
+[87] ControlType.Button 359,985,35,37 打开“403 Forbidden 错误分析”的对话选项
+[84] ControlType.ListItem 346,998,245,36 403 Forbidden 错误分析
+[85] ControlType.Hyperlink 352,998,233,36 403 Forbidden 错误分析
+[90] ControlType.Button 335,1021,35,37 置顶 问候交流
+[91] ControlType.Button 359,1021,35,37 打开“问候交流”的对话选项
+[88] ControlType.ListItem 346,1034,245,36 问候交流
+[89] ControlType.Hyperlink 352,1034,233,36 问候交流
+[94] ControlType.Button 335,1057,35,37 置顶 研究建议讨论
+[95] ControlType.Button 359,1057,35,37 打开“研究建议讨论”的对话选项
+[92] ControlType.ListItem 346,1070,245,36 研究建议讨论
+[93] ControlType.Hyperlink 352,1070,233,36 研究建议讨论
+[98] ControlType.Button 335,1093,35,37 置顶 Claude 更新失败解决
+[99] ControlType.Button 359,1093,35,37 打开“Claude 更新失败解决”的对话选项
+[96] ControlType.ListItem 346,1106,245,36 Claude 更新失败解决
+[97] ControlType.Hyperlink 352,1106,233,36 Claude 更新失败解决
+[102] ControlType.Button 335,1129,35,37 置顶 模型任务分析
+[103] ControlType.Button 359,1129,35,37 打开“模型任务分析”的对话选项
+[100] ControlType.ListItem 346,1142,245,36 模型任务分析
+[101] ControlType.Hyperlink 352,1142,233,36 模型任务分析
+[106] ControlType.Button 335,1165,35,37 置顶 instoment拼写错误解析
+[107] ControlType.Button 359,1165,35,37 打开“instoment拼写错误解析”的对话选项
+[104] ControlType.ListItem 346,1178,245,36 instoment拼写错误解析
+[105] ControlType.Hyperlink 352,1178,233,36 instoment拼写错误解析
+[112] ControlType.Button 354,1198,246,53 xin zheng Pro，打开“个人资料”菜单
+[110] ControlType.Button 335,1201,35,37 置顶 问候交流
+[111] ControlType.Button 359,1201,35,37 打开“问候交流”的对话选项
+[114] ControlType.Text 394,1205,65,19 xin zheng
+[116] ControlType.Button 556,1206,36,37 下载应用
+[113] ControlType.Image 362,1212,24,25 个人资料图片
+[108] ControlType.ListItem 346,1214,245,36 问候交流
+[109] ControlType.Hyperlink 352,1214,233,36 问候交流
+[115] ControlType.Text 394,1225,20,16 Pro
