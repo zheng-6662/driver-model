@@ -1,0 +1,4 @@
+﻿seed,fold,train_windows,test_windows,train_subjects,test_subjects,train_recordings,test_recordings,subject_overlap,recording_overlap
+20260904,1,203449,100641,26,12,151,70,0,0
+20260904,2,202174,101916,25,13,143,78,0,0
+20260904,3,202557,101533,25,13,148,73,0,0

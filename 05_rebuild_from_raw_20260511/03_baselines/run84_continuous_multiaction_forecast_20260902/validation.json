@@ -1,0 +1,521 @@
+{
+  "status": "ALL_PASS",
+  "checks": [
+    {
+      "check": "数据构建状态",
+      "passed": true,
+      "detail": "DATASET_COMPLETE"
+    },
+    {
+      "check": "因果输入不使用未来原始支持",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "recording来源数",
+      "passed": true,
+      "detail": "221"
+    },
+    {
+      "check": "221条recording均有合法窗口",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "连续查询窗口数与manifest一致",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "驾驶员数",
+      "passed": true,
+      "detail": "38"
+    },
+    {
+      "check": "历史数组形状",
+      "passed": true,
+      "detail": "(304090, 40, 10)"
+    },
+    {
+      "check": "目标数组形状",
+      "passed": true,
+      "detail": "(304090, 20, 4)"
+    },
+    {
+      "check": "ExtraTrees特征形状",
+      "passed": true,
+      "detail": "(304090, 160)"
+    },
+    {
+      "check": "核心历史通道有限",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "目标曲线有限",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "窗口索引连续",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "时间块不跨recording",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "固定评价人口",
+      "passed": true,
+      "detail": "{'distance_v2_305': 305, 'low_mu_v2_70': 70, 'release_v3_historical_2323': 2323}"
+    },
+    {
+      "check": "固定锚点映射误差",
+      "passed": true,
+      "detail": "0.1000000000000227"
+    },
+    {
+      "check": "三个随机种子",
+      "passed": true,
+      "detail": "[20260902, 20260903, 20260904]"
+    },
+    {
+      "check": "每种子三折",
+      "passed": true,
+      "detail": "[1, 2, 3]"
+    },
+    {
+      "check": "五模型齐全",
+      "passed": true,
+      "detail": "['et_transformer_residual', 'extra_trees', 'hold', 'linear', 'transformer']"
+    },
+    {
+      "check": "七评价人口齐全",
+      "passed": true,
+      "detail": "['action_started', 'all_continuous', 'distance_v2_305', 'high_dynamic_not_started', 'low_mu_v2_70', 'ordinary', 'release_v3_historical_2323']"
+    },
+    {
+      "check": "驾驶员零泄漏",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "recording零泄漏",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "残差内层驾驶员零泄漏",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "残差内层recording零泄漏",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "九个外折均有残差内层审计",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "每个外折三个残差内折",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "seed20260902 OOF窗口完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260902驾驶员唯一外折",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "seed20260902 hold全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260902 hold distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260902 hold low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260902 hold release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260902 linear全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260902 linear distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260902 linear low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260902 linear release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260902 extra_trees全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260902 extra_trees distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260902 extra_trees low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260902 extra_trees release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260902 transformer全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260902 transformer distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260902 transformer low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260902 transformer release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260902 et_transformer_residual全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260902 et_transformer_residual distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260902 et_transformer_residual low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260902 et_transformer_residual release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260902五模型逐驾驶员完整",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "seed20260903 OOF窗口完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260903驾驶员唯一外折",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "seed20260903 hold全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260903 hold distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260903 hold low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260903 hold release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260903 linear全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260903 linear distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260903 linear low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260903 linear release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260903 extra_trees全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260903 extra_trees distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260903 extra_trees low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260903 extra_trees release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260903 transformer全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260903 transformer distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260903 transformer low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260903 transformer release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260903 et_transformer_residual全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260903 et_transformer_residual distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260903 et_transformer_residual low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260903 et_transformer_residual release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260903五模型逐驾驶员完整",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "seed20260904 OOF窗口完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260904驾驶员唯一外折",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "seed20260904 hold全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260904 hold distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260904 hold low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260904 hold release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260904 linear全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260904 linear distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260904 linear low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260904 linear release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260904 extra_trees全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260904 extra_trees distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260904 extra_trees low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260904 extra_trees release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260904 transformer全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260904 transformer distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260904 transformer low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260904 transformer release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260904 et_transformer_residual全窗口评分完整",
+      "passed": true,
+      "detail": "304090"
+    },
+    {
+      "check": "seed20260904 et_transformer_residual distance_v2_305完整",
+      "passed": true,
+      "detail": "305"
+    },
+    {
+      "check": "seed20260904 et_transformer_residual low_mu_v2_70完整",
+      "passed": true,
+      "detail": "70"
+    },
+    {
+      "check": "seed20260904 et_transformer_residual release历史对照完整",
+      "passed": true,
+      "detail": "2323"
+    },
+    {
+      "check": "seed20260904五模型逐驾驶员完整",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "模型指标有限",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "训练折目标尺度为正",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "九个训练折标准化记录齐全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Transformer训练日志齐全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "主要结果表齐全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Review-light文档齐全",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "四组预测曲线示例",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Run57—Run83只读快照存在",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Run57—Run83历史文件大小和修改时间未变",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "check_count": 103
+}

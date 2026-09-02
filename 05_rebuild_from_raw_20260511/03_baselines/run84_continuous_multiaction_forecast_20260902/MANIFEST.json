@@ -1,0 +1,55 @@
+{
+  "status": "VALIDATED_COMPLETE",
+  "seeds": [
+    20260902,
+    20260903,
+    20260904
+  ],
+  "folds_per_seed": 3,
+  "models": [
+    "hold",
+    "linear",
+    "extra_trees",
+    "transformer",
+    "et_transformer_residual"
+  ],
+  "windows": 304090,
+  "best_simple_model": "hold",
+  "best_learned_model": "et_transformer_residual",
+  "personalization_verdict": "暂缓进入个体化阶段",
+  "results": [
+    "results/block_metrics.csv",
+    "results/curve_example_predictions.csv",
+    "results/driver_benefit_summary.csv",
+    "results/driver_paired_results.csv",
+    "results/evaluation_population_comparison.csv",
+    "results/fold_metrics.csv",
+    "results/main_model_comparison.csv",
+    "results/personalization_decision.json",
+    "results/seed_summary.csv",
+    "results/split_audit.csv",
+    "results/subject_metrics.csv"
+  ],
+  "review_light": [
+    "review_light/00_FINAL_CONCLUSION_CN.md",
+    "review_light/01_DATA_POPULATION_CN.md",
+    "review_light/02_MAIN_MODEL_COMPARISON_CN.md",
+    "review_light/03_EVALUATION_POPULATIONS_CN.md",
+    "review_light/04_DRIVER_PAIRED_SUMMARY_CN.md",
+    "review_light/05_SCRIPT_INVENTORY_CN.md",
+    "review_light/06_CURVE_EXAMPLES_CN.md"
+  ],
+  "figures": [
+    "review_light/figures/EX01_curves.png",
+    "review_light/figures/EX02_curves.png",
+    "review_light/figures/EX03_curves.png",
+    "review_light/figures/EX04_curves.png"
+  ],
+  "commands": {
+    "build": "py -3.11 build_dataset.py --project-root <PROJECT_ROOT> --august-root <AUGUST_ROOT> --output-root <RUN_ROOT>",
+    "experiment": "py -3.11 experiment.py --run-root <RUN_ROOT> --device cuda",
+    "validation": "py -3.11 validate.py --run-root <RUN_ROOT>"
+  },
+  "validation": "validation.json",
+  "validation_check_count": 103
+}

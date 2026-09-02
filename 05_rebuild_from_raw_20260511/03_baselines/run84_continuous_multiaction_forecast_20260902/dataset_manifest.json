@@ -1,0 +1,38 @@
+{
+  "run": "run84_continuous_multiaction_forecast_20260902",
+  "status": "DATASET_COMPLETE",
+  "recordings_total": 221,
+  "recordings_with_legal_windows": 221,
+  "subjects": 38,
+  "windows": 304090,
+  "history_shape": [
+    304090,
+    40,
+    10
+  ],
+  "target_shape": [
+    304090,
+    20,
+    4
+  ],
+  "extratrees_feature_shape": [
+    304090,
+    160
+  ],
+  "fixed_evaluation_counts": {
+    "distance_v2_305": 305,
+    "low_mu_v2_70": 70,
+    "release_v3_historical_2323": 2323
+  },
+  "source_inventory": "tables/recording_inventory.csv",
+  "window_metadata": "dataset/window_metadata.csv",
+  "history_array": "dataset/history_20hz.npy",
+  "target_array": "dataset/targets_relative_20hz.npy",
+  "extratrees_features": "dataset/extratrees_features.npy",
+  "fixed_evaluation_mapping": "tables/fixed_evaluation_mapping.csv",
+  "source_reader": "02_code/tools/build_multiaction_reframe_audit.py",
+  "builder": "build_dataset.py",
+  "causal_input_rule": "previous raw observation at or before each 20 Hz input time",
+  "future_label_rule": "offline bilateral linear interpolation at future label times",
+  "causal_input_future_support_used": false
+}

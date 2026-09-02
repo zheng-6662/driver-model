@@ -1,0 +1,6 @@
+# GitHub 只发布可复核结果包，不发布原始或可再生成的大型中间数据。
+dataset/*.npy
+dataset/window_metadata.csv
+tables/recording_inventory.csv
+sanity/
+__pycache__/

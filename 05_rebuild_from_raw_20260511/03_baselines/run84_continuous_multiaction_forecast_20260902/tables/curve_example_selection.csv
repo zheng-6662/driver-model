@@ -1,0 +1,5 @@
+﻿example_id,population,window_index,subject_alias,recording_alias,query_time_s,target_action_nmae_magnitude,selection_rule
+EX01,distance_v2_305,106301,S012,R081,222.4,1.1327590942382812,目标动作归一化幅值中位窗口；不按模型误差选择
+EX02,low_mu_v2_70,263468,S037,R191,553.6,0.43942978978157043,目标动作归一化幅值中位窗口；不按模型误差选择
+EX03,high_dynamic_not_started,19281,S002,R013,132.6,0.7185736894607544,目标动作归一化幅值中位窗口；不按模型误差选择
+EX04,ordinary,301307,S039,R217,687.4000000000001,0.33443254232406616,目标动作归一化幅值中位窗口；不按模型误差选择

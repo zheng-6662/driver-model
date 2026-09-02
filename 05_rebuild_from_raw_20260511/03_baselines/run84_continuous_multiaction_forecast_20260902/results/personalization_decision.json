@@ -1,0 +1,19 @@
+{
+  "best_simple_model": "hold",
+  "best_learned_model": "et_transformer_residual",
+  "best_single_learned_model": "transformer",
+  "all_continuous_improvement_pct": 10.190386501257748,
+  "driver_benefit_fraction": 1.0,
+  "ordinary_worsening_pct": 6.118975283150425,
+  "distance_v2_worsening_pct": -7.099483651643357,
+  "low_mu_v2_worsening_pct": 2.5802759264003856,
+  "gates": {
+    "all_improvement_ge_5pct": true,
+    "driver_benefit_ge_60pct": true,
+    "ordinary_worsening_le_2pct": false,
+    "distance_worsening_le_5pct": true,
+    "low_mu_worsening_le_5pct": true
+  },
+  "worth_entering_personalization": false,
+  "verdict": "暂缓进入个体化阶段"
+}
